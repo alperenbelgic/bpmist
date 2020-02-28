@@ -1,0 +1,26 @@
+.designer-wrapper {
+    font-family: "Comfortaa";
+}
+
+app-process-item {
+    position: absolute;
+}
+
+.title {
+    font: bold;
+    margin: 15px 0px 15px 0px;
+}
+
+.box {
+    width: 100%;
+    height: 600px;
+    background-color: #333;
+    background-size: 80px 80px;
+    background-image: linear-gradient(to bottom, #555 1px, transparent 1px);
+    border: 1px solid black;
+}
+
+.inner-box {
+    position: absolute;
+    width: 100%;
+}

@@ -1,0 +1,12 @@
+<div class="item-wrapper noselect" [ngClass]="{
+    'selected': processItem.isSelected,
+    'not-selected': !processItem.isSelected
+  }">
+  <div class="create-link-button" (click)="createLink($event)" (mousedown)="mousedown($event)">-></div>
+  <div class="settings-button" (click)="openSettings($event)" (mousedown)="mousedown($event)">s</div>
+  <div>process-item works! {{processItem.text}}</div>
+</div>
+
+<div class="settings-modal" *ngIf="isSettingsVisible">
+  <app-process-item-settings [processItem]="processItem"></app-process-item-settings>
+</div>
