@@ -4,7 +4,7 @@ import { ProcessDesignerComponent } from "./process-designer/process-designer.co
 
 
 const routes: Routes = [
-  { path: 'process-designer', component: ProcessDesignerComponent }
+  { path: '', component: ProcessDesignerComponent }
 ];
 
 @NgModule({
