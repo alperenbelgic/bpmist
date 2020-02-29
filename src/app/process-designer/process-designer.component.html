@@ -29,7 +29,7 @@
           [attr.y1]="link.startItem.middleY" [attr.x2]="link.endItem.middleX" [attr.y2]="link.endItem.middleY"
           stroke="tomato" marker-end="url(#arrow-end)" />
       </svg>
-      <app-process-item *ngFor="let processItem of processItems" [processItem]="processItem"
+      <app-process-item *ngFor="let processItem of processItems" (linkCreated)="startLinkProcess($event)" [processItem]="processItem"
         [style.left.px]="processItem.leftPx" [style.top.px]="processItem.topPx"
         (mouseenter)="mouseover(true, processItem)" (mouseleave)="mouseover(false, processItem)"
         (mousedown)="mousedown(processItem, $event)" (click)="clickItem($event, processItem)">

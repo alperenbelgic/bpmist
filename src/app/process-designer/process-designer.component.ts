@@ -96,7 +96,7 @@ export class ProcessDesignerComponent implements OnInit {
   initialize() {
     this.cd.detach();
 
-    this.processItems.push(new ProcessItem({ parentComponent: this, text: '1', leftPx: 30, topPx: 100 }));
+    this.processItems.push(new ProcessItem({ text: '1', leftPx: 30, topPx: 100 }));
 
     this.cd.detectChanges();
     this.cd.reattach();
@@ -107,7 +107,7 @@ export class ProcessDesignerComponent implements OnInit {
 
     this.arrangeHorizontalDistances();
     const lastItem = this.processItems.pop();
-    const newItem = new ProcessItem({ parentComponent: this, text: 'new one', topPx: lastItem.topPx, leftPx: lastItem.leftPx + 1 });
+    const newItem = new ProcessItem({ text: 'new one', topPx: lastItem.topPx, leftPx: lastItem.leftPx + 1 });
     this.processItems.push(lastItem);
     this.processItems.push(newItem);
     this.arrangeHorizontalDistances();
@@ -226,7 +226,10 @@ export class ProcessDesignerComponent implements OnInit {
     }
   }
 
-  startLinkProcess(processItem: ProcessItem, $clickedEvent: MouseEvent) {
+  startLinkProcess($event: any) {
+
+    const processItem = $event.processItem;
+    const $clickedEvent = $event.event;
 
     const endLinkHandled: boolean = this.handleEndLinkProcess(processItem);
 

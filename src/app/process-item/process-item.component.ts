@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, EventEmitter, Output } from '@angular/core';
 import { ProcessDesignerComponent } from '../process-designer/process-designer.component';
 
 export class Link {
@@ -28,7 +28,6 @@ export class ProcessItem {
   isSelected = false;
   isSelectedBeforeClick = false;
   component: ProcessItemComponent;
-  parentComponent: ProcessDesignerComponent; // TODO: remove compoenent ref
 
   links: Link[] = [];
 
@@ -59,6 +58,7 @@ export class ProcessItem {
 export class ProcessItemComponent implements OnInit {
 
   @Input() processItem: ProcessItem;
+  @Output() linkCreated: EventEmitter<any> = new EventEmitter();
   isSettingsVisible = false;
 
   constructor(private el: ElementRef) { }
@@ -84,13 +84,10 @@ export class ProcessItemComponent implements OnInit {
   createLink($event) {
     $event.stopPropagation();
 
-    // if (this.processItem.parentComponent.sourceStepForLinkCreation !== null) {
-    //   // handle this in a central place and use it in all possible buttons/clicks
-
-    //   return;
-    // }
-
-    this.processItem.parentComponent.startLinkProcess(this.processItem, $event);
+    this.linkCreated.emit({
+      processItem: this.processItem,
+      event: $event
+    });
 
   }
 
