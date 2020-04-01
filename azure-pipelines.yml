@@ -12,7 +12,7 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'e0360cdd-8b7c-432b-a77f-bba9152d55b4'
   imageRepository: 'alperenbelgicdragoprocessdesigner'
-  containerRegistry: 'cr31032020.azurecr.io'
+  containerRegistry: 'rg01042020.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
   
