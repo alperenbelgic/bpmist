@@ -10,7 +10,10 @@
         state event action decison state
         stoppropagation as directive
         select by drawing a box -->
-    </button>
+  </button>
+  <button (click)="addCondition()">
+    Add a condition
+  </button>
   <div #thebox id="the-box" class="box" (click)="clickBox()">
     <div class="inner-box">
 
@@ -30,7 +33,7 @@
           stroke="tomato" marker-end="url(#arrow-end)" />
       </svg>
       <app-process-item *ngFor="let processItem of processItems" (linkCreated)="startLinkProcess($event)" [processItem]="processItem"
-        [style.left.px]="processItem.leftPx" [style.top.px]="processItem.topPx"
+      [style.left.px]="processItem.leftPx" [style.top.px]="processItem.topPx"
         (mouseenter)="mouseover(true, processItem)" (mouseleave)="mouseover(false, processItem)"
         (mousedown)="mousedown(processItem, $event)" (click)="clickItem($event, processItem)">
       </app-process-item>

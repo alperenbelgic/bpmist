@@ -12,6 +12,8 @@ export class Link {
   endItem: ProcessItem;
 }
 
+
+
 export class ProcessItem {
 
   public constructor(init?: Partial<ProcessItem>) {
@@ -50,6 +52,11 @@ export class ProcessItem {
   }
 }
 
+export class ConditionItem extends ProcessItem {
+  public constructor(init?: Partial<ConditionItem>) {
+    super(init);
+  }
+}
 @Component({
   selector: 'app-process-item',
   templateUrl: './process-item.component.html',

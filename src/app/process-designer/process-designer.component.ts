@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { ProcessItemComponent, ProcessItem, Link } from '../process-item/process-item.component';
+import { ProcessItemComponent, ProcessItem, Link, ConditionItem } from '../process-item/process-item.component';
 
 
 
@@ -108,6 +108,20 @@ export class ProcessDesignerComponent implements OnInit {
     this.arrangeHorizontalDistances();
     const lastItem = this.processItems.pop();
     const newItem = new ProcessItem({ text: 'new one', topPx: lastItem.topPx, leftPx: lastItem.leftPx + 1 });
+    this.processItems.push(lastItem);
+    this.processItems.push(newItem);
+    this.arrangeHorizontalDistances();
+
+    this.cd.detectChanges();
+    this.cd.reattach();
+  }
+
+  addCondition() {
+    this.cd.detach();
+
+    this.arrangeHorizontalDistances();
+    const lastItem = this.processItems.pop();
+    const newItem = new ConditionItem({ text: 'new one', topPx: lastItem.topPx, leftPx: lastItem.leftPx + 1 });
     this.processItems.push(lastItem);
     this.processItems.push(newItem);
     this.arrangeHorizontalDistances();
