@@ -20,7 +20,6 @@ Click the video for a very quick tour.
 - Condition related
   - complete shapes
   - definition button
-    - can be shown on hover
 - State definition form
 - Connectors
   - leaving from state: defines action
@@ -36,3 +35,6 @@ Click the video for a very quick tour.
     - you can trigger remote procedures
     - returning values in body will be assigned in flow instance data
 - versioning flow definitions
+
+
+~~box buttons shown on hover~~

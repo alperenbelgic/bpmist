@@ -1,11 +1,11 @@
-<div *ngIf="processItem.constructor.name== 'ProcessItem'" class="state-box noselect" [ngClass]="{
+<div *ngIf="processItem.constructor.name== 'ProcessItem'" class="box state-box noselect" [ngClass]="{
     'selected': processItem.isSelected,
     'not-selected': !processItem.isSelected
   }">
-  <div class="create-link-button" (click)="createLink($event)" (mousedown)="mousedown($event)">
+  <div class="create-link-button box-button" (click)="createLink($event)" (mousedown)="mousedown($event)">
     <i class="fas fa-long-arrow-alt-up"></i>
   </div>
-  <div class="settings-button" (click)="openSettings($event)" (mousedown)="mousedown($event)">
+  <div class="settings-button box-button" (click)="openSettings($event)" (mousedown)="mousedown($event)">
     <i class="fas fa-wrench"></i>
   </div>
   <div>process-item works! {{processItem.text}} </div>
@@ -16,14 +16,14 @@
 </div>
 
 
-<div *ngIf="processItem.constructor.name== 'ConditionItem'" class="condition-box noselect" [ngClass]="{
+<div *ngIf="processItem.constructor.name== 'ConditionItem'" class="box condition-box noselect" [ngClass]="{
   'selected': processItem.isSelected,
   'not-selected': !processItem.isSelected
 }">
-  <div class="create-link-button" (click)="createLink($event)" (mousedown)="mousedown($event)">
+  <div class="create-link-button box-button" (click)="createLink($event)" (mousedown)="mousedown($event)">
     <i class="fas fa-long-arrow-alt-up"></i>
   </div>
-  <div class="settings-button" (click)="openSettings($event)" (mousedown)="mousedown($event)">
+  <div class="settings-button box-button" (click)="openSettings($event)" (mousedown)="mousedown($event)">
     <i class="fas fa-wrench"></i>
   </div>
   <div class="condition-content">

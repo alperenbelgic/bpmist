@@ -1,3 +1,4 @@
+
 .noselect {
     -webkit-touch-callout: none;
     /* iOS Safari */
@@ -33,7 +34,7 @@
 }
 
 .settings-button {
-    margin-top: -44px;
+    margin-top: -41px;
     margin-left: 68px;
     background-color: dodgerblue;
     position: absolute;
@@ -50,7 +51,7 @@
 }
 
 .create-link-button {
-    margin-top: -44px;
+    margin-top: -41px;
     margin-left: 30px;
     background-color: dodgerblue;
     position: absolute;
@@ -122,4 +123,21 @@
 
 .condition-box .create-link-button i{
   transform: rotate(0deg);
+}
+
+
+.box-button {
+  visibility: collapse;
+  transition: visibility 0.2s;
+}
+
+.box-button:hover{
+  visibility: visible;
+}
+
+/* .box:hover{
+  background-color: red;;
+} */
+.box:hover .box-button {
+  visibility: visible;
 }
