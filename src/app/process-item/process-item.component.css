@@ -14,7 +14,7 @@
                                     supported by Chrome, Opera and Firefox */
 }
 
-.item-wrapper {
+.state-box {
     background-color: paleturquoise;
     width: 100px;
     height: 100px;
@@ -33,25 +33,38 @@
 }
 
 .settings-button {
-    margin-top: -26px;
-    margin-left: 84px;
+    margin-top: -44px;
+    margin-left: 68px;
     background-color: dodgerblue;
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 35px;
+    height: 35px;
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
+    text-align: center;
+}
+
+.settings-button i {
+  font-size: 27px;
+  margin-top: 4px;
 }
 
 .create-link-button {
-    margin-top: -26px;
-    margin-left: 60px;
+    margin-top: -44px;
+    margin-left: 30px;
     background-color: dodgerblue;
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 35px;
+    height: 35px;
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
+    text-align: center;
+}
+
+.create-link-button i {
+  transform: rotate(45deg);
+  font-size: 30px;
+  margin-top: 4px;
 }
 
 /* .settings-form {
@@ -82,14 +95,14 @@
 }
 
 
-.condition {
-  background-color: red;
+.condition-box {
+  background-color: white;
   transform: rotate(45deg);
   width: 75px;
   height: 75px;
-  border: 5px solid white;
+
 }
 
-.condition div{
+.condition-content{
   transform: rotate(-45deg);
 }
