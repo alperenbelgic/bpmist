@@ -25,15 +25,20 @@
             <path d="M0,0 L0,2 L1,1 z" fill="white"></path>
           </marker>
         </defs>
-        <line *ngIf="isLinkBeingCreated" stroke-width="8" [attr.x1]="lineCreationStartX" [attr.y1]="lineCreationStartY"
+        <line *ngIf="isLinkBeingCreated" stroke-width="10" [attr.x1]="lineCreationStartX" [attr.y1]="lineCreationStartY"
           [attr.x2]="lineCreationEndX" [attr.y2]="lineCreationEndY" stroke="tomato" marker-end="url(#arrow-end)" />
 
-        <line *ngFor="let link of links" stroke-width="8" [attr.x1]="link.startItem.middleX" (click)="x('sdf')"
-          [attr.y1]="link.startItem.middleY" [attr.x2]="link.endItem.middleX" [attr.y2]="link.endItem.middleY"
-          stroke="tomato" marker-end="url(#arrow-end)" />
+
+
+          <line class="connector" *ngFor="let link of links" stroke-width="10" [attr.x1]="link.startItem.middleX"
+            (click)="x('sdf')" [attr.y1]="link.startItem.middleY" [attr.x2]="link.endItem.middleX"
+            [attr.y2]="link.endItem.middleY" stroke="tomato" marker-end="url(#arrow-end)"  (mouseenter)="x(link.startItem.middleX)" >
+
+          </line>
+
       </svg>
-      <app-process-item *ngFor="let processItem of processItems" (linkCreated)="startLinkProcess($event)" [processItem]="processItem"
-      [style.left.px]="processItem.leftPx" [style.top.px]="processItem.topPx"
+      <app-process-item *ngFor="let processItem of processItems" (linkCreated)="startLinkProcess($event)"
+        [processItem]="processItem" [style.left.px]="processItem.leftPx" [style.top.px]="processItem.topPx"
         (mouseenter)="mouseover(true, processItem)" (mouseleave)="mouseover(false, processItem)"
         (mousedown)="mousedown(processItem, $event)" (click)="clickItem($event, processItem)">
       </app-process-item>

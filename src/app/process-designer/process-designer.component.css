@@ -24,3 +24,8 @@ app-process-item {
     position: absolute;
     width: 100%;
 }
+
+
+.connector:hover {
+  stroke: yellow;
+}

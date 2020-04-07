@@ -9,7 +9,7 @@ import { ProcessItemComponent, ProcessItem, Link, ConditionItem } from '../proce
   styleUrls: ['./process-designer.component.css']
 })
 export class ProcessDesignerComponent implements OnInit {
-  x(xx) { alert(xx); }
+  x(xx) { console.log(xx); }
   processItems: ProcessItem[] = [];
   selectedProcessItems: ProcessItem[] = [];
 
