@@ -20,6 +20,12 @@
   'selected': processItem.isSelected,
   'not-selected': !processItem.isSelected
 }">
+  <div class="create-link-button" (click)="createLink($event)" (mousedown)="mousedown($event)">
+    <i class="fas fa-long-arrow-alt-up"></i>
+  </div>
+  <div class="settings-button" (click)="openSettings($event)" (mousedown)="mousedown($event)">
+    <i class="fas fa-wrench"></i>
+  </div>
   <div class="condition-content">
     the Cond
   </div>

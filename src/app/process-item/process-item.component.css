@@ -106,3 +106,20 @@
 .condition-content{
   transform: rotate(-45deg);
 }
+
+.condition-box .create-link-button {
+  margin-left:7px;
+}
+
+.condition-box .settings-button {
+  margin-left: 45px;
+}
+
+.condition-box .settings-button i {
+  transform: rotate(-45deg);
+  margin-top: 3px;
+}
+
+.condition-box .create-link-button i{
+  transform: rotate(0deg);
+}
