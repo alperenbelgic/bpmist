@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ProcessDesignerComponent } from './process-designer/process-designer.component';
 import { ProcessItemComponent } from './process-item/process-item.component';
 import { ProcessItemSettingsComponent } from './process-item-settings/process-item-settings.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ProcessItemSettingsComponent } from './process-item-settings/process-it
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
