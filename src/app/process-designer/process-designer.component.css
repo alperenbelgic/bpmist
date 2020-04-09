@@ -8,7 +8,7 @@ app-process-item {
 
 .title {
     font: bold;
-    margin: 15px 0px 15px 0px;
+    margin: 15px 0px 15px 6px;
 }
 
 .box {
@@ -28,4 +28,9 @@ app-process-item {
 
 .connector:hover {
   stroke: yellow;
+}
+
+button{
+  margin-left: 6px;
+  margin-bottom: 6px;;
 }

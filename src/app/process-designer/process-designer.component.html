@@ -2,8 +2,8 @@
   <div class="title">
     Process Builder: <b>New head count request</b>
   </div>
-  <button (click)="addItem()">
-    Add a new step +
+  <button mat-raised-button color="primary" (click)="addItem()">
+    New Step
     <!-- state event state
         state decision state
         state event action state
@@ -11,8 +11,8 @@
         stoppropagation as directive
         select by drawing a box -->
   </button>
-  <button (click)="addCondition()">
-    Add a condition
+  <button mat-raised-button color="primary" (click)="addCondition()">
+    New Condition
   </button>
   <div #thebox id="the-box" class="box" (click)="clickBox()">
     <div class="inner-box">
