@@ -11,9 +11,6 @@
   <div>process-item works! {{processItem.text}} </div>
 </div>
 
-<div class="settings-modal" *ngIf="isSettingsVisible">
-  <app-process-item-settings [processItem]="processItem"></app-process-item-settings>
-</div>
 
 
 <div *ngIf="processItem.constructor.name== 'ConditionItem'" class="box condition-box noselect" [ngClass]="{

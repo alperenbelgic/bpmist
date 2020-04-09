@@ -34,21 +34,21 @@ export class ProcessItem {
   links: Link[] = [];
 
   get width(): number {
-    return this.component ?.getWidth() ?? 0;
+    return this.component?.getWidth() ?? 0;
   }
 
   get height(): number {
-    return this.component ?.getHeight() ?? 0;
+    return this.component?.getHeight() ?? 0;
   }
 
   get middleX(): number {
     // return this.leftPx;
-    return this.leftPx + ((this.component ?.getWidth() ?? 0) / 2);
+    return this.leftPx + ((this.component?.getWidth() ?? 0) / 2);
   }
 
   get middleY(): number {
     // return this.topPx;
-    return this.topPx + ((this.component ?.getHeight() ?? 0) / 2);
+    return this.topPx + ((this.component?.getHeight() ?? 0) / 2);
   }
 }
 
@@ -66,6 +66,7 @@ export class ProcessItemComponent implements OnInit {
 
   @Input() processItem: ProcessItem;
   @Output() linkCreated: EventEmitter<any> = new EventEmitter();
+  @Output() settingDialogueOpening = new EventEmitter<ProcessItem>();
   isSettingsVisible = false;
 
   constructor(private el: ElementRef) { }
@@ -83,8 +84,9 @@ export class ProcessItemComponent implements OnInit {
   }
 
   openSettings($event) {
+
     console.log('open settings');
-    this.isSettingsVisible = true;
+    this.settingDialogueOpening.emit(this.processItem);
     $event.stopPropagation();
   }
 

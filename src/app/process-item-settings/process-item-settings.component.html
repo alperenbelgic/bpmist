@@ -1,3 +1,13 @@
-<div class="form-wrapper">
+<div *ngIf="visible" class="settings-modal">
 
+  <div class="form-wrapper">
+    <div>
+
+        <i class="fas fa-times close-button"></i>
+
+    </div>
+    <div>
+      <p>{{processItem.text}}</p>
+    </div>
+  </div>
 </div>

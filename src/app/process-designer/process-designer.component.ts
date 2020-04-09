@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ProcessItemComponent, ProcessItem, Link, ConditionItem } from '../process-item/process-item.component';
+import { ProcessItemSettingsComponent } from '../process-item-settings/process-item-settings.component';
 
 
 
@@ -9,21 +10,9 @@ import { ProcessItemComponent, ProcessItem, Link, ConditionItem } from '../proce
   styleUrls: ['./process-designer.component.css']
 })
 export class ProcessDesignerComponent implements OnInit {
-  x(xx) { console.log(xx); }
+
   processItems: ProcessItem[] = [];
   selectedProcessItems: ProcessItem[] = [];
-
-  get links(): Link[] {
-    const links: Link[] = [];
-    this.processItems.forEach((processItem: ProcessItem) => {
-      processItem.links.forEach((link: Link) => {
-        if (link.startItem === processItem) {
-          links.push(link);
-        }
-      });
-    });
-    return links;
-  }
 
   lastXRecorded = 0;
   lastYRecorded = 0;
@@ -37,13 +26,30 @@ export class ProcessDesignerComponent implements OnInit {
   lineCreationEndX = 0;
   lineCreationEndY = 0;
 
+  @ViewChild('itemSettings') settingItemComponent: ProcessItemSettingsComponent;
+
   @ViewChild('thebox') drawingBox: any;
   startedLinkItem: ProcessItem = null;
 
+  get links(): Link[] {
+    const links: Link[] = [];
+    this.processItems.forEach((processItem: ProcessItem) => {
+      processItem.links.forEach((link: Link) => {
+        if (link.startItem === processItem) {
+          links.push(link);
+        }
+      });
+    });
+    return links;
+  }
+
   constructor(private cd: ChangeDetectorRef) { }
+
   ngOnInit(): void {
     this.initialize();
   }
+
+  log(parameter) { console.log(parameter); }
 
   swapSelection(processItem: ProcessItem) {
 
@@ -309,5 +315,9 @@ export class ProcessDesignerComponent implements OnInit {
     this.startedLinkItem = null;
 
     return true;
+  }
+
+  openSettingDialogue(processItem: ProcessItem) {
+    this.settingItemComponent.open(processItem);
   }
 }

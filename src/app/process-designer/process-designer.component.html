@@ -1,3 +1,7 @@
+<app-process-item-settings #itemSettings>
+</app-process-item-settings>
+
+
 <div class="designer-wrapper">
   <div class="title">
     Process Builder: <b>New head count request</b>
@@ -30,17 +34,19 @@
 
 
 
-          <line class="connector" *ngFor="let link of links" stroke-width="10" [attr.x1]="link.startItem.middleX"
-            (click)="x('sdf')" [attr.y1]="link.startItem.middleY" [attr.x2]="link.endItem.middleX"
-            [attr.y2]="link.endItem.middleY" stroke="tomato" marker-end="url(#arrow-end)"  (mouseenter)="x(link.startItem.middleX)" >
+        <line class="connector" *ngFor="let link of links" stroke-width="10" [attr.x1]="link.startItem.middleX"
+          (click)="log('log line')" [attr.y1]="link.startItem.middleY" [attr.x2]="link.endItem.middleX"
+          [attr.y2]="link.endItem.middleY" stroke="tomato" marker-end="url(#arrow-end)"
+          (mouseenter)="log(link.startItem.middleX)">
 
-          </line>
+        </line>
 
       </svg>
       <app-process-item *ngFor="let processItem of processItems" (linkCreated)="startLinkProcess($event)"
         [processItem]="processItem" [style.left.px]="processItem.leftPx" [style.top.px]="processItem.topPx"
         (mouseenter)="mouseover(true, processItem)" (mouseleave)="mouseover(false, processItem)"
-        (mousedown)="mousedown(processItem, $event)" (click)="clickItem($event, processItem)">
+        (mousedown)="mousedown(processItem, $event)" (click)="clickItem($event, processItem)"
+        (settingDialogueOpening)="openSettingDialogue($event)">
       </app-process-item>
     </div>
   </div>

@@ -8,6 +8,7 @@ import { ProcessItem } from '../process-item/process-item.component';
 })
 export class ProcessItemSettingsComponent implements OnInit {
 
+  public visible = false;
   @Input() processItem: ProcessItem;
 
   constructor() { }
@@ -15,4 +16,8 @@ export class ProcessItemSettingsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  open(processItem: ProcessItem) {
+    this.processItem = processItem;
+    this.visible = true;
+  }
 }
