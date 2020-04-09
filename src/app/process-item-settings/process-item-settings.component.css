@@ -22,14 +22,13 @@
 }
 
 .form-wrapper {
-    width: 400px;
-    min-height: 200px;
-    background-color: white;
-    margin-left: auto;
-    margin-right: auto;
+  width: 400px;
+  min-height: 200px;
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-
-.close-button{
-
+.close-button {
+  margin: 5px;
 }

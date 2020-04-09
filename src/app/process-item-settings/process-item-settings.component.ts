@@ -20,4 +20,9 @@ export class ProcessItemSettingsComponent implements OnInit {
     this.processItem = processItem;
     this.visible = true;
   }
+
+  close() {
+    this.processItem = null;
+    this.visible = false;
+  }
 }
