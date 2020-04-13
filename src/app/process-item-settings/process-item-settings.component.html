@@ -5,8 +5,51 @@
     <div fxLayout="row" fxLayoutAlign="end none">
       <i (click)="close()" class="fas fa-times close-button"></i>
     </div>
-    <div>
-      <p>{{processItem.text}}</p>
+    <div class="step-title">
+      Step: {{stepItem.text}}
+    </div>
+    <div [formGroup]="processItemSettingsForm">
+      <div>
+        <button mat-raised-button color="primary" (click)="addField()">
+          New Field
+        </button>
+      </div>
+      <div>
+
+        <div formArrayName="fields">
+
+          <div class="field-form" fxLayout="row" *ngFor="let field of fieldsFormArray.controls; let i=index"
+            [formGroupName]="i">
+
+            <div class="field-number" fxLayout="row" fxLayoutAlign="center center">
+              {{i+1}}
+            </div>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Field Name</mat-label>
+              <input formControlName="name" matInput #input>
+            </mat-form-field>
+
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>Field Type</mat-label>
+              <input formControlName="name" matInput #input>
+            </mat-form-field> -->
+
+            <mat-form-field appearance="outline">
+              <mat-label>Field Type</mat-label>
+              <mat-select formControlName="fieldType">
+                <mat-option [value]="null"></mat-option>
+                <mat-option *ngFor="let fieldType of fieldTypes" value="fieldType.code">
+                  {{fieldType.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+
+        </div>
+
+      </div>
     </div>
   </div>
 </div>

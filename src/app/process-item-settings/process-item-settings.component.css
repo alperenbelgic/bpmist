@@ -22,13 +22,37 @@
 }
 
 .form-wrapper {
-  width: 400px;
+  width: 600px;
   min-height: 200px;
   background-color: white;
   margin-left: auto;
   margin-right: auto;
+  padding: 10px;
 }
 
 .close-button {
   margin: 5px;
+}
+
+mat-form-field {
+  margin-right: 10px;
+}
+
+.field-form {
+  margin-top: 10px;
+  border-bottom: gray solid 1px;
+}
+
+.field-number {
+  width: 54px;
+  height: 54px;
+  font-weight: bold;
+  font-size: 24px;
+  color: #555;
+}
+
+.step-title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
 }

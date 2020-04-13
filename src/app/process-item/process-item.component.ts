@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ElementRef, EventEmitter, Output } from '@angular/core';
 import { ProcessDesignerComponent } from '../process-designer/process-designer.component';
+import { Field } from '../field-type.service';
 
 export class Link {
 
@@ -52,7 +53,17 @@ export class ProcessItem {
   }
 }
 
+export class StepItem extends ProcessItem {
+
+  fields: Field[] = [];
+
+  public constructor(init?: Partial<StepItem>) {
+    super(init);
+  }
+}
+
 export class ConditionItem extends ProcessItem {
+
   public constructor(init?: Partial<ConditionItem>) {
     super(init);
   }

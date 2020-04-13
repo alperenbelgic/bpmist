@@ -17,6 +17,11 @@ Click the video for a very quick tour.
 
 
 ## TODO:
+- When a step is created, textbox should be shown for naming it in the box
+- When a box (step, condition, etc) is created, last item connects to the new one automatically
+- Order fields by drag and drop
+- All fields listed on the left to the step fields
+- Showing preview form option side by side on setting(field) page
 - Condition related
   - complete shapes
   - definition button
@@ -38,3 +43,4 @@ Click the video for a very quick tour.
 
 
 ~~box buttons shown on hover~~
+~~FormArray applied for fields~~

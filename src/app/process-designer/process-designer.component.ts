@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { ProcessItemComponent, ProcessItem, Link, ConditionItem } from '../process-item/process-item.component';
+import { ProcessItemComponent, ProcessItem, Link, ConditionItem, StepItem } from '../process-item/process-item.component';
 import { ProcessItemSettingsComponent } from '../process-item-settings/process-item-settings.component';
 
 
@@ -102,7 +102,7 @@ export class ProcessDesignerComponent implements OnInit {
   initialize() {
     this.cd.detach();
 
-    this.processItems.push(new ProcessItem({ text: '1', leftPx: 30, topPx: 100 }));
+    this.processItems.push(new StepItem({ text: 'Request Entry', leftPx: 30, topPx: 100 }));
 
     this.cd.detectChanges();
     this.cd.reattach();
@@ -113,7 +113,7 @@ export class ProcessDesignerComponent implements OnInit {
 
     this.arrangeHorizontalDistances();
     const lastItem = this.processItems.pop();
-    const newItem = new ProcessItem({ text: 'new one', topPx: lastItem.topPx, leftPx: lastItem.leftPx + 1 });
+    const newItem = new StepItem({ text: 'new one', topPx: lastItem.topPx, leftPx: lastItem.leftPx + 1 });
     this.processItems.push(lastItem);
     this.processItems.push(newItem);
     this.arrangeHorizontalDistances();
@@ -317,7 +317,7 @@ export class ProcessDesignerComponent implements OnInit {
     return true;
   }
 
-  openSettingDialogue(processItem: ProcessItem) {
-    this.settingItemComponent.open(processItem);
+  openSettingDialogue(stepItem: StepItem) {
+    this.settingItemComponent.open(stepItem);
   }
 }
