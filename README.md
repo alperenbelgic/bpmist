@@ -26,6 +26,9 @@ Click the video for a very quick tour.
   - complete shapes
   - definition button
 - State definition form
+- Continue in another process 
+  - For this kind of case: you split a flow into several cases and they continue with different flows
+  - In order to keep them simple, each of them can be defined in seperate processes
 - Connectors
   - leaving from state: defines action
   - leaving from condition: definies condition case
@@ -44,3 +47,10 @@ Click the video for a very quick tour.
 
 ~~box buttons shown on hover~~
 ~~FormArray applied for fields~~
+
+
+- kolay 
+- kalite 
+- surecleri tanimla, sistematize et
+- takip et
+- calisanlar islerini takip edebilsin.

@@ -60,6 +60,15 @@ export class ProcessItemSettingsComponent implements OnInit {
   }
 
   async addField() {
-    this.fieldsFormArray.push(this.fb.group({ name: '', fieldType: null }));
+    this.fieldsFormArray.push(this.fb.group({
+      name: '',
+      fieldType: null,
+      visualState: { settingsVisible: false },
+      isRequired: false
+    }));
+  }
+
+  swapSettingVisible(fieldGroupValue: any) {
+    fieldGroupValue.visualState.settingsVisible = !fieldGroupValue.visualState.settingsVisible;
   }
 }

@@ -6,8 +6,9 @@ export class FieldType {
 }
 
 export class Field {
-  name: string;
+  name: string = '';
   fieldType: FieldType;
+  settingsVisible = false;
 }
 
 @Injectable({
@@ -21,6 +22,10 @@ export class FieldTypeService {
     return [
       { name: 'Text', code: 'text' },
       { name: 'Numeric', code: 'numeric' },
+      { name: 'Date', code: 'date' },
+      { name: 'Checkbox', code: 'checkbox' },
+      { name: 'File', code: 'file' },
+
     ];
   }
 }

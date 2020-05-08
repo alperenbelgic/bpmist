@@ -56,3 +56,11 @@ mat-form-field {
   font-size: 20px;
   margin-bottom: 10px;
 }
+
+.setting-icon {
+  font-size: 36px;
+}
+
+.setting-wrapper{
+  padding-top: 12px;
+}

@@ -18,32 +18,46 @@
 
         <div formArrayName="fields">
 
-          <div class="field-form" fxLayout="row" *ngFor="let field of fieldsFormArray.controls; let i=index"
-            [formGroupName]="i">
+          <div class="field-form" fxLayout="column"
+            *ngFor="let fieldGroupControl of fieldsFormArray.controls; let i=index" [formGroupName]="i">
 
-            <div class="field-number" fxLayout="row" fxLayoutAlign="center center">
-              {{i+1}}
+            <div fxLayout="row">
+              <div class="field-number" fxLayout="row" fxLayoutAlign="center center">
+                {{i+1}}
+              </div>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Field Name</mat-label>
+                <input formControlName="name" matInput #input>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Field Type</mat-label>
+                <mat-select formControlName="fieldType">
+                  <mat-option [value]="null"></mat-option>
+                  <mat-option *ngFor="let fieldType of fieldTypes" [value]="fieldType.code">
+                    {{fieldType.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <section class="mat-typography">
+                <mat-checkbox formControlName="isRequired">Required field?
+                </mat-checkbox>
+              </section>
+              <div class="setting-wrapper" (click)="swapSettingVisible(fieldGroupControl.value)">
+                <i class="setting-icon fas fa-cog"></i>
+              </div>
             </div>
+            <div *ngIf="fieldGroupControl.value.visualState.settingsVisible">
 
-            <mat-form-field appearance="outline">
-              <mat-label>Field Name</mat-label>
-              <input formControlName="name" matInput #input>
-            </mat-form-field>
-
-            <!-- <mat-form-field appearance="outline">
-              <mat-label>Field Type</mat-label>
-              <input formControlName="name" matInput #input>
-            </mat-form-field> -->
-
-            <mat-form-field appearance="outline">
-              <mat-label>Field Type</mat-label>
-              <mat-select formControlName="fieldType">
-                <mat-option [value]="null"></mat-option>
-                <mat-option *ngFor="let fieldType of fieldTypes" value="fieldType.code">
-                  {{fieldType.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+              <div *ngIf="fieldGroupControl.value.fieldType == 'numeric'">
+                numeric settings, min, max, decimal?
+              </div>
+              <div *ngIf="fieldGroupControl.value.fieldType == 'text'">
+                text settings
+              </div>
+            </div>
 
           </div>
 
