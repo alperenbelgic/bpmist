@@ -11,6 +11,8 @@ import { MaterialModule } from './material-module';
 import { ProcessDesignerComponent } from './process-designer/process-designer.component';
 import { ProcessItemComponent } from './process-item/process-item.component';
 import { ProcessItemSettingsComponent } from './process-item-settings/process-item-settings.component';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyMaterialModule } from '@ngx-formly/material';
 
 
 
@@ -28,6 +30,8 @@ import { ProcessItemSettingsComponent } from './process-item-settings/process-it
     BrowserAnimationsModule,
     MaterialModule,
     FlexLayoutModule,
+    FormlyModule.forRoot(),
+    FormlyMaterialModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
