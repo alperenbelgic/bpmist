@@ -6,7 +6,7 @@ export class FieldType {
 }
 
 export class Field {
-  name: string = '';
+  name = '';
   fieldType: FieldType;
   settingsVisible = false;
 }

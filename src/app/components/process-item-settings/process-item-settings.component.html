@@ -1,0 +1,179 @@
+<div *ngIf="visible" class="settings-modal">
+
+
+
+
+  <div class="form-wrapper">
+
+    <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <formly-form [form]="form" [fields]="fields2" [model]="model2"></formly-form>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form> -->
+
+    <div fxLayout="row" fxLayoutAlign="end none">
+      <i (click)="close()" class="fas fa-times close-button clickable"></i>
+    </div>
+    <div class="step-definition-title">
+      Step definitions <i class="fas fa-question-circle clickable"></i>
+    </div>
+    <div class="step-title">
+      for {{stepItem.text}}
+    </div>
+
+    <div class="section clickable">
+
+      <button mat-button #settingNotVisible color="primary">
+        <div class="section-name">
+          <i class="fas fa-angle-double-down"></i> Responsible
+        </div>
+      </button>
+
+    </div>
+
+    <div class="section clickable" (click)="swapStepFormDesignerVisible()">
+
+      <button mat-button #settingNotVisible color="primary">
+        <div class="section-name">
+          <i *ngIf="isStepFormDesignerVisible" class="fas fa-angle-double-up"></i> <i *ngIf="!isStepFormDesignerVisible"
+            class="fas fa-angle-double-down"></i> Form designer
+        </div>
+      </button>
+
+    </div>
+    <div [formGroup]="processItemSettingsForm" *ngIf="isStepFormDesignerVisible" class="form-designer-wrapper">
+
+      <div>
+
+        <div class="form-designer-empty-content" *ngIf="fieldsFormArray.length == 0">
+          This step doesn't contain any field. <button mat-raised-button color="accent" (click)="addField()">
+            <i class="fas fa-plus"></i> Add a new field?
+          </button>
+        </div>
+
+        <div formArrayName="fields">
+
+          <div class="field-form" fxLayout="column"
+            *ngFor="let fieldGroupControl of fieldsFormArray.controls; let i=index" [formGroupName]="i">
+
+            <div fxLayout="row">
+
+              <div class="field-number" fxLayout="row" fxLayoutAlign="center center">
+                {{i+1}}
+              </div>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Field Name</mat-label>
+                <input formControlName="name" matInput #input>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Field Type</mat-label>
+                <mat-select formControlName="fieldType">
+                  <mat-option [value]="null"></mat-option>
+                  <mat-option *ngFor="let fieldType of fieldTypes" [value]="fieldType.code">
+                    {{fieldType.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <div class="required-wrapper">
+                <mat-checkbox color="primary" formControlName="isRequired">Required?
+                </mat-checkbox>
+              </div>
+
+            </div>
+
+            <div fxLayout="row">
+
+              <div class="setting-wrapper clickable" (click)="swapSettingVisible(fieldGroupControl.value)">
+
+                <div *ngIf="fieldGroupControl.value.visualState.settingsVisible; else settingNotVisible">
+
+                  <button mat-button #settingNotVisible color="primary">
+                    <i class="fas fa-angle-double-up"></i> Hide settings
+                  </button>
+
+                </div>
+                <ng-template #settingNotVisible>
+
+                  <button mat-button #settingNotVisible color="primary">
+                    <i class="fas fa-angle-double-down"></i>
+                    More field settings
+                  </button>
+
+                </ng-template>
+              </div>
+            </div>
+
+            <div *ngIf="fieldGroupControl.value.visualState.settingsVisible" class="detailed-settings" >
+
+              <div *ngIf="fieldGroupControl.value.fieldType == 'numeric'">
+
+                <!-- numeric settings, min, max, decimal? -->
+                <div fxLayout="row" class="detailed-settings-item">
+                  <mat-checkbox class="detailed-settings-item-checkbox" color="primary"
+                    formControlName="hasMinValueRestriction">Set Minimum Value?
+                  </mat-checkbox>
+
+                  <mat-form-field appearance="outline" *ngIf="fieldGroupControl.value.hasMinValueRestriction">
+                    <mat-label>Minimum value</mat-label>
+                    <input formControlName="minValue" matInput type="number">
+                  </mat-form-field>
+                </div>
+
+                <div fxLayout="row" class="detailed-settings-item">
+                  <mat-checkbox class="detailed-settings-item-checkbox" color="primary"
+                    formControlName="hasMaxValueRestriction">Set Maximum Value?
+                  </mat-checkbox>
+
+                  <mat-form-field appearance="outline" *ngIf="fieldGroupControl.value.hasMaxValueRestriction">
+                    <mat-label>Maximum value</mat-label>
+                    <input formControlName="maxValue" matInput type="number">
+                  </mat-form-field>
+                </div>
+
+              </div>
+              <div *ngIf="fieldGroupControl.value.fieldType == 'text'">
+                text settings: multiline, max character, min character
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div *ngIf="fieldsFormArray.length > 0" class="new-field-wrapper">
+        <button mat-raised-button color="accent" (click)="addField()">
+          <i class="fas fa-plus"></i> New Field
+        </button>
+      </div>
+
+      <div *ngIf="fieldsFormArray.length > 0" class="save-form-designer-wrapper">
+        <button mat-raised-button color="primary">
+          Save form definition
+        </button>
+      </div>
+
+
+    </div>
+
+    <div class="section clickable">
+      <button mat-button #settingNotVisible color="primary">
+        <div class="section-name">
+          <i class="fas fa-angle-double-down"></i> Actions
+        </div>
+      </button>
+    </div>
+
+    <div class="section clickable">
+      <button mat-button #settingNotVisible color="primary">
+        <div class="section-name">
+          <i class="fas fa-angle-double-down"></i> Description & help content
+        </div>
+      </button>
+    </div>
+<!-- notifications -->
+  </div>
+</div>

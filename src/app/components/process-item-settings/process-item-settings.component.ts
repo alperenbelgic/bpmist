@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ProcessItem, StepItem } from '../process-item/process-item.component';
-import { FieldTypeService, FieldType, Field } from '../field-type.service';
+import { FieldTypeService, FieldType, Field } from '../../services/field-type.service';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
   selector: 'app-process-item-settings',
@@ -9,6 +10,66 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
   styleUrls: ['./process-item-settings.component.css']
 })
 export class ProcessItemSettingsComponent implements OnInit {
+
+  form = new FormGroup({});
+  model2 = { email: 'email@gmail.com', Checkbox: false };
+  fields2: FormlyFieldConfig[] = [
+    {
+      key: 'email',
+      type: 'input',
+      templateOptions: {
+        label: 'Email address',
+        placeholder: 'Enter email',
+        required: true,
+      }
+    },
+    {
+      key: 'email2',
+      type: 'input',
+      templateOptions: {
+        label: 'Email address',
+        placeholder: 'Enter email',
+        required: true,
+      }
+    },
+    {
+      key: 'Checkbox',
+      type: 'checkbox',
+      templateOptions: {
+        label: 'the label',
+        description: 'the description',
+        // pattern: 'true',
+        required: true,
+      },
+      validation: {
+        messages: {
+          pattern: 'Please accept the terms',
+        },
+      },
+    },
+    {
+      key: 'email3',
+      type: 'input',
+      templateOptions: {
+        label: 'Email address',
+        placeholder: 'Enter email',
+        required: true,
+      }
+    },
+    {
+      key: 'email4',
+      type: 'input',
+      templateOptions: {
+        label: 'Email address',
+        placeholder: 'Enter email',
+        required: true,
+      }
+    },
+  ];
+
+  onSubmit() {
+    console.log(this.model2);
+  }
 
   processItemSettingsForm: FormGroup;
 
@@ -18,6 +79,8 @@ export class ProcessItemSettingsComponent implements OnInit {
 
   public visible = false;
   _stepItem: StepItem;
+
+  isStepFormDesignerVisible = false;
 
   get stepItem(): StepItem {
     return this._stepItem;
@@ -64,11 +127,19 @@ export class ProcessItemSettingsComponent implements OnInit {
       name: '',
       fieldType: null,
       visualState: { settingsVisible: false },
-      isRequired: false
+      isRequired: false,
+      hasMinValueRestriction: false,
+      minValue: null,
+      hasMaxValueRestriction: false,
+      maxValue: null
     }));
   }
 
   swapSettingVisible(fieldGroupValue: any) {
     fieldGroupValue.visualState.settingsVisible = !fieldGroupValue.visualState.settingsVisible;
+  }
+
+  swapStepFormDesignerVisible() {
+    this.isStepFormDesignerVisible = !this.isStepFormDesignerVisible;
   }
 }

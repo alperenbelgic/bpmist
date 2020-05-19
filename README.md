@@ -17,18 +17,22 @@ Click the video for a very quick tour.
 
 
 ## TODO:
-- When a step is created, textbox should be shown for naming it in the box
+- When a step is created, textbox should be shown for naming it in the box.
+  - prepare ProcessItem for this, to keep the proper state
 - When a box (step, condition, etc) is created, last item connects to the new one automatically
+  - if there is only one end of the flow design
 - Order fields by drag and drop
 - All fields listed on the left to the step fields
+  - this will be different. see figma design.
 - Showing preview form option side by side on setting(field) page
 - Condition related
-  - complete shapes
-  - definition button
 - State definition form
 - Continue in another process 
   - For this kind of case: you split a flow into several cases and they continue with different flows
   - In order to keep them simple, each of them can be defined in seperate processes
+  - subflow , ustflow'a dahil mi yoksa procedure gibi, ayri ama result donmesini bekliyor gibi mi?
+    - bunun cevabi, subflow'un nasil gorundugunu belirleyebilir, ust tarafin icinde gibi mi bagimsiz gibei mi gorunecek
+[burda kaldim]
 - Connectors
   - leaving from state: defines action
   - leaving from condition: definies condition case
@@ -43,7 +47,8 @@ Click the video for a very quick tour.
     - you can trigger remote procedures
     - returning values in body will be assigned in flow instance data
 - versioning flow definitions
-
+- validation on definitions
+  - any unconnected steps
 
 ~~box buttons shown on hover~~
 ~~FormArray applied for fields~~

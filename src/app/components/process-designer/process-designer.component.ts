@@ -1,7 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ViewChildren, QueryList, Injectable } from '@angular/core';
 import { ProcessItemComponent, ProcessItem, Link, ConditionItem, StepItem } from '../process-item/process-item.component';
 import { ProcessItemSettingsComponent } from '../process-item-settings/process-item-settings.component';
 
+
+// TODO: 0convert to service later
+@Injectable({
+  providedIn: 'root'
+})
+export class RandomIdGenerator {
+  generate(): string {
+    return Math.random().toString(36).substr(2, 9);
+  }
+}
 
 
 @Component({
@@ -14,17 +24,13 @@ export class ProcessDesignerComponent implements OnInit {
   processItems: ProcessItem[] = [];
   selectedProcessItems: ProcessItem[] = [];
 
-  lastXRecorded = 0;
-  lastYRecorded = 0;
-  xShift = 0;
-  yShift = 0;
-  clickedForDragDrop = false;
-
   isLinkBeingCreated = false;
   lineCreationStartX = 0;
   lineCreationStartY = 0;
   lineCreationEndX = 0;
   lineCreationEndY = 0;
+
+  // @ViewChildren(ProcessItemComponent) processItemComponents: QueryList<ProcessItemComponent>;
 
   @ViewChild('itemSettings') settingItemComponent: ProcessItemSettingsComponent;
 
@@ -43,25 +49,15 @@ export class ProcessDesignerComponent implements OnInit {
     return links;
   }
 
-  constructor(private cd: ChangeDetectorRef) { }
+  constructor(
+    private cd: ChangeDetectorRef,
+    private randomIdGenerator: RandomIdGenerator) { }
 
   ngOnInit(): void {
     this.initialize();
   }
 
   log(parameter) { console.log(parameter); }
-
-  swapSelection(processItem: ProcessItem) {
-
-    processItem.isSelected = !processItem.isSelected;
-
-    if (!processItem.isSelected) {
-      this.selectedProcessItems = this.selectedProcessItems.filter((item) => item !== processItem);
-    }
-    else {
-      this.selectedProcessItems.push(processItem);
-    }
-  }
 
   setSelection(processItem: ProcessItem, selected: boolean) {
     if (processItem.isSelected === selected) {
@@ -72,16 +68,9 @@ export class ProcessDesignerComponent implements OnInit {
 
     if (!processItem.isSelected) {
       this.selectedProcessItems = this.selectedProcessItems.filter((item) => item !== processItem);
-    }
-    else {
+    } else {
       this.selectedProcessItems.push(processItem);
     }
-  }
-
-  clickItem($event, processItem: ProcessItem) {
-    console.log('click');
-
-    $event.stopPropagation();
   }
 
   clickBox() {
@@ -102,7 +91,7 @@ export class ProcessDesignerComponent implements OnInit {
   initialize() {
     this.cd.detach();
 
-    this.processItems.push(new StepItem({ text: 'Request Entry', leftPx: 30, topPx: 100 }));
+    this.processItems.push(new StepItem(this.randomIdGenerator.generate(), false, 'Request Entry', 30 + 80, 100));
 
     this.cd.detectChanges();
     this.cd.reattach();
@@ -113,7 +102,7 @@ export class ProcessDesignerComponent implements OnInit {
 
     this.arrangeHorizontalDistances();
     const lastItem = this.processItems.pop();
-    const newItem = new StepItem({ text: 'new one', topPx: lastItem.topPx, leftPx: lastItem.leftPx + 1 });
+    const newItem = new StepItem(this.randomIdGenerator.generate(), false, 'new one', lastItem.topPx, lastItem.leftPx + 1);
     this.processItems.push(lastItem);
     this.processItems.push(newItem);
     this.arrangeHorizontalDistances();
@@ -127,7 +116,7 @@ export class ProcessDesignerComponent implements OnInit {
 
     this.arrangeHorizontalDistances();
     const lastItem = this.processItems.pop();
-    const newItem = new ConditionItem({ text: 'new one', topPx: lastItem.topPx, leftPx: lastItem.leftPx + 1 });
+    const newItem = new ConditionItem(this.randomIdGenerator.generate(), false, 'new cond', lastItem.topPx, lastItem.leftPx + 1);
     this.processItems.push(lastItem);
     this.processItems.push(newItem);
     this.arrangeHorizontalDistances();
@@ -136,62 +125,71 @@ export class ProcessDesignerComponent implements OnInit {
     this.cd.reattach();
   }
 
-  mouseover(value: boolean, processItem: ProcessItem) {
-    processItem.isMouseOn = value;
-  }
+  onProcessItemMouseDown(processItem: ProcessItem, $event: any) {
 
-  mousedown(processItem: ProcessItem, $event: any) {
+    const isClickForCompletingLink: boolean = this.handleEndLinkProcess(processItem);
 
-    const endLinkHandled: boolean = this.handleEndLinkProcess(processItem);
-
-    if (endLinkHandled) {
+    if (isClickForCompletingLink) {
       return;
     }
 
     this.cd.detach();
-    $event.stopPropagation();
 
-    if ($event.which !== 1) {
+    if (!this.isLeftClick($event)) {
       return;
     }
 
-    this.clickedForDragDrop = false;
+    // we assume that it is clicked to make the box selected, not to drag and drop
+    // we will use the value when mouse up event is caught
+    let clickedForDragDrop = false;
 
     setTimeout(() => {
-      this.clickedForDragDrop = true;
+      // if it is not released(mouse up) within 100ms, (once it is released)-> we will consider the user's intention as drag and drop.
+      clickedForDragDrop = true;
     }, 100);
 
-    processItem.isSelectedBeforeClick = processItem.isSelected;
+    // we will revert this value and apply as selection if the click is for selection of the process item
+    const isSelectedBeforeClick = processItem.isSelected;
 
+    // we are making this selected
+    // if the click is for drag & drop this is needed,
+    // otherwise(selection) we will use the reverted value of isSelectedBeforeClick)
     this.setSelection(processItem, true);
 
+    // we keep each item's initial position
+    // we will use it if drag & drop operation is triggered
     this.selectedProcessItems.forEach((i) => {
       i.leftPxBeforeMove = i.leftPx;
       i.topPxBeforeMove = i.topPx;
     });
 
-    this.lastXRecorded = $event.clientX;
-    this.lastYRecorded = $event.clientY;
-
-    this.cd.detectChanges();
+    // current mouse position (last position when drag & drop starts)
+    let lastXRecorded = $event.clientX;
+    let lastYRecorded = $event.clientY;
 
     document.onmouseup = () => {
       console.log('mouse up');
 
-      if (!this.clickedForDragDrop ||
+      // user clicked for selection change
+      if (!clickedForDragDrop ||
         (processItem.leftPx === processItem.leftPxBeforeMove && processItem.topPx === processItem.topPxBeforeMove)
       ) {
 
-        this.setSelection(processItem, !processItem.isSelectedBeforeClick);
+        this.setSelection(processItem, !isSelectedBeforeClick);
 
         this.selectedProcessItems.forEach((i) => {
+          // if mouse position shifted during click (within 100ms between mousedown and mouseup),
+          // we recover the position of each selected shape.
           i.leftPx = i.leftPxBeforeMove;
           i.topPx = i.topPxBeforeMove;
         });
       }
       else {
+        // user clicked for drag & drop
+
         this.cd.detectChanges();
 
+        // place each item in a vertical position that is k * 80
         this.selectedProcessItems.forEach((i) => {
           i.topPx = Math.round(i.middleY / 80) * 80 - i.height / 2;
         });
@@ -199,9 +197,13 @@ export class ProcessDesignerComponent implements OnInit {
         this.arrangeHorizontalDistances();
 
         if (this.selectedProcessItems.length === 1) {
-          this.setSelection(processItem, false);
+          // if there was one item drag&dropped, the intention is not to change selection
+          this.setSelection(processItem, isSelectedBeforeClick);
         }
         else if (this.selectedProcessItems.length > 1) {
+          // if there were multiple item, it would be good to make sure that the one we drag&drop is also in selected state,
+          // even though it wasn't selected initially
+          // we can consider that user thinks that it is in the same group with other selected ones.
           this.setSelection(processItem, true);
         }
       }
@@ -215,22 +217,36 @@ export class ProcessDesignerComponent implements OnInit {
 
     document.onmousemove = ($onMouseMoveEvent: any) => {
 
-      this.xShift = this.lastXRecorded - $onMouseMoveEvent.clientX;
-      this.yShift = this.lastYRecorded - $onMouseMoveEvent.clientY;
+      // shift: difference between last recoded position and current mouse position
+      const xShift = lastXRecorded - $onMouseMoveEvent.clientX;
+      const yShift = lastYRecorded - $onMouseMoveEvent.clientY;
 
-      this.lastXRecorded = $onMouseMoveEvent.clientX;
-      this.lastYRecorded = $onMouseMoveEvent.clientY;
+      // current mouse position will be used as last position in the next event trigger
+      lastXRecorded = $onMouseMoveEvent.clientX;
+      lastYRecorded = $onMouseMoveEvent.clientY;
 
+      // apply x and y shifts to each selected element
       this.selectedProcessItems.forEach((i) => {
-        i.leftPx = i.leftPx - this.xShift;
-        i.topPx = i.topPx - this.yShift;
+        i.leftPx = i.leftPx - xShift;
+        i.topPx = i.topPx - yShift;
       });
 
       this.cd.detectChanges();
     };
+
+    this.cd.detectChanges();
+  }
+
+  private isLeftClick($event: any) {
+    return $event.which === 1;
   }
 
   arrangeHorizontalDistances() {
+
+    if (this.processItems.length < 2) {
+      return;
+    }
+
     const sortedProcessItems = this.processItems.sort((a, b) => a.leftPx - b.leftPx);
     const buffer = 70;
     let i: number;
@@ -248,12 +264,12 @@ export class ProcessDesignerComponent implements OnInit {
 
   startLinkProcess($event: any) {
 
-    const processItem = $event.processItem;
+    const processItem = $event.processItem as ProcessItem;
     const $clickedEvent = $event.event;
 
-    const endLinkHandled: boolean = this.handleEndLinkProcess(processItem);
+    const isClickForCompletingLink: boolean = this.handleEndLinkProcess(processItem);
 
-    if (endLinkHandled) {
+    if (isClickForCompletingLink) {
       return;
     }
 
@@ -274,10 +290,8 @@ export class ProcessDesignerComponent implements OnInit {
 
       // return;
 
-      let shiftX = previousX - ev.clientX;
-      let shiftY = previousY - ev.clientY;
-
-      console.log('shiftX', shiftX);
+      const shiftX = previousX - ev.clientX;
+      const shiftY = previousY - ev.clientY;
 
       previousX = ev.clientX;
       previousY = ev.clientY;
@@ -295,7 +309,6 @@ export class ProcessDesignerComponent implements OnInit {
 
     if (this.startedLinkItem == null) {
       // unexpected case
-      this.startedLinkItem = processItem;
       return true;
     }
 

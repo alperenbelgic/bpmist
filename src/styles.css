@@ -1,4 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* formly mat checkbox's border when hovered is pink for indigo pink material theme, it should be blue like others */
+.mat-form-field-appearance-outline.mat-focused.mat-accent
+  .mat-form-field-outline-thick {
+  color: #3f51b5;
+}
+
+/* formly mat checkbox in mat form field normally takes more space verically, this is an effort to align it with other types of controls */
+.mat-checkbox-layout .mat-checkbox-label {
+  line-height: 14px;
+}
+.mat-checkbox-layout {
+  margin-top: -4px;
+}

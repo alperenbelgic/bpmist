@@ -1,6 +1,13 @@
 import { Component, OnInit, Input, ElementRef, EventEmitter, Output } from '@angular/core';
-import { ProcessDesignerComponent } from '../process-designer/process-designer.component';
-import { Field } from '../field-type.service';
+// import { ProcessDesignerComponent } from '../process-designer/process-designer.component';
+import { Field } from '../../services/field-type.service';
+
+export class Process {
+  processId: string;
+
+  processItems: ProcessItem[] = [];
+  links: Link[] = [];
+}
 
 export class Link {
 
@@ -13,26 +20,25 @@ export class Link {
   endItem: ProcessItem;
 }
 
-
-
 export class ProcessItem {
 
-  public constructor(init?: Partial<ProcessItem>) {
-    Object.assign(this, init);
+  public constructor(
+    public id: string,
+    protected retrievedFromServer: boolean,
+    public topPx: number = 80,
+    public leftPx: number = 80,
+    public text: string = ''
+  ) {
+
   }
 
-  isMouseOn = false;
-  text = '';
-  leftPx = 80;
-  topPx = 80;
   leftPxBeforeMove = 0;
   topPxBeforeMove = 0;
 
   isSelected = false;
-  isSelectedBeforeClick = false;
   component: ProcessItemComponent;
 
-  links: Link[] = [];
+  links: Link[] = []; // persistent
 
   get width(): number {
     return this.component?.getWidth() ?? 0;
@@ -43,12 +49,10 @@ export class ProcessItem {
   }
 
   get middleX(): number {
-    // return this.leftPx;
     return this.leftPx + ((this.component?.getWidth() ?? 0) / 2);
   }
 
   get middleY(): number {
-    // return this.topPx;
     return this.topPx + ((this.component?.getHeight() ?? 0) / 2);
   }
 }
@@ -57,15 +61,25 @@ export class StepItem extends ProcessItem {
 
   fields: Field[] = [];
 
-  public constructor(init?: Partial<StepItem>) {
-    super(init);
+  public constructor(
+    id: string,
+    retrievedFromServer: boolean = false,
+    stepName: string,
+    topPx: number,
+    leftPx: number) {
+    super(id, retrievedFromServer, topPx, leftPx, stepName);
   }
 }
 
 export class ConditionItem extends ProcessItem {
 
-  public constructor(init?: Partial<ConditionItem>) {
-    super(init);
+  public constructor(
+    id: string,
+    retrievedFromServer: boolean = false,
+    conditionName: string,
+    topPx: number,
+    leftPx: number) {
+    super(id, retrievedFromServer, topPx, leftPx, conditionName);
   }
 }
 @Component({
@@ -80,7 +94,8 @@ export class ProcessItemComponent implements OnInit {
   @Output() settingDialogueOpening = new EventEmitter<ProcessItem>();
   isSettingsVisible = false;
 
-  constructor(private el: ElementRef) { }
+  constructor(
+    private el: ElementRef) { }
 
   ngOnInit(): void {
     this.processItem.component = this;
@@ -98,20 +113,13 @@ export class ProcessItemComponent implements OnInit {
 
     console.log('open settings');
     this.settingDialogueOpening.emit(this.processItem);
-    $event.stopPropagation();
   }
 
   createLink($event) {
-    $event.stopPropagation();
-
     this.linkCreated.emit({
       processItem: this.processItem,
       event: $event
     });
 
-  }
-
-  mousedown($event: any) {
-    $event.stopPropagation();
   }
 }

@@ -2,13 +2,13 @@
     'selected': processItem.isSelected,
     'not-selected': !processItem.isSelected
   }">
-  <div class="create-link-button box-button" (click)="createLink($event)" (mousedown)="mousedown($event)">
+  <div class="create-link-button box-button" appClickStopPropagation (click)="createLink($event)">
     <i class="fas fa-long-arrow-alt-up"></i>
   </div>
-  <div class="settings-button box-button" (click)="openSettings($event)" (mousedown)="mousedown($event)">
+  <div class="settings-button box-button" appClickStopPropagation (click)="openSettings($event)">
     <i class="fas fa-wrench"></i>
   </div>
-  <div>{{processItem.text}} </div>
+  <div>{{processItem.text}} - {{processItem.id}} </div>
 </div>
 
 
@@ -17,13 +17,13 @@
   'selected': processItem.isSelected,
   'not-selected': !processItem.isSelected
 }">
-  <div class="create-link-button box-button" (click)="createLink($event)" (mousedown)="mousedown($event)">
+  <div class="create-link-button box-button" appClickStopPropagation (click)="createLink($event)">
     <i class="fas fa-long-arrow-alt-up"></i>
   </div>
-  <div class="settings-button box-button" (click)="openSettings($event)" (mousedown)="mousedown($event)">
+  <div class="settings-button box-button" appClickStopPropagation (click)="openSettings($event)">
     <i class="fas fa-wrench"></i>
   </div>
   <div class="condition-content">
-    the Cond
+    {{processItem.text}} - {{processItem.id}}
   </div>
 </div>
