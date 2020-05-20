@@ -6,9 +6,24 @@ export class FieldType {
 }
 
 export class Field {
+
+  constructor(private _id: string) { }
+
+  get id(): string {
+    return this._id;
+}
   name = '';
-  fieldType: FieldType;
-  settingsVisible = false;
+  fieldType: FieldType = null;
+  isRequired = false;
+
+  numericFieldSettings = {
+    hasMinValueRestriction: false,
+    minValue: null as number,
+    hasMaxValueRestriction: false,
+    maxValue: null as number
+  };
+
+  visualState = { settingsVisible: false };
 }
 
 @Injectable({

@@ -1,18 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ViewChildren, QueryList, Injectable } from '@angular/core';
 import { ProcessItemComponent, ProcessItem, Link, ConditionItem, StepItem } from '../process-item/process-item.component';
 import { ProcessItemSettingsComponent } from '../process-item-settings/process-item-settings.component';
-
-
-// TODO: 0convert to service later
-@Injectable({
-  providedIn: 'root'
-})
-export class RandomIdGenerator {
-  generate(): string {
-    return Math.random().toString(36).substr(2, 9);
-  }
-}
-
+import { RandomIdGenerator } from 'src/app/services/general.service';
 
 @Component({
   selector: 'app-process-designer',

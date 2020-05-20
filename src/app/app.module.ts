@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material-module';
@@ -34,6 +34,7 @@ const appearance: MatFormFieldDefaultOptions = {
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,

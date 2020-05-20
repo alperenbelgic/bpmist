@@ -23,7 +23,7 @@
 
 .form-wrapper {
   margin-top: min(100px, 10vh);
-  width: 780px;
+  width: 500px;
   min-height: 200px;
   background-color: white;
   margin-left: auto;
@@ -129,4 +129,8 @@ mat-checkbox {
 
 .detailed-settings-item-checkbox {
   margin-top: 22px;
+}
+
+.process-item-selector {
+  display: block;
 }
