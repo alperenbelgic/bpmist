@@ -4,39 +4,150 @@
 
 
   <div class="form-wrapper">
-
+    <div fxLayout="row" fxLayoutAlign="end none">
+      <i (click)="close()" class="fas fa-times close-button clickable"></i>
+    </div>
     <div>
 
-      <mat-form-field  class="process-item-selector " appearance="outline">
+      <mat-form-field class="process-item-selector " appearance="outline">
         <mat-label></mat-label>
-        <mat-select [(value)]="processItem">
+        <mat-select [(value)]="processItem" (selectionChange)="onProcessItenmChange()">
           <mat-option *ngFor="let processItem of processItems" [value]="processItem">
-            {{processItem.text}} - {{processItem.id}}
+            <span *ngIf="processItem.constructor.name== 'StepItem'">
+              Step:
+            </span>
+            <span *ngIf="processItem.constructor.name== 'ConditionItem'">
+              Condition:
+            </span>
+
+            <span>
+              {{processItem.text}}
+            </span>
           </mat-option>
         </mat-select>
       </mat-form-field>
 
     </div>
 
-    <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <formly-form [form]="form" [fields]="fields2" [model]="model2"></formly-form>
-      <button type="submit" class="btn btn-default">Submit</button>
-    </form> -->
+    <div [ngSwitch]="$any(processItem).constructor.name">
 
-    <div fxLayout="row" fxLayoutAlign="end none">
-      <i (click)="close()" class="fas fa-times close-button clickable"></i>
-    </div>
-    <div class="step-definition-title">
-      Step definitions <i class="fas fa-question-circle clickable"></i>
-    </div>
-    <div class="step-title">
-      for {{processItem.text}}
-    </div>
+      <ng-container *ngSwitchCase=" 'StepItem'">
+        <mat-tab-group (selectedTabChange)="onStepItemSettingsTabChanged($event)">
+          <mat-tab label=" Responsible"> Responsible content will be here. </mat-tab>
+          <mat-tab label="Form Designer">
+            <ng-template mat-tab-label>
+              Fields
+            </ng-template>
+            <div>
 
+              <div [ngSwitch]="fieldsViewMode">
 
-    <ng-container *ngIf="processItem.constructor.name== 'StepItem'">
+                <form *ngSwitchCase="'fieldEdit'" #fieldsForm="ngForm">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Field Name</mat-label>
+                    <input [(ngModel)]="currentFieldInStep.field.name" name="name-{{currentFieldInStep.field.id}}"
+                      matInput #input>
+                  </mat-form-field>
 
-      <div class="section clickable">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Field Type</mat-label>
+                    <mat-select [(ngModel)]="currentFieldInStep.field.fieldType"
+                      name="fieldType-{{currentFieldInStep.field.id}}">
+                      <mat-option [value]="null"></mat-option>
+                      <mat-option *ngFor="let fieldType of fieldTypes" [value]="fieldType">
+                        {{fieldType.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <ng-container *ngIf="currentFieldInStep.field.fieldType">
+
+                    <div *ngIf="currentFieldInStep.field.fieldType.code == 'numeric'">
+
+                      <!-- numeric settings, min, max, decimal? -->
+                      <div fxLayout="row" class="detailed-settings-item">
+                        <mat-checkbox class="detailed-settings-item-checkbox" color="primary"
+                          [(ngModel)]="currentFieldInStep.field.numericFieldSettings.hasMinValueRestriction"
+                          name="hasMinValueRestriction-{{currentFieldInStep.field.id}}">Set Minimum Value?
+                        </mat-checkbox>
+
+                        <mat-form-field appearance="outline"
+                          *ngIf="currentFieldInStep.field.numericFieldSettings.hasMinValueRestriction">
+                          <mat-label>Minimum value</mat-label>
+                          <input [(ngModel)]="currentFieldInStep.field.numericFieldSettings.minValue"
+                            name="minValue-{{currentFieldInStep.field.id}}" matInput type="number">
+                        </mat-form-field>
+                      </div>
+
+                      <div fxLayout="row" class="detailed-settings-item">
+                        <mat-checkbox class="detailed-settings-item-checkbox" color="primary"
+                          [(ngModel)]="currentFieldInStep.field.numericFieldSettings.hasMaxValueRestriction"
+                          name="hasMaxValueRestriction-{{currentFieldInStep.field.id}}">Set Maximum Value?
+                        </mat-checkbox>
+
+                        <mat-form-field appearance="outline"
+                          *ngIf="currentFieldInStep.field.numericFieldSettings.hasMaxValueRestriction">
+                          <mat-label>Maximum value</mat-label>
+                          <input [(ngModel)]="currentFieldInStep.field.numericFieldSettings.maxValue"
+                            name="maxValue-{{currentFieldInStep.field.id}}" matInput type="number">
+                        </mat-form-field>
+                      </div>
+
+                    </div>
+                    <div *ngIf="currentFieldInStep.field.fieldType.code === 'text'">
+                      text settings: multiline, max character, min character
+                    </div>
+
+                  </ng-container>
+
+                </form>
+
+                <form *ngSwitchCase="'listFields'" #fieldsForm="ngForm">
+
+                  <div class="form-designer-empty-content" *ngIf="stepItem.fieldsInStep.length == 0">
+                    This step doesn't contain any field.
+                  </div>
+                  <div class="field-form" fxLayout="row" *ngFor="let fieldInStep of stepItem.fieldsInStep; let i=index">
+
+                    <div class="field-number" fxLayout="row" fxLayoutAlign="center center">
+                      <div>{{i+1}}</div>
+                    </div>
+                    <div class="field-input-wrapper" fxLayout="column">
+                      <div>{{fieldInStep.field.name}}</div>
+                    </div>
+
+                    <div fxLayout="column">
+
+                      <button mat-button class="setting-button">
+                        <i class="fas fa-cog"></i>
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                  <div class="new-field-wrapper" fxLayout="column">
+                    <button mat-raised-button color="accent" (click)="openAddFieldView()">
+                      <i class="fas fa-plus"></i> Add a New Field
+                    </button>
+                    <button mat-raised-button color="accent" (click)="openAddExistingFieldView()">
+                      <i class="fas fa-plus"></i> Use an Existing Field (check if exist)
+                    </button>
+                  </div>
+
+                </form>
+
+              </div>
+
+            </div>
+
+          </mat-tab>
+          <mat-tab label="Actions"> Content 3 </mat-tab>
+          <mat-tab label="Description & Help"> Content 3 </mat-tab>
+          <mat-tab label="Notifications"> Content 3 </mat-tab>
+        </mat-tab-group>
+
+        <!-- <div class="section clickable">
 
         <button mat-button #settingNotVisible color="primary">
           <div class="section-name">
@@ -58,135 +169,7 @@
       </div>
       <div *ngIf="isStepFormDesignerVisible" class="form-designer-wrapper">
 
-        <div>
 
-          <div class="form-designer-empty-content" *ngIf="stepItem.fields.length == 0">
-            This step doesn't contain any field. <button mat-raised-button color="accent" (click)="addField()">
-              <i class="fas fa-plus"></i> Add a new field?
-            </button>
-          </div>
-
-          <form #fieldsForm="ngForm">
-
-            <!-- bu ngform'u koy
-ngModel kullan
-name attribute'unu doldur
-
-alakasiz ama
-trackBy diye onemli bir
-sey var *ngFor kullanirken
--->
-
-            <div class="field-form" fxLayout="column" *ngFor="let field of stepItem.fields; let i=index">
-
-              <div fxLayout="row">
-
-                <div class="field-number" fxLayout="row" fxLayoutAlign="center center">
-                  {{i+1}}
-                </div>
-
-                <mat-form-field appearance="outline">
-                  <mat-label>Field Name</mat-label>
-                  <input [(ngModel)]="field.name" name="name-{{field.id}}" matInput #input>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                  <mat-label>Field Type</mat-label>
-                  <mat-select [(ngModel)]="field.fieldType" name="fieldType-{{field.id}}">
-                    <mat-option [value]="null"></mat-option>
-                    <mat-option *ngFor="let fieldType of fieldTypes" [value]="fieldType">
-                      {{fieldType.name}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <div class="required-wrapper">
-                  <mat-checkbox color="primary" [(ngModel)]="field.isRequired" name="isRequired-{{field.id}}">Required?
-                  </mat-checkbox>
-                </div>
-
-              </div>
-
-              <div fxLayout="row">
-
-                <div class="setting-wrapper clickable" (click)="swapSettingVisible(field)">
-
-                  <div *ngIf="field.visualState.settingsVisible; else settingNotVisible">
-
-                    <button mat-button #settingNotVisible color="primary">
-                      <i class="fas fa-angle-double-up"></i> Hide settings
-                    </button>
-
-                  </div>
-                  <ng-template #settingNotVisible>
-
-                    <button mat-button #settingNotVisible color="primary">
-                      <i class="fas fa-angle-double-down"></i>
-                      More field settings
-                    </button>
-
-                  </ng-template>
-                </div>
-              </div>
-
-              <div *ngIf="field.visualState.settingsVisible" class="detailed-settings">
-
-                <ng-container *ngIf="field.fieldType">
-
-                  <div *ngIf="field.fieldType.code == 'numeric'">
-
-                    <!-- numeric settings, min, max, decimal? -->
-                    <div fxLayout="row" class="detailed-settings-item">
-                      <mat-checkbox class="detailed-settings-item-checkbox" color="primary"
-                        [(ngModel)]="field.numericFieldSettings.hasMinValueRestriction"
-                        name="hasMinValueRestriction-{{field.id}}">Set Minimum Value?
-                      </mat-checkbox>
-
-                      <mat-form-field appearance="outline" *ngIf="field.numericFieldSettings.hasMinValueRestriction">
-                        <mat-label>Minimum value</mat-label>
-                        <input [(ngModel)]="field.numericFieldSettings.minValue" name="minValue-{{field.id}}" matInput
-                          type="number">
-                      </mat-form-field>
-                    </div>
-
-                    <div fxLayout="row" class="detailed-settings-item">
-                      <mat-checkbox class="detailed-settings-item-checkbox" color="primary"
-                        [(ngModel)]="field.numericFieldSettings.hasMaxValueRestriction"
-                        name="hasMaxValueRestriction-{{field.id}}">Set Maximum Value?
-                      </mat-checkbox>
-
-                      <mat-form-field appearance="outline" *ngIf="field.numericFieldSettings.hasMaxValueRestriction">
-                        <mat-label>Maximum value</mat-label>
-                        <input [(ngModel)]="field.numericFieldSettings.maxValue" name="maxValue-{{field.id}}" matInput
-                          type="number">
-                      </mat-form-field>
-                    </div>
-
-                  </div>
-                  <div *ngIf="field.fieldType.code === 'text'">
-                    text settings: multiline, max character, min character
-                  </div>
-
-                </ng-container>
-
-              </div>
-
-            </div>
-
-          </form>
-
-        </div>
-
-        <div *ngIf="stepItem.fields.length > 0" class="new-field-wrapper">
-          <button mat-raised-button color="accent" (click)="addField()">
-            <i class="fas fa-plus"></i> New Field
-          </button>
-        </div>
-
-        <div *ngIf="stepItem.fields.length > 0" class="save-form-designer-wrapper">
-          <button mat-raised-button color="primary">
-            Save form definition
-          </button>
-        </div>
 
 
       </div>
@@ -205,10 +188,11 @@ sey var *ngFor kullanirken
             <i class="fas fa-angle-double-down"></i> Description & help content
           </div>
         </button>
-      </div>
-      <!-- notifications -->
+      </div> -->
 
-    </ng-container>
+      </ng-container>
+
+    </div>
 
   </div>
 </div>

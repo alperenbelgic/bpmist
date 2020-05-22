@@ -17,6 +17,8 @@ Click the video for a very quick tour.
 
 
 ## TODO:
+- validations
+  - add new field: check same field name used?
 - When a step is created, textbox should be shown for naming it in the box.
   - prepare ProcessItem for this, to keep the proper state
 - When a box (step, condition, etc) is created, last item connects to the new one automatically
@@ -59,3 +61,16 @@ Click the video for a very quick tour.
 - surecleri tanimla, sistematize et
 - takip et
 - calisanlar islerini takip edebilsin.
+
+
+
+
+<!-- 
+bu ngform'u koy
+ngModel kullan
+name attribute'unu doldur
+
+alakasiz ama
+trackBy diye onemli bir
+sey var *ngFor kullanirken
+-->

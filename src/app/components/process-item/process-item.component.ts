@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ElementRef, EventEmitter, Output } from '@angular/core';
 // import { ProcessDesignerComponent } from '../process-designer/process-designer.component';
-import { Field } from '../../services/field-type.service';
+import { Field, FieldInStep } from '../../services/field-type.service';
 
 export class Process {
   processId: string;
@@ -32,14 +32,6 @@ export class ProcessItem {
 
   }
 
-  leftPxBeforeMove = 0;
-  topPxBeforeMove = 0;
-
-  isSelected = false;
-  component: ProcessItemComponent;
-
-  links: Link[] = []; // persistent
-
   get width(): number {
     return this.component?.getWidth() ?? 0;
   }
@@ -55,11 +47,28 @@ export class ProcessItem {
   get middleY(): number {
     return this.topPx + ((this.component?.getHeight() ?? 0) / 2);
   }
+
+  leftPxBeforeMove = 0;
+  topPxBeforeMove = 0;
+
+  isSelected = false;
+  component: ProcessItemComponent;
+
+  links: Link[] = []; // persistent
+
+  get visualState(): ProcessItemVisualState {
+    return null;
+  }
+
+}
+
+export class ProcessItemVisualState {
+  visible = false;
 }
 
 export class StepItem extends ProcessItem {
 
-  fields: Field[] = [];
+  fieldsInStep: FieldInStep[] = [];
 
   public constructor(
     id: string,
@@ -69,6 +78,17 @@ export class StepItem extends ProcessItem {
     leftPx: number) {
     super(id, retrievedFromServer, topPx, leftPx, stepName);
   }
+
+  private _visualState = new StepItemVisuaState();
+  get visualState(): StepItemVisuaState {
+    return this._visualState;
+  }
+}
+
+
+
+export class StepItemVisuaState extends ProcessItemVisualState {
+  // fieldsViewMode: FieldViewModes = 'listFields';
 }
 
 export class ConditionItem extends ProcessItem {
@@ -111,7 +131,6 @@ export class ProcessItemComponent implements OnInit {
 
   openSettings($event) {
 
-    console.log('open settings');
     this.settingDialogueOpening.emit(this.processItem);
   }
 

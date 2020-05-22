@@ -1,9 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ProcessItem, StepItem } from '../process-item/process-item.component';
-import { FieldTypeService, FieldType, Field } from '../../services/field-type.service';
+import { FieldTypeService, FieldType, Field, FieldInStep } from '../../services/field-type.service';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { RandomIdGenerator } from 'src/app/services/general.service';
+
+type FieldViewMode = 'listFields' | 'fieldEdit' | 'addExisting';
+
 
 @Component({
   selector: 'app-process-item-settings',
@@ -12,78 +15,13 @@ import { RandomIdGenerator } from 'src/app/services/general.service';
 })
 export class ProcessItemSettingsComponent implements OnInit {
 
-  // form = new FormGroup({});
-  // model2 = { email: 'email@gmail.com', Checkbox: false };
-  // fields2: FormlyFieldConfig[] = [
-  //   {
-  //     key: 'email',
-  //     type: 'input',
-  //     templateOptions: {
-  //       label: 'Email address',
-  //       placeholder: 'Enter email',
-  //       required: true,
-  //     }
-  //   },
-  //   {
-  //     key: 'email2',
-  //     type: 'input',
-  //     templateOptions: {
-  //       label: 'Email address',
-  //       placeholder: 'Enter email',
-  //       required: true,
-  //     }
-  //   },
-  //   {
-  //     key: 'Checkbox',
-  //     type: 'checkbox',
-  //     templateOptions: {
-  //       label: 'the label',
-  //       description: 'the description',
-  //       // pattern: 'true',
-  //       required: true,
-  //     },
-  //     validation: {
-  //       messages: {
-  //         pattern: 'Please accept the terms',
-  //       },
-  //     },
-  //   },
-  //   {
-  //     key: 'email3',
-  //     type: 'input',
-  //     templateOptions: {
-  //       label: 'Email address',
-  //       placeholder: 'Enter email',
-  //       required: true,
-  //     }
-  //   },
-  //   {
-  //     key: 'email4',
-  //     type: 'input',
-  //     templateOptions: {
-  //       label: 'Email address',
-  //       placeholder: 'Enter email',
-  //       required: true,
-  //     }
-  //   },
-  // ];
-
-  // onSubmit() {
-  //   console.log(this.model2);
-  // }
 
   @Input() processItems: ProcessItem[] = [];
-
-  processItemSettingsForm: FormGroup;
 
   public visible = false;
   _processItem: ProcessItem;
 
   isStepFormDesignerVisible = false;
-
-  get stepItem(): StepItem {
-    return this.processItem as StepItem;
-  }
 
   get processItem(): ProcessItem {
     return this._processItem;
@@ -92,27 +30,22 @@ export class ProcessItemSettingsComponent implements OnInit {
   @Input('processItem')
   set processItem(value: ProcessItem) {
     this._processItem = value;
-
-    if (this.processItem == null) {
-      this.processItemSettingsForm.reset();
-    } else {
-
-      if (this.processItem.constructor.name === 'StepItem') {
-        this.processItemSettingsForm = this.fb.group({
-          fields: this.fb.array((this.processItem as StepItem).fields)
-        });
-      }
-    }
   }
 
-  fields: Field[] = [];
+  get stepItem(): StepItem {
+    return this.processItem as StepItem;
+  }
+
+  currentFieldInStep: FieldInStep;
 
   fieldTypes: FieldType[] = [];
+
+  fieldsViewMode: FieldViewMode = 'listFields';
 
   constructor(private fb: FormBuilder,
     private fieldTypeService: FieldTypeService,
     private randomIdGenerator: RandomIdGenerator
-    ) {
+  ) {
   }
 
   async ngOnInit() {
@@ -129,15 +62,38 @@ export class ProcessItemSettingsComponent implements OnInit {
     this.visible = false;
   }
 
-  async addField() {
-    (this.processItem as StepItem).fields.push(new Field(this.randomIdGenerator.generate()));
+  openAddFieldView() {
+
+    this.currentFieldInStep =
+      new FieldInStep(this.randomIdGenerator.generate(), false, new Field(this.randomIdGenerator.generate()), false, false);
+
+    this.stepItem.fieldsInStep.push(this.currentFieldInStep);
+
+    this.fieldsViewMode = 'fieldEdit';
   }
 
-  swapSettingVisible(field: Field) {
-    field.visualState.settingsVisible = !field.visualState.settingsVisible;
+  openAddExistingFieldView() {
+    this.fieldsViewMode = 'addExisting';
+  }
+
+  async addField() {
+    this.stepItem.fieldsInStep.push(
+      new FieldInStep(
+        this.randomIdGenerator.generate(),
+        false,
+        new Field(this.randomIdGenerator.generate()), false, false));
   }
 
   swapStepFormDesignerVisible() {
     this.isStepFormDesignerVisible = !this.isStepFormDesignerVisible;
   }
+
+  onProcessItenmChange() {
+    this.fieldsViewMode = 'listFields';
+  }
+
+  onStepItemSettingsTabChanged($event) {
+    this.fieldsViewMode = 'listFields';
+  }
+
 }

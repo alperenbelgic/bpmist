@@ -55,6 +55,10 @@ mat-checkbox {
   margin-left: 17px;
 }
 
+.field-input-wrapper {
+  width: 340px;
+}
+
 .field-form {
   margin-top: 10px;
   border-bottom: gray solid 1px;
@@ -62,7 +66,7 @@ mat-checkbox {
 
 .field-number {
   width: 54px;
-  height: 54px;
+  margin-top: -16px;
   font-weight: bold;
   font-size: 24px;
   color: #555;
@@ -98,16 +102,13 @@ mat-checkbox {
   font-size: 36px;
 }
 
-.setting-wrapper {
-  width: 170px;
-  margin-top: 12px;
-  margin-left: 30px;
-  text-decoration: underline;
+.setting-button {
+
+  font-size: 24px;
 }
 
-.new-field-wrapper {
+.add-field-wrapper {
   margin-top: 15px;
-  margin-left: 30px;
 }
 
 .save-form-designer-wrapper {
