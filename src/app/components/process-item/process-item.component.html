@@ -1,11 +1,23 @@
-<div *ngIf="processItem.constructor.name== 'StepItem'" class="box state-box noselect" [ngClass]="{
-    'selected': processItem.isSelected,
-    'not-selected': !processItem.isSelected
-  }">
-  <div class="create-link-button box-button" appClickStopPropagation (click)="createLink($event)">
+<div
+  *ngIf="$any(processItem).constructor.name== 'StepItem'"
+  class="box state-box noselect"
+  [ngClass]="{
+    'selected': processItem.visualState.isSelected,
+    'not-selected': !processItem.visualState.isSelected
+  }"
+>
+  <div
+    class="create-link-button box-button"
+    appClickStopPropagation
+    (click)="createLink($event)"
+  >
     <i class="fas fa-long-arrow-alt-up"></i>
   </div>
-  <div class="settings-button box-button" appClickStopPropagation (click)="openSettings($event)">
+  <div
+    class="settings-button box-button"
+    appClickStopPropagation
+    (click)="openSettings($event)"
+  >
     <i class="fas fa-wrench"></i>
   </div>
   <div>{{processItem.text}} - {{processItem.id}} </div>
@@ -13,14 +25,26 @@
 
 
 
-<div *ngIf="processItem.constructor.name== 'ConditionItem'" class="box condition-box noselect" [ngClass]="{
-  'selected': processItem.isSelected,
-  'not-selected': !processItem.isSelected
-}">
-  <div class="create-link-button box-button" appClickStopPropagation (click)="createLink($event)">
+<div
+  *ngIf="$any(processItem).constructor.name== 'ConditionItem'"
+  class="box condition-box noselect"
+  [ngClass]="{
+  'selected': processItem.visualState.isSelected,
+  'not-selected': !processItem.visualState.isSelected
+}"
+>
+  <div
+    class="create-link-button box-button"
+    appClickStopPropagation
+    (click)="createLink($event)"
+  >
     <i class="fas fa-long-arrow-alt-up"></i>
   </div>
-  <div class="settings-button box-button" appClickStopPropagation (click)="openSettings($event)">
+  <div
+    class="settings-button box-button"
+    appClickStopPropagation
+    (click)="openSettings($event)"
+  >
     <i class="fas fa-wrench"></i>
   </div>
   <div class="condition-content">

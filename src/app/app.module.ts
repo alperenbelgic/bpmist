@@ -12,7 +12,7 @@ import { ProcessDesignerComponent } from './components/process-designer/process-
 import { ProcessItemComponent } from './components/process-item/process-item.component';
 import { ProcessItemSettingsComponent } from './components/process-item-settings/process-item-settings.component';
 
-import { ClickStopPropagationDirective } from './Common/click-stop-propagation.directive';
+import { ClickStopPropagationDirective } from './common/Directives/click-stop-propagation.directive';
 
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';

@@ -1,26 +1,41 @@
-<div *ngIf="visible" class="settings-modal">
-
-
-
+<div
+  *ngIf="visible"
+  class="settings-modal"
+>
 
   <div class="form-wrapper">
-    <div fxLayout="row" fxLayoutAlign="end none">
-      <i (click)="close()" class="fas fa-times close-button clickable"></i>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="end none"
+    >
+      <i
+        (click)="close()"
+        class="fas fa-times close-button clickable"
+      ></i>
     </div>
     <div>
 
-      <mat-form-field class="process-item-selector " appearance="outline">
+      <mat-form-field
+        class="process-item-selector "
+        appearance="outline"
+      >
         <mat-label></mat-label>
-        <mat-select [(value)]="processItem" (selectionChange)="onProcessItenmChange()">
-          <mat-option *ngFor="let processItem of processItems" [value]="processItem">
-            <span *ngIf="processItem.constructor.name== 'StepItem'">
+        <mat-select
+          [(ngModel)]="processItem"
+          (selectionChange)="onProcessItemChange()"
+        >
+          <mat-option
+            *ngFor="let processItem of processItems"
+            [value]="processItem"
+          >
+            <span *ngIf="$any(processItem).constructor.name== 'StepItem'">
               Step:
             </span>
-            <span *ngIf="processItem.constructor.name== 'ConditionItem'">
+            <span *ngIf="$any(processItem).constructor.name== 'ConditionItem'">
               Condition:
             </span>
 
-            <span>
+            <span class="process-item-text-in-select">
               {{processItem.text}}
             </span>
           </mat-option>
@@ -32,119 +47,479 @@
     <div [ngSwitch]="$any(processItem).constructor.name">
 
       <ng-container *ngSwitchCase=" 'StepItem'">
-        <mat-tab-group (selectedTabChange)="onStepItemSettingsTabChanged($event)">
-          <mat-tab label=" Responsible"> Responsible content will be here. </mat-tab>
-          <mat-tab label="Form Designer">
+
+        <mat-tab-group
+          class="step-settings-tab"
+          (selectedTabChange)="onStepItemSettingsTabChanged($event)"
+        >
+
+          <mat-tab label=" Responsible">
+
+            <mat-selection-list
+              [multiple]="false"
+              class="detailed-settings-item-wrapper"
+              (selectionChange)="stepItem.responsible.responsibleType = $event.option.value"
+            >
+
+              <mat-list-option
+                [value]="stepItem.responsible.visualState.groupTypeName"
+                [selected]="stepItem.responsible.visualState.isTypeGroup"
+                matTooltip="This step will be assigned to a user from the group you select."
+              >
+                Assign to a group
+              </mat-list-option>
+
+              <mat-list-option
+                [value]="stepItem.responsible.visualState.userTypeName"
+                [selected]="stepItem.responsible.visualState.isTypeUser"
+                matToolTip="The step will be assigned to the user you select"
+              >
+                Assign to a specific user
+              </mat-list-option>
+
+              <mat-list-option
+                [value]="stepItem.responsible.visualState.userFromFieldTypeName"
+                [selected]="stepItem.responsible.visualState.isTypeUserFromField"
+                matTooltip="The step will be assigned to a user who is selected in a field from a previous step."
+              >
+                Assign to a user from a field
+              </mat-list-option>
+
+              <mat-list-option
+                [value]="stepItem.responsible.visualState.groupFromFieldTypeName"
+                [selected]="stepItem.responsible.visualState.isTypeGroupFromField"
+                matTooltip="The step will be assigned to a user who is selected in a field from a previous step."
+              >
+                Assign to a group from a field
+
+              </mat-list-option>
+
+              <mat-list-option
+                [value]="stepItem.responsible.visualState.userListFromFieldTypeName"
+                [selected]="stepItem.responsible.visualState.isTypeUserListFromField"
+                matTooltip="Steps will be assigned to users who are selected in a multiple list field of users."
+              >
+                Assign to selected list of users from a field
+              </mat-list-option>
+
+              <mat-list-option
+                [value]="stepItem.responsible.visualState.groupListFromFieldTypeName"
+                [selected]="stepItem.responsible.visualState.isTypeGroupListFromField"
+                matTooltip="Steps will be assigned to the groups that are selected in a multiple list field of groups."
+              >
+                Assign to selected list of groups from a field
+              </mat-list-option>
+
+            </mat-selection-list>
+
+            <div fxLayout="column">
+
+
+
+              <mat-form-field
+                *ngIf="stepItem.responsible.visualState.isTypeUser"
+                appearance="outline"
+              >
+                <mat-label>User</mat-label>
+
+                <input
+                  type="text"
+                  matInput
+                  [matAutocomplete]="userAutoComplete"
+                >
+                <mat-autocomplete
+                  #userAutoComplete="matAutocomplete"
+                  [displayWith]="userAutoCompleteDisplayFn"
+                  (optionSelected)="stepItem.responsible.user = $event?.option.value"
+                >
+                  <mat-option
+                    *ngFor="let user of users"
+                    [value]="user"
+                  >{{user.userName}}</mat-option>
+                </mat-autocomplete>
+
+              </mat-form-field>
+
+
+
+              <div *ngIf="stepItem.responsible.visualState.isTypeUser">
+                <div *ngFor="let field of process.getAllUserTypeFields()">
+
+                  {{field.name}}
+
+                </div>
+              </div>
+
+              <mat-selection-list
+                *ngIf="stepItem.responsible.visualState.isTypeUserFromField"
+                [multiple]="false"
+                class="detailed-settings-item-wrapper"
+                (selectionChange)="stepItem.responsible.userField = $event.option.value"
+              >
+
+                <mat-list-option
+                  *ngFor="let userField of process.getAllUserTypeFields()"
+                  [value]="userField"
+                  [selected]="userField.id === stepItem?.responsible?.userField?.id"
+                  matTooltip="This step will be assigned to the user who is selected in {{userField.name}} field."
+                >
+                  {{userField.name}}
+                </mat-list-option>
+
+              </mat-selection-list>
+
+
+
+
+              <div
+                *ngIf="stepItem.responsible.visualState.isTypeGroup"
+                fxLayout="column"
+              >
+                <div>Assign Type</div>
+                <mat-selection-list
+                  [multiple]="false"
+                  (selectionChange)="stepItem.responsible.groupAssignOption = $event.option.value"
+                >
+                  <mat-list-option
+                    *ngFor="let groupAssignOption of groupAssignOptions"
+                    [value]="groupAssignOption"
+                    [selected]="groupAssignOption.optionCode === stepItem?.responsible?.groupAssignOption?.optionCode"
+                    [matTooltip]="groupAssignOption.optionTooltip"
+                  >
+                    {{groupAssignOption.optionText}}
+                  </mat-list-option>
+                </mat-selection-list>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Group</mat-label>
+
+                  <input
+                    type="text"
+                    matInput
+                    [matAutocomplete]="groupAutoComplete"
+                  >
+                  <mat-autocomplete
+                    #groupAutoComplete="matAutocomplete"
+                    [displayWith]="groupAutoCompleteDisplayFn"
+                    (optionSelected)="stepItem.responsible.group = $event?.option.value"
+                  >
+                    <mat-option
+                      *ngFor="let group of groups"
+                      [value]="group"
+                    >{{group.groupName}}</mat-option>
+                  </mat-autocomplete>
+
+                </mat-form-field>
+
+              </div>
+            </div>
+            <!-- <mat-list-option
+                  [value]="'AssignRandomly'"
+                  [selected]=""
+                  matTooltip=""
+                >
+                  Assign to a user randomly in the group
+                </mat-list-option>
+
+                <mat-list-option
+                  [value]="'PulledManually'"
+                  [selected]="stepItem.responsible.visualState.isTypeGroup"
+                  matTooltip="This step will be assigned to a user from the group you select."
+                >
+                  Assign to a user randomly in the group
+                </mat-list-option> -->
+          </mat-tab>
+
+          <mat-tab label="Form">
             <ng-template mat-tab-label>
-              Fields
+              Form
             </ng-template>
-            <div>
+            <div
+              [ngSwitch]="fieldsViewMode"
+              class="fields-settings"
+            >
 
-              <div [ngSwitch]="fieldsViewMode">
 
-                <form *ngSwitchCase="'fieldEdit'" #fieldsForm="ngForm">
+
+              <form
+                *ngSwitchCase="'fieldEdit'"
+                #fieldsForm="ngForm"
+                class="form-setting-mode form-setting-mode-with-top-button"
+              >
+
+                <div fxLayout="column">
+
+                  <button
+                    (click)="openListFields()"
+                    fxLayoutAlign="start center"
+                    mat-button
+                    class="back-button"
+                  >
+                    <i class="fas fa-arrow-left"></i>
+                  </button>
+
+                  <div class="field-edit-title">
+                    Field Editor
+                    <i
+                      class="fas fa-info-circle"
+                      matTooltip="Settings for fields of the form. "
+                    ></i>
+                  </div>
+
                   <mat-form-field appearance="outline">
                     <mat-label>Field Name</mat-label>
-                    <input [(ngModel)]="currentFieldInStep.field.name" name="name-{{currentFieldInStep.field.id}}"
-                      matInput #input>
+                    <input
+                      [(ngModel)]="currentFieldInStep.field.name"
+                      name="name-{{currentFieldInStep.field.id}}"
+                      matInput
+                      #input
+                    >
                   </mat-form-field>
 
                   <mat-form-field appearance="outline">
                     <mat-label>Field Type</mat-label>
-                    <mat-select [(ngModel)]="currentFieldInStep.field.fieldType"
-                      name="fieldType-{{currentFieldInStep.field.id}}">
+                    <mat-select
+                      [(ngModel)]="currentFieldInStep.field.fieldType"
+                      name="fieldType-{{currentFieldInStep.field.id}}"
+                    >
                       <mat-option [value]="null"></mat-option>
-                      <mat-option *ngFor="let fieldType of fieldTypes" [value]="fieldType">
+                      <mat-option
+                        *ngFor="let fieldType of fieldTypes"
+                        [value]="fieldType"
+                      >
                         {{fieldType.name}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
 
-                  <ng-container *ngIf="currentFieldInStep.field.fieldType">
 
-                    <div *ngIf="currentFieldInStep.field.fieldType.code == 'numeric'">
 
-                      <!-- numeric settings, min, max, decimal? -->
-                      <div fxLayout="row" class="detailed-settings-item">
-                        <mat-checkbox class="detailed-settings-item-checkbox" color="primary"
-                          [(ngModel)]="currentFieldInStep.field.numericFieldSettings.hasMinValueRestriction"
-                          name="hasMinValueRestriction-{{currentFieldInStep.field.id}}">Set Minimum Value?
-                        </mat-checkbox>
+                </div>
+                <div
+                  fxLayout="column"
+                  *ngIf="currentFieldInStep.field.fieldType"
+                >
 
-                        <mat-form-field appearance="outline"
-                          *ngIf="currentFieldInStep.field.numericFieldSettings.hasMinValueRestriction">
-                          <mat-label>Minimum value</mat-label>
-                          <input [(ngModel)]="currentFieldInStep.field.numericFieldSettings.minValue"
-                            name="minValue-{{currentFieldInStep.field.id}}" matInput type="number">
-                        </mat-form-field>
-                      </div>
+                  <mat-selection-list
+                    [multiple]="false"
+                    (selectionChange)="currentFieldInStep.readOnly = $event.option.value"
+                    class="detailed-settings-item-wrapper"
+                  >
+                    <mat-list-option
+                      [value]="false"
+                      [selected]="!currentFieldInStep.readOnly"
+                    >
+                      Editable
+                    </mat-list-option>
+                    <mat-list-option
+                      [value]="true"
+                      [selected]="currentFieldInStep.readOnly"
+                    >
+                      Readonly
+                    </mat-list-option>
+                  </mat-selection-list>
 
-                      <div fxLayout="row" class="detailed-settings-item">
-                        <mat-checkbox class="detailed-settings-item-checkbox" color="primary"
-                          [(ngModel)]="currentFieldInStep.field.numericFieldSettings.hasMaxValueRestriction"
-                          name="hasMaxValueRestriction-{{currentFieldInStep.field.id}}">Set Maximum Value?
-                        </mat-checkbox>
+                  <mat-selection-list
+                    *ngIf="!currentFieldInStep.readOnly"
+                    [multiple]="false"
+                    (selectionChange)="currentFieldInStep.isRequired = $event.option.value"
+                    class="detailed-settings-item-wrapper"
+                  >
+                    <mat-list-option
+                      [value]="false"
+                      [selected]="!currentFieldInStep.isRequired"
+                    >
+                      Can be left empty
+                    </mat-list-option>
 
-                        <mat-form-field appearance="outline"
-                          *ngIf="currentFieldInStep.field.numericFieldSettings.hasMaxValueRestriction">
-                          <mat-label>Maximum value</mat-label>
-                          <input [(ngModel)]="currentFieldInStep.field.numericFieldSettings.maxValue"
-                            name="maxValue-{{currentFieldInStep.field.id}}" matInput type="number">
-                        </mat-form-field>
-                      </div>
+                    <mat-list-option
+                      [value]="true"
+                      [selected]="currentFieldInStep.isRequired"
+                    >
+                      Value required
+                    </mat-list-option>
 
+
+                  </mat-selection-list>
+
+                </div>
+
+
+                <ng-container *ngIf="currentFieldInStep.field.fieldType">
+
+                  <div *ngIf="currentFieldInStep.field.fieldType.code == 'numeric'">
+
+
+                    <div
+                      fxLayout="column"
+                      class="detailed-settings-item"
+                    >
+                      <mat-checkbox
+                        class="detailed-settings-item-wrapper"
+                        color="primary"
+                        [(ngModel)]="currentFieldInStep.field.numericFieldSettings.hasMinValueRestriction"
+                        name="hasMinValueRestriction-{{currentFieldInStep.field.id}}"
+                      >Set Minimum Value?
+                      </mat-checkbox>
+
+                      <mat-form-field
+                        appearance="outline"
+                        *ngIf="currentFieldInStep.field.numericFieldSettings.hasMinValueRestriction"
+                      >
+                        <mat-label>Minimum value</mat-label>
+                        <input
+                          [(ngModel)]="currentFieldInStep.field.numericFieldSettings.minValue"
+                          name="minValue-{{currentFieldInStep.field.id}}"
+                          matInput
+                          type="number"
+                        >
+                      </mat-form-field>
                     </div>
-                    <div *ngIf="currentFieldInStep.field.fieldType.code === 'text'">
-                      text settings: multiline, max character, min character
+
+                    <div
+                      fxLayout="column"
+                      class="detailed-settings-item"
+                    >
+                      <mat-checkbox
+                        class="detailed-settings-item-wrapper"
+                        color="primary"
+                        [(ngModel)]="currentFieldInStep.field.numericFieldSettings.hasMaxValueRestriction"
+                        name="hasMaxValueRestriction-{{currentFieldInStep.field.id}}"
+                      >Set Maximum Value?
+                      </mat-checkbox>
+
+                      <mat-form-field
+                        appearance="outline"
+                        *ngIf="currentFieldInStep.field.numericFieldSettings.hasMaxValueRestriction"
+                      >
+                        <mat-label>Maximum value</mat-label>
+                        <input
+                          [(ngModel)]="currentFieldInStep.field.numericFieldSettings.maxValue"
+                          name="maxValue-{{currentFieldInStep.field.id}}"
+                          matInput
+                          type="number"
+                        >
+                      </mat-form-field>
                     </div>
 
-                  </ng-container>
-
-                </form>
-
-                <form *ngSwitchCase="'listFields'" #fieldsForm="ngForm">
-
-                  <div class="form-designer-empty-content" *ngIf="stepItem.fieldsInStep.length == 0">
-                    This step doesn't contain any field.
                   </div>
-                  <div class="field-form" fxLayout="row" *ngFor="let fieldInStep of stepItem.fieldsInStep; let i=index">
-
-                    <div class="field-number" fxLayout="row" fxLayoutAlign="center center">
-                      <div>{{i+1}}</div>
-                    </div>
-                    <div class="field-input-wrapper" fxLayout="column">
-                      <div>{{fieldInStep.field.name}}</div>
-                    </div>
-
-                    <div fxLayout="column">
-
-                      <button mat-button class="setting-button">
-                        <i class="fas fa-cog"></i>
-                      </button>
-
-                    </div>
-
+                  <div *ngIf="currentFieldInStep.field.fieldType.code === 'text'">
+                    text settings: multiline, max character, min character
                   </div>
 
-                  <div class="new-field-wrapper" fxLayout="column">
-                    <button mat-raised-button color="accent" (click)="openAddFieldView()">
-                      <i class="fas fa-plus"></i> Add a New Field
+                </ng-container>
+
+              </form>
+
+              <div
+                *ngSwitchCase="'listFields'"
+                class="form-setting-mode"
+              >
+
+                <div class="field-edit-title">
+                  Fields in this Step <i
+                    class="fas fa-info-circle"
+                    matTooltip="Fields which are shown to editor of this step."
+                  ></i>
+                </div>
+
+                <div
+                  class="form-designer-empty-content"
+                  *ngIf="renderingFieldsInStep.length == 0"
+                >
+                  This step doesn't contain any field.
+                </div>
+                <div
+                  class="field-form"
+                  fxLayout="row"
+                  *ngFor="let fieldInStep of renderingFieldsInStep; let i=index"
+                >
+
+                  <div class="field-number">
+                    <div>{{i+1}}</div>
+                  </div>
+
+                  <div
+                    class="field-name-in-list"
+                    fxLayout="column"
+                  >
+                    <div>{{fieldInStep.field.name}}</div>
+                  </div>
+
+                  <div fxLayout="row">
+
+                    <button
+                      mat-button
+                      class="setting-button"
+                      (click)="openFieldEditViewForExistingField(fieldInStep)"
+                    >
+                      <i class="fas fa-chevron-circle-down"></i>
                     </button>
-                    <button mat-raised-button color="accent" (click)="openAddExistingFieldView()">
-                      <i class="fas fa-plus"></i> Use an Existing Field (check if exist)
+
+                    <button
+                      mat-button
+                      class="setting-button"
+                      (click)="removeFieldInStep(fieldInStep)"
+                    >
+                      <i class="fas fa-trash-alt"></i>
                     </button>
+
+                    <button
+                      mat-button
+                      class="setting-button"
+                      (click)="openFieldEditViewForExistingField(fieldInStep)"
+                    >
+                      <i
+                        matBadge="!"
+                        matBadgeColor="warn"
+                        matBadgePosition="before"
+                        class="fas fa-pencil-alt"
+                      ></i>
+                    </button>
+
                   </div>
 
-                </form>
+                </div>
+
+                <div
+                  class="new-field-wrapper"
+                  fxLayout="column"
+                >
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="openFieldEditViewForNewField()"
+                  >
+                    <i class="fas fa-plus"></i> Create a New Field
+                  </button>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="openAddExistingFieldView()"
+                  >
+                    <i class="fas fa-plus"></i> Use an Existing Field <i
+                      class="fas fa-info-circle"
+                      matTooltip="Include a field you created in another step."
+                    ></i>
+                  </button>
+                </div>
 
               </div>
 
             </div>
 
           </mat-tab>
-          <mat-tab label="Actions"> Content 3 </mat-tab>
-          <mat-tab label="Description & Help"> Content 3 </mat-tab>
+          <mat-tab label="Links"> submit, links to this step, or condition</mat-tab>
+
+          <mat-tab label="Description"> Content 3 </mat-tab>
           <mat-tab label="Notifications"> Content 3 </mat-tab>
+          <mat-tab label="Actions">
+            <p>just before coming to this step </p>
+            <p>right after completing this step</p>
+            <p>python script to arrange data</p>
+            <p>web service call</p>
+            <p>(for future)-> save/update data to database</p>
+          </mat-tab>
         </mat-tab-group>
 
         <!-- <div class="section clickable">

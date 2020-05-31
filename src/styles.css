@@ -16,9 +16,75 @@ body {
 }
 
 /* formly mat checkbox in mat form field normally takes more space verically, this is an effort to align it with other types of controls */
-.mat-checkbox-layout .mat-checkbox-label {
+/* .mat-checkbox-layout .mat-checkbox-label {
   line-height: 14px;
 }
 .mat-checkbox-layout {
   margin-top: -4px;
+} */
+
+.step-settings-tab .mat-tab-labels {
+  display: block;
+  text-align: center;
+}
+
+.step-setting-tab [aria-selected="true"] .active-button {
+  display: block;
+}
+
+.step-setting-tab [aria-selected="false"] .non-active-button {
+  display: block;
+}
+
+.step-settings-tab .mat-tab-label {
+  padding: 0 13px !important;
+  min-width: 10px !important;
+}
+
+/* .login::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f007";
+} */
+
+/* .mat-selection-list .mat-list-single-selected-option .mat-list-text::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f007";
+}
+
+mat-selection-list .mat-list-single-selected-option .mat-list-text {
+  color: red;
+  background-color: yellow;
+} */
+
+/* mat-selection-list .mat-list-single-selected-option .mat-list-text {
+  color: green !important;
+}
+
+.mat-list-text {
+  color: green;
+} */
+
+.mat-selection-list .mat-list-text {
+  /* display: block !important; */
+  flex-direction: row !important;
+}
+
+.mat-selection-list .mat-list-text::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f00c";
+  visibility: hidden;
+  color: green;
+  margin-right: 3px;
+}
+
+.mat-selection-list .mat-list-single-selected-option .mat-list-text::before {
+  visibility: visible;
+}
+
+.mat-checkbox-indeterminate.mat-primary .mat-checkbox-background,
+.mat-checkbox-checked.mat-primary .mat-checkbox-background {
+  background-color: green !important;
 }

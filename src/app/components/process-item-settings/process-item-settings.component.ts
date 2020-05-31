@@ -1,9 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProcessItem, StepItem } from '../process-item/process-item.component';
-import { FieldTypeService, FieldType, Field, FieldInStep } from '../../services/field-type.service';
+import { FieldTypeService } from '../../services/field-type.service';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
 import { RandomIdGenerator } from 'src/app/services/general.service';
+import { StepItem } from 'src/app/common/Models/ProcessItems/StepItem';
+import { ProcessItem } from 'src/app/common/Models/ProcessItems/ProcessItem';
+import { FieldInStep } from 'src/app/common/Models/Field/FieldInStep';
+import { FieldType } from 'src/app/common/Models/Field/FieldType';
+import { Field } from 'src/app/common/Models/Field/Field';
+import { UserGroupService } from 'src/app/services/userGroup.service';
+import { Group } from 'src/app/common/Models/Responsible/Group';
+import { User } from 'src/app/common/Models/Responsible/User';
+import { GroupAssignOption } from 'src/app/common/Models/Responsible/GroupAssignOption';
+import { Process } from 'src/app/common/Models/ProcessItems/Process';
 
 type FieldViewMode = 'listFields' | 'fieldEdit' | 'addExisting';
 
@@ -16,24 +24,40 @@ type FieldViewMode = 'listFields' | 'fieldEdit' | 'addExisting';
 export class ProcessItemSettingsComponent implements OnInit {
 
 
-  @Input() processItems: ProcessItem[] = [];
+  get processItems(): ProcessItem[] {
+    return this.process.processItems;
+  }
 
   public visible = false;
+  // tslint:disable-next-line: variable-name
   _processItem: ProcessItem;
 
   isStepFormDesignerVisible = false;
+
+  groups: Group[];
+
+  users: User[];
+
+  groupAssignOptions: GroupAssignOption[] = [];
 
   get processItem(): ProcessItem {
     return this._processItem;
   }
 
-  @Input('processItem')
   set processItem(value: ProcessItem) {
     this._processItem = value;
   }
 
+  @Input() process: Process;
+
+  //#region step item
+
   get stepItem(): StepItem {
     return this.processItem as StepItem;
+  }
+
+  get renderingFieldsInStep(): FieldInStep[] {
+    return this.stepItem.fieldsInStep.filter((value, index, arr) => !value.deleted);
   }
 
   currentFieldInStep: FieldInStep;
@@ -42,14 +66,21 @@ export class ProcessItemSettingsComponent implements OnInit {
 
   fieldsViewMode: FieldViewMode = 'listFields';
 
-  constructor(private fb: FormBuilder,
+  //#endregion
+
+  constructor(
     private fieldTypeService: FieldTypeService,
-    private randomIdGenerator: RandomIdGenerator
+    private randomIdGenerator: RandomIdGenerator,
+    private userGroupService: UserGroupService
   ) {
   }
 
   async ngOnInit() {
     this.fieldTypes = await this.fieldTypeService.getFieldTypes();
+    this.groups = await this.userGroupService.getGroups();
+    this.users = await this.userGroupService.getUsers();
+    this.groupAssignOptions = await this.userGroupService.getGroupAssignOptions();
+
   }
 
   async open(processItem: ProcessItem) {
@@ -62,13 +93,33 @@ export class ProcessItemSettingsComponent implements OnInit {
     this.visible = false;
   }
 
-  openAddFieldView() {
+  //#region field - step item functions
 
-    this.currentFieldInStep =
-      new FieldInStep(this.randomIdGenerator.generate(), false, new Field(this.randomIdGenerator.generate()), false, false);
+  openFieldEditViewForNewField() {
 
-    this.stepItem.fieldsInStep.push(this.currentFieldInStep);
+    // this.currentFieldInStep =
+    //   new FieldInStep(
+    //     this.randomIdGenerator.generate(),
+    //     false,
+    //     new Field(this.randomIdGenerator.generate()),
+    //     false,
+    //     false);
 
+    // this.stepItem.fieldsInStep.push(this.currentFieldInStep);
+
+    const addNewFieldResult = this.process.addNewField(this.stepItem);
+
+    this.currentFieldInStep = addNewFieldResult.createdFieldInStep;
+
+    this.fieldsViewMode = 'fieldEdit';
+  }
+
+  removeFieldInStep(fieldInStep: FieldInStep) {
+    fieldInStep.deleted = true;
+  }
+
+  openFieldEditViewForExistingField(fieldInStep: FieldInStep) {
+    this.currentFieldInStep = fieldInStep;
     this.fieldsViewMode = 'fieldEdit';
   }
 
@@ -76,24 +127,34 @@ export class ProcessItemSettingsComponent implements OnInit {
     this.fieldsViewMode = 'addExisting';
   }
 
-  async addField() {
-    this.stepItem.fieldsInStep.push(
-      new FieldInStep(
-        this.randomIdGenerator.generate(),
-        false,
-        new Field(this.randomIdGenerator.generate()), false, false));
+  openListFields() {
+    this.fieldsViewMode = 'listFields';
   }
 
   swapStepFormDesignerVisible() {
     this.isStepFormDesignerVisible = !this.isStepFormDesignerVisible;
   }
 
-  onProcessItenmChange() {
+  onProcessItemChange() {
     this.fieldsViewMode = 'listFields';
   }
 
   onStepItemSettingsTabChanged($event) {
     this.fieldsViewMode = 'listFields';
   }
+
+  //#endregion
+
+  //#region responsible - step item functions
+
+  groupAutoCompleteDisplayFn(group: Group): string | undefined {
+    return group?.groupName;
+  }
+
+  userAutoCompleteDisplayFn(user: User): string | undefined {
+    return user?.userName;
+  }
+
+  //#endregion
 
 }
