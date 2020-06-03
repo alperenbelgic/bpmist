@@ -88,8 +88,13 @@
               <mat-list-option
                 [value]="stepItem.responsible.visualState.groupFromFieldTypeName"
                 [selected]="stepItem.responsible.visualState.isTypeGroupFromField"
+                [disabled]="true"
                 matTooltip="The step will be assigned to a user who is selected in a field from a previous step."
               >
+                <mat-icon
+                  [matTooltip]="'hodor'"
+                  tooltip="lan!"
+                >search</mat-icon>
                 Assign to a group from a field
 
               </mat-list-option>
@@ -116,7 +121,7 @@
 
 
 
-              <mat-form-field
+              <!-- <mat-form-field
                 *ngIf="stepItem.responsible.visualState.isTypeUser"
                 appearance="outline"
               >
@@ -127,6 +132,16 @@
                   matInput
                   [matAutocomplete]="userAutoComplete"
                 >
+                <button
+                  mat-button
+                  *ngIf="stepItem.responsible.user"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Clear"
+                  (click)="stepItem.responsible.user = null"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
                 <mat-autocomplete
                   #userAutoComplete="matAutocomplete"
                   [displayWith]="userAutoCompleteDisplayFn"
@@ -138,6 +153,55 @@
                   >{{user.userName}}</mat-option>
                 </mat-autocomplete>
 
+              </mat-form-field> -->
+
+
+              <mat-form-field
+                *ngIf="stepItem.responsible.visualState.isTypeUser"
+                appearance="outline"
+              >
+                <mat-label>User</mat-label>
+
+                <mat-select
+                  [(ngModel)]="stepItem.responsible.user"
+                  name="user"
+                >
+
+                  <label
+                    fxLayout="row"
+                    style="position: absolute;z-index: 1001;padding-top:10px; width: 100%;"
+                  >
+                    <mat-icon>search</mat-icon>
+                    <div
+                      style="padding-top:2px;"
+                      fxFlex
+                    >
+                      <input
+                        matInput
+                        placeholder="Filter"
+                        onkeydown="event.stopPropagation();"
+                        #userSearch
+                        [(ngModel)]="userSearchFilter"
+                      >
+                    </div>
+
+                  </label>
+
+                  <mat-option
+                    disabled="true"
+                    [value]="null"
+                  >
+                    <!-- this is for allocating space for search box -->
+                  </mat-option>
+
+                  <mat-option [value]="null">---</mat-option>
+                  <mat-option
+                    *ngFor="let user of searchedUsers"
+                    [value]="user"
+                  >
+                    {{user.userName}}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
 
 
@@ -197,14 +261,56 @@
                     type="text"
                     matInput
                     [matAutocomplete]="groupAutoComplete"
+                    (focusout)="groupSearch.value = (groupSearch.value == stepItem?.responsible?.group?.groupName) ? groupSearch.value : '' ; stepItem.responsible.group = (groupSearch.value == stepItem?.responsible?.group?.groupName) ? stepItem.responsible.group : null"
+                    #groupSearch
+                    [(ngModel)]="groupSearchFilter"
                   >
+                  <button
+                    mat-button
+                    *ngIf="groupSearch.value"
+                    matSuffix
+                    mat-icon-button
+                    aria-label="Clear"
+                    (click)="stepItem.responsible.group = null; groupSearch.value= ''; filteredGroups = groups; "
+                  >
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  <!-- <button
+                    mat-button
+                    matSuffix
+                    mat-icon-button
+                    aria-label="Clear"
+                    *ngIf="!groupSearch.panelOpen"
+                    (click)="groupSearch.openPanel()"
+                  >
+                    <mat-icon style="color:blue">check_circle</mat-icon>
+
+                  </button>
+
+                  <button
+                    mat-button
+                    matSuffix
+                    mat-icon-button
+                    aria-label="Clear"
+                    *ngIf="groupSearch.panelOpen"
+                    (click)="groupSearch.closePanel()"
+                  >
+                    <mat-icon style="color:red">check_circle</mat-icon>
+                  </button> -->
+
+                  <mat-icon
+                    *ngIf="stepItem?.responsible?.group?.groupName == groupSearch.value"
+                    matPrefix
+                    style="color:green"
+                  >check_circle</mat-icon>
+
                   <mat-autocomplete
                     #groupAutoComplete="matAutocomplete"
                     [displayWith]="groupAutoCompleteDisplayFn"
                     (optionSelected)="stepItem.responsible.group = $event?.option.value"
                   >
                     <mat-option
-                      *ngFor="let group of groups"
+                      *ngFor="let group of filteredGroups"
                       [value]="group"
                     >{{group.groupName}}</mat-option>
                   </mat-autocomplete>
@@ -213,21 +319,6 @@
 
               </div>
             </div>
-            <!-- <mat-list-option
-                  [value]="'AssignRandomly'"
-                  [selected]=""
-                  matTooltip=""
-                >
-                  Assign to a user randomly in the group
-                </mat-list-option>
-
-                <mat-list-option
-                  [value]="'PulledManually'"
-                  [selected]="stepItem.responsible.visualState.isTypeGroup"
-                  matTooltip="This step will be assigned to a user from the group you select."
-                >
-                  Assign to a user randomly in the group
-                </mat-list-option> -->
           </mat-tab>
 
           <mat-tab label="Form">
@@ -278,11 +369,12 @@
 
                   <mat-form-field appearance="outline">
                     <mat-label>Field Type</mat-label>
+
                     <mat-select
                       [(ngModel)]="currentFieldInStep.field.fieldType"
                       name="fieldType-{{currentFieldInStep.field.id}}"
                     >
-                      <mat-option [value]="null"></mat-option>
+                      <mat-option [value]="null">---</mat-option>
                       <mat-option
                         *ngFor="let fieldType of fieldTypes"
                         [value]="fieldType"

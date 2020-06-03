@@ -30,6 +30,19 @@ export class UserGroupService {
       new User('Fazil Husnu Daglarca', '9c44bz'),
       new User('Tacsiz Kral Pele', '9c44bz'),
       new User('Ringo Siseler', '9c44bz'),
+      new User('a', '9c44bz'),
+      new User('b', '9c44bz'),
+      new User('c', '9c44bz'),
+      new User('d', '9c44bz'),
+      new User('e', '9c44bz'),
+      new User('f', '9c44bz'),
+      new User('ag', '9c44bz'),
+      new User('bg', '9c44bz'),
+      new User('cg', '9c44bz'),
+      new User('dg', '9c44bz'),
+      new User('eg', '9c44bz'),
+      new User('fg', '9c44bz'),
+      new User('gSg', '9c44bz'),
     ];
   }
 

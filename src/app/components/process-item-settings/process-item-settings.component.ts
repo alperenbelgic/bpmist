@@ -35,8 +35,24 @@ export class ProcessItemSettingsComponent implements OnInit {
   isStepFormDesignerVisible = false;
 
   groups: Group[];
+  filteredGroups: Group[];
+
+  _groupSearchFilter = '';
+  get groupSearchFilter() {
+    return this._groupSearchFilter;
+  }
+  set groupSearchFilter(value: string) {
+    this._groupSearchFilter = value;
+    this.filteredGroups = this.search(this.groups, (group) => group.groupName, value);
+  }
 
   users: User[];
+  searchedUsers: User[];
+  set userSearchFilter(value: string) {
+    console.log('calisiyo muyuk?');
+    this.searchedUsers = this.search(this.users, (user) => user.userName, value);
+  }
+
 
   groupAssignOptions: GroupAssignOption[] = [];
 
@@ -77,8 +93,8 @@ export class ProcessItemSettingsComponent implements OnInit {
 
   async ngOnInit() {
     this.fieldTypes = await this.fieldTypeService.getFieldTypes();
-    this.groups = await this.userGroupService.getGroups();
-    this.users = await this.userGroupService.getUsers();
+    this.filteredGroups = this.groups = await this.userGroupService.getGroups();
+    this.searchedUsers = this.users = await this.userGroupService.getUsers();
     this.groupAssignOptions = await this.userGroupService.getGroupAssignOptions();
 
   }
@@ -96,16 +112,6 @@ export class ProcessItemSettingsComponent implements OnInit {
   //#region field - step item functions
 
   openFieldEditViewForNewField() {
-
-    // this.currentFieldInStep =
-    //   new FieldInStep(
-    //     this.randomIdGenerator.generate(),
-    //     false,
-    //     new Field(this.randomIdGenerator.generate()),
-    //     false,
-    //     false);
-
-    // this.stepItem.fieldsInStep.push(this.currentFieldInStep);
 
     const addNewFieldResult = this.process.addNewField(this.stepItem);
 
@@ -156,5 +162,13 @@ export class ProcessItemSettingsComponent implements OnInit {
   }
 
   //#endregion
+
+
+  search<T>(array: T[], selectorFunc: (obj: T) => string, filter: string): T[] {
+    if (filter === '' || filter == null) {
+      return array;
+    }
+    return array.filter(i => selectorFunc(i).toLowerCase().indexOf(filter.toLowerCase()) > -1);
+  }
 
 }
