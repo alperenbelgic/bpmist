@@ -3,6 +3,7 @@ import { FieldType } from '../common/Models/Field/FieldType';
 import { Group } from '../common/Models/Responsible/Group';
 import { User } from '../common/Models/Responsible/User';
 import { GroupAssignOption } from '../common/Models/Responsible/GroupAssignOption';
+import { ResponsibleType } from '../common/Models/Responsible/ResponsibleType';
 
 @Injectable({
   providedIn: 'root'
@@ -24,43 +25,116 @@ export class UserGroupService {
   async getUsers(): Promise<User[]> {
     return [
       new User('Omer Kucuk', '9c44bz'),
-      new User('Baris Belgic', '9c44bz'),
-      new User('Alperen Belgic', '9c44bz'),
-      new User('Kemalettin Tugcu', '9c44bz'),
-      new User('Fazil Husnu Daglarca', '9c44bz'),
-      new User('Tacsiz Kral Pele', '9c44bz'),
-      new User('Ringo Siseler', '9c44bz'),
-      new User('a', '9c44bz'),
-      new User('b', '9c44bz'),
-      new User('c', '9c44bz'),
-      new User('d', '9c44bz'),
-      new User('e', '9c44bz'),
-      new User('f', '9c44bz'),
-      new User('ag', '9c44bz'),
-      new User('bg', '9c44bz'),
-      new User('cg', '9c44bz'),
-      new User('dg', '9c44bz'),
-      new User('eg', '9c44bz'),
-      new User('fg', '9c44bz'),
-      new User('gSg', '9c44bz'),
+      new User('Baris Belgic', 'a'),
+      new User('Alperen Belgic', 'b'),
+      new User('Kemalettin Tugcu', 'c'),
+      new User('Fazil Husnu Daglarca', 'd'),
+      new User('Tacsiz Kral Pele', 'e'),
+      new User('Ringo Siseler', 'f'),
+      new User('a', 'g'),
+      new User('b', '3'),
+      new User('c', '4'),
+      new User('d', '6'),
+      new User('e', '5'),
+      new User('f', '8'),
+      new User('ag', '7'),
+      new User('bg', '9'),
+      new User('cg', 'aaa'),
+      new User('dg', 'sss'),
+      new User('eg', 'ddd'),
+      new User('fg', '9c44bz1'),
+      new User('gSg', '9c44b11z'),
     ];
   }
 
 
-  async getGroupAssignOptions(): Promise<GroupAssignOption[]> {
+  getGroupAssignOptions(): GroupAssignOption[] {
     return [
 
       new GroupAssignOption(
-        'PulledManually',
-        'The step will be in the pool of the group. A member of the group will manually pull it.',
-        'When this step is reached, the step will be available to any member to pull and work'),
-
-      new GroupAssignOption(
         'AssignRandomly',
-        'The step will be assigned automatically to a member of the group.',
+        'The step will automatically be assigned to a member.',
         'When this step is reached, the system will assign this step to a random member automatically'),
 
+      new GroupAssignOption(
+        'PulledManually',
+        'A member of the group will manually pull the step.',
+        'When this step is reached, the step will be available to any member to pull and work'),
+
     ];
+
+  }
+
+  getDefaultGroupAssignOption(): GroupAssignOption {
+
+    return this.getGroupAssignOptions().find(gao => gao.optionCode === 'AssignRandomly');
+
+  }
+
+  getResponsibleTypes(): ResponsibleType[] {
+    return [
+      {
+        code: 'group',
+        name: 'Assign to a group',
+        tooltip: 'This step will be assigned to a user from the group you select.',
+        isAdvancedOption: false,
+        visualState: { enabled: true },
+      },
+      {
+        code: 'user',
+        name: 'Assign to a specific user',
+        tooltip: 'The step will be assigned to the user you select.',
+        isAdvancedOption: false,
+        visualState: { enabled: true },
+      },
+      {
+        code: 'groupList',
+        name: 'Assign to multiple groups parallelly',
+        tooltip: 'Multiple steps will be assigned to groups you select.',
+        isAdvancedOption: true,
+        visualState: { enabled: true },
+      },
+      {
+        code: 'userList',
+        name: 'Assign to multiple users parallelly',
+        tooltip: 'Multiple steps will be assigned users you select.',
+        isAdvancedOption: true,
+        visualState: { enabled: true },
+      },
+      {
+        code: 'userFromField',
+        name: 'Assign to the user selected in a user field',
+        tooltip: 'The step will be assigned to the user selected in a field from a previous step.',
+        isAdvancedOption: true,
+        visualState: { enabled: true },
+      },
+      {
+        code: 'groupFromField',
+        name: 'Assign to the group selected in a group field',
+        tooltip: 'The step will be assigned to the group who is selected in a field from a previous step.',
+        isAdvancedOption: true,
+        visualState: { enabled: true },
+      },
+      {
+        code: 'userListFromField',
+        name: 'Assign to multiple users selected in a multiple selection user field',
+        tooltip: 'Multiple steps will be assigned parallelly to users selected in a multi selection user field from a previous step.',
+        isAdvancedOption: true,
+        visualState: { enabled: true },
+      },
+      {
+        code: 'groupListFromField',
+        name: 'Assign to multiple groups selected in a multiple selection group field',
+        tooltip: 'Multiple steps will be assigned parallelly to groups selected in a multi selection group field from a previous step.',
+        isAdvancedOption: true,
+        visualState: { enabled: true },
+      },
+
+    ];
+  }
+
+  getDefaultResponsibleType(): ResponsibleType {
+    return this.getResponsibleTypes()[0];
   }
 }
 

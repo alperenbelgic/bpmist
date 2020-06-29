@@ -15,32 +15,47 @@
     </div>
     <div>
 
-      <mat-form-field
-        class="process-item-selector "
-        appearance="outline"
+      <ejs-dropdownlist
+        [dataSource]='processItems'
+        [fields]="{ value:'id' }"
+        (change)='processItem = $event.itemData; onProcessItemChange();'
+        [ngModel]="processItem?.id"
+        name="processItemPicker"
+        cssClass="e-outline"
       >
-        <mat-label></mat-label>
-        <mat-select
-          [(ngModel)]="processItem"
-          (selectionChange)="onProcessItemChange()"
+        <ng-template
+          #itemTemplate
+          let-data
         >
-          <mat-option
-            *ngFor="let processItem of processItems"
-            [value]="processItem"
+          <span *ngIf="$any(data).constructor.name== 'StepItem'">
+            Step:
+          </span>
+          <span *ngIf="$any(data).constructor.name== 'ConditionItem'">
+            Condition:
+          </span>
+          <span>{{data.text}}</span>
+        </ng-template>
+        <ng-template
+          #valueTemplate
+          let-data
+        >
+          <div
+            fxLayoutAlign="center center"
+            style="font-weight: bold; font-size: 18px; height: 50px;"
           >
-            <span *ngIf="$any(processItem).constructor.name== 'StepItem'">
+            <span *ngIf="$any(data).constructor.name== 'StepItem'">
               Step:
             </span>
-            <span *ngIf="$any(processItem).constructor.name== 'ConditionItem'">
+            <span *ngIf="$any(data).constructor.name== 'ConditionItem'">
               Condition:
             </span>
+            <span>{{data.text}}</span>
+          </div>
+        </ng-template>
 
-            <span class="process-item-text-in-select">
-              {{processItem.text}}
-            </span>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      </ejs-dropdownlist>
+
+
 
     </div>
 
@@ -53,193 +68,192 @@
           (selectedTabChange)="onStepItemSettingsTabChanged($event)"
         >
 
-          <mat-tab label=" Responsible">
+          <mat-tab label="Responsible">
 
-            <mat-selection-list
-              [multiple]="false"
-              class="detailed-settings-item-wrapper"
-              (selectionChange)="stepItem.responsible.responsibleType = $event.option.value"
-            >
-
-              <mat-list-option
-                [value]="stepItem.responsible.visualState.groupTypeName"
-                [selected]="stepItem.responsible.visualState.isTypeGroup"
-                matTooltip="This step will be assigned to a user from the group you select."
-              >
-                Assign to a group
-              </mat-list-option>
-
-              <mat-list-option
-                [value]="stepItem.responsible.visualState.userTypeName"
-                [selected]="stepItem.responsible.visualState.isTypeUser"
-                matToolTip="The step will be assigned to the user you select"
-              >
-                Assign to a specific user
-              </mat-list-option>
-
-              <mat-list-option
-                [value]="stepItem.responsible.visualState.userFromFieldTypeName"
-                [selected]="stepItem.responsible.visualState.isTypeUserFromField"
-                matTooltip="The step will be assigned to a user who is selected in a field from a previous step."
-              >
-                Assign to a user from a field
-              </mat-list-option>
-
-              <mat-list-option
-                [value]="stepItem.responsible.visualState.groupFromFieldTypeName"
-                [selected]="stepItem.responsible.visualState.isTypeGroupFromField"
-                [disabled]="true"
-                matTooltip="The step will be assigned to a user who is selected in a field from a previous step."
-              >
-                <mat-icon
-                  [matTooltip]="'hodor'"
-                  tooltip="lan!"
-                >search</mat-icon>
-                Assign to a group from a field
-
-              </mat-list-option>
-
-              <mat-list-option
-                [value]="stepItem.responsible.visualState.userListFromFieldTypeName"
-                [selected]="stepItem.responsible.visualState.isTypeUserListFromField"
-                matTooltip="Steps will be assigned to users who are selected in a multiple list field of users."
-              >
-                Assign to selected list of users from a field
-              </mat-list-option>
-
-              <mat-list-option
-                [value]="stepItem.responsible.visualState.groupListFromFieldTypeName"
-                [selected]="stepItem.responsible.visualState.isTypeGroupListFromField"
-                matTooltip="Steps will be assigned to the groups that are selected in a multiple list field of groups."
-              >
-                Assign to selected list of groups from a field
-              </mat-list-option>
-
-            </mat-selection-list>
 
             <div fxLayout="column">
 
-
-
-              <!-- <mat-form-field
-                *ngIf="stepItem.responsible.visualState.isTypeUser"
-                appearance="outline"
+              <ejs-dropdownlist
+                style="margin-top:22px"
+                placeholder="Whom to assign?"
+                name="whoToAssign"
+                [dataSource]='showingResponsibleTypes'
+                [ngModel]="stepItem?.responsible?.responsibleType?.code"
+                [fields]="{value:'code', text:'name' }"
+                (change)='stepItem.responsible.responsibleType = $event.itemData; '
+                [allowFiltering]='false'
+                cssClass="e-outline"
+                floatLabelType="Always"
+                popupHeight='500px'
               >
-                <mat-label>User</mat-label>
 
-                <input
-                  type="text"
-                  matInput
-                  [matAutocomplete]="userAutoComplete"
-                >
-                <button
-                  mat-button
-                  *ngIf="stepItem.responsible.user"
-                  matSuffix
-                  mat-icon-button
-                  aria-label="Clear"
-                  (click)="stepItem.responsible.user = null"
-                >
-                  <mat-icon>close</mat-icon>
-                </button>
-                <mat-autocomplete
-                  #userAutoComplete="matAutocomplete"
-                  [displayWith]="userAutoCompleteDisplayFn"
-                  (optionSelected)="stepItem.responsible.user = $event?.option.value"
-                >
-                  <mat-option
-                    *ngFor="let user of users"
-                    [value]="user"
-                  >{{user.userName}}</mat-option>
-                </mat-autocomplete>
-
-              </mat-form-field> -->
-
-
-              <mat-form-field
-                *ngIf="stepItem.responsible.visualState.isTypeUser"
-                appearance="outline"
-              >
-                <mat-label>User</mat-label>
-
-                <mat-select
-                  [(ngModel)]="stepItem.responsible.user"
-                  name="user"
+                <ng-template
+                  #itemTemplate=""
+                  let-data=""
                 >
 
-                  <label
+                  <span *ngIf="data.visualState.enabled">{{data.name}}</span>
+                  <span *ngIf="!data.visualState.enabled"><span
+                      style="text-decoration: line-through;">{{data.name}}</span>
+                    <span> [No field exists]</span></span>
+
+                </ng-template>
+
+                <ng-template
+                  #footerTemplate=""
+                  let-data=""
+                >
+
+                  <div
                     fxLayout="row"
-                    style="position: absolute;z-index: 1001;padding-top:10px; width: 100%;"
+                    fxLayoutAlign="end center"
+                    style="height: 30px;"
+                    *ngIf="stepItem?.responsible?.visualState.show_ShowHideAdvancedOptions"
                   >
-                    <mat-icon>search</mat-icon>
+
                     <div
-                      style="padding-top:2px;"
-                      fxFlex
+                      style="
+                      text-decoration: underline;
+                      cursor:pointer;
+                      transform: translateX(-4px);"
+                      (click)='showAdvancedResponsibleTypes = !showAdvancedResponsibleTypes'
                     >
-                      <input
-                        matInput
-                        placeholder="Filter"
-                        onkeydown="event.stopPropagation();"
-                        #userSearch
-                        [(ngModel)]="userSearchFilter"
-                      >
+
+                      <ng-container *ngIf="showAdvancedResponsibleTypes">Hide advanced options</ng-container>
+                      <ng-container *ngIf="!showAdvancedResponsibleTypes">Show advanced options</ng-container>
+
                     </div>
+                  </div>
 
-                  </label>
-
-                  <mat-option
-                    disabled="true"
-                    [value]="null"
-                  >
-                    <!-- this is for allocating space for search box -->
-                  </mat-option>
-
-                  <mat-option [value]="null">---</mat-option>
-                  <mat-option
-                    *ngFor="let user of searchedUsers"
-                    [value]="user"
-                  >
-                    {{user.userName}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-
-
-
-              <div *ngIf="stepItem.responsible.visualState.isTypeUser">
-                <div *ngFor="let field of process.getAllUserTypeFields()">
-
-                  {{field.name}}
-
-                </div>
-              </div>
-
-              <mat-selection-list
-                *ngIf="stepItem.responsible.visualState.isTypeUserFromField"
-                [multiple]="false"
-                class="detailed-settings-item-wrapper"
-                (selectionChange)="stepItem.responsible.userField = $event.option.value"
-              >
-
-                <mat-list-option
-                  *ngFor="let userField of process.getAllUserTypeFields()"
-                  [value]="userField"
-                  [selected]="userField.id === stepItem?.responsible?.userField?.id"
-                  matTooltip="This step will be assigned to the user who is selected in {{userField.name}} field."
-                >
-                  {{userField.name}}
-                </mat-list-option>
-
-              </mat-selection-list>
-
-
+                </ng-template>
+              </ejs-dropdownlist>
 
 
               <div
                 *ngIf="stepItem.responsible.visualState.isTypeGroup"
                 fxLayout="column"
               >
-                <div>Assign Type</div>
+
+                <ejs-dropdownlist
+                  class="detailed-settings-item-wrapper"
+                  placeholder="Group"
+                  name="group"
+                  [dataSource]='groups'
+                  [ngModel]="stepItem?.responsible?.group?.groupId"
+                  [fields]="{value:'groupId', text:'groupName' }"
+                  (change)='stepItem.responsible.group = $event.itemData; '
+                  [allowFiltering]='true'
+                  [ignoreAccent]='true'
+                  filterBarPlaceholder='Search'
+                  cssClass="e-outline detailed-settings-item-wrapper"
+                  marks
+                  and
+                  floatLabelType="Always"
+                >
+                </ejs-dropdownlist>
+
+              </div>
+
+              <div *ngIf="stepItem.responsible.visualState.isTypeUser">
+
+                <ejs-dropdownlist
+                  style="margin-top:22px"
+                  placeholder="User"
+                  name="user"
+                  [dataSource]='users'
+                  [ngModel]="stepItem?.responsible?.user?.userId"
+                  [fields]="{value:'userId', text:'userName' }"
+                  (change)='stepItem.responsible.user = $event.itemData; '
+                  [allowFiltering]='true'
+                  [ignoreAccent]='true'
+                  filterBarPlaceholder='Search'
+                  cssClass="e-outline"
+                  floatLabelType="Always"
+                >
+                </ejs-dropdownlist>
+
+              </div>
+
+              <div *ngIf="stepItem.responsible.visualState.isTypeGroupList">
+                <!-- {{stepItem?.responsible?.groups}} -->
+                <ejs-multiselect
+                  #groupsMultiselect
+                  style="margin-top:22px"
+                  placeholder="Groups"
+                  name="groups"
+                  [dataSource]='groups'
+                  [fields]="{ text: 'groupName', value: 'groupId' }"
+                  mode='Box'
+                  [showDropDownIcon]='true'
+                  [closePopupOnSelect]="false"
+                  filterBarPlaceholder='Search'
+                  cssClass="e-outline"
+                  floatLabelType="Always"
+                  [allowFiltering]='true'
+                  [ignoreAccent]='true'
+                  [(value)]="selectedGroupIds"
+                ></ejs-multiselect>
+                <!-- [(ngModel)]="selectedGroupIds" -->
+                <!-- (change)="assignMultiselectValues(stepItem.responsible, 'groups', 'groupId', groups, $event.value, $event)" -->
+
+              </div>
+
+              <div *ngIf="stepItem.responsible.visualState.isTypeUserList">
+
+                <ejs-multiselect
+                  style="margin-top:22px"
+                  placeholder="Users"
+                  name="users"
+                  [dataSource]='users'
+                  [fields]="{ text: 'userName', value: 'userId' }"
+                  mode='Box'
+                  [showDropDownIcon]='true'
+                  filterBarPlaceholder='Search'
+                  cssClass="e-outline"
+                  floatLabelType="Always"
+                  [allowFiltering]='true'
+                  [ignoreAccent]='true'
+                  (change)="assignMultiselectValues(stepItem.responsible, 'users', 'userId', users, $event.value, $event);"
+                  [(ngModel)]="selectedUserIds"
+                ></ejs-multiselect>
+
+              </div>
+
+              <div *ngIf="stepItem.responsible.visualState.isTypeUserFromField">
+
+                <ejs-dropdownlist
+                  style="margin-top:22px"
+                  placeholder="User Field"
+                  name="userField"
+                  [dataSource]='process.userTypeFields'
+                  [ngModel]="stepItem?.responsible?.userField?.id"
+                  [fields]="{value:'id', text:'name' }"
+                  (change)='stepItem.responsible.userField = $event.itemData; '
+                  [allowFiltering]='true'
+                  [ignoreAccent]='true'
+                  filterBarPlaceholder='Search'
+                  cssClass="e-outline"
+                  floatLabelType="Always"
+                >
+                </ejs-dropdownlist>
+
+              </div>
+
+              <div *ngIf="stepItem.responsible.visualState.showGroupAssignOptions">
+
+                <div
+                  class="detailed-settings-item-wrapper"
+                  style="
+                          font-size: 12px;
+                          margin-left: 9px;
+                          line-height: 1em;
+                          color: #777;
+                          transform: translateY(2px);
+                          background-color: white;
+                          padding-left: 5px;
+                          display: inline-block;
+                          width: 106px;"
+                >How to distribute?</div>
                 <mat-selection-list
                   [multiple]="false"
                   (selectionChange)="stepItem.responsible.groupAssignOption = $event.option.value"
@@ -250,75 +264,16 @@
                     [selected]="groupAssignOption.optionCode === stepItem?.responsible?.groupAssignOption?.optionCode"
                     [matTooltip]="groupAssignOption.optionTooltip"
                   >
-                    {{groupAssignOption.optionText}}
+
+                    <div style="vertical-align: middle;height: 100%;">{{groupAssignOption.optionText}}</div>
+
                   </mat-list-option>
+
                 </mat-selection-list>
-
-                <mat-form-field appearance="outline">
-                  <mat-label>Group</mat-label>
-
-                  <input
-                    type="text"
-                    matInput
-                    [matAutocomplete]="groupAutoComplete"
-                    (focusout)="groupSearch.value = (groupSearch.value == stepItem?.responsible?.group?.groupName) ? groupSearch.value : '' ; stepItem.responsible.group = (groupSearch.value == stepItem?.responsible?.group?.groupName) ? stepItem.responsible.group : null"
-                    #groupSearch
-                    [(ngModel)]="groupSearchFilter"
-                  >
-                  <button
-                    mat-button
-                    *ngIf="groupSearch.value"
-                    matSuffix
-                    mat-icon-button
-                    aria-label="Clear"
-                    (click)="stepItem.responsible.group = null; groupSearch.value= ''; filteredGroups = groups; "
-                  >
-                    <mat-icon>close</mat-icon>
-                  </button>
-                  <!-- <button
-                    mat-button
-                    matSuffix
-                    mat-icon-button
-                    aria-label="Clear"
-                    *ngIf="!groupSearch.panelOpen"
-                    (click)="groupSearch.openPanel()"
-                  >
-                    <mat-icon style="color:blue">check_circle</mat-icon>
-
-                  </button>
-
-                  <button
-                    mat-button
-                    matSuffix
-                    mat-icon-button
-                    aria-label="Clear"
-                    *ngIf="groupSearch.panelOpen"
-                    (click)="groupSearch.closePanel()"
-                  >
-                    <mat-icon style="color:red">check_circle</mat-icon>
-                  </button> -->
-
-                  <mat-icon
-                    *ngIf="stepItem?.responsible?.group?.groupName == groupSearch.value"
-                    matPrefix
-                    style="color:green"
-                  >check_circle</mat-icon>
-
-                  <mat-autocomplete
-                    #groupAutoComplete="matAutocomplete"
-                    [displayWith]="groupAutoCompleteDisplayFn"
-                    (optionSelected)="stepItem.responsible.group = $event?.option.value"
-                  >
-                    <mat-option
-                      *ngFor="let group of filteredGroups"
-                      [value]="group"
-                    >{{group.groupName}}</mat-option>
-                  </mat-autocomplete>
-
-                </mat-form-field>
-
               </div>
+
             </div>
+
           </mat-tab>
 
           <mat-tab label="Form">
@@ -329,8 +284,6 @@
               [ngSwitch]="fieldsViewMode"
               class="fields-settings"
             >
-
-
 
               <form
                 *ngSwitchCase="'fieldEdit'"
@@ -367,26 +320,20 @@
                     >
                   </mat-form-field>
 
-                  <mat-form-field appearance="outline">
-                    <mat-label>Field Type</mat-label>
-
-                    <mat-select
-                      [(ngModel)]="currentFieldInStep.field.fieldType"
-                      name="fieldType-{{currentFieldInStep.field.id}}"
-                    >
-                      <mat-option [value]="null">---</mat-option>
-                      <mat-option
-                        *ngFor="let fieldType of fieldTypes"
-                        [value]="fieldType"
-                      >
-                        {{fieldType.name}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-
-
+                  <ejs-dropdownlist
+                    placeholder="Field Type"
+                    name="fieldType-{{currentFieldInStep.field.id}}"
+                    [dataSource]='fieldTypes'
+                    [ngModel]="currentFieldInStep?.field?.fieldType?.code"
+                    [fields]="{value:'code', text:'name' }"
+                    (change)='currentFieldInStep.field.fieldType = $event.itemData'
+                    cssClass="e-outline"
+                    floatLabelType="Always"
+                  >
+                  </ejs-dropdownlist>
 
                 </div>
+
                 <div
                   fxLayout="column"
                   *ngIf="currentFieldInStep.field.fieldType"
@@ -435,7 +382,6 @@
                   </mat-selection-list>
 
                 </div>
-
 
                 <ng-container *ngIf="currentFieldInStep.field.fieldType">
 
@@ -499,6 +445,31 @@
                     text settings: multiline, max character, min character
                   </div>
 
+                  <div
+                    class="detailed-settings-item-wrapper"
+                    *ngIf="currentFieldInStep.field.fieldType.code === 'user' || currentFieldInStep.field.fieldType.code === 'group'"
+                  >
+
+                    <mat-selection-list
+                      [multiple]="false"
+                      (selectionChange)="currentFieldInStep.field.generalFieldSettings.multipleValue = $event.option.value"
+                    >
+                      <mat-list-option
+                        [value]="false"
+                        [selected]="!currentFieldInStep.field.generalFieldSettings.multipleValue"
+                      >
+                        Single item selection
+                      </mat-list-option>
+                      <mat-list-option
+                        [value]="true"
+                        [selected]="currentFieldInStep.field.generalFieldSettings.multipleValue"
+                      >
+                        Multiple items selection
+                      </mat-list-option>
+                    </mat-selection-list>
+
+                  </div>
+
                 </ng-container>
 
               </form>
@@ -511,7 +482,7 @@
                 <div class="field-edit-title">
                   Fields in this Step <i
                     class="fas fa-info-circle"
-                    matTooltip="Fields which are shown to editor of this step."
+                    matTooltip="Fields that are shown to the editor of this step."
                   ></i>
                 </div>
 

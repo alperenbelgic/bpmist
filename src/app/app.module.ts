@@ -7,6 +7,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material-module';
+import { UiControlsModule } from './ui-controls.module';
 
 import { ProcessDesignerComponent } from './components/process-designer/process-designer.component';
 import { ProcessItemComponent } from './components/process-item/process-item.component';
@@ -39,6 +40,7 @@ const appearance: MatFormFieldDefaultOptions = {
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    UiControlsModule,
     FlexLayoutModule,
     FormlyMatDatepickerModule,
     FormlyMatToggleModule,

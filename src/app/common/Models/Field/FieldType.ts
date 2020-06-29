@@ -1,4 +1,9 @@
 export class FieldType {
-  name: string;
-  code: string;
+
+  constructor(
+    public readonly name: string,
+    public readonly code: string,
+  ) {
+
+  }
 }

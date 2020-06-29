@@ -5,7 +5,7 @@ import { ProcessItemVisualState } from './ProcessItemVisualState';
 export class ProcessItem {
 
   public constructor(
-    public id: string,
+    public readonly id: string,
     protected retrievedFromServer: boolean,
     public topPx: number = 80,
     public leftPx: number = 80,

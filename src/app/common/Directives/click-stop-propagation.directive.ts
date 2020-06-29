@@ -8,14 +8,17 @@ export class ClickStopPropagationDirective {
   constructor() { }
 
   @HostListener('click', ['$event'])
-  public onClick(event: any): void
-  {
-      event.stopPropagation();
+  public onClick(event: any): void {
+    event.stopPropagation();
   }
 
   @HostListener('mousedown', ['$event'])
-  public onmMouseDown(event: any): void
-  {
-      event.stopPropagation();
+  public onmMouseDown(event: any): void {
+    event.stopPropagation();
   }
+
+  // @HostListener('mouseup', ['$event'])
+  // public onmMouseUp(event: any): void {
+  //   event.stopPropagation();
+  // }
 }

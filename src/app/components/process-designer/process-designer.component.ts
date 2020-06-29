@@ -6,6 +6,7 @@ import { Link } from 'src/app/common/Models/ProcessItems/Link';
 import { StepItem } from 'src/app/common/Models/ProcessItems/StepItem';
 import { ConditionItem } from 'src/app/common/Models/ProcessItems/ConditionItem';
 import { Process } from 'src/app/common/Models/ProcessItems/Process';
+import { UserGroupService } from 'src/app/services/userGroup.service';
 
 @Component({
   selector: 'app-process-designer',
@@ -48,7 +49,9 @@ export class ProcessDesignerComponent implements OnInit {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private randomIdGenerator: RandomIdGenerator) { }
+    private randomIdGenerator: RandomIdGenerator,
+    private userGroupService: UserGroupService,
+  ) { }
 
   ngOnInit(): void {
     this.initialize();
@@ -57,7 +60,7 @@ export class ProcessDesignerComponent implements OnInit {
   initialize() {
     this.cd.detach();
 
-    this.process = new Process(this.randomIdGenerator);
+    this.process = new Process(this.randomIdGenerator, this.userGroupService);
 
     this.process.addNewStep('Request Entry', 30 + 80, 100);
 
@@ -99,7 +102,15 @@ export class ProcessDesignerComponent implements OnInit {
 
     this.arrangeHorizontalDistances();
     const lastItem = this.processItems.pop();
-    const newItem = new StepItem(this.randomIdGenerator.generate(), false, 'new one', lastItem.topPx, lastItem.leftPx + 1);
+
+    const newItem = new StepItem(
+      this.randomIdGenerator.generate(),
+      false, 'new one',
+      lastItem.topPx,
+      lastItem.leftPx + 1,
+      this.userGroupService.getDefaultResponsibleType(),
+      this.userGroupService.getDefaultGroupAssignOption());
+
     this.processItems.push(lastItem);
     this.processItems.push(newItem);
     this.arrangeHorizontalDistances();

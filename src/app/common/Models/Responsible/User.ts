@@ -1,4 +1,4 @@
 export class User {
-  constructor(public userName: string, public userId: string) {
+  constructor(public readonly userName: string, public readonly userId: string) {
   }
 }
