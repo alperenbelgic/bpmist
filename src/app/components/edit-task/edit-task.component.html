@@ -1,0 +1,43 @@
+<div
+  class="edit-task-wrapper"
+  fxLayout="row"
+  fxLayoutAlign="center center"
+>
+  <div
+    *ngIf="taskModel"
+    class="edit-task-content"
+  >
+    <div class="process-title-header">process
+      <i class="fa fa-info-circle"></i></div>
+    <div class="process-title">{{taskModel.processName}}</div>
+    <div class="task-title-header">your task<i class="fa fa-info-circle"></i></div>
+    <div class="task-title">{{taskModel.title}}</div>
+
+    <div class="detail-textbox">
+      <ejs-textbox
+        placeholder="Any notes?"
+        floatLabelType="Always"
+        [multiline]='true'
+        cssClass="e-outline"
+        [(value)]='taskModel.details'
+      ></ejs-textbox>
+    </div>
+
+    <div
+      fxLayout="row"
+      fxLayoutAlign="end center"
+    >
+
+      <button
+        (click)="complete()"
+        fxLayoutAlign="start center"
+        mat-button
+        mat-raised-button
+        color="primary"
+      >
+        Complete
+      </button>
+    </div>
+
+  </div>
+</div>

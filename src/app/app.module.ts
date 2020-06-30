@@ -20,6 +20,7 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
 import { FormlyMatToggleModule } from '@ngx-formly/material/toggle';
 import { MatFormFieldDefaultOptions, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { EditTaskComponent } from './components/edit-task/edit-task.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -31,7 +32,8 @@ const appearance: MatFormFieldDefaultOptions = {
     ProcessDesignerComponent,
     ProcessItemComponent,
     ProcessItemSettingsComponent,
-    ClickStopPropagationDirective
+    ClickStopPropagationDirective,
+    EditTaskComponent
   ],
   imports: [
     BrowserModule,

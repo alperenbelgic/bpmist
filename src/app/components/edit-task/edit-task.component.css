@@ -1,0 +1,36 @@
+.edit-task-content {
+  width: 500px;
+}
+
+.process-title-header {
+  font-weight: bold;
+  /* // color gray */
+  color: gray;
+  text-align: center;
+  font-size: 12px;
+  margin-top: 40px;
+}
+
+.process-title {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+}
+
+.task-title-header {
+  font-weight: bold;
+  /* // color gray */
+  color: gray;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.task-title {
+  font-weight: bold;
+  font-size: 40px;
+  text-align: center;
+}
+
+.detail-textbox {
+  margin-top: 20px;
+}
