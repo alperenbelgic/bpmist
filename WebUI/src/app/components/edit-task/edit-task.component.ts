@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from 'src/app/services/Web/http.service';
 
 export class TaskModel {
   processName = 'Space onboarding - 211b Baker St.';
@@ -15,11 +16,17 @@ export class EditTaskComponent implements OnInit {
 
   taskModel: TaskModel;
 
-  constructor() {
+  constructor(
+    private httpService: HttpService,
+  ) {
   }
 
   ngOnInit(): void {
     this.taskModel = new TaskModel();
+
+    this.httpService.post('/Task/Save', { processId: 'hello', hodor: 1 }).subscribe(r => {
+      console.log('web result', r);
+    });
   }
 
   complete() {

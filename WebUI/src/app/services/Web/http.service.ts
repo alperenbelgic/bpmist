@@ -3,12 +3,14 @@ import { HttpClient, HttpHeaders, HttpErrorResponse, HttpInterceptor, HttpReques
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-@Injectable()
-export class AppWebService {
+@Injectable({
+  providedIn: 'root'
+})
+export class HttpService {
 
   getServiceRootPath(): string {
     if (location.hostname === 'localhost') {
-      return 'http://localhost:60766/api';
+      return 'https://localhost:5001/api';
     }
     else {
       return '/api';
@@ -19,7 +21,7 @@ export class AppWebService {
 
   }
 
-  Get<T>(source: string): Observable<T> {
+  get<T>(source: string): Observable<T> {
     return this.http.get<T>(this.getServiceRootPath() + source);
   }
 
@@ -30,7 +32,7 @@ export class AppWebService {
     });
   }
 
-  Post<T>(source: string, objectToPost: any): Observable<T> {
+  post<T>(source: string, objectToPost: any): Observable<T> {
     console.log('http method is called:' + this.getServiceRootPath() + source);
 
     const httpOptions = {
