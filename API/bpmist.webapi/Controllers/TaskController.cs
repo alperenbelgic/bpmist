@@ -10,9 +10,9 @@ namespace API.Controllers
     public class TaskController : BaseController
     {
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<TaskController> _logger;
 
-        public TaskController(ILogger<WeatherForecastController> logger)
+        public TaskController(ILogger<TaskController> logger)
         {
             _logger = logger;
         }
