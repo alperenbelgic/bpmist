@@ -11,7 +11,7 @@ namespace bpmist.firestore.Commands
     {
         protected override async Task<GetProcessStartTemplateQueryResult> ExecuteImplementationAsync(GetProcessStartTemplateQueryParameter parameter, IContextInformation contextInformation)
         {
-            return new GetProcessStartTemplateQueryResult("hodor", "modor");
+            throw new NotImplementedException();
         }
 
         protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(GetProcessStartTemplateQueryParameter parameter, IContextInformation contextInformation)

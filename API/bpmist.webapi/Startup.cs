@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,9 +32,12 @@ namespace API
                                         builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
                                     });
 
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(configure =>
+            {
+                configure.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
 
-            services.AddTransient<bpmist.data.ICommands.IGetProcessStartTemplateQuery, bpmist.firestore.Commands.GetProcessStartTemplateQuery>();
+            services.AddBpmistServices();
 
         }
 

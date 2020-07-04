@@ -6,8 +6,7 @@ namespace API
     {
         public static void AddBpmistServices(this IServiceCollection services)
         {
-            services.AddTransient<bpmist.data.ICommands.IGetProcessStartTemplateQuery, bpmist.firestore.Commands.GetProcessStartTemplateQuery>();
-
+[ServiceMappings]
         }
     }
 }

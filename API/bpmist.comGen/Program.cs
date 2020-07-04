@@ -17,6 +17,7 @@ namespace bpmist.comGen
         // login?
         // 
         // chopping user/command
+        // shit hell yeaa!! generate javascript services
 
         // 
         // check if there is duplicating guid
@@ -34,6 +35,7 @@ namespace bpmist.comGen
             var files = Directory.GetFiles("Config\\commands");
 
             var controllerContent = new StringBuilder();
+            var registeringServicesContent = new StringBuilder();
 
             foreach (var commandConfigurationFilePath in files)
             {
@@ -65,25 +67,40 @@ namespace bpmist.comGen
                 if (commandModel.usedInApi)
                 {
                     string commandControllerContent = commandModel.isQuery ? CreateGetController(commandModel) : CreatePostController(commandModel);
-
                     controllerContent.AppendLine(commandControllerContent);
-
                     File.WriteAllText(implementationCommandFullFilePath, implementationCommandContent);
                 }
+
+                string serviceRegistrationContent = GetServiceRegistrationContent(commandModel);
+                registeringServicesContent.AppendLine(serviceRegistrationContent);
             }
 
             if (controllerContent.Length > 0)
             {
                 string controllerFileContent = File.ReadAllText("Config/global/ControllerFile.template");
-
                 controllerFileContent = controllerFileContent.Replace("[ControllersContent]", controllerContent.ToString());
-
                 File.WriteAllText("..\\bpmist.webapi\\Controllers\\GeneratedControllers.cs", controllerFileContent);
             }
             {
                 //delete file if exists
             }
 
+            string serviceRegistrationTemplateContent = File.ReadAllText("Config/global/ServiceMapper.template");
+            string serviceRegistrationFileContent = serviceRegistrationTemplateContent.Replace("[ServiceMappings]", registeringServicesContent.ToString());
+            File.WriteAllText("..\\bpmist.webapi\\ServiceMapper.cs", serviceRegistrationFileContent);
+
+        }
+
+        static string GetServiceRegistrationContent(CommandModel commandModel)
+        {
+            string commandName = commandModel.name;
+            string interfaceProject = commandModel.interfaceProject;
+            string command_query = commandModel.isQuery ? "Query" : "Command";
+            string implementationProject = commandModel.implementationProject;
+
+            string serviceMapping = $"            services.AddTransient<{interfaceProject}.ICommands.I{commandName}{command_query}, {implementationProject}.Commands.{commandName}Query>();";
+
+            return serviceMapping;
         }
 
         static string CreateGetController(CommandModel commandModel)

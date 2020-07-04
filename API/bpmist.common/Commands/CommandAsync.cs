@@ -123,15 +123,9 @@ namespace bpmist.common.Commands
 
         IList<ITeam> Teams { get; }
 
-        int TenantId { get; }
+        string TenantId { get; }
 
-        int UserId { get; }
-
-        string FirstName { get; }
-
-        string Surname { get; }
-
-        string UserPhoto { get; }
+        string UserId { get; }
     }
 
     public interface IContextInformation
