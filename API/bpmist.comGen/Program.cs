@@ -10,6 +10,22 @@ namespace bpmist.comGen
 {
     class Program
     {
+
+        // todo
+        // DI mapping
+        // context / user
+        // login?
+        // 
+        // chopping user/command
+
+        // 
+        // check if there is duplicating guid
+        // check if there is duplicating name
+        // each time, save configs in another folder
+        // next time, detect changed ones
+        // you can even change file names for implementation commands
+        // Log to console: what has changed
+
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
@@ -39,7 +55,7 @@ namespace bpmist.comGen
 
                 string implementationCommandContent = CreateImplementationCommandContent(commandModel);
                 commandModel.GetImplementationCommandFilePath(out string implementationCommandFilePath, out string implementationCommandFileName);
-                Directory.CreateDirectory(implementationCommandFilePath);
+                Directory.CreateDirectory("..\\" + implementationCommandFilePath);
                 string implementationCommandFullFilePath = "..\\" + implementationCommandFilePath + implementationCommandFileName;
                 if (!File.Exists(implementationCommandFullFilePath))
                 {
@@ -48,7 +64,7 @@ namespace bpmist.comGen
 
                 if (commandModel.usedInApi)
                 {
-                    string commandControllerContent = commandModel.isQuery ? CreateGetController(commandModel) : "";
+                    string commandControllerContent = commandModel.isQuery ? CreateGetController(commandModel) : CreatePostController(commandModel);
 
                     controllerContent.AppendLine(commandControllerContent);
 
@@ -64,6 +80,9 @@ namespace bpmist.comGen
 
                 File.WriteAllText("..\\bpmist.webapi\\Controllers\\GeneratedControllers.cs", controllerFileContent);
             }
+            {
+                //delete file if exists
+            }
 
         }
 
@@ -75,7 +94,7 @@ namespace bpmist.comGen
             fileContent = fileContent.Replace("[CommandName]", commandName);
 
             string command_query = commandModel.isQuery ? "Query" : "Command";
-            fileContent = fileContent.Replace("[Command_Query]", commandModel);            
+            fileContent = fileContent.Replace("[Command_Query]", command_query);
 
             string parameterConstructorParameters = string.Join(", ",
                               commandModel.parameters.Select(p =>
@@ -96,7 +115,60 @@ namespace bpmist.comGen
 
             fileContent = fileContent.Replace("[PassingParameters]", passingParameters);
 
-            fileContent = fileContent.Replace("[ReturnType]", passingParameters);
+            string interfaceNamespace = commandModel.interfaceProject + ".ICommands";
+            fileContent = fileContent.Replace("[InterfaceNamespace]", interfaceNamespace);
+
+            return fileContent;
+        }
+
+        static string CreatePostController(CommandModel commandModel)
+        {
+            string fileContent = File.ReadAllText("Config/global/PostController.template");
+
+            string commandName = commandModel.name;
+            fileContent = fileContent.Replace("[CommandName]", commandName);
+
+            string command_query = commandModel.isQuery ? "Query" : "Command";
+            fileContent = fileContent.Replace("[Command_Query]", command_query);
+
+            string passingParameters = string.Join(", ",
+                              commandModel.parameters.Select(p =>
+                              {
+                                  string name = p.Key.Split('_')[0];
+                                  string type = p.Key.Split('_')[1];
+                                  if (UseNullableParameter(type, commandModel.usedInApi))
+                                  {
+                                      return "_parameter." + name;
+                                  }
+                                  return "_parameter." + name;
+                              }
+
+                              ));
+
+            fileContent = fileContent.Replace("[PassingParameters]", passingParameters);
+
+
+            string controllerParameterProperties = string.Join(Environment.NewLine,
+            commandModel.parameters.Select(p =>
+            {
+                string name = p.Key.Split('_')[0];
+                string type = p.Key.Split('_')[1];
+                if (UseNullableParameter(type, commandModel.usedInApi))
+                {
+                    return "            " + $"public {type}? {name} {{ get; }} ";
+                }
+                return "            " + $"public {p.Key.Split('_')[1]} {p.Key.Split('_')[0]} {{ get; }} ";
+            })
+            );
+
+            fileContent = fileContent.Replace("[ControllerParameterProperties]", controllerParameterProperties);
+
+
+
+
+
+            string interfaceNamespace = commandModel.interfaceProject + ".ICommands";
+            fileContent = fileContent.Replace("[InterfaceNamespace]", interfaceNamespace);
 
             return fileContent;
         }
@@ -117,7 +189,7 @@ namespace bpmist.comGen
             fileContent = fileContent.Replace("[CommandName]", commandName);
 
             string command_query = commandModel.isQuery ? "Query" : "Command";
-            fileContent = fileContent.Replace("[Command_Query]", commandModel);
+            fileContent = fileContent.Replace("[Command_Query]", command_query);
 
             return fileContent;
 
@@ -139,7 +211,7 @@ namespace bpmist.comGen
             fileContent = fileContent.Replace("[CommandName]", commandName);
 
             string command_query = commandModel.isQuery ? "Query" : "Command";
-            fileContent = fileContent.Replace("[Command_Query]", commandModel);            
+            fileContent = fileContent.Replace("[Command_Query]", command_query);
 
             string[] injects = commandModel.injects;
             fileContent = fileContent.Replace("[InjectingCommandParameteres]",
@@ -172,7 +244,7 @@ namespace bpmist.comGen
             fileContent = fileContent.Replace("[CommandName]", commandName);
 
             string command_query = commandModel.isQuery ? "Query" : "Command";
-            fileContent = fileContent.Replace("[Command_Query]", commandModel);            
+            fileContent = fileContent.Replace("[Command_Query]", command_query);
 
             string parameterConstructorParameters = string.Join(", ",
                               commandModel.parameters.Select(p =>
@@ -295,7 +367,7 @@ public class CommandModel
 
     public void GetImplementationCommandFilePath(out string filePath, out string fileName)
     {
-        filePath = this.implementationProject + "\\" + "Commands";
+        filePath = this.implementationProject + "\\" + "Commands\\Implementation";
         fileName = "\\" + this.name + (this.isQuery ? "Query" : "Command") + ".cs";
     }
 

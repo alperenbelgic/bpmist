@@ -3,9 +3,11 @@
   "name": "GetProcessStartTemplate",
   "interfaceProject": "bpmist.data",
   "implementationProject": "bpmist.firestore",
-  "isQuery": false,
+  "isQuery": true,
   "injects": [],
-  "parameters": {},
+  "parameters": {
+    "ProcessId_string": null
+  },
   "returnType": {
     "ProcessName_string": null,
     "Task_string": null

@@ -33,7 +33,7 @@ namespace API
 
             services.AddControllers();
 
-
+            services.AddTransient<bpmist.data.ICommands.IGetProcessStartTemplateQuery, bpmist.firestore.Commands.GetProcessStartTemplateQuery>();
 
         }
 

@@ -19,7 +19,7 @@ namespace [InterfaceNameSpace]
 [ParameterProperties]
     }
 
-    public class [CommandName]Result
+    public class [CommandName][Command_Query]Result
     {
         public [CommandName][Command_Query]Result(
             [ResultConstructorParameters]

@@ -1,25 +1,29 @@
-    public class [ControllerName]Controller : BaseController
+    public class [CommandName][Command_Query]Controller : BaseController
     {
-        private I[CommandName] [CommandName] { get; }
+        private [InterfaceNamespace].I[CommandName][Command_Query] [CommandName][Command_Query] { get; }
 
-        public [ControllerName]Controller(I[CommandName] _[CommandName])
+        public [CommandName][Command_Query]Controller(
+            [InterfaceNamespace].I[CommandName][Command_Query] _[CommandName][Command_Query])
         {
-            this.[CommandName] = _[CommandName];
+            this.[CommandName][Command_Query] = _[CommandName][Command_Query];
         }
 
         [HttpPost]
-        public async [ReturnType] Post(
-            [ControllerName]ControllerParameter _parameter
+        public async Task<CommandResult<[InterfaceNamespace].[CommandName][Command_Query]Result>> Post(
+            [CommandName][Command_Query]ControllerParameter _parameter
         )
         {
-            return await this.[CommandName].ExecuteAsync(
-                [PassingParameters]
-                , 
-                this.GetExecutionContext()
+            var contextInfo = this.GetContextInfo();
+
+            return await this.[CommandName][Command_Query].ExecuteAsync(
+                new [InterfaceNamespace].[CommandName][Command_Query]Parameter(
+                    [PassingParameters]
+                    ),
+                contextInfo
             );
         }
 
-         public class [ControllerName]ControllerParameter
+         public class [CommandName][Command_Query]ControllerParameter
          {
 [ControllerParameterProperties]
          }

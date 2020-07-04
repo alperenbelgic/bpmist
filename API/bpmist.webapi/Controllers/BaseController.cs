@@ -14,12 +14,14 @@ namespace API.Controllers
     {
         protected virtual IContextInformation GetContextInfo()
         {
-            throw new NotImplementedException();
+            return null;
+            // throw new NotImplementedException();
             // return this.ContextProvider.GetContextInformation(this.GetCurrentUser());
         }
 
         protected virtual IUser GetCurrentUser(string authorizationKey = null)
         {
+            return null;
             throw new NotImplementedException();
             // IUser user;
             // if (authorizationKey == null)
