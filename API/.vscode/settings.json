@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.comGen": "json",
+        "*.template": "csharp"
+    }
+}

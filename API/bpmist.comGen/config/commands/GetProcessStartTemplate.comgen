@@ -1,0 +1,14 @@
+{
+  "guid": "a2ae7e81-0e70-4d57-908d-c6b3c327966c",
+  "name": "GetProcessStartTemplate",
+  "interfaceProject": "bpmist.data",
+  "implementationProject": "bpmist.firestore",
+  "isQuery": false,
+  "injects": [],
+  "parameters": {},
+  "returnType": {
+    "ProcessName_string": null,
+    "Task_string": null
+  },
+  "usedInApi": true
+}

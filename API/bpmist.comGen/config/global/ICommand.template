@@ -1,0 +1,33 @@
+﻿using System;
+using bpmist.common.Commands;
+
+namespace [InterfaceNameSpace]
+{
+    public interface I[CommandName][Command_Query] : ICommand<[CommandName][Command_Query]Parameter, [CommandName][Command_Query]Result>
+    {
+    }
+
+    public class [CommandName][Command_Query]Parameter
+    {
+        public [CommandName][Command_Query]Parameter(
+            [ParameterConstructorParameters]
+            )
+        {
+[ParameterPropertyAssignments]
+        }
+
+[ParameterProperties]
+    }
+
+    public class [CommandName]Result
+    {
+        public [CommandName][Command_Query]Result(
+            [ResultConstructorParameters]
+            )
+        {
+[ResultPropertyAssignments]
+        }
+
+[ResultProperties]
+    } 
+}

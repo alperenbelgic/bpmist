@@ -1,0 +1,29 @@
+    public class [ControllerName]Controller : BaseController
+    {
+        private I[CommandName] [CommandName] { get; }
+
+        public [ControllerName]Controller(I[CommandName] _[CommandName])
+        {
+            this.[CommandName] = _[CommandName];
+        }
+
+        [HttpPost]
+        public async [ReturnType] Post(
+            [ControllerName]ControllerParameter _parameter
+        )
+        {
+            return await this.[CommandName].ExecuteAsync(
+                [PassingParameters]
+                , 
+                this.GetExecutionContext()
+            );
+        }
+
+         public class [ControllerName]ControllerParameter
+         {
+[ControllerParameterProperties]
+         }
+
+
+
+    }

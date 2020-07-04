@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using bpmist.common.Commands;
+using [InterfaceNamespace];
+
+namespace [CommandNamespace]
+{
+    public partial class [CommandName][Command_Query] :
+    Command<[CommandName][Command_Query]Parameter, [CommandName][Command_Query]Result>, I[CommandName][Command_Query]
+    {
+        public [CommandName][Command_Query](
+            [InjectingCommandParameteres]
+        )
+        {
+[InjectingCommandPropertyAssignment]
+        }
+
+[InjectingCommandProperties]
+    }
+}

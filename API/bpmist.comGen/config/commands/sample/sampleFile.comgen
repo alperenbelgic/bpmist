@@ -1,0 +1,25 @@
+{
+  "guid": "a2ae7e81-0e70-4d57-908d-c6b3c327966c",
+  "name": "GetProcessStartTemplate",
+  "interfaceProject": "bpmist.data",
+  "implementationProject": "bpmist.firestore",
+  "isQuery": true,
+  "injects": [
+    "GetSomethingCommand_bpmist.data.ICommands.IGetSomethingCommand",
+    "logger_Logger"
+  ],
+  "parameters": {
+    "StartDatee_DateTime": null,
+    "EndDate_DateTime": null,
+    "UserId_string": null
+  },
+  "returnType": {
+    "OrderId_string": null,
+    "OrderDate_DateTime": null,
+    "LineItems_List": {
+      "LineId_string": null,
+      "Count_int": null
+    }
+  },
+  "usedInApi": true
+}

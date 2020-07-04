@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -18,8 +19,21 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public object GetNewProcess(string processId, int hodor)
+        public async Task<object> GetNewProcessTemplate(string processId, int hodor)
         {
+            var db = FirestoreDb.Create("bpmistproject");
+
+
+            DocumentReference docRef = db.Collection("users").Document("alovelace");
+            Dictionary<string, object> user = new Dictionary<string, object>
+{
+    { "First", "Ada" },
+    { "Last", "Lovelace" },
+    { "Born", 1815 }
+};
+            await docRef.SetAsync(user);
+
+
             return new
             {
                 Hodor = "modor"
@@ -32,21 +46,15 @@ namespace API.Controllers
             return new
             {
                 Hodor = "modor",
-                processId = param.processId2,
-                modor = param.hodor2
+                processId = param.processId,
+                modor = param.hodor
             };
         }
     }
 
     public class X
     {
-        public X(string processId, int hodor)
-        {
-            this.processId2 = processId;
-            this.hodor2 = hodor;
-        }
-
-        public string processId2 { get; set; }
-        public int hodor2 { get; set; }
+        public string processId { get; set; }
+        public int hodor { get; set; }
     }
 }

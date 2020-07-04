@@ -1,0 +1,24 @@
+    public class [CommandName][Command_Query]Controller : BaseController
+    {
+        private I[CommandName][Command_Query] [CommandName][Command_Query] { get; }
+
+        public [CommandName][Command_Query]Controller(I[CommandName][Command_Query] _[CommandName][Command_Query])
+        {
+            this.[CommandName][Command_Query] = _[CommandName][Command_Query];
+        }
+
+        [HttpGet]
+        public async Task<CommandResult<[ReturnType]>> Get(
+            [InputParameters]
+        )
+        {
+            var contextInfo = this.GetContextInfo();
+
+            return await this.[CommandName][Command_Query].ExecuteAsync(
+                new [CommandName][Command_Query]Parameter(
+                    [PassingParameters]
+                    ),
+                contextInfo
+            );
+        }
+    }
