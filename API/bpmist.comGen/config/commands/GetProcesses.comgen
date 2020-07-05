@@ -8,11 +8,11 @@
   "parameters": {},
   "returnType": {
     "Processes_List": {
-       "ProcessName_string": null,
-       "Tasks_List": {
-          "TaskId_string": null,
-          "TaskName_string": null
-        }
+      "ProcessName_string": null,
+      "Tasks_List": {
+        "TaskId_string": null,
+        "TaskName_string": null
+      }
     }
   },
   "usedInApi": true
