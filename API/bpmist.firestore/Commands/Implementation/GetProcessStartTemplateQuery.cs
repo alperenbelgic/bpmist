@@ -9,12 +9,12 @@ namespace bpmist.firestore.Commands
 {
     public partial class GetProcessStartTemplateQuery
     {
-        protected override async Task<GetProcessStartTemplateQueryResult> ExecuteImplementationAsync(GetProcessStartTemplateQueryParameter parameter, IContextInformation contextInformation)
+        protected override async Task<GetProcessStartTemplateResult> ExecuteImplementationAsync(GetProcessStartTemplateParameter parameter, IContextInformation contextInformation)
         {
             throw new NotImplementedException();
         }
 
-        protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(GetProcessStartTemplateQueryParameter parameter, IContextInformation contextInformation)
+        protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(GetProcessStartTemplateParameter parameter, IContextInformation contextInformation)
         {
             return Enumerable.Empty<OperationErrorInformation>();
         }

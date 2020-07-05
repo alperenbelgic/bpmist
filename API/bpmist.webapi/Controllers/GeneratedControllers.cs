@@ -9,6 +9,31 @@ using bpmist.common.Commands;
 
 namespace API.Controllers
 {
+    public class GetProcessesQueryController : BaseController
+    {
+        private bpmist.data.ICommands.IGetProcessesQuery GetProcessesQuery { get; }
+
+        public GetProcessesQueryController(
+            bpmist.data.ICommands.IGetProcessesQuery _GetProcessesQuery)
+        {
+            this.GetProcessesQuery = _GetProcessesQuery;
+        }
+
+        [HttpGet]
+        public async Task<CommandResult<bpmist.data.ICommands.GetProcessesResult>> Get(
+            
+        )
+        {
+            var contextInfo = this.GetContextInfo();
+
+            return await this.GetProcessesQuery.ExecuteAsync(
+                new bpmist.data.ICommands.GetProcessesParameter(
+                    
+                    ),
+                contextInfo
+            );
+        }
+    }
     public class GetProcessStartTemplateQueryController : BaseController
     {
         private bpmist.data.ICommands.IGetProcessStartTemplateQuery GetProcessStartTemplateQuery { get; }
@@ -20,14 +45,14 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<CommandResult<bpmist.data.ICommands.GetProcessStartTemplateQueryResult>> Get(
+        public async Task<CommandResult<bpmist.data.ICommands.GetProcessStartTemplateResult>> Get(
             string ProcessId
         )
         {
             var contextInfo = this.GetContextInfo();
 
             return await this.GetProcessStartTemplateQuery.ExecuteAsync(
-                new bpmist.data.ICommands.GetProcessStartTemplateQueryParameter(
+                new bpmist.data.ICommands.GetProcessStartTemplateParameter(
                     ProcessId
                     ),
                 contextInfo

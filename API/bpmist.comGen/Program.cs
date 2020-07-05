@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Text;
+using System.Reflection.Metadata;
 
 namespace bpmist.comGen
 {
@@ -68,7 +69,6 @@ namespace bpmist.comGen
                 {
                     string commandControllerContent = commandModel.isQuery ? CreateGetController(commandModel) : CreatePostController(commandModel);
                     controllerContent.AppendLine(commandControllerContent);
-                    File.WriteAllText(implementationCommandFullFilePath, implementationCommandContent);
                 }
 
                 string serviceRegistrationContent = GetServiceRegistrationContent(commandModel);
@@ -250,9 +250,72 @@ namespace bpmist.comGen
 
         }
 
+        static string CreateResultClass(PropertyCollection resultProperties, string modelName)
+        {
+            string classContent = "";
+
+            string fileContent = File.ReadAllText("Config/global/Class.template");
+
+            string className = modelName + "Result";
+
+            fileContent = fileContent.Replace("[ClassName]", className);
+
+            string resultConstructorParameters = string.Join(", ",
+                              resultProperties.Select(p =>
+                              {
+                                  string name = p.Key.Split('_')[0];
+                                  string type = p.Key.Split('_')[1];
+
+                                  if (type == "List")
+                                  {
+                                      return modelName + "_" + name + "Result" + "[]" + " " + name;
+                                  }
+
+                                  return type + " " + name;
+                              }));
+
+            fileContent = fileContent.Replace("[Parameters]", resultConstructorParameters);
+
+            string resultPropertyAssignments = string.Join(Environment.NewLine,
+            resultProperties.Select(p => "            " + "this." + p.Key.Split('_')[0] + " = " + p.Key.Split('_')[0] + ";")
+            );
+
+            fileContent = fileContent.Replace("[Assignments]", resultPropertyAssignments);
+
+            string resultPropertiesContent = string.Join(Environment.NewLine,
+            resultProperties.Select(p =>
+            {
+                string name = p.Key.Split('_')[0];
+                string type = p.Key.Split('_')[1];
+
+                if (type == "List")
+                {
+                    return "        " + "public " + modelName + "_" + name + "Result" + "[]" + " " + name + " { get; } ";
+                }
+
+                return "        " + $"public {type} {name} {{ get; }} ";
+            })
+            );
+
+            fileContent = fileContent.Replace("[Properties]", resultPropertiesContent);
+
+            foreach (var resultProperty in resultProperties)
+            {
+                string name = resultProperty.Key.Split('_')[0];
+                string type = resultProperty.Key.Split('_')[1];
+
+                if (type == "List")
+                {
+                    fileContent += CreateResultClass(resultProperty.Value, modelName + "_" + name);
+                }
+            }
+
+            return fileContent;
+        }
+
         static string CreateInterfaceContent(CommandModel commandModel)
         {
-            string fileContent = System.IO.File.ReadAllText("Config/global/ICommand.template");
+            string fileContent = File.ReadAllText("Config/global/ICommand.template");
 
             string interfaceNamespace = commandModel.interfaceProject + ".ICommands";
             fileContent = fileContent.Replace("[InterfaceNameSpace]", interfaceNamespace);
@@ -312,24 +375,35 @@ namespace bpmist.comGen
 
             fileContent = fileContent.Replace("[ParameterProperties]", parameterProperties);
 
+            fileContent = fileContent.Replace("[ResultClass]", CreateResultClass(commandModel.returnType, commandModel.name));
 
+            //string resultConstructorParameters = string.Join(", ",
+            //                  commandModel.returnType.Select(p =>
+            //                  {
+            //                      string name = p.Key.Split('_')[0];
+            //                      string type = p.Key.Split('_')[1];
 
-            string resultConstructorParameters = string.Join(", ",
-                              commandModel.returnType.Select(p => p.Key.Split('_')[1] + " " + p.Key.Split('_')[0]));
+            //                      if (type == "List")
+            //                      {
+            //                          return commandName + "_" + name + "[]" + " " + name;
+            //                      }
 
-            fileContent = fileContent.Replace("[ResultConstructorParameters]", resultConstructorParameters);
+            //                      return type + " " + name;
+            //                  }));
 
-            string resultPropertyAssignments = string.Join(Environment.NewLine,
-            commandModel.returnType.Select(p => "            " + "this." + p.Key.Split('_')[0] + " = " + p.Key.Split('_')[0] + ";")
-            );
+            //fileContent = fileContent.Replace("[ResultConstructorParameters]", resultConstructorParameters);
 
-            fileContent = fileContent.Replace("[ResultPropertyAssignments]", resultPropertyAssignments);
+            //string resultPropertyAssignments = string.Join(Environment.NewLine,
+            //commandModel.returnType.Select(p => "            " + "this." + p.Key.Split('_')[0] + " = " + p.Key.Split('_')[0] + ";")
+            //);
 
-            string resultProperties = string.Join(Environment.NewLine,
-            commandModel.returnType.Select(p => "        " + $"public {p.Key.Split('_')[1]} {p.Key.Split('_')[0]} {{ get; }} ")
-            );
+            //fileContent = fileContent.Replace("[ResultPropertyAssignments]", resultPropertyAssignments);
 
-            fileContent = fileContent.Replace("[ResultProperties]", resultProperties);
+            //string resultProperties = string.Join(Environment.NewLine,
+            //commandModel.returnType.Select(p => "        " + $"public {p.Key.Split('_')[1]} {p.Key.Split('_')[0]} {{ get; }} ")
+            //);
+
+            //fileContent = fileContent.Replace("[ResultProperties]", resultProperties);
 
             return fileContent;
         }
@@ -364,9 +438,9 @@ public class CommandModel
 
     public string[] injects { get; set; }
 
-    public ParameterCollection parameters { get; set; }
+    public PropertyCollection parameters { get; set; }
 
-    public ParameterCollection returnType { get; set; }
+    public PropertyCollection returnType { get; set; }
 
     public bool usedInApi { get; set; } = false;
 
@@ -391,7 +465,7 @@ public class CommandModel
 
 }
 
-public class ParameterCollection : Dictionary<string, ParameterCollection>
+public class PropertyCollection : Dictionary<string, PropertyCollection>
 {
 
 }

@@ -9,12 +9,12 @@ namespace [CommandNamespace]
 {
     public partial class [CommandName][Command_Query]
     {
-        protected override async Task<[CommandName][Command_Query]Result> ExecuteImplementationAsync([CommandName][Command_Query]Parameter parameter, IContextInformation contextInformation)
+        protected override async Task<[CommandName]Result> ExecuteImplementationAsync([CommandName]Parameter parameter, IContextInformation contextInformation)
         {
             throw new NotImplementedException();
         }
 
-        protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync([CommandName][Command_Query]Parameter parameter, IContextInformation contextInformation)
+        protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync([CommandName]Parameter parameter, IContextInformation contextInformation)
         {
             return Enumerable.Empty<OperationErrorInformation>();
         }

@@ -9,14 +9,14 @@
         }
 
         [HttpGet]
-        public async Task<CommandResult<[InterfaceNamespace].[CommandName][Command_Query]Result>> Get(
+        public async Task<CommandResult<[InterfaceNamespace].[CommandName]Result>> Get(
             [InputParameters]
         )
         {
             var contextInfo = this.GetContextInfo();
 
             return await this.[CommandName][Command_Query].ExecuteAsync(
-                new [InterfaceNamespace].[CommandName][Command_Query]Parameter(
+                new [InterfaceNamespace].[CommandName]Parameter(
                     [PassingParameters]
                     ),
                 contextInfo

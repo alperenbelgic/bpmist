@@ -9,21 +9,21 @@
         }
 
         [HttpPost]
-        public async Task<CommandResult<[InterfaceNamespace].[CommandName][Command_Query]Result>> Post(
-            [CommandName][Command_Query]ControllerParameter _parameter
+        public async Task<CommandResult<[InterfaceNamespace].[CommandName]Result>> Post(
+            [CommandName]ControllerParameter _parameter
         )
         {
             var contextInfo = this.GetContextInfo();
 
             return await this.[CommandName][Command_Query].ExecuteAsync(
-                new [InterfaceNamespace].[CommandName][Command_Query]Parameter(
+                new [InterfaceNamespace].[CommandName]Parameter(
                     [PassingParameters]
                     ),
                 contextInfo
             );
         }
 
-         public class [CommandName][Command_Query]ControllerParameter
+         public class [CommandName]ControllerParameter
          {
 [ControllerParameterProperties]
          }

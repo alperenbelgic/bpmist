@@ -3,13 +3,13 @@ using bpmist.common.Commands;
 
 namespace [InterfaceNameSpace]
 {
-    public interface I[CommandName][Command_Query] : ICommand<[CommandName][Command_Query]Parameter, [CommandName][Command_Query]Result>
+    public interface I[CommandName][Command_Query] : ICommand<[CommandName]Parameter, [CommandName]Result>
     {
     }
 
-    public class [CommandName][Command_Query]Parameter
+    public class [CommandName]Parameter
     {
-        public [CommandName][Command_Query]Parameter(
+        public [CommandName]Parameter(
             [ParameterConstructorParameters]
             )
         {
@@ -19,15 +19,5 @@ namespace [InterfaceNameSpace]
 [ParameterProperties]
     }
 
-    public class [CommandName][Command_Query]Result
-    {
-        public [CommandName][Command_Query]Result(
-            [ResultConstructorParameters]
-            )
-        {
-[ResultPropertyAssignments]
-        }
-
-[ResultProperties]
-    } 
+[ResultClass]
 }

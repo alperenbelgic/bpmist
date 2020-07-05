@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "bpmist.comGen": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\Alperen\\Documents\\projects\\drago\\drago-app\\API\\bpmist.comGen"
+    }
+  }
+}

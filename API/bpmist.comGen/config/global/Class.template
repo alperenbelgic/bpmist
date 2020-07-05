@@ -1,0 +1,10 @@
+﻿public class [ClassName]
+{
+    public [ClassName] ([Parameters])
+    {
+[Assignments]
+    }
+
+[Properties]
+}
+

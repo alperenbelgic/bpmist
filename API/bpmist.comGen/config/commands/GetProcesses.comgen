@@ -1,0 +1,19 @@
+{
+  "guid": "acdaf835-9cf7-4034-870f-05412136683f",
+  "name": "GetProcesses",
+  "interfaceProject": "bpmist.data",
+  "implementationProject": "bpmist.firestore",
+  "isQuery": true,
+  "injects": [],
+  "parameters": {},
+  "returnType": {
+    "Processes_List": {
+       "ProcessName_string": null,
+       "Tasks_List": {
+          "TaskId_string": null,
+          "TaskName_string": null
+        }
+    }
+  },
+  "usedInApi": true
+}

@@ -3,13 +3,13 @@ using bpmist.common.Commands;
 
 namespace bpmist.data.ICommands
 {
-    public interface IGetProcessStartTemplateQuery : ICommand<GetProcessStartTemplateQueryParameter, GetProcessStartTemplateQueryResult>
+    public interface IGetProcessStartTemplateQuery : ICommand<GetProcessStartTemplateParameter, GetProcessStartTemplateResult>
     {
     }
 
-    public class GetProcessStartTemplateQueryParameter
+    public class GetProcessStartTemplateParameter
     {
-        public GetProcessStartTemplateQueryParameter(
+        public GetProcessStartTemplateParameter(
             string ProcessId
             )
         {
@@ -19,17 +19,17 @@ namespace bpmist.data.ICommands
         public string ProcessId { get; } 
     }
 
-    public class GetProcessStartTemplateQueryResult
+public class GetProcessStartTemplateResult
+{
+    public GetProcessStartTemplateResult (string ProcessName, string Task)
     {
-        public GetProcessStartTemplateQueryResult(
-            string ProcessName, string Task
-            )
-        {
             this.ProcessName = ProcessName;
             this.Task = Task;
-        }
+    }
 
         public string ProcessName { get; } 
         public string Task { get; } 
-    } 
+}
+
+
 }

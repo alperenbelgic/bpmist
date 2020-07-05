@@ -6,10 +6,10 @@ using bpmist.data.ICommands;
 
 namespace bpmist.firestore.Commands
 {
-    public partial class GetProcessStartTemplateQuery :
-    Command<GetProcessStartTemplateParameter, GetProcessStartTemplateResult>, IGetProcessStartTemplateQuery
+    public partial class GetProcessesQuery :
+    Command<GetProcessesParameter, GetProcessesResult>, IGetProcessesQuery
     {
-        public GetProcessStartTemplateQuery(
+        public GetProcessesQuery(
             
         )
         {
