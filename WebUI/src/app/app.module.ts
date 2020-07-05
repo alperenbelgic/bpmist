@@ -8,7 +8,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material-module';
-import { UiControlsModule } from './ui-controls.module';
+import { UiControlsModule } from './ui-controls-module';
 
 import { ProcessDesignerComponent } from './components/process-designer/process-designer.component';
 import { ProcessItemComponent } from './components/process-item/process-item.component';
@@ -22,6 +22,7 @@ import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
 import { FormlyMatToggleModule } from '@ngx-formly/material/toggle';
 import { MatFormFieldDefaultOptions, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { EditTaskComponent } from './components/edit-task/edit-task.component';
+import { ListProcessesComponent } from './components/list-processes/list-processes.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -34,7 +35,8 @@ const appearance: MatFormFieldDefaultOptions = {
     ProcessItemComponent,
     ProcessItemSettingsComponent,
     ClickStopPropagationDirective,
-    EditTaskComponent
+    EditTaskComponent,
+    ListProcessesComponent
   ],
   imports: [
     BrowserModule,

@@ -11,8 +11,7 @@ export class HttpService {
   getServiceRootPath(): string {
     if (location.hostname === 'localhost') {
       return 'https://localhost:5001/api';
-    }
-    else {
+    } else {
       return '/api';
     }
   }
