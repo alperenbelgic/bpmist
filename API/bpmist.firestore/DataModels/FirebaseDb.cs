@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 
 // I keep losing this addres:
-// https://jskeet.github.io/google-cloud-dotnet/docs/Google.Cloud.Firestore.Data/datamodel.html
+// https://googleapis.github.io/google-cloud-dotnet/docs/Google.Cloud.Firestore/datamodel.html
 
 namespace bpmist.firestore.DataModels
 {
@@ -15,9 +15,6 @@ namespace bpmist.firestore.DataModels
         public T Get<T>(DocumentSnapshot documentSnapshot) where T : DocumentWithId
         {
             var obj = documentSnapshot.ConvertTo<T>();
-
-            obj.Id = documentSnapshot.Id;
-
             return obj;
         }
 

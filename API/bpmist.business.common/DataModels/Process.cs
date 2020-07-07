@@ -4,21 +4,36 @@ using System;
 namespace bpmist.business.common
 {
 
-    public class DocumentWithId
+    [FirestoreData]
+    public abstract class DocumentWithId
     {
+        [FirestoreDocumentId]
         public string Id { get; set; }
 
         //created, updated, etc
     }
 
+    /// <summary>
+    /// A map object belonging to a document
+    /// </summary>
+    [FirestoreData]
+    public abstract class SubDocumentWithId
+    {
+        public SubDocumentWithId()
+        {
+            // we assign an id
+            // if the object is loaded from db, this will be overridden
+            // otherwise, which means we programatically created this object,
+            // this id will be saved in db
+            this.Id = Guid.NewGuid().ToString();
+        }
+
+        public string Id { get; set; }
+    }
+
     [FirestoreData]
     public class Process : DocumentWithId
     {
-        Process()
-        {
-
-        }
-
         [FirestoreProperty]
         public string ProcessName { get; set; }
 
@@ -37,30 +52,8 @@ namespace bpmist.business.common
         public string TaskId { get; set; }
     }
 
-    //public class FirestoreDoc
-    //{
-    //    public string Id { get; set; }
-
-    //    //created, updated, etc
-    //}
 
 
-    ///// <summary>
-    ///// A map object belonging to a document
-    ///// </summary>
-    //public class FirestoreMap
-    //{
-    //    public FirestoreMap()
-    //    {
-    //        // we assign an id
-    //        // if the object is loaded from db, this will be overridden
-    //        // otherwise, which means we programatically created this object,
-    //        // this id will be saved in db
-    //        this.Id = Guid.NewGuid().ToString();
-    //    }
-
-    //    public string Id { get; set; }
-    //}
 
     //public class ProcessInstance : FirestoreDoc
     //{
