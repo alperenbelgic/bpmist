@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bpmist.firestore", "bpmist.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bpmist.data", "bpmist.data\bpmist.data.csproj", "{3ACE9F3B-D0A8-4CA8-ADF7-F8C2247CEC05}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bpmist.business.common", "bpmist.business.common\bpmist.business.common.csproj", "{EDA6A89A-0440-4302-AE6E-2D18E086258F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bpmist.common", "bpmist.business.common\bpmist.common.csproj", "{EDA6A89A-0440-4302-AE6E-2D18E086258F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
