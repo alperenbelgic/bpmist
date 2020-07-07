@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\bpmist.common\bpmist.common.csproj" />
+    <ProjectReference Include="..\bpmist.core\bpmist.core.csproj" />
+    <ProjectReference Include="..\bpmist.data\bpmist.data.csproj" />
+  </ItemGroup>
+
+</Project>
