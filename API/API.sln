@@ -1,15 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "bpmist.webapi\API.csproj", "{71AB4C76-F759-4D52-8941-FFE41CD0E7CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "bpmist.webapi\API.csproj", "{71AB4C76-F759-4D52-8941-FFE41CD0E7CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bpmist.common", "bpmist.common\bpmist.common.csproj", "{48D1FC4C-1384-4620-B645-CAA4D969B1F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bpmist.common", "bpmist.common\bpmist.common.csproj", "{48D1FC4C-1384-4620-B645-CAA4D969B1F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bpmist.firestore", "bpmist.firestore\bpmist.firestore.csproj", "{9B08EA7B-29AD-4112-B6B5-0AD3EC859BD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bpmist.firestore", "bpmist.firestore\bpmist.firestore.csproj", "{9B08EA7B-29AD-4112-B6B5-0AD3EC859BD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bpmist.data", "bpmist.data\bpmist.data.csproj", "{3ACE9F3B-D0A8-4CA8-ADF7-F8C2247CEC05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bpmist.data", "bpmist.data\bpmist.data.csproj", "{3ACE9F3B-D0A8-4CA8-ADF7-F8C2247CEC05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bpmist.business.common", "bpmist.business.common\bpmist.business.common.csproj", "{EDA6A89A-0440-4302-AE6E-2D18E086258F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,9 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{71AB4C76-F759-4D52-8941-FFE41CD0E7CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -72,5 +71,23 @@ Global
 		{3ACE9F3B-D0A8-4CA8-ADF7-F8C2247CEC05}.Release|x64.Build.0 = Release|Any CPU
 		{3ACE9F3B-D0A8-4CA8-ADF7-F8C2247CEC05}.Release|x86.ActiveCfg = Release|Any CPU
 		{3ACE9F3B-D0A8-4CA8-ADF7-F8C2247CEC05}.Release|x86.Build.0 = Release|Any CPU
+		{EDA6A89A-0440-4302-AE6E-2D18E086258F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDA6A89A-0440-4302-AE6E-2D18E086258F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDA6A89A-0440-4302-AE6E-2D18E086258F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EDA6A89A-0440-4302-AE6E-2D18E086258F}.Debug|x64.Build.0 = Debug|Any CPU
+		{EDA6A89A-0440-4302-AE6E-2D18E086258F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EDA6A89A-0440-4302-AE6E-2D18E086258F}.Debug|x86.Build.0 = Debug|Any CPU
+		{EDA6A89A-0440-4302-AE6E-2D18E086258F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDA6A89A-0440-4302-AE6E-2D18E086258F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDA6A89A-0440-4302-AE6E-2D18E086258F}.Release|x64.ActiveCfg = Release|Any CPU
+		{EDA6A89A-0440-4302-AE6E-2D18E086258F}.Release|x64.Build.0 = Release|Any CPU
+		{EDA6A89A-0440-4302-AE6E-2D18E086258F}.Release|x86.ActiveCfg = Release|Any CPU
+		{EDA6A89A-0440-4302-AE6E-2D18E086258F}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F40C75C3-925C-41A1-9BDA-F9731EDA49B2}
 	EndGlobalSection
 EndGlobal
