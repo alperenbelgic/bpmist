@@ -31,12 +31,14 @@ public class GetProcessesResult
 
 public class GetProcesses_ProcessesResult
 {
-    public GetProcesses_ProcessesResult (string ProcessName, GetProcesses_Processes_TasksResult[] Tasks)
+    public GetProcesses_ProcessesResult (string ProcessId, string ProcessName, GetProcesses_Processes_TasksResult[] Tasks)
     {
+            this.ProcessId = ProcessId;
             this.ProcessName = ProcessName;
             this.Tasks = Tasks;
     }
 
+        public string ProcessId { get; } 
         public string ProcessName { get; } 
         public GetProcesses_Processes_TasksResult[] Tasks { get; } 
 }

@@ -25,8 +25,9 @@ export class HttpService {
   }
 
 
-  GetByParams<T>(source: string, params: any): Observable<T> {
+  getByParams<T>(source: string, params: any): Observable<T> {
     return this.http.get<T>(this.getServiceRootPath() + source, {
+      // tslint:disable-next-line: object-literal-shorthand
       params: params
     });
   }

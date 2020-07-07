@@ -6,7 +6,9 @@ import { ListProcessesComponent } from './components/list-processes/list-process
 
 
 const routes: Routes = [
-  { path: '', component: ListProcessesComponent }
+  { path: '', component: ListProcessesComponent },
+  { path: 'NewTask/:processId', component: EditTaskComponent },
+  { path: 'EditTask/:processId/:instanceId/:taskInstanceId', component: EditTaskComponent }
 ];
 
 @NgModule({

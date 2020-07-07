@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/services/Web/http.service';
+import { WebService } from 'src/app/services/Web/web.service';
+import { Params, ActivatedRoute } from '@angular/router';
 
 export class TaskModel {
   processName = 'Space onboarding - 211b Baker St.';
@@ -17,20 +19,26 @@ export class EditTaskComponent implements OnInit {
   taskModel: TaskModel;
 
   constructor(
-    private httpService: HttpService,
+    private webService: WebService,
+    private activatedRoute: ActivatedRoute,
+
   ) {
   }
 
   ngOnInit(): void {
-    this.taskModel = new TaskModel();
 
-    this.httpService.post('/Task/Save', { processId: 'hello', hodor: 1 }).subscribe(r => {
-      console.log('web result', r);
+    const processId = this.activatedRoute.snapshot.paramMap.get('processId');
+
+    this.webService.GetProcessStartTemplateQuery(processId).subscribe({
+      next: (r: any) => {
+        this.taskModel = new TaskModel();
+        this.taskModel.processName = r.Value.ProcessName;
+        this.taskModel.title = r.Value.Task;
+      }
     });
   }
 
   complete() {
     console.log(this.taskModel);
   }
-
 }
