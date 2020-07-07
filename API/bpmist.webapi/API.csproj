@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-    <ProjectReference Include="..\bpmist.common\bpmist.common.csproj" />
+    <ProjectReference Include="..\bpmist.core\bpmist.core.csproj" />
     <ProjectReference Include="..\bpmist.data\bpmist.data.csproj" />
     <ProjectReference Include="..\bpmist.firestore\bpmist.firestore.csproj" />
   </ItemGroup>

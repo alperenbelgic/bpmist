@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "bpmist.webapi\API.csproj", "{71AB4C76-F759-4D52-8941-FFE41CD0E7CF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bpmist.common", "bpmist.common\bpmist.common.csproj", "{48D1FC4C-1384-4620-B645-CAA4D969B1F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bpmist.core", "bpmist.core\bpmist.core.csproj", "{48D1FC4C-1384-4620-B645-CAA4D969B1F4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bpmist.firestore", "bpmist.firestore\bpmist.firestore.csproj", "{9B08EA7B-29AD-4112-B6B5-0AD3EC859BD3}"
 EndProject

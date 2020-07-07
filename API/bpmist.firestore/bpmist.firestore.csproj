@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\bpmist.business.common\bpmist.business.common.csproj" />
-    <ProjectReference Include="..\bpmist.common\bpmist.common.csproj" />
+    <ProjectReference Include="..\bpmist.core\bpmist.core.csproj" />
     <ProjectReference Include="..\bpmist.data\bpmist.data.csproj" />
   </ItemGroup>
 
