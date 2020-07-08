@@ -1,0 +1,16 @@
+{
+  "guid": "57670019-7103-4afb-9e31-fca9ebb7f415",
+  "name": "StartNewProcess",
+  "interfaceProject": "bpmist.data",
+  "implementationProject": "bpmist.firestore",
+  "isQuery": false,
+  "injects": [],
+  "parameters": {
+    "ProcessId_string": null
+  },
+  "returnType": {
+    "ProcessName_string": null,
+    "TaskInstanceId_string": null
+  },
+  "usedInApi": true
+}

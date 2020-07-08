@@ -98,7 +98,7 @@ namespace bpmist.comGen
             string command_query = commandModel.isQuery ? "Query" : "Command";
             string implementationProject = commandModel.implementationProject;
 
-            string serviceMapping = $"            services.AddTransient<{interfaceProject}.ICommands.I{commandName}{command_query}, {implementationProject}.Commands.{commandName}Query>();";
+            string serviceMapping = $"            services.AddTransient<{interfaceProject}.ICommands.I{commandName}{command_query}, {implementationProject}.Commands.{commandName}{command_query}>();";
 
             return serviceMapping;
         }

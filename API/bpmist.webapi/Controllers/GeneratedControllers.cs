@@ -59,5 +59,38 @@ namespace API.Controllers
             );
         }
     }
+    public class StartNewProcessCommandController : BaseController
+    {
+        private bpmist.data.ICommands.IStartNewProcessCommand StartNewProcessCommand { get; }
+
+        public StartNewProcessCommandController(
+            bpmist.data.ICommands.IStartNewProcessCommand _StartNewProcessCommand)
+        {
+            this.StartNewProcessCommand = _StartNewProcessCommand;
+        }
+
+        [HttpPost]
+        public async Task<CommandResult<bpmist.data.ICommands.StartNewProcessResult>> Post(
+            StartNewProcessControllerParameter _parameter
+        )
+        {
+            var contextInfo = this.GetContextInfo();
+
+            return await this.StartNewProcessCommand.ExecuteAsync(
+                new bpmist.data.ICommands.StartNewProcessParameter(
+                    _parameter.ProcessId
+                    ),
+                contextInfo
+            );
+        }
+
+         public class StartNewProcessControllerParameter
+         {
+            public string ProcessId { get; } 
+         }
+
+
+
+    }
 
 }
