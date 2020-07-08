@@ -1,0 +1,15 @@
+{
+  "guid": "27a64c0c-153f-4f30-bbe6-b49411352f83",
+  "name": "GetProcess",
+  "interfaceProject": "bpmist.data",
+  "implementationProject": "bpmist.firestore",
+  "isQuery": true,
+  "injects": [],
+  "parameters": {
+    "ProcessId_string": null
+  },
+  "returnType": {
+    "Process_bpmist.common.DataModels.DocumentTypes.Process": null
+  },
+  "usedInApi": false
+}

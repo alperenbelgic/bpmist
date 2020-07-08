@@ -29,20 +29,22 @@ namespace API.Controllers
 
             string hrGroupId = "hr_group_id";
 
-            await
-            FirestoreDb
-            .Create("bpmistproject")
-            .Collection("organisations")
-            .Document("I8b23jRR3LVAa6ROcqS8")
-            .Collection("processes")
-            .AddAsync(
-                new Process()
+            if (false)
+            {
+                await
+        FirestoreDb
+        .Create("bpmistproject")
+        .Collection("organisations")
+        .Document("I8b23jRR3LVAa6ROcqS8")
+        .Collection("processes")
+        .AddAsync(
+            new Process()
+            {
+                ProcessName = "Holiday Request",
+                ProcessModel = new ProcessModel()
                 {
-                    ProcessName = "Holiday Request",
-                    ProcessModel = new ProcessModel()
+                    Tasks = new TaskModel[]
                     {
-                        Tasks = new TaskModel[]
-                        {
                             new TaskModel
                             {
                                 TaskName = "Request Entry",
@@ -99,9 +101,12 @@ namespace API.Controllers
                                     AssignableGroupIds = new string[]{hrGroupId }
                                 },
                             }
-                        }
                     }
-                });
+                }
+            }); 
+            }
+
+
 
             //            var db = FirestoreDb.Create("bpmistproject");
 

@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\bpmist.common\bpmist.common.csproj" />
     <ProjectReference Include="..\bpmist.core\bpmist.core.csproj" />
   </ItemGroup>
 
