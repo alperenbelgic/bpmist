@@ -6,6 +6,7 @@
   "isQuery": false,
   "injects": [],
   "parameters": {
+    "ProcessId_string":null,
     "ProcessInstance_bpmist.common.DataModels.DocumentTypes.ProcessInstance": null
   },
   "returnType": {

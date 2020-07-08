@@ -10,12 +10,14 @@ namespace bpmist.data.ICommands
     public class CreateProcessInstanceParameter
     {
         public CreateProcessInstanceParameter(
-            bpmist.common.DataModels.DocumentTypes.ProcessInstance ProcessInstance
+            string ProcessId, bpmist.common.DataModels.DocumentTypes.ProcessInstance ProcessInstance
             )
         {
+            this.ProcessId = ProcessId;
             this.ProcessInstance = ProcessInstance;
         }
 
+        public string ProcessId { get; } 
         public bpmist.common.DataModels.DocumentTypes.ProcessInstance ProcessInstance { get; } 
     }
 
