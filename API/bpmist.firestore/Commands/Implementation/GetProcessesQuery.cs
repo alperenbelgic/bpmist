@@ -30,8 +30,7 @@ namespace bpmist.firestore.Commands
             new GetProcessesResult(
                 processes.Select(p => new GetProcesses_ProcessesResult(
                     p.Id,
-                    p.ProcessName,
-                    null//p.Tasks.Select(t => new GetProcesses_Processes_TasksResult(t.TaskId, t.TaskName)).ToArray()
+                    p.ProcessName
                 )).ToArray());
         }
 

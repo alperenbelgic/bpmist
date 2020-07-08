@@ -9,11 +9,7 @@
   "returnType": {
     "Processes_List": {
       "ProcessId_string": null,
-      "ProcessName_string": null,
-      "Tasks_List": {
-        "TaskId_string": null,
-        "TaskName_string": null
-      }
+      "ProcessName_string": null
     }
   },
   "usedInApi": true
