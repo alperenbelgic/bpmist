@@ -10,12 +10,14 @@ namespace bpmist.business.Commands
     Command<StartNewProcessParameter, StartNewProcessResult>, IStartNewProcessCommand
     {
         public StartNewProcessCommand(
-            bpmist.data.ICommands.IGetProcessQuery _GetProcessQuery
+            bpmist.data.ICommands.IGetProcessQuery _GetProcessQuery, bpmist.data.ICommands.ICreateProcessInstanceCommand _CreateProcessInstanceCommand
         )
         {
             this.GetProcessQuery = _GetProcessQuery;
+            this.CreateProcessInstanceCommand = _CreateProcessInstanceCommand;
         }
 
         private bpmist.data.ICommands.IGetProcessQuery GetProcessQuery { get; }
+        private bpmist.data.ICommands.ICreateProcessInstanceCommand CreateProcessInstanceCommand { get; }
     }
 }

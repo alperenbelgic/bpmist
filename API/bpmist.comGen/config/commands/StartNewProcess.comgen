@@ -4,12 +4,16 @@
   "interfaceProject": "bpmist.common",
   "implementationProject": "bpmist.business",
   "isQuery": false,
-  "injects": [ "GetProcessQuery_bpmist.data.ICommands.IGetProcessQuery" ],
+  "injects": [
+    "GetProcessQuery_bpmist.data.ICommands.IGetProcessQuery",
+    "CreateProcessInstanceCommand_bpmist.data.ICommands.ICreateProcessInstanceCommand"
+  ],
   "parameters": {
     "ProcessId_string": null
   },
   "returnType": {
     "ProcessName_string": null,
+    "TaskName_string": null,
     "TaskInstanceId_string": null
   },
   "usedInApi": true
