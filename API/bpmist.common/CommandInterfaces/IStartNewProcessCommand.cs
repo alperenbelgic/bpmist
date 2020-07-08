@@ -29,9 +29,9 @@ public class StartNewProcessResult
     }
 
         public string ProcessName { get; } 
+        public string TaskName { get; } 
         public string TaskInstanceId { get; } 
-        public string TaskName { get; }
-    }
+}
 
 
 }
