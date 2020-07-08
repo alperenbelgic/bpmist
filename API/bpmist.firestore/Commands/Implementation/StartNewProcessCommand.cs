@@ -11,6 +11,13 @@ namespace bpmist.firestore.Commands
     {
         protected override async Task<StartNewProcessResult> ExecuteImplementationAsync(StartNewProcessParameter parameter, IContextInformation contextInformation)
         {
+
+            // get process data            
+
+            // prepare new instance data
+
+            // save process instance data
+
             throw new NotImplementedException();
         }
 
