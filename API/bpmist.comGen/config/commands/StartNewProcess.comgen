@@ -4,7 +4,7 @@
   "interfaceProject": "bpmist.common",
   "implementationProject": "bpmist.business",
   "isQuery": false,
-  "injects": [],
+  "injects": [ "GetProcessQuery_bpmist.data.ICommands.IGetProcessQuery" ],
   "parameters": {
     "ProcessId_string": null
   },

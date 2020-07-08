@@ -12,7 +12,7 @@ namespace bpmist.comGen
     class Program
     {
 
-        // todo
+        // TODO: 
         // DI mapping
         // context / user
         // login?
@@ -27,6 +27,15 @@ namespace bpmist.comGen
         // next time, detect changed ones
         // you can even change file names for implementation commands
         // Log to console: what has changed
+
+        // TODO: command/query specific error types (design time check)
+        /*
+        public class XCommandErrors{
+            public const string EmptyParameters = typeof(EmptyParameters);
+        }
+
+        // 
+        */
 
         static void Main(string[] args)
         {
@@ -174,7 +183,7 @@ namespace bpmist.comGen
                 {
                     return "            " + $"public {type}? {name} {{ get; }} ";
                 }
-                return "            " + $"public {p.Key.Split('_')[1]} {p.Key.Split('_')[0]} {{ get; }} ";
+                return "            " + $"public {p.Key.Split('_')[1]} {p.Key.Split('_')[0]} {{ get; set; }} ";
             })
             );
 
