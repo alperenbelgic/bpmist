@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using bpmist.common.Commands;
-using bpmist.data.ICommands;
+using bpmist.common.ICommands;
 
-namespace bpmist.firestore.Commands
+namespace bpmist.business.Commands
 {
     public partial class StartNewProcessCommand :
     Command<StartNewProcessParameter, StartNewProcessResult>, IStartNewProcessCommand

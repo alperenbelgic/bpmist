@@ -1,7 +1,7 @@
 using System;
 using bpmist.common.Commands;
 
-namespace bpmist.data.ICommands
+namespace bpmist.common.ICommands
 {
     public interface IStartNewProcessCommand : ICommand<StartNewProcessParameter, StartNewProcessResult>
     {

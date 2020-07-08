@@ -8,7 +8,7 @@ namespace API
         {
             services.AddTransient<bpmist.data.ICommands.IGetProcessesQuery, bpmist.firestore.Commands.GetProcessesQuery>();
             services.AddTransient<bpmist.data.ICommands.IGetProcessStartTemplateQuery, bpmist.firestore.Commands.GetProcessStartTemplateQuery>();
-            services.AddTransient<bpmist.data.ICommands.IStartNewProcessCommand, bpmist.firestore.Commands.StartNewProcessCommand>();
+            services.AddTransient<bpmist.common.ICommands.IStartNewProcessCommand, bpmist.business.Commands.StartNewProcessCommand>();
 
         }
     }

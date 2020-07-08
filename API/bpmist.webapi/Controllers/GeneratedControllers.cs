@@ -61,23 +61,23 @@ namespace API.Controllers
     }
     public class StartNewProcessCommandController : BaseController
     {
-        private bpmist.data.ICommands.IStartNewProcessCommand StartNewProcessCommand { get; }
+        private bpmist.common.ICommands.IStartNewProcessCommand StartNewProcessCommand { get; }
 
         public StartNewProcessCommandController(
-            bpmist.data.ICommands.IStartNewProcessCommand _StartNewProcessCommand)
+            bpmist.common.ICommands.IStartNewProcessCommand _StartNewProcessCommand)
         {
             this.StartNewProcessCommand = _StartNewProcessCommand;
         }
 
         [HttpPost]
-        public async Task<CommandResult<bpmist.data.ICommands.StartNewProcessResult>> Post(
+        public async Task<CommandResult<bpmist.common.ICommands.StartNewProcessResult>> Post(
             StartNewProcessControllerParameter _parameter
         )
         {
             var contextInfo = this.GetContextInfo();
 
             return await this.StartNewProcessCommand.ExecuteAsync(
-                new bpmist.data.ICommands.StartNewProcessParameter(
+                new bpmist.common.ICommands.StartNewProcessParameter(
                     _parameter.ProcessId
                     ),
                 contextInfo

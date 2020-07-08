@@ -1,8 +1,8 @@
 {
   "guid": "57670019-7103-4afb-9e31-fca9ebb7f415",
   "name": "StartNewProcess",
-  "interfaceProject": "bpmist.data",
-  "implementationProject": "bpmist.firestore",
+  "interfaceProject": "bpmist.common",
+  "implementationProject": "bpmist.business",
   "isQuery": false,
   "injects": [],
   "parameters": {
