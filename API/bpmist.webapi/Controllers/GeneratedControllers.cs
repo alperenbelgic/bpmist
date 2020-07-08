@@ -21,14 +21,14 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<CommandResult<bpmist.data.ICommands.GetProcessesResult>> Get(
-
+            
         )
         {
             var contextInfo = this.GetContextInfo();
 
             return await this.GetProcessesQuery.ExecuteAsync(
                 new bpmist.data.ICommands.GetProcessesParameter(
-
+                    
                     ),
                 contextInfo
             );
@@ -84,10 +84,10 @@ namespace API.Controllers
             );
         }
 
-        public class StartNewProcessControllerParameter
-        {
-            public string ProcessId { get; set; }
-        }
+         public class StartNewProcessControllerParameter
+         {
+            public string ProcessId { get; set; } 
+         }
 
 
 
