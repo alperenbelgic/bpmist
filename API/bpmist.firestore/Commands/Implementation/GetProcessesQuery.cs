@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using bpmist.business.common;
 using bpmist.common.Commands;
+using bpmist.common.DataModels.DocumentTypes;
 using bpmist.data.ICommands;
 using bpmist.firestore.DataModels;
 using Google.Cloud.Firestore;
@@ -30,7 +31,7 @@ namespace bpmist.firestore.Commands
                 processes.Select(p => new GetProcesses_ProcessesResult(
                     p.Id,
                     p.ProcessName,
-                    p.Tasks.Select(t => new GetProcesses_Processes_TasksResult(t.TaskId, t.TaskName)).ToArray()
+                    null//p.Tasks.Select(t => new GetProcesses_Processes_TasksResult(t.TaskId, t.TaskName)).ToArray()
                 )).ToArray());
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using bpmist.business.common;
 using bpmist.common.Commands;
+using bpmist.common.DataModels.DocumentTypes;
 using bpmist.data.ICommands;
 using bpmist.firestore.DataModels;
 using Google.Cloud.Firestore;
@@ -33,7 +34,10 @@ namespace bpmist.firestore.Commands
             // TODO: validate if any task exists
 
             //throw new NotImplementedException();
-            return new GetProcessStartTemplateResult(process.ProcessName, process.Tasks[0].TaskName);
+            return new GetProcessStartTemplateResult(
+                process.ProcessName,
+                null // process.Tasks[0].TaskName
+                );
 
         }
 
