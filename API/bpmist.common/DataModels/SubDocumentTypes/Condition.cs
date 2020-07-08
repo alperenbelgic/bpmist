@@ -1,14 +1,16 @@
 ﻿using bpmist.business.common;
+using Google.Cloud.Firestore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace bpmist.common.DataModels.SubDocumentTypes
 {
+    [FirestoreData]
     public class Condition : SubDocument
     {
-        public object ConditionExpression { get; set; }
+        [FirestoreProperty] public object ConditionExpression { get; set; }
 
-        public GenericProcessItem NextItem { get; set; }
+        [FirestoreProperty] public GenericProcessItem NextItem { get; set; }
     }
 }

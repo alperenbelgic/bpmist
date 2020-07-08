@@ -8,7 +8,7 @@ namespace bpmist.business.common
     public class GenericProcessItem : SubDocument
     {
         [FirestoreProperty]
-        public Task Task { get; set; }
+        public TaskModel Task { get; set; }
 
         [FirestoreProperty]
         public Condition Condition { get; set; }

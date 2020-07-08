@@ -9,6 +9,7 @@ namespace bpmist.common.DataModels.SubDocumentTypes
     [FirestoreData]
     public class ConditionItem : SubDocument
     {
+        [FirestoreProperty]
         public Condition[] Conditions { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace bpmist.common.DataModels.SubDocumentTypes
         public int VersionNumber { get; set; }
 
         [FirestoreProperty]
-        public Task[] Tasks { get; set; }
+        public TaskModel[] Tasks { get; set; }
 
         [FirestoreProperty]
         public ConditionItem[] ConditionItems { get; set; }

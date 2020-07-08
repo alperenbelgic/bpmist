@@ -20,13 +20,15 @@ namespace bpmist.common.DataModels.SubDocumentTypes
         public string AssignedGroupId { get; set; }
 
         [FirestoreProperty]
-        public Task Task { get; set; }
+        public TaskModel Task { get; set; }
 
         [FirestoreProperty]
         public Activity[] Activities { get; set; }
 
+        [FirestoreProperty]
         public System.DateTime? StartedAt { get; set; }
 
+        [FirestoreProperty]
         public System.DateTime? CompletedAt { get; set; }
 
     }

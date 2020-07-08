@@ -8,7 +8,7 @@
            "name": "Com Gen",
            "type": "coreclr",
            "request": "launch",
-           "preLaunchTask": "build",
+           "preLaunchTask": "build_comGen",
            "program": "${workspaceFolder}/bpmist.comGen/bin/Debug/netcoreapp3.1/bpmist.comGen.dll",
            "args": [],
            "cwd": "${workspaceFolder}/bpmist.comGen",
@@ -21,7 +21,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/bpmist.webapi/bin/Debug/netcoreapp3.1/API.dll",
+            "program": "${workspaceFolder}/bpmist.webapi/bin/Debug/netcoreapp3.1/bpmist.webapi.dll",
             "args": [],
             "cwd": "${workspaceFolder}/bpmist.webapi",
             "stopAtEntry": false,

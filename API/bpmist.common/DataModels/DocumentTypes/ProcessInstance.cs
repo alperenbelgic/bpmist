@@ -7,6 +7,7 @@ using System.Text;
 
 namespace bpmist.common.DataModels.DocumentTypes
 {
+    [FirestoreData]
     public class ProcessInstance : Document
     {
         [FirestoreProperty]

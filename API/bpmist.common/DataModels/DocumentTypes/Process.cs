@@ -14,9 +14,9 @@ namespace bpmist.common.DataModels.DocumentTypes
         public string ProcessName { get; set; }
 
         [FirestoreProperty]
-        public ProcessModel ProcessTasks { get; set; }
+        public ProcessModel ProcessModel { get; set; }
 
         [FirestoreProperty]
-        public ProcessModel[] VersionedProcessTasks { get; set; }
+        public ProcessModel[] VersionedProcessModels { get; set; }
     }
 }

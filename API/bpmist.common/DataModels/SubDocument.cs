@@ -21,6 +21,7 @@ namespace bpmist.common.DataModels
             this.Id = Guid.NewGuid().ToString();
         }
 
+        [FirestoreProperty]
         public string Id { get; set; }
     }
 }
