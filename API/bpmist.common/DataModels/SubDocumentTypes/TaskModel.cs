@@ -30,7 +30,7 @@ namespace bpmist.common.DataModels.SubDocumentTypes
         public string[] AssignableUserIds { get; set; }
 
         [FirestoreProperty]
-        public string[] AssignableGroupIds { get; set; }
+        public string AssignableGroupId { get; set; }
     }
 
     [FirestoreData]

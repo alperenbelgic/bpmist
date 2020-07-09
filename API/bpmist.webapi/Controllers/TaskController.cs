@@ -88,7 +88,7 @@ namespace API.Controllers
                                 },
                                 AssigningConfiguration = new AssigningConfiguration
                                 {
-                                    AssignableGroupIds = new string[]{ hrGroupId }
+                                    AssignableGroupId =  hrGroupId
                                 },
                             }
                     };

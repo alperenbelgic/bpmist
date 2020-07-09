@@ -16,41 +16,35 @@ namespace bpmist.business.Commands
         protected override async Task<SendUserActionResult> ExecuteImplementationAsync(SendUserActionParameter parameter, IContextInformation contextInformation)
         {
             // get the process instance
-            ProcessInstance processInstace = null;
+            string processId = parameter.ProcessId;
+            string processInstanceId = parameter.ProcessInstanceId;
+
+            var getProcessInstanceResult =
+            await this.GetProcessInstanceQuery.ExecuteAsync(new data.ICommands.GetProcessInstanceParameter(processId, processInstanceId), contextInformation);
+
+            // TODO: check error
+
+            ProcessInstance processInstace = getProcessInstanceResult.Value.ProcessInstace;
+
 
             // the process instance has this task instance as active task instance
-            bool isTaskInProcess = this.IsTaskInProcessAndActive(processInstace, parameter.TaskInstanceId);
-
-            if (false == isTaskInProcess)
-            {
-                throw SendUserActionResult.TaskIsNotInProcessOrNotActive();
-            }
+            if (false == this.IsTaskInProcessAndActive(processInstace, parameter.TaskInstanceId)) { throw SendUserActionResult.TaskIsNotInProcessOrNotActive(); }
 
             // actionid contains in the task
-            bool isActionIdContainedInTask = this.IsActionIdContainedInTask(processInstace, parameter.TaskInstanceId, parameter.ActionId);
-
-            if (false == isActionIdContainedInTask)
-            {
-                throw SendUserActionResult.ActionIdNotContainedInTask();
-            }
+            if (false == this.IsActionIdContainedInTask(processInstace, parameter.TaskInstanceId, parameter.ActionId)) { throw SendUserActionResult.ActionIdNotContainedInTask(); }
 
             // user is assigned or 
             // TODO: no other user assigned and in the group of those selected group
+            if (false == this.HasCurrentUserAuthorisationToCallAction(processInstace, contextInformation.User.UserId, parameter.TaskInstanceId)) { throw SendUserActionResult.UserNotAuthorised(); }
 
-            bool hasCurrentUserAuthorisationToCallAction = this.HasCurrentUserAuthorisationToCallAction(processInstace, contextInformation.User.UserId, parameter.TaskInstanceId);
-
-            if (false == hasCurrentUserAuthorisationToCallAction)
-            {
-                throw SendUserActionResult.UserNotAuthorised();
-            }
             // TODO: other validations?
-
-
 
             // close current task
             // how? - list all required things
-            // remove the task from user's inbox - if exists (for newly started tasks, it may not be added)
-            // set current task as completed
+            //      remove the task from user's inbox - if exists (for newly started tasks, it may not be added)
+            //          the question was how to do it. 1) get the doc in firestore. arrange in business. replace in firestore. 2) do everything with one command in firestore. I think I will do second one. it's not horrible and I want to be bit quick. 
+            //          changed my mind. I'll always need read and set methods. it will require one business command. one command is already esssential. how about this?
+            //      set current task as completed
 
             // create the next task(s)
             // how? who is assigned etc.

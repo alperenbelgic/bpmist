@@ -23,12 +23,12 @@ namespace bpmist.data.ICommands
 
 public class GetProcessInstanceResult
 {
-    public GetProcessInstanceResult(bpmist.common.DataModels.DocumentTypes.ProcessInstance Process)
+    public GetProcessInstanceResult(bpmist.common.DataModels.DocumentTypes.ProcessInstance ProcessInstace)
     {
-            this.Process = Process;
+            this.ProcessInstace = ProcessInstace;
     }
 
-        public bpmist.common.DataModels.DocumentTypes.ProcessInstance Process { get; } 
+        public bpmist.common.DataModels.DocumentTypes.ProcessInstance ProcessInstace { get; } 
 }
 
 
