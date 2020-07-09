@@ -10,7 +10,7 @@
     "ProcessId_string": null,
     "ProcessInstanceId_string": null,
     "TaskInstanceId_string": null,
-    "CommandId_string": null,
+    "ActionId_string": null,
     "Notes_string": null
   },
   "returnType": {

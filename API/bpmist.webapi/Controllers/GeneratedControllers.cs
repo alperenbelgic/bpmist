@@ -53,7 +53,7 @@ namespace API.Controllers
 
             return await this.SendUserActionCommand.ExecuteAsync(
                 new bpmist.common.ICommands.SendUserActionParameter(
-                    _parameter.ProcessId, _parameter.ProcessInstanceId, _parameter.TaskInstanceId, _parameter.CommandId, _parameter.Notes
+                    _parameter.ProcessId, _parameter.ProcessInstanceId, _parameter.TaskInstanceId, _parameter.ActionId, _parameter.Notes
                     ),
                 contextInfo
             );
@@ -64,7 +64,7 @@ namespace API.Controllers
             public string ProcessId { get; set; } 
             public string ProcessInstanceId { get; set; } 
             public string TaskInstanceId { get; set; } 
-            public string CommandId { get; set; } 
+            public string ActionId { get; set; } 
             public string Notes { get; set; } 
          }
 

@@ -21,21 +21,30 @@ namespace bpmist.common.Commands
             return message;
         }
     }
-    public class ApplicationError : Exception// AppliationException olsun
+    public class BusinessError : Exception// AppliationException olsun
     {
 
 
         public OperationErrorInformation[] OperationErrors { get; }
-        public ApplicationError(params OperationErrorInformation[] operationErrors)
+        public BusinessError(params OperationErrorInformation[] operationErrors)
         {
             this.OperationErrors = operationErrors;
         }
 
-        public ApplicationError(string errorCode, string messageTemplate, params string[] orderedMessageTemplateData)
+        public BusinessError(string errorCode, string messageTemplate, params string[] orderedMessageTemplateData)
         {
             this.OperationErrors = new OperationErrorInformation[] {
                 new OperationErrorInformation(errorCode, messageTemplate, orderedMessageTemplateData)
             };
+        }
+
+        public static BusinessError Combine(params BusinessError[] businessErrors)
+        {
+            return
+            new BusinessError(
+            businessErrors.SelectMany(ae => ae.OperationErrors).ToArray()
+            );
+            
         }
     }
 
@@ -237,7 +246,7 @@ namespace bpmist.common.Commands
 
                 return commandResult;
             }
-            catch (ApplicationError applicationError)
+            catch (BusinessError applicationError)
             {
                 commandResult = new CommandResult<ReturnType>(applicationError.OperationErrors, isBreakingError: false);
                 return commandResult;
