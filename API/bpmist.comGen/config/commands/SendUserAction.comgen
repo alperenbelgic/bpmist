@@ -17,5 +17,10 @@
     "HasProcessCompleted_bool": null,
     "NewTaskInstanceId_string": null
   },
-  "usedInApi": true
+  "usedInApi": true,
+  "errorTypes": {
+    "TaskIsNotInProcessOrNotActive": "Task is not found. ",
+    "ActionIdNotContainedInTask": "Action is not found. ",
+    "UserNotAuthorised": "You are not authorised for this action. The task should be assigned to you. "
+  }
 }

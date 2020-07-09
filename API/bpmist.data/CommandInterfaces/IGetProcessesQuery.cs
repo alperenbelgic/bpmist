@@ -21,7 +21,7 @@ namespace bpmist.data.ICommands
 
 public class GetProcessesResult
 {
-    public GetProcessesResult (GetProcesses_ProcessesResult[] Processes)
+    public GetProcessesResult(GetProcesses_ProcessesResult[] Processes)
     {
             this.Processes = Processes;
     }
@@ -31,7 +31,7 @@ public class GetProcessesResult
 
 public class GetProcesses_ProcessesResult
 {
-    public GetProcesses_ProcessesResult (string ProcessId, string ProcessName)
+    public GetProcesses_ProcessesResult(string ProcessId, string ProcessName)
     {
             this.ProcessId = ProcessId;
             this.ProcessName = ProcessName;

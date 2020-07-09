@@ -23,7 +23,7 @@ namespace bpmist.data.ICommands
 
 public class CreateProcessInstanceResult
 {
-    public CreateProcessInstanceResult (string ProcessInstanceId)
+    public CreateProcessInstanceResult(string ProcessInstanceId)
     {
             this.ProcessInstanceId = ProcessInstanceId;
     }

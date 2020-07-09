@@ -1,6 +1,6 @@
 ﻿public class [ClassName]
 {
-    public [ClassName] ([Parameters])
+    public [ClassName]([Parameters])
     {
 [Assignments]
     }

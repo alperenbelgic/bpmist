@@ -259,7 +259,7 @@ namespace bpmist.comGen
 
         }
 
-        static string CreateResultClass(PropertyCollection resultProperties, string modelName)
+        static string CreateResultClass(PropertyCollection resultProperties, string modelName, Dictionary<string, string> errorTypes)
         {
             string classContent = "";
 
@@ -306,6 +306,20 @@ namespace bpmist.comGen
             })
             );
 
+
+            if (errorTypes != null && errorTypes.Count() > 0)
+            {
+                resultPropertiesContent += Environment.NewLine + Environment.NewLine;
+
+                resultPropertiesContent += string.Join(Environment.NewLine,
+                    errorTypes.Select(et =>
+                    {
+                        return $"        public static BusinessError {et.Key}(params string[] messageTemplateData) => new BusinessError(\"{ et.Key } \", \"{ et.Value } \", messageTemplateData);";
+                    }));
+
+            }
+
+
             fileContent = fileContent.Replace("[Properties]", resultPropertiesContent);
 
             foreach (var resultProperty in resultProperties)
@@ -315,7 +329,7 @@ namespace bpmist.comGen
 
                 if (type == "List")
                 {
-                    fileContent += CreateResultClass(resultProperty.Value, modelName + "_" + name);
+                    fileContent += CreateResultClass(resultProperty.Value, modelName + "_" + name, null);
                 }
             }
 
@@ -384,7 +398,7 @@ namespace bpmist.comGen
 
             fileContent = fileContent.Replace("[ParameterProperties]", parameterProperties);
 
-            fileContent = fileContent.Replace("[ResultClass]", CreateResultClass(commandModel.returnType, commandModel.name));
+            fileContent = fileContent.Replace("[ResultClass]", CreateResultClass(commandModel.returnType, commandModel.name, commandModel.errorTypes));
 
             //string resultConstructorParameters = string.Join(", ",
             //                  commandModel.returnType.Select(p =>
@@ -452,6 +466,8 @@ public class CommandModel
     public PropertyCollection returnType { get; set; }
 
     public bool usedInApi { get; set; } = false;
+
+    public Dictionary<string, string> errorTypes { get; set; }
 
     public void GetInterfaceFilePath(out string filePath, out string fileName)
     {

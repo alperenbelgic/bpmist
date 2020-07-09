@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using bpmist.common.Commands;
 
 namespace bpmist.common.ICommands
@@ -21,28 +20,28 @@ namespace bpmist.common.ICommands
             this.Notes = Notes;
         }
 
-        public string ProcessId { get; }
-        public string ProcessInstanceId { get; }
-        public string TaskInstanceId { get; }
-        public string ActionId { get; }
-        public string Notes { get; }
+        public string ProcessId { get; } 
+        public string ProcessInstanceId { get; } 
+        public string TaskInstanceId { get; } 
+        public string ActionId { get; } 
+        public string Notes { get; } 
     }
 
-    public class SendUserActionResult
+public class SendUserActionResult
+{
+    public SendUserActionResult(bool HasProcessCompleted, string NewTaskInstanceId)
     {
-        public SendUserActionResult(bool HasProcessCompleted, string NewTaskInstanceId)
-        {
             this.HasProcessCompleted = HasProcessCompleted;
             this.NewTaskInstanceId = NewTaskInstanceId;
-        }
-
-        public bool HasProcessCompleted { get; }
-        public string NewTaskInstanceId { get; }
-
-        public static BusinessError TaskIsNotInProcessOrNotActive(params string[] messageTemplateData) => new BusinessError("TaskIsNotInProcessOrNotActive", "TaskIsNotInProcessOrNotActive", messageTemplateData);
-        public static BusinessError ActionIdNotContainedInTask(params string[] messageTemplateData) => new BusinessError("ActionIdNotContainedInTask", "ActionIdNotContainedInTask", messageTemplateData);
-        public static BusinessError UserNotAuthorised(params string[] messageTemplateData) => new BusinessError("UserNotAuthorised", "UserNotAuthorised", messageTemplateData);
     }
+
+        public bool HasProcessCompleted { get; } 
+        public string NewTaskInstanceId { get; } 
+
+        public static BusinessError TaskIsNotInProcessOrNotActive(params string[] messageTemplateData) => new BusinessError("TaskIsNotInProcessOrNotActive ", "Task is not found.  ", messageTemplateData);
+        public static BusinessError ActionIdNotContainedInTask(params string[] messageTemplateData) => new BusinessError("ActionIdNotContainedInTask ", "Action is not found.  ", messageTemplateData);
+        public static BusinessError UserNotAuthorised(params string[] messageTemplateData) => new BusinessError("UserNotAuthorised ", "You are not authorised for this action. The task should be assigned to you.  ", messageTemplateData);
+}
 
 
 }

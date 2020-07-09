@@ -21,7 +21,7 @@ namespace bpmist.data.ICommands
 
 public class GetProcessResult
 {
-    public GetProcessResult (bpmist.common.DataModels.DocumentTypes.Process Process)
+    public GetProcessResult(bpmist.common.DataModels.DocumentTypes.Process Process)
     {
             this.Process = Process;
     }
