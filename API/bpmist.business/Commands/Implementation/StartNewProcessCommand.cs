@@ -29,18 +29,21 @@ namespace bpmist.business.Commands
 
             var process = getProcessResult.Value.Process;
 
+            var processModel = process.VersionedProcessModels.Last();
+
+            var firstTask = processModel.Tasks.First();
+
             var processInstance =
                                     new ProcessInstance()
                                     {
-                                        OriginalProcessModel = process.ProcessModel,
-                                        ProcessModel = process.ProcessModel,
+                                        OriginalProcessModel = processModel,
                                         TaskInstances = new TaskInstance[]
                                         {
                                             new TaskInstance()
                                             {
                                                 AssignedUserId = userId,
                                                 StartedAt = DateTime.UtcNow,
-                                                Task = process.ProcessModel.Tasks[0],
+                                                Task = firstTask,
                                                 TaskState = TaskStates.Candidate
                                             }
                                         }
@@ -52,7 +55,7 @@ namespace bpmist.business.Commands
             // TODO: handle errors
 
             string processInstanceId = createProcessInstanceResult.Value.ProcessInstanceId;
-            string taskName = process.ProcessModel.Tasks[0].TaskName;
+            string taskName = firstTask.TaskName;
 
             return new StartNewProcessResult(process.ProcessName, taskName, processInstanceId);
         }

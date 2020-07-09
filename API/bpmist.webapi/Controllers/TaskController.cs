@@ -31,19 +31,9 @@ namespace API.Controllers
 
             if (false)
             {
-                await
-        FirestoreDb
-        .Create("bpmistproject")
-        .Collection("organisations")
-        .Document("I8b23jRR3LVAa6ROcqS8")
-        .Collection("processes")
-        .AddAsync(
-            new Process()
-            {
-                ProcessName = "Holiday Request",
-                ProcessModel = new ProcessModel()
-                {
-                    Tasks = new TaskModel[]
+
+                var tasks =
+                    new TaskModel[]
                     {
                             new TaskModel
                             {
@@ -98,12 +88,28 @@ namespace API.Controllers
                                 },
                                 AssigningConfiguration = new AssigningConfiguration
                                 {
-                                    AssignableGroupIds = new string[]{hrGroupId }
+                                    AssignableGroupIds = new string[]{ hrGroupId }
                                 },
                             }
-                    }
-                }
-            }); 
+                    };
+
+
+                await
+                    FirestoreDb
+                    .Create("bpmistproject")
+                    .Collection("organisations")
+                    .Document("I8b23jRR3LVAa6ROcqS8")
+                    .Collection("processes")
+                    .AddAsync(
+                                new Process()
+                                {
+                                    ProcessName = "Holiday Request",
+                                    VersionedProcessModels = new ProcessModel[]
+                                    {
+                                        new ProcessModel() { Tasks = tasks }
+                                    }
+                                }
+                            );
             }
 
 
