@@ -1,0 +1,21 @@
+{
+  "guid": "48038B10-7CB5-4A34-8389-9B10C809C2A3",
+  "name": "SendUserAction",
+  "interfaceProject": "bpmist.common",
+  "implementationProject": "bpmist.business",
+  "isQuery": false,
+  "injects": [
+  ],
+  "parameters": {
+    "ProcessId_string": null,
+    "ProcessInstanceId_string": null,
+    "TaskInstanceId_string": null,
+    "CommandId_string": null,
+    "Notes_string": null
+  },
+  "returnType": {
+    "HasProcessCompleted_bool": null,
+    "NewTaskInstanceId_string": null
+  },
+  "usedInApi": true
+}

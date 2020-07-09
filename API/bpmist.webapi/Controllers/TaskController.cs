@@ -134,20 +134,14 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public object Save(X param)
+        public object Test(X param)
         {
-            return new
-            {
-                Hodor = "modor",
-                processId = param.processId,
-                modor = param.hodor
-            };
+            return param;
         }
     }
 
     public class X
     {
-        public string processId { get; set; }
-        public int hodor { get; set; }
+        public Dictionary<string, object> theObject { get; set; }
     }
 }

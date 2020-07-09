@@ -34,6 +34,43 @@ namespace API.Controllers
             );
         }
     }
+    public class SendUserActionCommandController : BaseController
+    {
+        private bpmist.common.ICommands.ISendUserActionCommand SendUserActionCommand { get; }
+
+        public SendUserActionCommandController(
+            bpmist.common.ICommands.ISendUserActionCommand _SendUserActionCommand)
+        {
+            this.SendUserActionCommand = _SendUserActionCommand;
+        }
+
+        [HttpPost]
+        public async Task<CommandResult<bpmist.common.ICommands.SendUserActionResult>> Post(
+            SendUserActionControllerParameter _parameter
+        )
+        {
+            var contextInfo = this.GetContextInfo();
+
+            return await this.SendUserActionCommand.ExecuteAsync(
+                new bpmist.common.ICommands.SendUserActionParameter(
+                    _parameter.ProcessId, _parameter.ProcessInstanceId, _parameter.TaskInstanceId, _parameter.CommandId, _parameter.Notes
+                    ),
+                contextInfo
+            );
+        }
+
+         public class SendUserActionControllerParameter
+         {
+            public string ProcessId { get; set; } 
+            public string ProcessInstanceId { get; set; } 
+            public string TaskInstanceId { get; set; } 
+            public string CommandId { get; set; } 
+            public string Notes { get; set; } 
+         }
+
+
+
+    }
     public class StartNewProcessCommandController : BaseController
     {
         private bpmist.common.ICommands.IStartNewProcessCommand StartNewProcessCommand { get; }
