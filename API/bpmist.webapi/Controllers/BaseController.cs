@@ -45,7 +45,7 @@ namespace API.Controllers
 
         public IList<ITeam> Teams => throw new NotImplementedException();
 
-        public string TenantId => "tenant_id";
+        public string OrganisationId => "I8b23jRR3LVAa6ROcqS8";
 
         public string UserId => "user_id";
     }

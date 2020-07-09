@@ -132,7 +132,7 @@ namespace bpmist.common.Commands
 
         IList<ITeam> Teams { get; }
 
-        string TenantId { get; }
+        string OrganisationId { get; }
 
         string UserId { get; }
     }
