@@ -29,6 +29,7 @@ namespace bpmist.business.Commands
 
             var process = getProcessResult.Value.Process;
 
+
             var processModel = process.VersionedProcessModels.Last();
 
             var firstTask = processModel.Tasks.First();
@@ -57,7 +58,7 @@ namespace bpmist.business.Commands
             string processInstanceId = createProcessInstanceResult.Value.ProcessInstanceId;
             string taskName = firstTask.TaskName;
 
-            return new StartNewProcessResult(process.ProcessName, taskName, processInstanceId);
+            return new StartNewProcessResult(process.ProcessName, processInstanceId, taskName, firstTask.Id);
         }
 
         protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(StartNewProcessParameter parameter, IContextInformation contextInformation)

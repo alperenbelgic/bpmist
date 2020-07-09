@@ -16,11 +16,6 @@ export class WebService {
     return this.httpService.get(endPoint);
   }
 
-  public GetProcessStartTemplateQuery(ProcessId: string): Observable<any> {
-    const endPoint = '/GetProcessStartTemplateQuery/Get';
-    return this.httpService.getByParams(endPoint, { ProcessId });
-  }
-
   public StartNewProcessCommand(ProcessId: string): Observable<any> {
     const endPoint = '/StartNewProcessCommand/Post';
     return this.httpService.post(endPoint, { ProcessId });

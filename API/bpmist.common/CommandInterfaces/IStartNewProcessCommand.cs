@@ -21,14 +21,16 @@ namespace bpmist.common.ICommands
 
 public class StartNewProcessResult
 {
-    public StartNewProcessResult (string ProcessName, string TaskName, string TaskInstanceId)
+    public StartNewProcessResult (string ProcessName, string ProcessInstanceId, string TaskName, string TaskInstanceId)
     {
             this.ProcessName = ProcessName;
+            this.ProcessInstanceId = ProcessInstanceId;
             this.TaskName = TaskName;
             this.TaskInstanceId = TaskInstanceId;
     }
 
         public string ProcessName { get; } 
+        public string ProcessInstanceId { get; } 
         public string TaskName { get; } 
         public string TaskInstanceId { get; } 
 }

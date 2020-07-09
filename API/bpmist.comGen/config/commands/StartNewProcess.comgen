@@ -13,6 +13,7 @@
   },
   "returnType": {
     "ProcessName_string": null,
+    "ProcessInstanceId_string": null,
     "TaskName_string": null,
     "TaskInstanceId_string": null
   },

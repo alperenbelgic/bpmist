@@ -19,15 +19,5 @@ export class ListProcessesComponent implements OnInit {
       console.log(r);
       this.processes = r.Value.Processes;
     });
-
-    // temp
-    this.webService.StartNewProcessCommand('lj1X3gTWSN0QCb4wLzLL').subscribe({
-      next: (r: any) => {
-        console.log(r);
-        console.log('hodor');
-      }
-    });
-
-
   }
 }

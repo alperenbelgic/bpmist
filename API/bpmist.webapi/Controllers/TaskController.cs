@@ -29,7 +29,7 @@ namespace API.Controllers
 
             string hrGroupId = "hr_group_id";
 
-            if (false)
+            if (true)
             {
 
                 var tasks =

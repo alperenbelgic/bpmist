@@ -7,6 +7,9 @@ export class TaskModel {
   processName = 'Space onboarding - 211b Baker St.';
   title = 'Take photo of property';
   details = 'hodor';
+  processId = '';
+  processInstanceId = '';
+  taskInstanceId = '';
 }
 
 @Component({
@@ -29,11 +32,15 @@ export class EditTaskComponent implements OnInit {
 
     const processId = this.activatedRoute.snapshot.paramMap.get('processId');
 
-    this.webService.GetProcessStartTemplateQuery(processId).subscribe({
+    // temp
+    this.webService.StartNewProcessCommand(processId).subscribe({
       next: (r: any) => {
         this.taskModel = new TaskModel();
         this.taskModel.processName = r.Value.ProcessName;
-        this.taskModel.title = r.Value.Task;
+        this.taskModel.title = r.Value.TaskName;
+        this.taskModel.processId = processId;
+        this.taskModel.processInstanceId = r.value.processInstanceId;
+
       }
     });
   }
