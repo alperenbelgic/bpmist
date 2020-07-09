@@ -34,31 +34,6 @@ namespace API.Controllers
             );
         }
     }
-    public class GetProcessStartTemplateQueryController : BaseController
-    {
-        private bpmist.data.ICommands.IGetProcessStartTemplateQuery GetProcessStartTemplateQuery { get; }
-
-        public GetProcessStartTemplateQueryController(
-            bpmist.data.ICommands.IGetProcessStartTemplateQuery _GetProcessStartTemplateQuery)
-        {
-            this.GetProcessStartTemplateQuery = _GetProcessStartTemplateQuery;
-        }
-
-        [HttpGet]
-        public async Task<CommandResult<bpmist.data.ICommands.GetProcessStartTemplateResult>> Get(
-            string ProcessId
-        )
-        {
-            var contextInfo = this.GetContextInfo();
-
-            return await this.GetProcessStartTemplateQuery.ExecuteAsync(
-                new bpmist.data.ICommands.GetProcessStartTemplateParameter(
-                    ProcessId
-                    ),
-                contextInfo
-            );
-        }
-    }
     public class StartNewProcessCommandController : BaseController
     {
         private bpmist.common.ICommands.IStartNewProcessCommand StartNewProcessCommand { get; }
