@@ -1,0 +1,15 @@
+{
+  "guid": "8AB61327-5891-404D-A9DF-D8FA061D6AAF",
+  "name": "GetOrganizationUser",
+  "interfaceProject": "bpmist.data",
+  "implementationProject": "bpmist.firestore",
+  "isQuery": true,
+  "injects": [],
+  "parameters": {
+    "OrganizationUserId_string": null
+  },
+  "returnType": {
+    "OrganizationUser_bpmist.common.DataModels.DocumentTypes.OrganizationUser": null
+  },
+  "usedInApi": false
+}

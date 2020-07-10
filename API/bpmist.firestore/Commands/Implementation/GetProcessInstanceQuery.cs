@@ -14,7 +14,7 @@ namespace bpmist.firestore.Commands
     {
         protected override async Task<GetProcessInstanceResult> ExecuteImplementationAsync(GetProcessInstanceParameter parameter, IContextInformation contextInformation)
         {
-            string organisationId = contextInformation.User.OrganisationId;
+            string organisationId = contextInformation.User.OrganizationId;
             string processId = parameter.ProcessId;
             string processInstanceId = parameter.ProcessInstanceId;
 
@@ -32,10 +32,9 @@ namespace bpmist.firestore.Commands
 
             // TODO: check if doc exists
 
-            var process = new FirestoreHelper().Get<ProcessInstance>(processInstanceSnapshot);
+            var processInstance = new FirestoreHelper().Get<ProcessInstance>(processInstanceSnapshot);
 
-
-            throw new NotImplementedException();
+            return new GetProcessInstanceResult(processInstance);
         }
 
         protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(GetProcessInstanceParameter parameter, IContextInformation contextInformation)
