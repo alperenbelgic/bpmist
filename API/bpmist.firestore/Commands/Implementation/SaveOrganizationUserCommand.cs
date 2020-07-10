@@ -13,7 +13,6 @@ namespace bpmist.firestore.Commands
         protected override async Task<SaveOrganizationUserResult> ExecuteImplementationAsync(SaveOrganizationUserParameter parameter, IContextInformation contextInformation)
         {
             string organizationId = contextInformation.User.OrganizationId;
-            //string organizationUserId = parameter.OrganizationUserId;
 
             var organizationUser = parameter.OrganizationUser;
 

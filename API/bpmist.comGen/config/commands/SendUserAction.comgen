@@ -6,7 +6,8 @@
   "isQuery": false,
   "injects": [
     "GetProcessInstanceQuery_bpmist.data.ICommands.IGetProcessInstanceQuery",
-    "GetOrganizationUserQuery_bpmist.data.ICommands.IGetOrganizationUserQuery"
+    "GetOrganizationUserQuery_bpmist.data.ICommands.IGetOrganizationUserQuery",
+    "SaveOrganizationUserCommand_bpmist.data.ICommands.ISaveOrganizationUserCommand"
   ],
   "parameters": {
     "ProcessId_string": null,

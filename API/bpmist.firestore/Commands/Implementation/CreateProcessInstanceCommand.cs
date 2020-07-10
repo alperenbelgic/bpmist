@@ -13,23 +13,42 @@ namespace bpmist.firestore.Commands
     {
         protected override async Task<CreateProcessInstanceResult> ExecuteImplementationAsync(CreateProcessInstanceParameter parameter, IContextInformation contextInformation)
         {
+            string organizationId = contextInformation.User.OrganizationId;
             string processId = parameter.ProcessId;
             var processInstance = parameter.ProcessInstance;
 
-            var documentReference =
-             await
-             FirestoreDb
-             .Create("bpmistproject")
-             .Collection("organisations")
-             .Document("I8b23jRR3LVAa6ROcqS8")
-             .Collection("processes")
-             .Document(processId)
-             .Collection("processInstances")
-             .AddAsync(processInstance);
+            if (string.IsNullOrEmpty(processInstance.Id))
+            {
 
-            string processInstanceId = documentReference.Id;
+                var documentReference =
+                 await
+                 FirestoreDb
+                 .Create("bpmistproject")
+                 .Collection("organisations")
+                 .Document(organizationId)
+                 .Collection("processes")
+                 .Document(processId)
+                 .Collection("processInstances")
+                 .AddAsync(processInstance);
 
-            return new CreateProcessInstanceResult(processInstanceId);
+                processInstance.Id = documentReference.Id;
+            }
+            else
+            {
+                await
+                    FirestoreDb
+                 .Create("bpmistproject")
+                 .Collection("organisations")
+                 .Document(organizationId)
+                 .Collection("processes")
+                 .Document(processId)
+                 .Collection("processInstances")
+                 .Document(processInstance.Id)
+                 .SetAsync(processInstance);
+
+            }
+
+            return new CreateProcessInstanceResult(processInstance.Id);
         }
 
         protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(CreateProcessInstanceParameter parameter, IContextInformation contextInformation)

@@ -88,7 +88,7 @@ namespace API.Controllers
                                 },
                                 AssigningConfiguration = new AssigningConfiguration
                                 {
-                                    AssignableGroupId =  hrGroupId
+                                    AssigningGroupId =  hrGroupId
                                 },
                             }
                     };
@@ -111,21 +111,6 @@ namespace API.Controllers
                                 }
                             );
             }
-
-
-
-            //            var db = FirestoreDb.Create("bpmistproject");
-
-
-            //            DocumentReference docRef = db.Collection("users").Document("alovelace");
-            //            Dictionary<string, object> user = new Dictionary<string, object>
-            //{
-            //    { "First", "Ada" },
-            //    { "Last", "Lovelace" },
-            //    { "Born", 1815 }
-            //};
-            //            await docRef.SetAsync(user);
-
 
             return new
             {

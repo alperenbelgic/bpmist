@@ -27,17 +27,21 @@ namespace bpmist.common.DataModels.SubDocumentTypes
         public AssigningRule AssigningRule { get; set; }
 
         [FirestoreProperty]
-        public string[] AssignableUserIds { get; set; }
+        public string AssigningUserId { get; set; }
 
         [FirestoreProperty]
-        public string AssignableGroupId { get; set; }
+        public string AssigningGroupId { get; set; }
+
+        [FirestoreProperty]
+        public string PoolId { get; set; } // this is on the fly group, which is created by selecting multiple users while defining assigned person.
+
     }
 
     [FirestoreData]
     public class AssigningRule
     {
         [FirestoreProperty]
-        public bool AssignToManager { get; set; } = false;
+        public bool AssignToManager { get; set; } = false; // can this be set for parallel tasks? probably no. maybe we can say that, the previous item has to be a (single) task, not anything else. 
     }
 
 

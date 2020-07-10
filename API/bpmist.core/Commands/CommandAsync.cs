@@ -21,7 +21,7 @@ namespace bpmist.common.Commands
             return message;
         }
     }
-    public class BusinessError : Exception// AppliationException olsun
+    public class BusinessError : Exception
     {
 
 
