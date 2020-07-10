@@ -3,13 +3,13 @@ using bpmist.common.Commands;
 
 namespace bpmist.data.ICommands
 {
-    public interface ICreateProcessInstanceCommand : ICommand<CreateProcessInstanceParameter, CreateProcessInstanceResult>
+    public interface ISaveProcessInstanceCommand : ICommand<SaveProcessInstanceParameter, SaveProcessInstanceResult>
     {
     }
 
-    public class CreateProcessInstanceParameter
+    public class SaveProcessInstanceParameter
     {
-        public CreateProcessInstanceParameter(
+        public SaveProcessInstanceParameter(
             string ProcessId, bpmist.common.DataModels.DocumentTypes.ProcessInstance ProcessInstance
             )
         {
@@ -21,9 +21,9 @@ namespace bpmist.data.ICommands
         public bpmist.common.DataModels.DocumentTypes.ProcessInstance ProcessInstance { get; } 
     }
 
-public class CreateProcessInstanceResult
+public class SaveProcessInstanceResult
 {
-    public CreateProcessInstanceResult(string ProcessInstanceId)
+    public SaveProcessInstanceResult(string ProcessInstanceId)
     {
             this.ProcessInstanceId = ProcessInstanceId;
     }

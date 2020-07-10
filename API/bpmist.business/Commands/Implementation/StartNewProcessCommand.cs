@@ -51,7 +51,7 @@ namespace bpmist.business.Commands
                                     };
 
             var createProcessInstanceResult =
-            await this.CreateProcessInstanceCommand.ExecuteAsync(new CreateProcessInstanceParameter(processId, processInstance), contextInformation);
+            await this.CreateProcessInstanceCommand.ExecuteAsync(new SaveProcessInstanceParameter(processId, processInstance), contextInformation);
 
             // TODO: handle errors
 

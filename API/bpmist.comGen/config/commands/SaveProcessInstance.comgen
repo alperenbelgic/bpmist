@@ -1,6 +1,6 @@
 {
   "guid": "E8C47B14-28A9-49AC-BB9F-AD21F2B2F5E4",
-  "name": "CreateProcessInstance",
+  "name": "SaveProcessInstance",
   "interfaceProject": "bpmist.data",
   "implementationProject": "bpmist.firestore",
   "isQuery": false,

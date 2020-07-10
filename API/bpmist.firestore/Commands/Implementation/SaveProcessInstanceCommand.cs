@@ -9,9 +9,9 @@ using Google.Cloud.Firestore;
 
 namespace bpmist.firestore.Commands
 {
-    public partial class CreateProcessInstanceCommand
+    public partial class SaveProcessInstanceCommand
     {
-        protected override async Task<CreateProcessInstanceResult> ExecuteImplementationAsync(CreateProcessInstanceParameter parameter, IContextInformation contextInformation)
+        protected override async Task<SaveProcessInstanceResult> ExecuteImplementationAsync(SaveProcessInstanceParameter parameter, IContextInformation contextInformation)
         {
             string organizationId = contextInformation.User.OrganizationId;
             string processId = parameter.ProcessId;
@@ -48,10 +48,10 @@ namespace bpmist.firestore.Commands
 
             }
 
-            return new CreateProcessInstanceResult(processInstance.Id);
+            return new SaveProcessInstanceResult(processInstance.Id);
         }
 
-        protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(CreateProcessInstanceParameter parameter, IContextInformation contextInformation)
+        protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(SaveProcessInstanceParameter parameter, IContextInformation contextInformation)
         {
             return Enumerable.Empty<OperationErrorInformation>();
         }

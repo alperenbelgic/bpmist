@@ -6,10 +6,10 @@ using bpmist.data.ICommands;
 
 namespace bpmist.firestore.Commands
 {
-    public partial class CreateProcessInstanceCommand :
-    Command<CreateProcessInstanceParameter, CreateProcessInstanceResult>, ICreateProcessInstanceCommand
+    public partial class SaveProcessInstanceCommand :
+    Command<SaveProcessInstanceParameter, SaveProcessInstanceResult>, ISaveProcessInstanceCommand
     {
-        public CreateProcessInstanceCommand(
+        public SaveProcessInstanceCommand(
             
         )
         {
