@@ -24,30 +24,59 @@ namespace bpmist.business.Commands
 
             // TODO: check error
 
-            ProcessInstance processInstace = getProcessInstanceResult.Value.ProcessInstace;
+            ProcessInstance processInstance = getProcessInstanceResult.Value.ProcessInstace;
 
 
             // the process instance has this task instance as active task instance
-            if (false == this.IsTaskInProcessAndActive(processInstace, parameter.TaskInstanceId)) { throw SendUserActionResult.TaskIsNotInProcessOrNotActive(); }
+            if (false == this.IsTaskInProcessAndActive(processInstance, parameter.TaskInstanceId)) { throw SendUserActionResult.TaskIsNotInProcessOrNotActive(); }
 
             // actionid contains in the task
-            if (false == this.IsActionIdContainedInTask(processInstace, parameter.TaskInstanceId, parameter.ActionId)) { throw SendUserActionResult.ActionIdNotContainedInTask(); }
+            if (false == this.IsActionIdContainedInTask(processInstance, parameter.TaskInstanceId, parameter.ActionId)) { throw SendUserActionResult.ActionIdNotContainedInTask(); }
 
             // user is assigned or 
             // TODO: no other user assigned and in the group of those selected group
-            if (false == this.HasCurrentUserAuthorisationToCallAction(processInstace, contextInformation.User.UserId, parameter.TaskInstanceId)) { throw SendUserActionResult.UserNotAuthorised(); }
+            if (false == this.HasCurrentUserAuthorisationToCallAction(processInstance, contextInformation.User.UserId, parameter.TaskInstanceId)) { throw SendUserActionResult.UserNotAuthorised(); }
 
             // TODO: other validations?
 
             // close current task
             // how? - list all required things
             //      remove the task from user's inbox - if exists (for newly started tasks, it may not be added)
+            await RemoveCurrentTaskFromUsersInbox(processInstance, parameter.TaskInstanceId, contextInformation);
             //          the question was how to do it. 1) get the doc in firestore. arrange in business. replace in firestore. 2) do everything with one command in firestore. I think I will do second one. it's not horrible and I want to be bit quick. 
-            //          changed my mind. I'll always need read and set methods. it will require one business command. one command is already esssential. how about this?
+            //          changed my mind. I'll always need read and set methods. it will require one business command to remove the completed task. one command is already esssential. how about this? [I am here.]
             //      set current task as completed
+
 
             // create the next task(s)
             // how? who is assigned etc.
+
+            throw new NotImplementedException();
+        }
+
+        private async Task RemoveCurrentTaskFromUsersInbox(ProcessInstance processInstance, string taskInstanceId, IContextInformation contextInformation)
+        {
+            var taskInstance = processInstance.TaskInstances.FirstOrDefault(ti => ti.Id == taskInstanceId);
+
+            if (taskInstance == null)
+            {
+                return;
+            }
+
+            string assingedUserId = taskInstance.AssignedUserId;
+
+            if (string.IsNullOrEmpty(assingedUserId))
+            {
+                return;
+            }
+
+            var getOrganizationUserResult = await this.GetOrganizationUserQuery.ExecuteAsync(new data.ICommands.GetOrganizationUserParameter(assingedUserId), contextInformation);
+
+            // TODO: handle query error
+
+            var organisationUser = getOrganizationUserResult.Value.OrganizationUser;
+
+            organisationUser.Tasks = organisationUser.Tasks.Where(t => t.TaskInstanceId != taskInstanceId).ToArray();
 
             throw new NotImplementedException();
         }

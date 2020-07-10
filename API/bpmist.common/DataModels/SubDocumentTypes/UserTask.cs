@@ -11,7 +11,7 @@ namespace bpmist.common.DataModels.SubDocumentTypes
     {
         [FirestoreProperty] public string ProcessId { get; set; }
         [FirestoreProperty] public string ProcessInstanceId { get; set; }
-        [FirestoreProperty] public string TaskId { get; set; }
+        [FirestoreProperty] public string TaskInstanceId { get; set; }
         [FirestoreProperty] public string ProcessName { get; set; }
         [FirestoreProperty] public string TaskName { get; set; }
         [FirestoreProperty] public DateTime DueDate { get; set; }
