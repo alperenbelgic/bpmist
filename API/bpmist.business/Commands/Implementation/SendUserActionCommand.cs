@@ -40,7 +40,7 @@ namespace bpmist.business.Commands
             if (false == this.HasCurrentUserAuthorisationToCallAction(taskInstance, contextInformation.User.UserId)) { throw SendUserActionResult.UserNotAuthorised(); }
 
             // Action points to a valid process item
-            if (false == this.DoesActionPointsToAValidProcessItem(processInstance, action, out TaskModel nextTask)) { throw SendUserActionResult.ActionNotPointingAValidProcessItem(); }
+            if (false == this.DoesActionPointsToAValidProcessItem(processInstance, action, out TaskModel nextTask, out bool processCompleted)) { throw SendUserActionResult.ActionNotPointingAValidProcessItem(); }
 
             // TODO: other validations?
 
@@ -59,15 +59,28 @@ namespace bpmist.business.Commands
             //      set current task as completed
             this.SetTaskInstanceCompleted(taskInstance);
 
-            // create the next task(s)
-            // how? who is assigned etc.
-            this.AddNewTaskInstanceInProcessInstance(processInstance, previousTaskInstance: taskInstance, currentlyAssignedUser, nextTask);
+
+            string newTaskInstanceId = null;
+
+            if (processCompleted)
+            {
+                this.CompleteProcessInstance(processInstance);
+            }
+            else
+            {
+                // create the next task(s)
+                // how? who is assigned etc.
+                this.AddNewTaskInstanceInProcessInstance(processInstance, previousTaskInstance: taskInstance, currentlyAssignedUser, nextTask, out newTaskInstanceId);
+            }
 
             await this.SaveProcessInstance(processInstance);
 
-            //return new SendUserActionResult()
+            return new SendUserActionResult(processCompleted, newTaskInstanceId);
+        }
 
-            throw new NotImplementedException();
+        private void CompleteProcessInstance(ProcessInstance processInstance)
+        {
+            processInstance.ProcessState = ProcessStates.Completed;
         }
 
         private Task SaveProcessInstance(ProcessInstance processInstance)
@@ -75,7 +88,7 @@ namespace bpmist.business.Commands
             throw new NotImplementedException();
         }
 
-        private void AddNewTaskInstanceInProcessInstance(ProcessInstance processInstance, TaskInstance previousTaskInstance, OrganizationUser currentlyAssignedUser, TaskModel nextTask)
+        private void AddNewTaskInstanceInProcessInstance(ProcessInstance processInstance, TaskInstance previousTaskInstance, OrganizationUser currentlyAssignedUser, TaskModel nextTask, out string newTaskInstanceId)
         {
             /*
             // Analysis:
@@ -125,6 +138,8 @@ namespace bpmist.business.Commands
             var taskInstanceList = processInstance.TaskInstances.ToList();
             taskInstanceList.Add(newTaskInstance);
             processInstance.TaskInstances = taskInstanceList.ToArray();
+
+            newTaskInstanceId = newTaskInstance.Id;
         }
 
         private bool CanTaskInstanceBeAssignedToASpecificUser(TaskModel nextTask, OrganizationUser currentlyAssignedUser, out string assignedUserId)
@@ -167,13 +182,16 @@ namespace bpmist.business.Commands
             }
         }
 
-        private bool DoesActionPointsToAValidProcessItem(ProcessInstance processInstance, ActionModel action, out TaskModel nextTask)
+        private bool DoesActionPointsToAValidProcessItem(ProcessInstance processInstance, ActionModel action, out TaskModel nextTask, out bool processCompleted)
         {
+            nextTask = null;
+            processCompleted = false;
+
             string nextItemId = action.NextItemId;
 
             if (nextItemId == null)
             {
-                // TODO:! we are ending the process
+                processCompleted = true;
             }
 
             nextTask = processInstance.ProcessModel.Tasks.FirstOrDefault(t => t.Id == nextItemId);

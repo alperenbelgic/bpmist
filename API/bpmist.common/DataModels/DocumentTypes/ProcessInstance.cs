@@ -10,14 +10,19 @@ namespace bpmist.common.DataModels.DocumentTypes
     [FirestoreData]
     public class ProcessInstance : Document
     {
-        [FirestoreProperty]
-        public object ProcessData { get; set; }
+        [FirestoreProperty] public object ProcessData { get; set; }
 
-        [FirestoreProperty]
-        public ProcessModel ProcessModel { get; set; }
+        [FirestoreProperty] public ProcessModel ProcessModel { get; set; }
 
-        [FirestoreProperty]
-        public TaskInstance[] TaskInstances { get; set; }
+        [FirestoreProperty] public TaskInstance[] TaskInstances { get; set; }
+
+        [FirestoreProperty] public string ProcessState { get; set; }
     }
 
+    public class ProcessStates
+    {
+        public const string Running = nameof(Running);
+        public const string Completed = nameof(Completed);
+        public const string Cancelled = nameof(Cancelled);
+    }
 }
