@@ -73,7 +73,7 @@ namespace bpmist.business.Commands
                 this.AddNewTaskInstanceInProcessInstance(processInstance, previousTaskInstance: taskInstance, currentlyAssignedUser, nextTask, out newTaskInstanceId);
             }
 
-            await this.SaveProcessInstance(processInstance);
+            await this.SaveProcessInstance(processId, processInstance, contextInformation);
 
             return new SendUserActionResult(processCompleted, newTaskInstanceId);
         }
@@ -83,9 +83,9 @@ namespace bpmist.business.Commands
             processInstance.ProcessState = ProcessStates.Completed;
         }
 
-        private Task SaveProcessInstance(ProcessInstance processInstance)
+        private async Task SaveProcessInstance(string processId, ProcessInstance processInstance, IContextInformation contextInformation)
         {
-            throw new NotImplementedException();
+            await this.SaveProcessInstanceCommand.ExecuteAsync(new SaveProcessInstanceParameter(processId, processInstance), contextInformation);
         }
 
         private void AddNewTaskInstanceInProcessInstance(ProcessInstance processInstance, TaskInstance previousTaskInstance, OrganizationUser currentlyAssignedUser, TaskModel nextTask, out string newTaskInstanceId)
