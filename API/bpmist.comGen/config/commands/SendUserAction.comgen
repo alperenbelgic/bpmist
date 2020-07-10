@@ -5,8 +5,8 @@
   "implementationProject": "bpmist.business",
   "isQuery": false,
   "injects": [
-    "GetProcessInstanceQuery_bpmist.data.ICommands.IGetProcessInstanceQuery"
-
+    "GetProcessInstanceQuery_bpmist.data.ICommands.IGetProcessInstanceQuery",
+    "GetOrganizationUserQuery_bpmist.data.ICommands.IGetOrganizationUserQuery"
   ],
   "parameters": {
     "ProcessId_string": null,
