@@ -1,0 +1,14 @@
+{
+  "guid": "8936A0E9-D16F-4420-AFD6-BC0CACEB00F4",
+  "name": "SaveOrganizationUser",
+  "interfaceProject": "bpmist.data",
+  "implementationProject": "bpmist.firestore",
+  "isQuery": false,
+  "injects": [],
+  "parameters": {
+    "OrganizationUser_bpmist.common.DataModels.DocumentTypes.OrganizationUser": null
+  },
+  "returnType": {
+  },
+  "usedInApi": false
+}
