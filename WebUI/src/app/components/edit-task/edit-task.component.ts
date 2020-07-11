@@ -10,6 +10,7 @@ export class TaskModel {
   processId = '';
   processInstanceId = '';
   taskInstanceId = '';
+  actions: any[] = [];
 }
 
 @Component({
@@ -41,12 +42,12 @@ export class EditTaskComponent implements OnInit {
         this.taskModel.processId = processId;
         this.taskModel.processInstanceId = r.Value.ProcessInstanceId;
         this.taskModel.taskInstanceId = r.Value.TaskInstanceId;
-
+        this.taskModel.actions = r.Value.Actions;
       }
     });
   }
 
-  complete() {
-    console.log(this.taskModel);
+  submit(actionId: string) {
+    console.log(actionId, this.taskModel);
   }
 }

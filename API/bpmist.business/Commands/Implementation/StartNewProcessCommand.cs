@@ -58,7 +58,13 @@ namespace bpmist.business.Commands
             string processInstanceId = createProcessInstanceResult.Value.ProcessInstanceId;
             string taskName = firstTask.TaskName;
 
-            return new StartNewProcessResult(process.ProcessName, processInstanceId, taskName, firstTask.Id);
+            var actions = firstTask.Actions.Select(a =>
+                {
+                    return new StartNewProcess_ActionsResult(a.ActionText, a.ActionType, a.Id);
+                })
+                .ToArray();
+
+            return new StartNewProcessResult(process.ProcessName, processInstanceId, taskName, firstTask.Id, actions);
         }
 
         protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(StartNewProcessParameter parameter, IContextInformation contextInformation)

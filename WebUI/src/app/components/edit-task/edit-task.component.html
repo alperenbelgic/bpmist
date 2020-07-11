@@ -29,13 +29,14 @@
     >
 
       <button
-        (click)="complete()"
+        *ngFor="let action of taskModel.actions"
+        (click)="submit(action.ActionId)"
         fxLayoutAlign="start center"
         mat-button
         mat-raised-button
         color="primary"
       >
-        Complete
+        {{action.ActionText}}
       </button>
     </div>
 
