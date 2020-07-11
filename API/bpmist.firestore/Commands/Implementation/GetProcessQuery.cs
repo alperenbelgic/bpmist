@@ -14,22 +14,17 @@ namespace bpmist.firestore.Commands
     {
         protected override async Task<GetProcessResult> ExecuteImplementationAsync(GetProcessParameter parameter, IContextInformation contextInformation)
         {
-
+            string organizationId = contextInformation.User.OrganizationId;
             string processId = parameter.ProcessId;
-
-            // TODO: handle if doc doesn't exist
 
             var processSnapshot =
                 await
-                FirestoreDb
-                .Create("bpmistproject")
-                .Collection("organisations")
-                .Document("I8b23jRR3LVAa6ROcqS8")
-                .Collection("processes")
-                .Document(processId)
-                .GetSnapshotAsync();
+                 Documents.process(organizationId, processId)
+                .GetSnapshotAsync();           
 
-            var process = new FirestoreHelper().Get<Process>(processSnapshot);
+            // TODO: handle if doc doesn't exist
+
+            var process = FirestoreHelper.Get<Process>(processSnapshot);
 
             return new GetProcessResult(process);
         }

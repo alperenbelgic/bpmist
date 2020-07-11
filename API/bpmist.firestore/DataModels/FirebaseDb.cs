@@ -1,5 +1,4 @@
-﻿using bpmist.business.common;
-using bpmist.common.DataModels;
+﻿using bpmist.common.DataModels;
 using Google.Cloud.Firestore;
 using System;
 using System.Collections.Generic;
@@ -15,15 +14,22 @@ namespace bpmist.firestore.DataModels
 {
     public class FirestoreHelper
     {
-        public T Get<T>(DocumentSnapshot documentSnapshot) where T : Document
+        public static T Get<T>(DocumentSnapshot documentSnapshot) where T : Document
         {
+            if (!documentSnapshot.Exists)
+            {
+                return null;
+            }
+
             var obj = documentSnapshot.ConvertTo<T>();
-            return obj;
+            return obj; 
         }
 
-        public IEnumerable<T> Get<T>(QuerySnapshot querySnapshot) where T : Document
+        public static IEnumerable<T> Get<T>(QuerySnapshot querySnapshot) where T : Document
         {
             return querySnapshot.Select(documentSnapshot => Get<T>(documentSnapshot));
         }
+
+        public const string ProjectName = "bpmistproject";
     }
 }

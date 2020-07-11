@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using bpmist.business.common;
 using bpmist.common.Commands;
 using bpmist.common.DataModels.DocumentTypes;
 using bpmist.data.ICommands;
@@ -15,16 +14,11 @@ namespace bpmist.firestore.Commands
     {
         protected override async Task<GetProcessesResult> ExecuteImplementationAsync(GetProcessesParameter parameter, IContextInformation contextInformation)
         {
-            var processesSnapshot =
-                await
-                FirestoreDb
-                .Create("bpmistproject")
-                .Collection("organisations")
-                .Document("I8b23jRR3LVAa6ROcqS8")
-                .Collection("processes")
-                .GetSnapshotAsync();
+            string organizationId = contextInformation.User.OrganizationId;
 
-            var processes = new FirestoreHelper().Get<Process>(processesSnapshot);
+            var processesSnapshot = await Collections.processes(organizationId).GetSnapshotAsync();
+
+            var processes = FirestoreHelper.Get<Process>(processesSnapshot);
 
             return
             new GetProcessesResult(

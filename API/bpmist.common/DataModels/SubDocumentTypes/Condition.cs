@@ -11,6 +11,6 @@ namespace bpmist.common.DataModels.SubDocumentTypes
     {
         [FirestoreProperty] public object ConditionExpression { get; set; }
 
-        [FirestoreProperty] public GenericProcessItem NextItem { get; set; }
+        [FirestoreProperty] public string NextItemId { get; set; }
     }
 }

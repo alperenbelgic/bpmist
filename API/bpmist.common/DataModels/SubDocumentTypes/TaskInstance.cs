@@ -10,27 +10,19 @@ namespace bpmist.common.DataModels.SubDocumentTypes
     [FirestoreData]
     public class TaskInstance : SubDocument
     {
-        [FirestoreProperty]
-        public string TaskState { get; set; }
+        [FirestoreProperty] public string TaskState { get; set; }
 
-        [FirestoreProperty]
-        public string AssignedUserId { get; set; }
+        [FirestoreProperty] public string AssignedUserId { get; set; }
 
-        [FirestoreProperty]
-        public string AssignedGroupId { get; set; }
+        [FirestoreProperty] public string AssignedGroupId { get; set; }
 
-        [FirestoreProperty]
-        public TaskModel Task { get; set; }
+        [FirestoreProperty] public TaskModel Task { get; set; }
 
-        [FirestoreProperty]
-        public Activity[] Activities { get; set; }
+        [FirestoreProperty] public Activity[] Activities { get; set; } = new Activity[0];
 
-        [FirestoreProperty]
-        public System.DateTime? StartedAt { get; set; }
+        [FirestoreProperty] public System.DateTime? StartedAt { get; set; }
 
-        [FirestoreProperty]
-        public System.DateTime? CompletedAt { get; set; }
-
+        [FirestoreProperty] public System.DateTime? CompletedAt { get; set; }
     }
 
     public class TaskStates

@@ -122,6 +122,7 @@ namespace bpmist.business.Commands
             }
             else if (nextTask.AssigningConfiguration?.AssigningGroupId != null)
             {
+                // TODO:! Check if group exists
                 newTaskInstance.AssignedGroupId = nextTask.AssigningConfiguration.AssigningGroupId;
             }
             else if (nextTask.AssigningConfiguration.PoolId != null && nextTask.AssigningConfiguration.PoolId.Count() > 0)
@@ -259,7 +260,10 @@ namespace bpmist.business.Commands
                 return false;
             }
 
-            return taskInstance.TaskState == TaskStates.Active;
+            return 
+                taskInstance.TaskState == TaskStates.Active || 
+                taskInstance.TaskState == TaskStates.Candidate || 
+                taskInstance.TaskState == TaskStates.Draft;
         }
 
         protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(SendUserActionParameter parameter, IContextInformation contextInformation)

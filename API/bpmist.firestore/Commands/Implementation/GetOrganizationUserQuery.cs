@@ -17,21 +17,13 @@ namespace bpmist.firestore.Commands
             string organizationId = contextInformation.User.OrganizationId;
             string organizationUserId = parameter.OrganizationUserId;
 
-            var organizationUserSnapshot =
-                                    await
-                                    FirestoreDb
-                                    .Create("bpmistproject")
-                                    .Collection("organisations")
-                                    .Document(organizationId)
-                                    .Collection("users")
-                                    .Document(organizationUserId)
-                                    .GetSnapshotAsync();
+            var organizationUserDocumentReference = await Documents.organizationUser(organizationId, organizationUserId).GetSnapshotAsync();
 
-            // TODO: check if doc exists
+            var organizationUser = FirestoreHelper.Get<OrganizationUser>(organizationUserDocumentReference);
 
-            var organisationUser = new FirestoreHelper().Get<OrganizationUser>(organizationUserSnapshot);
+            // TODO: check if not exists
 
-            return new GetOrganizationUserResult(organisationUser);
+            return new GetOrganizationUserResult(organizationUser);
         }
 
         protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(GetOrganizationUserParameter parameter, IContextInformation contextInformation)
