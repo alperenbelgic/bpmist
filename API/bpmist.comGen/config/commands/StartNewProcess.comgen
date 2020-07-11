@@ -15,7 +15,12 @@
     "ProcessName_string": null,
     "ProcessInstanceId_string": null,
     "TaskName_string": null,
-    "TaskInstanceId_string": null
+    "TaskInstanceId_string": null,
+    "Actions_List": {
+      "ActionText_string": null,
+      "ActionType_string": null,
+      "ActionId_string": null
+    }
   },
   "usedInApi": true
 }
