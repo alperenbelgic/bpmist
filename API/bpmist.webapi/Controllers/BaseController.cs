@@ -47,7 +47,7 @@ namespace API.Controllers
 
         public string OrganizationId => "I8b23jRR3LVAa6ROcqS8";
 
-        public string UserId => "user_id";
+        public string UserId => "{9296A486-5D25-4A40-97BA-F67CB6FBBBCC}";
     }
 
     public class DefaultContextInformation : IContextInformation

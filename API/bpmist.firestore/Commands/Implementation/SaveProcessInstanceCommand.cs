@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using bpmist.common.Commands;
 using bpmist.common.DataModels.DocumentTypes;
 using bpmist.data.ICommands;
+using bpmist.firestore.DataModels;
 using Google.Cloud.Firestore;
 
 namespace bpmist.firestore.Commands
@@ -19,33 +20,19 @@ namespace bpmist.firestore.Commands
 
             if (string.IsNullOrEmpty(processInstance.Id))
             {
-
+                
                 var documentReference =
                  await
-                 FirestoreDb
-                 .Create("bpmistproject")
-                 .Collection("organisations")
-                 .Document(organizationId)
-                 .Collection("processes")
-                 .Document(processId)
-                 .Collection("processInstances")
+                 Collections.processInstances(organizationId, processId)
                  .AddAsync(processInstance);
 
                 processInstance.Id = documentReference.Id;
             }
             else
-            {
+            { 
                 await
-                    FirestoreDb
-                 .Create("bpmistproject")
-                 .Collection("organisations")
-                 .Document(organizationId)
-                 .Collection("processes")
-                 .Document(processId)
-                 .Collection("processInstances")
-                 .Document(processInstance.Id)
+                 Documents.processInstance(organizationId, processId, processInstance.Id)
                  .SetAsync(processInstance);
-
             }
 
             return new SaveProcessInstanceResult(processInstance.Id);

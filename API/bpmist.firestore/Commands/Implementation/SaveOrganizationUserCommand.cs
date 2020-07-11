@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using bpmist.common.Commands;
 using bpmist.data.ICommands;
+using bpmist.firestore.DataModels;
 using Google.Cloud.Firestore;
 
 namespace bpmist.firestore.Commands
@@ -18,13 +19,10 @@ namespace bpmist.firestore.Commands
 
             if (string.IsNullOrEmpty(organizationUser.Id))
             {
+                
                 var documentRef =
                                 await
-                                    FirestoreDb
-                                    .Create("bpmistproject")
-                                    .Collection("organisations")
-                                    .Document(organizationId)
-                                    .Collection("users")
+                                    Collections.organizationUsers(organizationId)
                                     .AddAsync(organizationUser);
 
                 organizationUser.Id = documentRef.Id;
@@ -32,12 +30,7 @@ namespace bpmist.firestore.Commands
             else
             {
                 await
-                    FirestoreDb
-                    .Create("bpmistproject")
-                    .Collection("organisations")
-                    .Document(organizationId)
-                    .Collection("users")
-                    .Document(organizationUser.Id)
+                    Documents.organizationUser(organizationId, organizationUser.Id)
                     .SetAsync(organizationUser);
             }
 

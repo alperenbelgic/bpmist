@@ -22,100 +22,6 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        async Task<object> GetNewProcessTemplate(string processId, int hodor)
-        {
-
-
-
-            if (false)
-            {
-
-                //var tasks =
-                //    new TaskModel[]
-                //    {
-                //            new TaskModel
-                //            {
-                //                TaskName = "Request Entry",
-                //                Actions=new ActionModel[]
-                //                {
-                //                    new ActionModel
-                //                    {
-                //                        ActionText = "Complete",
-                //                        NextItemId = secondTaskId,
-                //                    }
-                //                },
-
-                //            },
-                //            new TaskModel
-                //            {
-                //                Id = secondTaskId,
-                //                TaskName = "Approval",
-                //                Actions = new ActionModel[]{
-                //                    new ActionModel
-                //                    {
-                //                        ActionText = "Approve",
-                //                        NextItemId = thirdTaskId,
-                //                    },
-                //                    new ActionModel
-                //                    {
-                //                        ActionText = "Reject",
-                //                        NextItemId = null,
-                //                        ActionType = ActionTypes.Warned
-                //                    },
-                //                },
-                //                AssigningConfiguration = new AssigningConfiguration
-                //                {
-                //                    AssigningRule = new AssigningRule()
-                //                    {
-                //                        AssignToManager = true
-                //                    }
-                //                },
-                //            },
-                //            new TaskModel
-                //            {
-                //                Id = thirdTaskId,
-                //                TaskName = "HR Confirmation",
-                //                Actions = new ActionModel[]
-                //                {
-                //                    new ActionModel
-                //                    {
-                //                        ActionText = "Confirm",
-                //                        NextItemId = null
-                //                    }
-                //                },
-                //                AssigningConfiguration = new AssigningConfiguration
-                //                {
-                //                    AssigningGroupId =  hrGroupId
-                //                },
-                //            }
-                //    };
-
-
-                //await
-                //    FirestoreDb
-                //    .Create("bpmistproject")
-                //    .Collection("organisations")
-                //    .Document("I8b23jRR3LVAa6ROcqS8")
-                //    .Collection("processes")
-                //    .AddAsync(
-                //                new Process()
-                //                {
-                //                    ProcessName = "Holiday Request",
-                //                    VersionedProcessModels = new ProcessModel[]
-                //                    {
-                //                        new ProcessModel() { Tasks = tasks }
-                //                    }
-                //                }
-                //            );
-            }
-
-            return new
-            {
-                Hodor = "modor"
-            };
-        }
-
-        [HttpGet]
         public async Task<object> InitializeDb()
         {
             string organizationId = "I8b23jRR3LVAa6ROcqS8";
@@ -278,7 +184,7 @@ namespace API.Controllers
                 });
 
             await usersCollection
-                .Document(hrUser1)
+                .Document(hrUser2)
                 .SetAsync(new OrganizationUser()
                 {
                     Email = "baris@gmail.com",

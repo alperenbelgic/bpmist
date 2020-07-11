@@ -39,7 +39,8 @@ export class EditTaskComponent implements OnInit {
         this.taskModel.processName = r.Value.ProcessName;
         this.taskModel.title = r.Value.TaskName;
         this.taskModel.processId = processId;
-        this.taskModel.processInstanceId = r.value.processInstanceId;
+        this.taskModel.processInstanceId = r.Value.ProcessInstanceId;
+        this.taskModel.taskInstanceId = r.Value.TaskInstanceId;
 
       }
     });
