@@ -6,6 +6,7 @@ namespace API
     {
         public static void AddBpmistServices(this IServiceCollection services)
         {
+            services.AddTransient<bpmist.data.ICommands.IGetGroupQuery, bpmist.firestore.Commands.GetGroupQuery>();
             services.AddTransient<bpmist.data.ICommands.IGetOrganizationUserQuery, bpmist.firestore.Commands.GetOrganizationUserQuery>();
             services.AddTransient<bpmist.data.ICommands.IGetProcessQuery, bpmist.firestore.Commands.GetProcessQuery>();
             services.AddTransient<bpmist.data.ICommands.IGetProcessesQuery, bpmist.firestore.Commands.GetProcessesQuery>();

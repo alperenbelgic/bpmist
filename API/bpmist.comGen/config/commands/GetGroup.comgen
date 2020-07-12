@@ -1,0 +1,15 @@
+{
+  "guid": "B493C3DC-865E-4E19-947C-39D927BF100C",
+  "name": "GetGroup",
+  "interfaceProject": "bpmist.data",
+  "implementationProject": "bpmist.firestore",
+  "isQuery": true,
+  "injects": [],
+  "parameters": {
+    "GroupId_string": null
+  },
+  "returnType": {
+    "Group_bpmist.common.DataModels.DocumentTypes.Group": null
+  },
+  "usedInApi": false
+}

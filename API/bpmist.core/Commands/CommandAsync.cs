@@ -190,6 +190,8 @@ namespace bpmist.common.Commands
 
             try
             {
+                await Initialize(parameter, contextInformation);
+
                 var operationErrorResults = await ValidateAsync(parameter, contextInformation);
 
                 if (operationErrorResults != null && operationErrorResults.Count() > 0)
