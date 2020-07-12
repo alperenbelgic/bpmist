@@ -34,6 +34,31 @@ namespace API.Controllers
             );
         }
     }
+    public class GetTaskInstanceQueryController : BaseController
+    {
+        private bpmist.common.ICommands.IGetTaskInstanceQuery GetTaskInstanceQuery { get; }
+
+        public GetTaskInstanceQueryController(
+            bpmist.common.ICommands.IGetTaskInstanceQuery _GetTaskInstanceQuery)
+        {
+            this.GetTaskInstanceQuery = _GetTaskInstanceQuery;
+        }
+
+        [HttpGet]
+        public async Task<CommandResult<bpmist.common.ICommands.GetTaskInstanceResult>> Get(
+            
+        )
+        {
+            var contextInfo = this.GetContextInfo();
+
+            return await this.GetTaskInstanceQuery.ExecuteAsync(
+                new bpmist.common.ICommands.GetTaskInstanceParameter(
+                    
+                    ),
+                contextInfo
+            );
+        }
+    }
     public class SendUserActionCommandController : BaseController
     {
         private bpmist.common.ICommands.ISendUserActionCommand SendUserActionCommand { get; }

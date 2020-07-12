@@ -1,0 +1,17 @@
+{
+  "guid": "208551CB-2582-42B2-9FF1-0F0F6756C517",
+  "name": "GetTaskInstance",
+  "interfaceProject": "bpmist.common",
+  "implementationProject": "bpmist.business",
+  "isQuery": true,
+  "injects": [],
+  "parameters": {},
+  "returnType": {
+    "ProcessName_string": null,
+    "TaskName_string": null,
+    "UserTaskState_Object": {
+      "CanEdit_bool": null
+    }
+  },
+  "usedInApi": true
+}

@@ -261,8 +261,6 @@ namespace bpmist.comGen
 
         static string CreateResultClass(PropertyCollection resultProperties, string modelName, Dictionary<string, string> errorTypes)
         {
-            string classContent = "";
-
             string fileContent = File.ReadAllText("Config/global/Class.template");
 
             string className = modelName + "Result";
@@ -278,6 +276,10 @@ namespace bpmist.comGen
                                   if (type == "List")
                                   {
                                       return modelName + "_" + name + "Result" + "[]" + " " + name;
+                                  }
+                                  else if (type == "Object")
+                                  {
+                                      return modelName + "_" + name + "Result" + " " + name;
                                   }
 
                                   return type + " " + name;
@@ -300,6 +302,10 @@ namespace bpmist.comGen
                 if (type == "List")
                 {
                     return "        " + "public " + modelName + "_" + name + "Result" + "[]" + " " + name + " { get; } ";
+                }
+                else if (type == "Object")
+                {
+                    return "        " + "public " + modelName + "_" + name + "Result" + " " + name + " { get; } ";
                 }
 
                 return "        " + $"public {type} {name} {{ get; }} ";
@@ -327,7 +333,7 @@ namespace bpmist.comGen
                 string name = resultProperty.Key.Split('_')[0];
                 string type = resultProperty.Key.Split('_')[1];
 
-                if (type == "List")
+                if (type == "List" || type == "Object")
                 {
                     fileContent += CreateResultClass(resultProperty.Value, modelName + "_" + name, null);
                 }

@@ -11,6 +11,7 @@ namespace API
             services.AddTransient<bpmist.data.ICommands.IGetProcessQuery, bpmist.firestore.Commands.GetProcessQuery>();
             services.AddTransient<bpmist.data.ICommands.IGetProcessesQuery, bpmist.firestore.Commands.GetProcessesQuery>();
             services.AddTransient<bpmist.data.ICommands.IGetProcessInstanceQuery, bpmist.firestore.Commands.GetProcessInstanceQuery>();
+            services.AddTransient<bpmist.common.ICommands.IGetTaskInstanceQuery, bpmist.business.Commands.GetTaskInstanceQuery>();
             services.AddTransient<bpmist.data.ICommands.ISaveOrganizationUserCommand, bpmist.firestore.Commands.SaveOrganizationUserCommand>();
             services.AddTransient<bpmist.data.ICommands.ISaveProcessInstanceCommand, bpmist.firestore.Commands.SaveProcessInstanceCommand>();
             services.AddTransient<bpmist.common.ICommands.ISendUserActionCommand, bpmist.business.Commands.SendUserActionCommand>();
