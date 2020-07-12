@@ -61,6 +61,7 @@ namespace bpmist.business.Commands
 
 
             string newTaskInstanceId = null;
+            string assignedName = null;
 
             if (processCompleted)
             {
@@ -70,7 +71,8 @@ namespace bpmist.business.Commands
             {
                 // create the next task(s)
                 // how? who is assigned etc.
-                this.AddNewTaskInstanceInProcessInstance(processInstance, previousTaskInstance: taskInstance, currentlyAssignedUser, nextTask, out newTaskInstanceId);
+                (newTaskInstanceId, assignedName) = await this.AddNewTaskInstanceInProcessInstance(
+                    processInstance, previousTaskInstance: taskInstance, currentlyAssignedUser, nextTask, contextInformation);
             }
 
             await this.SaveProcessInstance(processId, processInstance, contextInformation);
@@ -88,7 +90,8 @@ namespace bpmist.business.Commands
             await this.SaveProcessInstanceCommand.ExecuteAsync(new SaveProcessInstanceParameter(processId, processInstance), contextInformation);
         }
 
-        private void AddNewTaskInstanceInProcessInstance(ProcessInstance processInstance, TaskInstance previousTaskInstance, OrganizationUser currentlyAssignedUser, TaskModel nextTask, out string newTaskInstanceId)
+        private async Task<(string NewTaskInstanceId, string AssignedName)> AddNewTaskInstanceInProcessInstance(
+            ProcessInstance processInstance, TaskInstance previousTaskInstance, OrganizationUser currentlyAssignedUser, TaskModel nextTask, IContextInformation contextInformation)
         {
             /*
             // Analysis:
@@ -105,7 +108,8 @@ namespace bpmist.business.Commands
 
             */
 
-            bool canBeAssignedToASpecificUser = this.CanTaskInstanceBeAssignedToASpecificUser(nextTask, currentlyAssignedUser, out string userId);
+            (bool canBeAssignedToASpecificUser, OrganizationUser user) =
+                await this.CanTaskInstanceBeAssignedToASpecificUser(nextTask, currentlyAssignedUser, contextInformation);
 
             // TODO: if cannot be assigned to a user, there must be a group by business rules. if unexpectedly not present, this should be a known exception. 
 
@@ -118,11 +122,12 @@ namespace bpmist.business.Commands
 
             if (canBeAssignedToASpecificUser)
             {
-                newTaskInstance.AssignedUserId = userId;
-                //newTaskInstance.AssigneeName = ?
+                newTaskInstance.AssignedUserId = user.Id;
+                newTaskInstance.AssigneeName = user.UserFullName;
             }
             else if (nextTask.AssigningConfiguration?.AssigningGroupId != null)
             {
+
                 // TODO:! Check if group exists
                 newTaskInstance.AssignedGroupId = nextTask.AssigningConfiguration.AssigningGroupId;
             }
@@ -141,12 +146,14 @@ namespace bpmist.business.Commands
             taskInstanceList.Add(newTaskInstance);
             processInstance.TaskInstances = taskInstanceList.ToArray();
 
-            newTaskInstanceId = newTaskInstance.Id;
+            return (newTaskInstance.Id, newTaskInstance.AssigneeName);
         }
 
-        private bool CanTaskInstanceBeAssignedToASpecificUser(TaskModel nextTask, OrganizationUser currentlyAssignedUser, out string assignedUserId)
+        private async Task<(bool canAssignToSpecificUser, OrganizationUser user)> CanTaskInstanceBeAssignedToASpecificUser(TaskModel nextTask, OrganizationUser currentlyAssignedUser, IContextInformation contextInformation)
         {
             var assigningConfiguration = nextTask.AssigningConfiguration;
+
+            string assignedUserId = null;
 
             if (assigningConfiguration?.AssigningRule?.AssignToManager ?? false)
             {
@@ -159,15 +166,14 @@ namespace bpmist.business.Commands
 
                 if (currentlyAssignedUser.ManagerId != null)
                 {
-                    // TODO: ? manager id corresponds to a real user?
                     assignedUserId = currentlyAssignedUser.ManagerId;
-                    return true;
+
+                    // TODO: ? manager id corresponds to a real user
                 }
                 else
                 {
                     // TODO: who to assign then? to the same user? to a process owner
                     assignedUserId = currentlyAssignedUser.Id;
-                    return true;
                 }
 
             }
@@ -175,12 +181,30 @@ namespace bpmist.business.Commands
             {
                 // TODO: is this a real & active user?
                 assignedUserId = assigningConfiguration.AssigningUserId;
-                return true;
+            }
+
+            if (!string.IsNullOrEmpty(assignedUserId))
+            {
+                var getUserResult = await this.GetOrganizationUserQuery.ExecuteAsync(new GetOrganizationUserParameter(assignedUserId), contextInformation);
+
+                if (getUserResult.Successful)
+                {
+                    var user = getUserResult.Value.OrganizationUser;
+
+                    // TODO: Is user deactivated? Assign it but, inform process owners.
+
+                    return (true, user);
+                }
+                else
+                {
+                    // TODO: This is unexpected. Should we inform anyone? 
+
+                    return (false, null);
+                }
             }
             else
             {
-                assignedUserId = null;
-                return false;
+                return (false, null);
             }
         }
 
@@ -261,9 +285,9 @@ namespace bpmist.business.Commands
                 return false;
             }
 
-            return 
-                taskInstance.TaskState == TaskStates.Active || 
-                taskInstance.TaskState == TaskStates.Candidate || 
+            return
+                taskInstance.TaskState == TaskStates.Active ||
+                taskInstance.TaskState == TaskStates.Candidate ||
                 taskInstance.TaskState == TaskStates.Draft;
         }
 

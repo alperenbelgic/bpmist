@@ -158,69 +158,25 @@ namespace bpmist.common.Commands
 
     }
 
-    public class OnTheFlyCommandAsync<CommandParameter, ReturnType> : Command<CommandParameter, ReturnType>
-    {
-        private readonly Func<CommandParameter, IContextInformation, Task<ReturnType>> CommandImplementationAsync;
-        private readonly string CommandName;
-        private readonly Func<CommandParameter, IContextInformation, Task<IEnumerable<OperationErrorInformation>>> ValidationImplementationAsync;
-        private readonly Func<CommandParameter, CommandResult<ReturnType>, IContextInformation, Task> RunAfterCommandExecutedImplementation;
-
-        public OnTheFlyCommandAsync(
-            string commandName,
-              Func<CommandParameter, IContextInformation, Task<ReturnType>> commandImplementation,
-            Func<CommandParameter, IContextInformation, Task<IEnumerable<OperationErrorInformation>>> validationImplementation = null,
-            Func<CommandParameter, CommandResult<ReturnType>, IContextInformation, Task> runAfterCommandExecutedImplementation = null
-            )
-        {
-            this.CommandName = commandName;
-            this.CommandImplementationAsync = commandImplementation;
-            this.ValidationImplementationAsync = validationImplementation;
-            this.RunAfterCommandExecutedImplementation = runAfterCommandExecutedImplementation;
-        }
-
-        public override string ToString()
-        {
-            return this.CommandName;
-        }
-        protected override async Task<ReturnType> ExecuteImplementationAsync(CommandParameter parameter, IContextInformation contextInformation)
-        {
-            return await this.CommandImplementationAsync(parameter, contextInformation);
-        }
-
-        protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(CommandParameter parameter, IContextInformation contextInformation)
-        {
-            if (this.ValidationImplementationAsync == null)
-            {
-                return new List<OperationErrorInformation>();
-            }
-
-            return await this.ValidationImplementationAsync(parameter, contextInformation);
-        }
-
-        protected override async Task RunAfterCommandExecuted(CommandParameter parameter, CommandResult<ReturnType> commandResult, IContextInformation contextInformation)
-        {
-            if (this.RunAfterCommandExecutedImplementation != null)
-            {
-                await this.RunAfterCommandExecutedImplementation(parameter, commandResult, contextInformation);
-            }
-            else
-            {
-                // ??
-            }
-        }
-
-        public async Task<IEnumerable<OperationErrorInformation>> ValidateAsyncPublic(CommandParameter parameter, IContextInformation contextInformation)
-        {
-            return await this.ValidateAsync(parameter, contextInformation);
-        }
-
-    }
 
     public abstract class CommandBase<CommandParameter, ReturnType>
         : ICommand<CommandParameter, ReturnType>
 
     {
         private bool BreakingErrorsHandled = false;
+
+        /// <summary>
+        /// Initialize values which can be used both in validation and execute. 
+        /// Values are expected to be members of command implementations. 
+        /// Commands must not be injected as Singleton-like .
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="contextInformation"></param>
+        /// <returns></returns>
+        protected virtual async Task Initialize(CommandParameter parameter, IContextInformation contextInformation)
+        {
+
+        }
 
         protected abstract Task<IEnumerable<OperationErrorInformation>> ValidateAsync(CommandParameter parameter, IContextInformation contextInformation);
 
@@ -369,3 +325,62 @@ namespace bpmist.common.Commands
         string CacheKey();
     }
 }
+
+
+//public class OnTheFlyCommandAsync<CommandParameter, ReturnType> : Command<CommandParameter, ReturnType>
+//{
+//    private readonly Func<CommandParameter, IContextInformation, Task<ReturnType>> CommandImplementationAsync;
+//    private readonly string CommandName;
+//    private readonly Func<CommandParameter, IContextInformation, Task<IEnumerable<OperationErrorInformation>>> ValidationImplementationAsync;
+//    private readonly Func<CommandParameter, CommandResult<ReturnType>, IContextInformation, Task> RunAfterCommandExecutedImplementation;
+
+//    public OnTheFlyCommandAsync(
+//        string commandName,
+//          Func<CommandParameter, IContextInformation, Task<ReturnType>> commandImplementation,
+//        Func<CommandParameter, IContextInformation, Task<IEnumerable<OperationErrorInformation>>> validationImplementation = null,
+//        Func<CommandParameter, CommandResult<ReturnType>, IContextInformation, Task> runAfterCommandExecutedImplementation = null
+//        )
+//    {
+//        this.CommandName = commandName;
+//        this.CommandImplementationAsync = commandImplementation;
+//        this.ValidationImplementationAsync = validationImplementation;
+//        this.RunAfterCommandExecutedImplementation = runAfterCommandExecutedImplementation;
+//    }
+
+//    public override string ToString()
+//    {
+//        return this.CommandName;
+//    }
+//    protected override async Task<ReturnType> ExecuteImplementationAsync(CommandParameter parameter, IContextInformation contextInformation)
+//    {
+//        return await this.CommandImplementationAsync(parameter, contextInformation);
+//    }
+
+//    protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(CommandParameter parameter, IContextInformation contextInformation)
+//    {
+//        if (this.ValidationImplementationAsync == null)
+//        {
+//            return new List<OperationErrorInformation>();
+//        }
+
+//        return await this.ValidationImplementationAsync(parameter, contextInformation);
+//    }
+
+//    protected override async Task RunAfterCommandExecuted(CommandParameter parameter, CommandResult<ReturnType> commandResult, IContextInformation contextInformation)
+//    {
+//        if (this.RunAfterCommandExecutedImplementation != null)
+//        {
+//            await this.RunAfterCommandExecutedImplementation(parameter, commandResult, contextInformation);
+//        }
+//        else
+//        {
+//            // ??
+//        }
+//    }
+
+//    public async Task<IEnumerable<OperationErrorInformation>> ValidateAsyncPublic(CommandParameter parameter, IContextInformation contextInformation)
+//    {
+//        return await this.ValidateAsync(parameter, contextInformation);
+//    }
+
+//}
