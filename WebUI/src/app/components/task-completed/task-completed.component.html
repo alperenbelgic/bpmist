@@ -1,0 +1,14 @@
+<div class="wrapper">
+  <div class="title">
+    <img src="/assets/images/completed-green.png">
+    <h1 class="congrats-text">Congrats!</h1>
+  </div>
+  <h1 class="task-completed-text">Task Completed!</h1>
+  <h5>Next task is</h5>
+  <a
+    class="next-task"
+    [routerLink]="['/EditProcess/' + processId + '/' + processInstanceId + '/'+ taskInstanceId]"
+  >Approval</a>
+  <h5>Assigned to </h5>
+  <h2>{{nextAssignee}}</h2>
+</div>

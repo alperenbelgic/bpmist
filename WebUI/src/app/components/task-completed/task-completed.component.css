@@ -1,0 +1,31 @@
+.wrapper {
+  text-align: center;
+}
+
+.title {
+  margin-top: 50px;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.image {
+  height: 256px;
+}
+
+h5 {
+  margin: 0;
+}
+
+.task-completed-text {
+  margin-bottom: 63px;
+}
+
+.congrats-text {
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.next-task {
+  text-decoration: underline;
+  cursor: pointer;
+}

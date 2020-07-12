@@ -1,0 +1,9 @@
+Todo:
+- 
+
+
+Later:
+- collection group queries
+	- how to apply exactly
+	- can it be projected under a path?
+	- https://github.com/googleapis/google-cloud-dotnet/blob/master/apis/Google.Cloud.Firestore/Google.Cloud.Firestore.IntegrationTests/QueryTest.cs

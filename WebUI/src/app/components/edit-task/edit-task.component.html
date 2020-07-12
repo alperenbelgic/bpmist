@@ -1,13 +1,14 @@
 <div
   class="edit-task-wrapper"
-  fxLayout="row"
+  fxLayout="column"
   fxLayoutAlign="center center"
 >
   <div
-    *ngIf="taskModel"
+    *ngIf="taskModel && !showCompletedMessage"
     class="edit-task-content"
   >
-    <div class="process-title-header">process
+    <div class="process-title-header">
+      process
       <i class="fa fa-info-circle"></i></div>
     <div class="process-title">{{taskModel.processName}}</div>
     <div class="task-title-header">your task<i class="fa fa-info-circle"></i></div>
@@ -41,4 +42,12 @@
     </div>
 
   </div>
+
+  <div
+    *ngIf="showCompletedMessage"
+    style="width: 500px;"
+  >
+    <app-task-completed></app-task-completed>
+  </div>
+
 </div>

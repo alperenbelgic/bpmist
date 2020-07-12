@@ -3,7 +3,7 @@
   *ngFor="let process of processes"
   class="process-box"
 >
-  <a [routerLink]="['/NewTask/' + process.ProcessId]">
+  <a [routerLink]="['/NewProcess/' + process.ProcessId]">
     Start <b>{{process.ProcessName}}</b>
   </a>
 </div>

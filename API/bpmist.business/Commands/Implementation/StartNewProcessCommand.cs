@@ -34,19 +34,22 @@ namespace bpmist.business.Commands
 
             var firstTask = processModel.Tasks.First();
 
+            var taskInstance =
+                                 new TaskInstance()
+                                 {
+                                     AssignedUserId = userId,
+                                     StartedAt = DateTime.UtcNow,
+                                     Task = firstTask,
+                                     TaskState = TaskStates.Candidate
+                                 };
+
             var processInstance =
                                     new ProcessInstance()
                                     {
                                         ProcessModel = processModel,
                                         TaskInstances = new TaskInstance[]
                                         {
-                                            new TaskInstance()
-                                            {
-                                                AssignedUserId = userId,
-                                                StartedAt = DateTime.UtcNow,
-                                                Task = firstTask,
-                                                TaskState = TaskStates.Candidate
-                                            }
+                                           taskInstance
                                         }
                                     };
 
@@ -64,7 +67,7 @@ namespace bpmist.business.Commands
                 })
                 .ToArray();
 
-            return new StartNewProcessResult(process.ProcessName, processInstanceId, taskName, firstTask.Id, actions);
+            return new StartNewProcessResult(process.ProcessName, processInstanceId, taskName, taskInstance.Id, actions);
         }
 
         protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(StartNewProcessParameter parameter, IContextInformation contextInformation)

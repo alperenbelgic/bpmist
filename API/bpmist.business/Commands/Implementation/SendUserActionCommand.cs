@@ -119,6 +119,7 @@ namespace bpmist.business.Commands
             if (canBeAssignedToASpecificUser)
             {
                 newTaskInstance.AssignedUserId = userId;
+                //newTaskInstance.AssigneeName = ?
             }
             else if (nextTask.AssigningConfiguration?.AssigningGroupId != null)
             {

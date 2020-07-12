@@ -20,4 +20,10 @@ export class WebService {
     const endPoint = '/StartNewProcessCommand/Post';
     return this.httpService.post(endPoint, { ProcessId });
   }
+  public SendUserActionCommand(
+    ProcessId: string, ProcessInstanceId: string, TaskInstanceId: string, ActionId: string, Notes: string): Observable<any> {
+    const endPoint = '/SendUserActionCommand/Post';
+    return this.httpService.post(endPoint, { ProcessId, ProcessInstanceId, TaskInstanceId, ActionId, Notes });
+  }
+
 }

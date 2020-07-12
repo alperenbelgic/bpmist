@@ -20,7 +20,7 @@ namespace bpmist.firestore.Commands
 
             if (string.IsNullOrEmpty(processInstance.Id))
             {
-                
+
                 var documentReference =
                  await
                  Collections.processInstances(organizationId, processId)
@@ -29,7 +29,7 @@ namespace bpmist.firestore.Commands
                 processInstance.Id = documentReference.Id;
             }
             else
-            { 
+            {
                 await
                  Documents.processInstance(organizationId, processId, processInstance.Id)
                  .SetAsync(processInstance);

@@ -23,6 +23,7 @@ import { FormlyMatToggleModule } from '@ngx-formly/material/toggle';
 import { MatFormFieldDefaultOptions, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { EditTaskComponent } from './components/edit-task/edit-task.component';
 import { ListProcessesComponent } from './components/list-processes/list-processes.component';
+import { TaskCompletedComponent } from './components/task-completed/task-completed.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -36,7 +37,8 @@ const appearance: MatFormFieldDefaultOptions = {
     ProcessItemSettingsComponent,
     ClickStopPropagationDirective,
     EditTaskComponent,
-    ListProcessesComponent
+    ListProcessesComponent,
+    TaskCompletedComponent
   ],
   imports: [
     BrowserModule,
