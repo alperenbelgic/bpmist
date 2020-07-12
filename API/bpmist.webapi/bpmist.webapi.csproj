@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\bpmist.business\bpmist.business.csproj" />
     <ProjectReference Include="..\bpmist.common\bpmist.common.csproj" />
     <ProjectReference Include="..\bpmist.core\bpmist.core.csproj" />

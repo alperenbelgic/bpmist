@@ -13,7 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bpmist.data", "bpmist.data\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bpmist.common", "bpmist.common\bpmist.common.csproj", "{EDA6A89A-0440-4302-AE6E-2D18E086258F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bpmist.business", "bpmist.business\bpmist.business.csproj", "{97E66302-000E-44B7-99E1-CE487D505AB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bpmist.business", "bpmist.business\bpmist.business.csproj", "{97E66302-000E-44B7-99E1-CE487D505AB1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C59CB989-5983-4514-9D7D-6F0A23269343}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
