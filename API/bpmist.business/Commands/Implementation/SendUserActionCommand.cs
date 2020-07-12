@@ -77,7 +77,7 @@ namespace bpmist.business.Commands
 
             await this.SaveProcessInstance(processId, processInstance, contextInformation);
 
-            return new SendUserActionResult(processCompleted, newTaskInstanceId);
+            return new SendUserActionResult(processCompleted, newTaskInstanceId, assignedName);
         }
 
         private void CompleteProcessInstance(ProcessInstance processInstance)
@@ -111,7 +111,7 @@ namespace bpmist.business.Commands
             (bool canBeAssignedToASpecificUser, OrganizationUser user) =
                 await this.CanTaskInstanceBeAssignedToASpecificUser(nextTask, currentlyAssignedUser, contextInformation);
 
-            // TODO: if cannot be assigned to a user, there must be a group by business rules. if unexpectedly not present, this should be a known exception. 
+            // TODO: if cannot be assigned to a user, there must be a group by business rules. if group is unexpectedly not present, this spcific situation should be a known exception. 
 
             var newTaskInstance =
             new TaskInstance()
@@ -127,9 +127,10 @@ namespace bpmist.business.Commands
             }
             else if (nextTask.AssigningConfiguration?.AssigningGroupId != null)
             {
-
-                // TODO:! Check if group exists
+                var getGroupQuery = await this.GetGroupQuery.ExecuteAsync(new GetGroupParameter(nextTask.AssigningConfiguration.AssigningGroupId), contextInformation);
+                // TODO: Check if group exists
                 newTaskInstance.AssignedGroupId = nextTask.AssigningConfiguration.AssigningGroupId;
+                newTaskInstance.AssigneeName = getGroupQuery.Value.Group.GroupName;
             }
             else if (nextTask.AssigningConfiguration.PoolId != null && nextTask.AssigningConfiguration.PoolId.Count() > 0)
             {

@@ -13,6 +13,13 @@ export class TaskModel {
   actions: any[] = [];
 }
 
+export class TaskCompletedModel {
+  assigneeName = '';
+  processId = '';
+  processInstanceId = '';
+  taskInstanceId = '';
+}
+
 @Component({
   selector: 'app-edit-task',
   templateUrl: './edit-task.component.html',
@@ -21,12 +28,12 @@ export class TaskModel {
 export class EditTaskComponent implements OnInit {
 
   taskModel: TaskModel;
+  taskCompletedModel: TaskCompletedModel;
   showCompletedMessage = false;
 
   constructor(
     private webService: WebService,
     private activatedRoute: ActivatedRoute,
-
   ) {
   }
 
@@ -82,6 +89,15 @@ export class EditTaskComponent implements OnInit {
         next: (r: any) => {
           console.log('action trigger result', r);
           this.showCompletedMessage = true;
+
+          const taskCompletedModel = new TaskCompletedModel();
+          taskCompletedModel.assigneeName = r.Value.AssignedName;
+          taskCompletedModel.processId = this.taskModel.processId;
+          taskCompletedModel.processInstanceId = this.taskModel.processInstanceId;
+          taskCompletedModel.taskInstanceId = this.taskModel.taskInstanceId;
+
+          this.taskCompletedModel = taskCompletedModel;
+
           // bu submit sonrasi gosterilen ekran
           // aslinda tum sureclerin listelendigi detay ekranina
           // sadece completed mesajinin eklendigi sey olabilir.

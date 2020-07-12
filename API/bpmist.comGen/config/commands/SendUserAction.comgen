@@ -8,6 +8,7 @@
     "GetProcessInstanceQuery_bpmist.data.ICommands.IGetProcessInstanceQuery",
     "SaveProcessInstanceCommand_bpmist.data.ICommands.ISaveProcessInstanceCommand",
     "GetOrganizationUserQuery_bpmist.data.ICommands.IGetOrganizationUserQuery",
+    "GetGroupQuery_bpmist.data.ICommands.IGetGroupQuery",
     "SaveOrganizationUserCommand_bpmist.data.ICommands.ISaveOrganizationUserCommand"
   ],
   "parameters": {
@@ -19,7 +20,8 @@
   },
   "returnType": {
     "HasProcessCompleted_bool": null,
-    "NewTaskInstanceId_string": null
+    "NewTaskInstanceId_string": null,
+    "AssignedName_string": null
   },
   "usedInApi": true,
   "errorTypes": {

@@ -7,11 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TaskCompletedComponent implements OnInit {
 
-  @Input() nextAssignee: string;
-  @Input() taskName: string;
-  @Input() processId: string;
-  @Input() processInstanceId: string;
-  @Input() taskInstanceId;
+  @Input() taskCompletedModel: any;
 
   get nextTaskUrl(): string {
     return '';

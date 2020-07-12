@@ -1,14 +1,17 @@
 <div class="wrapper">
-  <div class="title">
-    <img src="/assets/images/completed-green.png">
+  <div class="congrats-wrapper">
+    <img
+      class="image"
+      src="/assets/images/completed-green.png"
+    >
     <h1 class="congrats-text">Congrats!</h1>
   </div>
   <h1 class="task-completed-text">Task Completed!</h1>
   <h5>Next task is</h5>
   <a
     class="next-task"
-    [routerLink]="['/EditProcess/' + processId + '/' + processInstanceId + '/'+ taskInstanceId]"
+    [routerLink]="['/EditProcess/' + taskCompletedModel.processId + '/' + taskCompletedModel.processInstanceId + '/'+ taskCompletedModel.taskInstanceId]"
   >Approval</a>
-  <h5>Assigned to </h5>
-  <h2>{{nextAssignee}}</h2>
+  <h5 class="assigned-to-label">Assigned to </h5>
+  <h2 class="assigned-to">{{taskCompletedModel.assigneeName}}</h2>
 </div>
