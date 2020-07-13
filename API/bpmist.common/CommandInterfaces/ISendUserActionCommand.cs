@@ -29,15 +29,17 @@ namespace bpmist.common.ICommands
 
 public class SendUserActionResult
 {
-    public SendUserActionResult(bool HasProcessCompleted, string NewTaskInstanceId, string AssignedName)
+    public SendUserActionResult(bool HasProcessCompleted, string NewTaskInstanceId, string NewTaskName, string AssignedName)
     {
             this.HasProcessCompleted = HasProcessCompleted;
             this.NewTaskInstanceId = NewTaskInstanceId;
+            this.NewTaskName = NewTaskName;
             this.AssignedName = AssignedName;
     }
 
         public bool HasProcessCompleted { get; } 
         public string NewTaskInstanceId { get; } 
+        public string NewTaskName { get; } 
         public string AssignedName { get; } 
 
         public static BusinessError TaskIsNotInProcessOrNotActive(params string[] messageTemplateData) => new BusinessError("TaskIsNotInProcessOrNotActive ", "Task is not found.  ", messageTemplateData);

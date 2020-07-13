@@ -10,8 +10,8 @@
   <h5>Next task is</h5>
   <a
     class="next-task"
-    [routerLink]="['/EditProcess/' + taskCompletedModel.processId + '/' + taskCompletedModel.processInstanceId + '/'+ taskCompletedModel.taskInstanceId]"
-  >Approval</a>
+    [routerLink]="['/EditTask/' + taskCompletedModel.processId + '/' + taskCompletedModel.processInstanceId + '/'+ taskCompletedModel.taskInstanceId]"
+  >{{taskCompletedModel.taskName}}</a>
   <h5 class="assigned-to-label">Assigned to </h5>
   <h2 class="assigned-to">{{taskCompletedModel.assigneeName}}</h2>
 </div>

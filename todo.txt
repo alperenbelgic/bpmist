@@ -1,5 +1,9 @@
 Todo:
-- 
+- Group member can pull a task that is assingned to the group
+	- can put back (if initially assigned to a group)
+- complete & cancel flow
+- Actions going back to a previous one should be assigned the user who worked on that one. 
+- Primary actions should be on the most right, warnings are left of them, secondary on the left side. 
 
 
 Later:

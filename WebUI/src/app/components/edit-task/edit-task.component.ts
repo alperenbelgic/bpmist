@@ -4,13 +4,15 @@ import { WebService } from 'src/app/services/Web/web.service';
 import { Params, ActivatedRoute } from '@angular/router';
 
 export class TaskModel {
-  processName = 'Space onboarding - 211b Baker St.';
-  title = 'Take photo of property';
-  details = 'hodor';
+  processName = '';
+  title = '';
+  details = '';
   processId = '';
   processInstanceId = '';
   taskInstanceId = '';
   actions: any[] = [];
+  actionsEnabled = false;
+  assigneeName = '';
 }
 
 export class TaskCompletedModel {
@@ -18,6 +20,7 @@ export class TaskCompletedModel {
   processId = '';
   processInstanceId = '';
   taskInstanceId = '';
+  taskName = '';
 }
 
 @Component({
@@ -39,14 +42,28 @@ export class EditTaskComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const processId = this.activatedRoute.snapshot.paramMap.get('processId');
-    const processInstanceId = this.activatedRoute.snapshot.paramMap.get('processInstanceId');
-    const taskInstanceId = this.activatedRoute.snapshot.paramMap.get('taskInstanceId');
+    this.activatedRoute.params.subscribe({
+      next: (r: any) => {
+        const processId = r.processId;
+        const processInstanceId = r.processInstanceId;
+        const taskInstanceId = r.taskInstanceId;
+
+        this.initialize(processId, processInstanceId, taskInstanceId);
+      }
+    });
+
+
+  }
+
+  initialize(processId: string, processInstanceId: string, taskInstanceId: string) {
+
+    this.taskModel = null;
+    this.showCompletedMessage = false;
+    this.taskCompletedModel = null;
 
     if (processId != null && processInstanceId == null && taskInstanceId == null) {
       this.StartNewProcesses(processId);
-    }
-    else if (processId != null && processInstanceId != null && taskInstanceId != null) {
+    } else if (processId != null && processInstanceId != null && taskInstanceId != null) {
       // Analysis:
       // load task
       // possible responses & rendering types:
@@ -61,8 +78,21 @@ export class EditTaskComponent implements OnInit {
       //    - can cancel completely
       //    - what else?
 
-    }
+      this.webService.GetTaskInstanceQuery(processId, processInstanceId, taskInstanceId).subscribe({
+        next: (r: any) => {
+          this.taskModel = new TaskModel();
 
+          this.taskModel.processName = r.Value.ProcessName;
+          this.taskModel.title = r.Value.TaskName;
+          this.taskModel.processId = processId;
+          this.taskModel.processInstanceId = processInstanceId;
+          this.taskModel.taskInstanceId = taskInstanceId;
+          this.taskModel.actions = r.Value.Actions;
+          this.taskModel.actionsEnabled = r.Value.UserTaskState.CanEdit;
+          this.taskModel.assigneeName = r.Value.AssigneeName;
+        }
+      });
+    }
   }
   StartNewProcesses(processId: string) {
     this.webService.StartNewProcessCommand(processId).subscribe({
@@ -74,6 +104,7 @@ export class EditTaskComponent implements OnInit {
         this.taskModel.processInstanceId = r.Value.ProcessInstanceId;
         this.taskModel.taskInstanceId = r.Value.TaskInstanceId;
         this.taskModel.actions = r.Value.Actions;
+        this.taskModel.actionsEnabled = true;
       }
     });
   }
@@ -94,7 +125,8 @@ export class EditTaskComponent implements OnInit {
           taskCompletedModel.assigneeName = r.Value.AssignedName;
           taskCompletedModel.processId = this.taskModel.processId;
           taskCompletedModel.processInstanceId = this.taskModel.processInstanceId;
-          taskCompletedModel.taskInstanceId = this.taskModel.taskInstanceId;
+          taskCompletedModel.taskInstanceId = r.Value.NewTaskInstanceId;
+          taskCompletedModel.taskName = r.Value.NewTaskName;
 
           this.taskCompletedModel = taskCompletedModel;
 

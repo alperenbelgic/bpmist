@@ -21,6 +21,7 @@
   "returnType": {
     "HasProcessCompleted_bool": null,
     "NewTaskInstanceId_string": null,
+    "NewTaskName_string": null,
     "AssignedName_string": null
   },
   "usedInApi": true,

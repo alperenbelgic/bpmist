@@ -61,6 +61,7 @@ namespace bpmist.business.Commands
 
 
             string newTaskInstanceId = null;
+            string newTaskName = null;
             string assignedName = null;
 
             if (processCompleted)
@@ -71,13 +72,13 @@ namespace bpmist.business.Commands
             {
                 // create the next task(s)
                 // how? who is assigned etc.
-                (newTaskInstanceId, assignedName) = await this.AddNewTaskInstanceInProcessInstance(
+                (newTaskInstanceId, newTaskName, assignedName) = await this.AddNewTaskInstanceInProcessInstance(
                     processInstance, previousTaskInstance: taskInstance, currentlyAssignedUser, nextTask, contextInformation);
             }
 
             await this.SaveProcessInstance(processId, processInstance, contextInformation);
 
-            return new SendUserActionResult(processCompleted, newTaskInstanceId, assignedName);
+            return new SendUserActionResult(processCompleted, newTaskInstanceId, newTaskName, assignedName);
         }
 
         private void CompleteProcessInstance(ProcessInstance processInstance)
@@ -90,7 +91,7 @@ namespace bpmist.business.Commands
             await this.SaveProcessInstanceCommand.ExecuteAsync(new SaveProcessInstanceParameter(processId, processInstance), contextInformation);
         }
 
-        private async Task<(string NewTaskInstanceId, string AssignedName)> AddNewTaskInstanceInProcessInstance(
+        private async Task<(string NewTaskInstanceId, string NewTaskName, string AssignedName)> AddNewTaskInstanceInProcessInstance(
             ProcessInstance processInstance, TaskInstance previousTaskInstance, OrganizationUser currentlyAssignedUser, TaskModel nextTask, IContextInformation contextInformation)
         {
             /*
@@ -117,7 +118,8 @@ namespace bpmist.business.Commands
             new TaskInstance()
             {
                 StartedAt = DateTime.UtcNow,
-                TaskState = canBeAssignedToASpecificUser ? TaskStates.Active : TaskStates.Waiting
+                TaskState = canBeAssignedToASpecificUser ? TaskStates.Active : TaskStates.Waiting,
+                Task = nextTask
             };
 
             if (canBeAssignedToASpecificUser)
@@ -147,7 +149,7 @@ namespace bpmist.business.Commands
             taskInstanceList.Add(newTaskInstance);
             processInstance.TaskInstances = taskInstanceList.ToArray();
 
-            return (newTaskInstance.Id, newTaskInstance.AssigneeName);
+            return (newTaskInstance.Id, newTaskInstance.Task.TaskName, newTaskInstance.AssigneeName);
         }
 
         private async Task<(bool canAssignToSpecificUser, OrganizationUser user)> CanTaskInstanceBeAssignedToASpecificUser(TaskModel nextTask, OrganizationUser currentlyAssignedUser, IContextInformation contextInformation)

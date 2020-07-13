@@ -10,9 +10,9 @@
     <div class="process-title-header">
       process
       <i class="fa fa-info-circle"></i></div>
-    <div class="process-title">{{taskModel.processName}}</div>
+    <div class="process-title">{{taskModel.processName}}&nbsp;</div>
     <div class="task-title-header">your task<i class="fa fa-info-circle"></i></div>
-    <div class="task-title">{{taskModel.title}}</div>
+    <div class="task-title">{{taskModel.title}}&nbsp;</div>
 
     <div class="detail-textbox">
       <ejs-textbox
@@ -36,6 +36,7 @@
         mat-button
         mat-raised-button
         color="primary"
+        [disabled]="!taskModel.actionsEnabled"
       >
         {{action.ActionText}}
       </button>
