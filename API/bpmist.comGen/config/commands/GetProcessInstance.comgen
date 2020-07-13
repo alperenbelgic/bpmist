@@ -10,7 +10,7 @@
     "ProcessInstanceId_string": null
   },
   "returnType": {
-    "ProcessInstace_bpmist.common.DataModels.DocumentTypes.ProcessInstance": null
+    "ProcessInstance_bpmist.common.DataModels.DocumentTypes.ProcessInstance": null
   },
   "usedInApi": false
 }

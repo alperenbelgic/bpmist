@@ -18,6 +18,9 @@ namespace bpmist.firestore.Commands
             string processId = parameter.ProcessId;
             var processInstance = parameter.ProcessInstance;
 
+            // this is for collection group queries.
+            processInstance.OrganizationId = organizationId;
+
             if (string.IsNullOrEmpty(processInstance.Id))
             {
 

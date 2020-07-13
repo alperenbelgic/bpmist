@@ -25,7 +25,7 @@ namespace bpmist.business.Commands
 
             // TODO: check error
 
-            ProcessInstance processInstance = getProcessInstanceResult.Value.ProcessInstace;
+            ProcessInstance processInstance = getProcessInstanceResult.Value.ProcessInstance;
 
             var taskInstance = processInstance.TaskInstances.FirstOrDefault(ti => ti.Id == parameter.TaskInstanceId);
 

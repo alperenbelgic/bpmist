@@ -33,5 +33,6 @@ namespace bpmist.common.DataModels.SubDocumentTypes
         public const string Waiting = nameof(Waiting); // not sure this will be used. Maybe just jump to active. maybe, if a task is assigned to a group, it's waiting. if it assigned to a person, it is active. 
         public const string Active = nameof(Active); 
         public const string Completed = nameof(Completed);
+        public const string Canceled = nameof(Canceled);
     }
 }

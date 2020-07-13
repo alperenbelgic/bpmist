@@ -46,6 +46,7 @@ namespace bpmist.business.Commands
             var processInstance =
                                     new ProcessInstance()
                                     {
+                                        ProcessName = process.ProcessName,
                                         ProcessModel = processModel,
                                         TaskInstances = new TaskInstance[]
                                         {

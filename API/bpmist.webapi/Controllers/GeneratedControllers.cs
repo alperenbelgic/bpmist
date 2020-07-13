@@ -46,14 +46,14 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<CommandResult<bpmist.common.ICommands.GetTaskInstanceResult>> Get(
-            
+            string ProcessId, string ProcessInstanceId, string TaskInstanceId
         )
         {
             var contextInfo = this.GetContextInfo();
 
             return await this.GetTaskInstanceQuery.ExecuteAsync(
                 new bpmist.common.ICommands.GetTaskInstanceParameter(
-                    
+                    ProcessId, ProcessInstanceId, TaskInstanceId
                     ),
                 contextInfo
             );

@@ -10,6 +10,10 @@ namespace bpmist.common.DataModels.DocumentTypes
     [FirestoreData]
     public class ProcessInstance : Document
     {
+        [FirestoreProperty] public string OrganizationId { get; set; }
+
+        [FirestoreProperty] public string ProcessName { get; set; }
+
         [FirestoreProperty] public object ProcessData { get; set; }
 
         [FirestoreProperty] public ProcessModel ProcessModel { get; set; }

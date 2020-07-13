@@ -4,11 +4,24 @@
   "interfaceProject": "bpmist.common",
   "implementationProject": "bpmist.business",
   "isQuery": true,
-  "injects": [],
-  "parameters": {},
+  "injects": [
+    "GetProcessInstanceQuery_bpmist.data.ICommands.IGetProcessInstanceQuery"
+  ],
+  "parameters": {
+    "ProcessId_string": null,
+    "ProcessInstanceId_string": null,
+    "TaskInstanceId_string": null
+  },
   "returnType": {
     "ProcessName_string": null,
     "TaskName_string": null,
+    "AssigneeName_string": null,
+    "TaskState_string": null,
+    "Actions_List": {
+      "ActionText_string": null,
+      "ActionType_string": null,
+      "ActionId_string": null
+    },
     "UserTaskState_Object": {
       "CanEdit_bool": null
     }
