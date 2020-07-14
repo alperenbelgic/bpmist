@@ -11,8 +11,33 @@
       process
       <i class="fa fa-info-circle"></i></div>
     <div class="process-title">{{taskModel.processName}}&nbsp;</div>
-    <div class="task-title-header">your task<i class="fa fa-info-circle"></i></div>
+    <div class="task-title-header">
+      <div *ngIf="taskModel.assignmentStates.assignedToCurrentUser">
+        your task<i class="fa fa-info-circle"></i>
+      </div>
+      <div *ngIf="taskModel.assignmentStates.assignedToGroup">
+        {{taskModel.assigneeName}} will work on
+      </div>
+      <div *ngIf="taskModel.assignmentStates.assignedToAnotherUser">
+        {{taskModel.assigneeName}} is working on
+      </div>
+
+    </div>
     <div class="task-title">{{taskModel.title}}&nbsp;</div>
+
+    <div
+      class="centered-text"
+      *ngIf="taskModel.assignmentStates.assignedToCurrentUsersGroup"
+    >
+      You are in {{taskModel.assigneeName}} group.
+      <button
+        mat-button
+        mat-raised-button
+        color="primary"
+      >
+        Work on this?
+      </button>
+    </div>
 
     <div class="detail-textbox">
       <ejs-textbox
@@ -36,7 +61,7 @@
         mat-button
         mat-raised-button
         color="primary"
-        [disabled]="!taskModel.actionsEnabled"
+        [disabled]="!taskModel.assignmentStates.assignedToCurrentUser"
       >
         {{action.ActionText}}
       </button>

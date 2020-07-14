@@ -59,12 +59,18 @@ public class GetTaskInstance_ActionsResult
 
 public class GetTaskInstance_UserTaskStateResult
 {
-    public GetTaskInstance_UserTaskStateResult(bool CanEdit)
+    public GetTaskInstance_UserTaskStateResult(bool CanEdit, bool AssignedToAnotherUser, bool AssignedToCurrentUsersGroup, bool AssignedToGroup)
     {
             this.CanEdit = CanEdit;
+            this.AssignedToAnotherUser = AssignedToAnotherUser;
+            this.AssignedToCurrentUsersGroup = AssignedToCurrentUsersGroup;
+            this.AssignedToGroup = AssignedToGroup;
     }
 
         public bool CanEdit { get; } 
+        public bool AssignedToAnotherUser { get; } 
+        public bool AssignedToCurrentUsersGroup { get; } 
+        public bool AssignedToGroup { get; } 
 }
 
 

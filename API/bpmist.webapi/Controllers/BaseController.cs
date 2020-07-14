@@ -47,8 +47,12 @@ namespace API.Controllers
 
         public string OrganizationId => "I8b23jRR3LVAa6ROcqS8";
 
-        //public string UserId => "{9296A486-5D25-4A40-97BA-F67CB6FBBBCC}";
-        public string UserId => "{208DDB53-FDF0-41C8-A2F1-535E975CED22}";
+        //9296A486-5D25-4A40-97BA-F67CB6FBBBCC // alperen
+        //208DDB53-FDF0-41C8-A2F1-535E975CED22 //omer
+        //83B203D7-2030-4788-BE40-CB153563A979 //pelin
+        //C06960E7-203F-4265-85BA-A0B59863B82D //baris
+        public string UserId => "{208DDB53-FDF0-41C8-A2F1-535E975CED22}";//pelin
+
     }
 
 

@@ -5,7 +5,8 @@
   "implementationProject": "bpmist.business",
   "isQuery": true,
   "injects": [
-    "GetProcessInstanceQuery_bpmist.data.ICommands.IGetProcessInstanceQuery"
+    "GetProcessInstanceQuery_bpmist.data.ICommands.IGetProcessInstanceQuery",
+    "GetUserQuery_bpmist.data.ICommands.IGetOrganizationUserQuery"
   ],
   "parameters": {
     "ProcessId_string": null,
@@ -23,7 +24,10 @@
       "ActionId_string": null
     },
     "UserTaskState_Object": {
-      "CanEdit_bool": null
+      "CanEdit_bool": null,
+      "AssignedToAnotherUser_bool": null,
+      "AssignedToCurrentUsersGroup_bool": null,
+      "AssignedToGroup_bool": null
     }
   },
   "usedInApi": true

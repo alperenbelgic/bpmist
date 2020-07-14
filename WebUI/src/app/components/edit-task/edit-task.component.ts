@@ -11,8 +11,14 @@ export class TaskModel {
   processInstanceId = '';
   taskInstanceId = '';
   actions: any[] = [];
-  actionsEnabled = false;
   assigneeName = '';
+  assignmentStates = {
+    assignedToCurrentUser: false,
+    assignedToGroup: false,
+    assignedToAnotherUser: false,
+    assignedToCurrentUsersGroup: false,
+
+  }
 }
 
 export class TaskCompletedModel {
@@ -62,7 +68,9 @@ export class EditTaskComponent implements OnInit {
     this.taskCompletedModel = null;
 
     if (processId != null && processInstanceId == null && taskInstanceId == null) {
+
       this.StartNewProcesses(processId);
+
     } else if (processId != null && processInstanceId != null && taskInstanceId != null) {
       // Analysis:
       // load task
@@ -88,8 +96,11 @@ export class EditTaskComponent implements OnInit {
           this.taskModel.processInstanceId = processInstanceId;
           this.taskModel.taskInstanceId = taskInstanceId;
           this.taskModel.actions = r.Value.Actions;
-          this.taskModel.actionsEnabled = r.Value.UserTaskState.CanEdit;
           this.taskModel.assigneeName = r.Value.AssigneeName;
+          this.taskModel.assignmentStates.assignedToAnotherUser = r.Value.UserTaskState.AssignedToAnotherUser;
+          this.taskModel.assignmentStates.assignedToCurrentUser = r.Value.UserTaskState.CanEdit;
+          this.taskModel.assignmentStates.assignedToCurrentUsersGroup = r.Value.UserTaskState.AssignedToCurrentUsersGroup;
+          this.taskModel.assignmentStates.assignedToGroup = r.Value.UserTaskState.AssignedToGroup;
         }
       });
     }
@@ -104,7 +115,10 @@ export class EditTaskComponent implements OnInit {
         this.taskModel.processInstanceId = r.Value.ProcessInstanceId;
         this.taskModel.taskInstanceId = r.Value.TaskInstanceId;
         this.taskModel.actions = r.Value.Actions;
-        this.taskModel.actionsEnabled = true;
+        this.taskModel.assignmentStates.assignedToAnotherUser = false;
+        this.taskModel.assignmentStates.assignedToCurrentUser = true;
+        this.taskModel.assignmentStates.assignedToCurrentUsersGroup = false;
+        this.taskModel.assignmentStates.assignedToGroup = false;
       }
     });
   }

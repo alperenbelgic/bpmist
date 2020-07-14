@@ -131,9 +131,8 @@ namespace API.Controllers
                         );
         }
 
-        private async Task<(string HrGroupId, string Temp)> CreateGroups(string organizationId, string[] hrUserIds)
+        private async Task  CreateGroups(string organizationId, string[] hrUserIds, string hrGroupId)
         {
-            string hrGroupId = "{44CBC4BF-DBDF-4B43-90F8-123B4242BB34}";
 
             var group = Documents.group(organizationId, hrGroupId);
 
@@ -143,8 +142,6 @@ namespace API.Controllers
                     GroupName = "HR",
                     UserIds = hrUserIds
                 });
-
-            return (hrGroupId, null);
         }
 
         private async Task<(string HrGroupId, string Temp)> InitialiseUsersAndGroups(string organizationId)
@@ -155,6 +152,9 @@ namespace API.Controllers
             string managerId = "{208DDB53-FDF0-41C8-A2F1-535E975CED22}";
             string hrUser1 = "{83B203D7-2030-4788-BE40-CB153563A979}";
             string hrUser2 = "{C06960E7-203F-4265-85BA-A0B59863B82D}";
+
+            string hrGroupId = "{44CBC4BF-DBDF-4B43-90F8-123B4242BB34}";
+
 
             await usersCollection
                 .Document(userId)
@@ -180,8 +180,9 @@ namespace API.Controllers
                 {
                     Email = "pelin@gmail.com",
                     ManagerId = null,
-                    UserFullName = "Pelin Mezrea"
-                });
+                    UserFullName = "Pelin Mezrea",
+                    GroupIds = new string[] { hrGroupId }
+                }); ;
 
             await usersCollection
                 .Document(hrUser2)
@@ -189,12 +190,11 @@ namespace API.Controllers
                 {
                     Email = "baris@gmail.com",
                     ManagerId = null,
-                    UserFullName = "Baris B Belgic"
+                    UserFullName = "Baris B Belgic",
+                    GroupIds = new string[] { hrGroupId }
                 });
 
-            var createGroupResult = await this.CreateGroups(organizationId, new string[] { hrUser1, hrUser2 });
-
-            string hrGroupId = createGroupResult.HrGroupId;
+            await this.CreateGroups(organizationId, new string[] { hrUser1, hrUser2 }, hrGroupId);
 
             return (hrGroupId, null);
         }

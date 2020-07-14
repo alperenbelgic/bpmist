@@ -33,14 +33,50 @@ namespace bpmist.business.Commands
             if (taskState == TaskStates.Completed || taskState == TaskStates.Canceled)
             {
                 // no action, no editing.
-                return new GetTaskInstanceResult(processName, taskName, assigneeName, taskState, new GetTaskInstance_ActionsResult[0], new GetTaskInstance_UserTaskStateResult(false));
+                return new GetTaskInstanceResult(processName, taskName, assigneeName, taskState, new GetTaskInstance_ActionsResult[0], new GetTaskInstance_UserTaskStateResult(false, false, false, false));
             }
 
             var actions = taskInstance.Task.Actions.Select(a => new GetTaskInstance_ActionsResult(a.ActionText, a.ActionType, a.Id)).ToArray();
 
-            bool canEdit = actionUserId == taskInstance.AssignedUserId;
+            var userTaskState = await GetUserTaskState(taskInstance, actionUserId, contextInformation);
 
-            return new GetTaskInstanceResult(processName, taskName, assigneeName, taskState, actions, new GetTaskInstance_UserTaskStateResult(canEdit));
+
+            return new GetTaskInstanceResult(processName, taskName, assigneeName, taskState, actions, userTaskState);
+        }
+
+        private async Task<GetTaskInstance_UserTaskStateResult> GetUserTaskState(TaskInstance taskInstance, string actionUserId, IContextInformation contextInformation)
+        {
+            bool canEdit = actionUserId == taskInstance.AssignedUserId;
+            bool assignedToAnotherUser =
+                !string.IsNullOrEmpty(taskInstance.AssignedUserId) &&
+                actionUserId != taskInstance.AssignedUserId;
+
+            bool assignedToCurrentUsersGroup;
+            bool assignedToGroup;
+            if (!string.IsNullOrWhiteSpace(taskInstance.AssignedUserId))
+            {
+                assignedToGroup = false;
+                assignedToCurrentUsersGroup = false;
+            }
+            else if(!string.IsNullOrWhiteSpace(taskInstance.AssignedGroupId))
+            {
+                assignedToGroup = true;
+
+                var getUserResult = await this.GetUserQuery.ExecuteAsync(new data.ICommands.GetOrganizationUserParameter(actionUserId), contextInformation);
+                // TODO: Check if user is empty.
+                var user = getUserResult.Value.OrganizationUser;
+
+                assignedToCurrentUsersGroup = user.GroupIds.Any(gi => gi == taskInstance.AssignedGroupId);
+            }
+            else
+            {
+                // TODO: unexpected case
+                throw new NotImplementedException();
+            }
+
+            var userTaskState = new GetTaskInstance_UserTaskStateResult(canEdit, assignedToAnotherUser, assignedToCurrentUsersGroup, assignedToGroup);
+
+            return userTaskState;
         }
 
         private async Task<ProcessInstance> GetProcessInstance(IContextInformation contextInformation, string processId, string processInstanceId)
