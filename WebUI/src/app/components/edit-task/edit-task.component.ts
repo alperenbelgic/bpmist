@@ -105,6 +105,7 @@ export class EditTaskComponent implements OnInit {
       });
     }
   }
+
   StartNewProcesses(processId: string) {
     this.webService.StartNewProcessCommand(processId).subscribe({
       next: (r: any) => {
@@ -159,6 +160,21 @@ export class EditTaskComponent implements OnInit {
           //    and (if exists in other parallel branches)
           //    these are other ongoing tasks in this process
           //    or - this process now completed.
+        }
+      });
+  }
+
+  pullTask() {
+    this.webService.PullTaskFromGroupCommand(
+      this.taskModel.processId,
+      this.taskModel.processInstanceId,
+      this.taskModel.taskInstanceId)
+      .subscribe({
+        next: (r: any) => {
+          this.initialize(
+            this.taskModel.processId,
+            this.taskModel.processInstanceId,
+            this.taskModel.taskInstanceId);
         }
       });
   }

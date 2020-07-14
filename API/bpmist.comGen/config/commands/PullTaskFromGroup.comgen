@@ -1,0 +1,26 @@
+{
+  "guid": "BB2F2A72-13D0-4479-B9F7-72542ABF218C",
+  "name": "PullTaskFromGroup",
+  "interfaceProject": "bpmist.common",
+  "implementationProject": "bpmist.business",
+  "isQuery": false,
+  "injects": [
+    "GetProcessInstanceQuery_bpmist.data.ICommands.IGetProcessInstanceQuery",
+    "SaveProcessInstanceCommand_bpmist.data.ICommands.ISaveProcessInstanceCommand",
+    "GetOrganizationUserQuery_bpmist.data.ICommands.IGetOrganizationUserQuery",
+    "GetGroupQuery_bpmist.data.ICommands.IGetGroupQuery",
+    "SaveOrganizationUserCommand_bpmist.data.ICommands.ISaveOrganizationUserCommand"
+  ],
+  "parameters": {
+    "ProcessId_string": null,
+    "ProcessInstanceId_string": null,
+    "TaskInstanceId_string": null
+  },
+  "returnType": {
+  },
+  "usedInApi": true,
+  "errorTypes": {
+    "TaskIsNotInProcessOrNotActive": "Task is not found. ",
+    "TaskIsNotAssignedToYourGroup": "TaskIsNotAssignedToYourGroup. "
+  }
+}

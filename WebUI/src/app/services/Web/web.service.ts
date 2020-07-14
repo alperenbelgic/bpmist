@@ -31,4 +31,9 @@ export class WebService {
     const endPoint = '/GetTaskInstanceQuery/Get';
     return this.httpService.getByParams(endPoint, { ProcessId, ProcessInstanceId, TaskInstanceId });
   }
+
+  public PullTaskFromGroupCommand(ProcessId: string, ProcessInstanceId: string, TaskInstanceId: string): Observable<any> {
+    const endPoint = '/PullTaskFromGroupCommand/Post';
+    return this.httpService.post(endPoint, { ProcessId, ProcessInstanceId, TaskInstanceId });
+  }
 }

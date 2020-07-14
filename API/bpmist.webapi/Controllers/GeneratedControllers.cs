@@ -59,6 +59,41 @@ namespace API.Controllers
             );
         }
     }
+    public class PullTaskFromGroupCommandController : BaseController
+    {
+        private bpmist.common.ICommands.IPullTaskFromGroupCommand PullTaskFromGroupCommand { get; }
+
+        public PullTaskFromGroupCommandController(
+            bpmist.common.ICommands.IPullTaskFromGroupCommand _PullTaskFromGroupCommand)
+        {
+            this.PullTaskFromGroupCommand = _PullTaskFromGroupCommand;
+        }
+
+        [HttpPost]
+        public async Task<CommandResult<bpmist.common.ICommands.PullTaskFromGroupResult>> Post(
+            PullTaskFromGroupControllerParameter _parameter
+        )
+        {
+            var contextInfo = this.GetContextInfo();
+
+            return await this.PullTaskFromGroupCommand.ExecuteAsync(
+                new bpmist.common.ICommands.PullTaskFromGroupParameter(
+                    _parameter.ProcessId, _parameter.ProcessInstanceId, _parameter.TaskInstanceId
+                    ),
+                contextInfo
+            );
+        }
+
+         public class PullTaskFromGroupControllerParameter
+         {
+            public string ProcessId { get; set; } 
+            public string ProcessInstanceId { get; set; } 
+            public string TaskInstanceId { get; set; } 
+         }
+
+
+
+    }
     public class SendUserActionCommandController : BaseController
     {
         private bpmist.common.ICommands.ISendUserActionCommand SendUserActionCommand { get; }
