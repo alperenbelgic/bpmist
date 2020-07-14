@@ -1,11 +1,8 @@
 Todo:
-- Group member can pull a task that is assingned to the group
-	- can put back (if initially assigned to a group)
+- complete & cancel processflow
 - denormalized data arrangment on assignment, creating new tasks, closing tasks.
 	- user doc: OrganizationUser.Tasks
 	- group: ActiveTaskInstancePaths, ActiveTaskInstancePathsAssignedToUsers
-- complete & cancel processflow
-- Actions going back to a previous one should be assigned the user who worked on that one. 
 - Primary actions should be on the most right, warnings are left of them, secondary on the left side. 
 - task history
 - inbox
@@ -24,3 +21,5 @@ Later:
 	- https://github.com/googleapis/google-cloud-dotnet/blob/master/apis/Google.Cloud.Firestore/Google.Cloud.Firestore.IntegrationTests/QueryTest.cs
 - as default user picture, initials and a specific color background
 	- same for processes
+- put back to group
+- Actions going back to a previous one should be assigned the user who worked on that one. 
