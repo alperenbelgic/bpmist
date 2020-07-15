@@ -10,15 +10,16 @@ export class TaskModel {
   processId = '';
   processInstanceId = '';
   taskInstanceId = '';
+  taskState = '';
   actions: any[] = [];
   assigneeName = '';
   assignmentStates = {
     assignedToCurrentUser: false,
     assignedToGroup: false,
     assignedToAnotherUser: false,
-    assignedToCurrentUsersGroup: false,
-
-  }
+    assignedToCurrentUsersGroup: false
+  };
+  otherTasks = [];
 }
 
 export class TaskCompletedModel {
@@ -97,12 +98,14 @@ export class EditTaskComponent implements OnInit {
           this.taskModel.processId = processId;
           this.taskModel.processInstanceId = processInstanceId;
           this.taskModel.taskInstanceId = taskInstanceId;
+          this.taskModel.taskState = r.Value.TaskState;
           this.taskModel.actions = r.Value.Actions;
           this.taskModel.assigneeName = r.Value.AssigneeName;
           this.taskModel.assignmentStates.assignedToAnotherUser = r.Value.UserTaskState.AssignedToAnotherUser;
           this.taskModel.assignmentStates.assignedToCurrentUser = r.Value.UserTaskState.CanEdit;
           this.taskModel.assignmentStates.assignedToCurrentUsersGroup = r.Value.UserTaskState.AssignedToCurrentUsersGroup;
           this.taskModel.assignmentStates.assignedToGroup = r.Value.UserTaskState.AssignedToGroup;
+          this.taskModel.otherTasks = r.Value.OtherTasks;
         }
       });
     }

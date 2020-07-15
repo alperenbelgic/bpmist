@@ -34,10 +34,13 @@ namespace bpmist.business.Commands
 
             var firstTask = processModel.Tasks.First();
 
+            string userFullName = await this.GetUserName(userId, contextInformation);
+
             var taskInstance =
                                  new TaskInstance()
                                  {
                                      AssignedUserId = userId,
+                                     AssigneeName = userFullName,
                                      StartedAt = DateTime.UtcNow,
                                      Task = firstTask,
                                      TaskState = TaskStates.Candidate
@@ -69,6 +72,15 @@ namespace bpmist.business.Commands
                 .ToArray();
 
             return new StartNewProcessResult(process.ProcessName, processInstanceId, taskName, taskInstance.Id, actions);
+        }
+
+        public async Task<string> GetUserName(string userId, IContextInformation contextInformation)
+        {
+            var getUserQueryResult = await this.GetUserQuery.ExecuteAsync(new GetOrganizationUserParameter(userId), contextInformation);
+
+            // TODO: handle not returned user
+
+            return getUserQueryResult.Value.OrganizationUser.UserFullName;
         }
 
         protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(StartNewProcessParameter parameter, IContextInformation contextInformation)

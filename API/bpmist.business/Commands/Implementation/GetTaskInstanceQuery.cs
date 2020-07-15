@@ -30,10 +30,12 @@ namespace bpmist.business.Commands
             string assigneeName = taskInstance.AssigneeName;
             string taskState = taskInstance.TaskState;
 
+            var otherTasks = this.GetOtherTasks(processInstance.TaskInstances);
+
             if (taskState == TaskStates.Completed || taskState == TaskStates.Canceled)
             {
                 // no action, no editing.
-                return new GetTaskInstanceResult(processName, taskName, assigneeName, taskState, new GetTaskInstance_ActionsResult[0], new GetTaskInstance_UserTaskStateResult(false, false, false, false));
+                return new GetTaskInstanceResult(processName, taskName, assigneeName, taskState, new GetTaskInstance_ActionsResult[0], new GetTaskInstance_UserTaskStateResult(false, false, false, false), otherTasks);
             }
 
             var actions = taskInstance.Task.Actions.Select(a => new GetTaskInstance_ActionsResult(a.ActionText, a.ActionType, a.Id)).ToArray();
@@ -41,7 +43,12 @@ namespace bpmist.business.Commands
             var userTaskState = await GetUserTaskState(taskInstance, actionUserId, contextInformation);
 
 
-            return new GetTaskInstanceResult(processName, taskName, assigneeName, taskState, actions, userTaskState);
+            return new GetTaskInstanceResult(processName, taskName, assigneeName, taskState, actions, userTaskState, otherTasks);
+        }
+
+        private GetTaskInstance_OtherTasksResult[] GetOtherTasks(TaskInstance[] taskInstances)
+        {
+            return taskInstances.Select(ti => new GetTaskInstance_OtherTasksResult(ti.Id, ti.Task.TaskName, ti.AssigneeName, ti.TaskState, ti.CompletedAt)).ToArray();
         }
 
         private async Task<GetTaskInstance_UserTaskStateResult> GetUserTaskState(TaskInstance taskInstance, string actionUserId, IContextInformation contextInformation)
@@ -58,7 +65,7 @@ namespace bpmist.business.Commands
                 assignedToGroup = false;
                 assignedToCurrentUsersGroup = false;
             }
-            else if(!string.IsNullOrWhiteSpace(taskInstance.AssignedGroupId))
+            else if (!string.IsNullOrWhiteSpace(taskInstance.AssignedGroupId))
             {
                 assignedToGroup = true;
 

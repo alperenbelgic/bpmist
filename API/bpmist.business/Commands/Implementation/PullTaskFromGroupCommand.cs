@@ -27,8 +27,10 @@ namespace bpmist.business.Commands
             if (string.IsNullOrWhiteSpace(taskInstance.AssignedUserId) && user.GroupIds.Contains(taskInstance.AssignedGroupId))
             {
                 taskInstance.AssignedUserId = actionUserId;
+                taskInstance.AssigneeName = user.UserFullName;
+                taskInstance.TaskState = TaskStates.Active;
 
-                // TODO:! arrange denormalize data
+                // TODO:! User & Group inbox update
             }
             else
             {

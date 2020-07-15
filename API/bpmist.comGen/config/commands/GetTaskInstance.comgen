@@ -28,6 +28,13 @@
       "AssignedToAnotherUser_bool": null,
       "AssignedToCurrentUsersGroup_bool": null,
       "AssignedToGroup_bool": null
+    },
+    "OtherTasks_List": {
+      "TaskInstanceId_string": null,
+      "TaskName_string": null,
+      "AssingedName_string": null,
+      "TaskState_string": null,
+      "CompletedTime_DateTime?": null
     }
   },
   "usedInApi": true

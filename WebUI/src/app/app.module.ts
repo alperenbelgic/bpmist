@@ -24,6 +24,7 @@ import { MatFormFieldDefaultOptions, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@ang
 import { EditTaskComponent } from './components/edit-task/edit-task.component';
 import { ListProcessesComponent } from './components/list-processes/list-processes.component';
 import { TaskCompletedComponent } from './components/task-completed/task-completed.component';
+import { CustomDateTimePipePipe } from './common/Pipes/custom-date-time-pipe.pipe';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -38,7 +39,8 @@ const appearance: MatFormFieldDefaultOptions = {
     ClickStopPropagationDirective,
     EditTaskComponent,
     ListProcessesComponent,
-    TaskCompletedComponent
+    TaskCompletedComponent,
+    CustomDateTimePipePipe
   ],
   imports: [
     BrowserModule,
