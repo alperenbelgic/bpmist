@@ -1,17 +1,54 @@
 <div class="wrapper">
   <div class="congrats-wrapper">
     <img
+      *ngIf="!taskCompletedModel.processCompleted && !taskCompletedModel.processCanceled"
       class="image"
       src="/assets/images/completed-green.png"
     >
-    <h1 class="congrats-text">Congrats!</h1>
+    <img
+      *ngIf="taskCompletedModel.processCompleted"
+      class="image"
+      src="/assets/images/completed-green.png"
+    >
+    <img
+      *ngIf="taskCompletedModel.processCanceled"
+      class="image"
+      src="/assets/images/cancel.jpg"
+    >
+    <h1
+      *ngIf="!taskCompletedModel.processCompleted && !taskCompletedModel.processCanceled"
+      class="congrats-text"
+    >Congrats!</h1>
+    <h1
+      *ngIf="taskCompletedModel.processCompleted"
+      class="congrats-text"
+    >That's it!</h1>
+    <h1
+      *ngIf="taskCompletedModel.processCanceled"
+      class="congrats-text"
+    >Done!</h1>
   </div>
-  <h1 class="task-completed-text">Task Completed!</h1>
-  <h5>Next task is</h5>
-  <a
-    class="next-task"
-    [routerLink]="['/EditTask/' + taskCompletedModel.processId + '/' + taskCompletedModel.processInstanceId + '/'+ taskCompletedModel.taskInstanceId]"
-  >{{taskCompletedModel.taskName}}</a>
-  <h5 class="assigned-to-label">Assigned to </h5>
-  <h2 class="assigned-to">{{taskCompletedModel.assigneeName}}</h2>
+  <h1
+    *ngIf="!taskCompletedModel.processCompleted && !taskCompletedModel.processCanceled"
+    class="task-completed-text"
+  >Task Completed!</h1>
+  <h1
+    *ngIf="taskCompletedModel.processCompleted"
+    class="task-completed-text"
+  >The process with all tasks are now completed!</h1>
+  <h1
+    *ngIf="taskCompletedModel.processCanceled"
+    class="task-completed-text"
+  >The process is canceled.</h1>
+  <ng-container *ngIf="!taskCompletedModel.processCompleted && !taskCompletedModel.processCanceled">
+    <h5>Next task is</h5>
+    <a
+      class="next-task"
+      [routerLink]="['/EditTask/' + taskCompletedModel.processId + '/' + taskCompletedModel.processInstanceId + '/'+ taskCompletedModel.taskInstanceId]"
+    >{{taskCompletedModel.taskName}}</a>
+    <h5 class="assigned-to-label">Assigned to </h5>
+    <h2 class="assigned-to">{{taskCompletedModel.assigneeName}}</h2>
+  </ng-container>
+
+
 </div>

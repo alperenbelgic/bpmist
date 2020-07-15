@@ -38,3 +38,7 @@
 .centered-text {
   text-align: center;
 }
+
+.task-history {
+  width: 500px;
+}

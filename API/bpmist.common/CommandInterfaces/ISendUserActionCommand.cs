@@ -29,15 +29,17 @@ namespace bpmist.common.ICommands
 
 public class SendUserActionResult
 {
-    public SendUserActionResult(bool HasProcessCompleted, string NewTaskInstanceId, string NewTaskName, string AssignedName)
+    public SendUserActionResult(bool HasProcessCompleted, bool HasProcessCanceled, string NewTaskInstanceId, string NewTaskName, string AssignedName)
     {
             this.HasProcessCompleted = HasProcessCompleted;
+            this.HasProcessCanceled = HasProcessCanceled;
             this.NewTaskInstanceId = NewTaskInstanceId;
             this.NewTaskName = NewTaskName;
             this.AssignedName = AssignedName;
     }
 
         public bool HasProcessCompleted { get; } 
+        public bool HasProcessCanceled { get; } 
         public string NewTaskInstanceId { get; } 
         public string NewTaskName { get; } 
         public string AssignedName { get; } 

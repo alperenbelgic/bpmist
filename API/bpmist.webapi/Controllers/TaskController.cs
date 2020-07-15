@@ -82,7 +82,7 @@ namespace API.Controllers
                                     new ActionModel
                                     {
                                         ActionText = "Reject",
-                                        NextItemId = null,
+                                        NextItemId = "cancel",
                                         ActionType = ActionTypes.Warned
                                     },
                                 },
@@ -131,7 +131,7 @@ namespace API.Controllers
                         );
         }
 
-        private async Task  CreateGroups(string organizationId, string[] hrUserIds, string hrGroupId)
+        private async Task CreateGroups(string organizationId, string[] hrUserIds, string hrGroupId)
         {
 
             var group = Documents.group(organizationId, hrGroupId);

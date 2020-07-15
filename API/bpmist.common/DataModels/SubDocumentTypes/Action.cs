@@ -15,6 +15,7 @@ namespace bpmist.common.DataModels.SubDocumentTypes
         /// <summary>
         /// This can be an id of a task, condition, paralleltaskstartitem, paralleltaskenditem. 
         /// If null -> the process will end upon the action call.
+        /// If the value is cancel, the task and the process will be canceled. 
         /// </summary>
         [FirestoreProperty] public string NextItemId { get; set; }
 

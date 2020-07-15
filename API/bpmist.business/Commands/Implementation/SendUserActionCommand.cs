@@ -40,7 +40,7 @@ namespace bpmist.business.Commands
             if (false == this.HasCurrentUserAuthorisationToCallAction(taskInstance, contextInformation.User.UserId)) { throw SendUserActionResult.UserNotAuthorised(); }
 
             // Action points to a valid process item
-            if (false == this.DoesActionPointsToAValidProcessItem(processInstance, action, out TaskModel nextTask, out bool processCompleted)) { throw SendUserActionResult.ActionNotPointingAValidProcessItem(); }
+            if (false == this.DoesActionPointsToAValidProcessItem(processInstance, action, out TaskModel nextTask, out bool processCompleted, out bool processCanceled)) { throw SendUserActionResult.ActionNotPointingAValidProcessItem(); }
 
             // TODO: other validations?
 
@@ -56,9 +56,8 @@ namespace bpmist.business.Commands
 
             await SaveOrganizationUser(currentlyAssignedUser, contextInformation);
 
-            //      set current task as completed
-            this.SetTaskInstanceCompleted(taskInstance);
-
+            //      set current task as completed or canceled
+            this.SetTaskInstanceCompleted(taskInstance, processCanceled);
 
             string newTaskInstanceId = null;
             string newTaskName = null;
@@ -67,6 +66,10 @@ namespace bpmist.business.Commands
             if (processCompleted)
             {
                 this.CompleteProcessInstance(processInstance);
+            }
+            else if (processCanceled)
+            {
+                this.CancelProcessInstance(processInstance);
             }
             else
             {
@@ -78,12 +81,16 @@ namespace bpmist.business.Commands
 
             await this.SaveProcessInstance(processId, processInstance, contextInformation);
 
-            return new SendUserActionResult(processCompleted, newTaskInstanceId, newTaskName, assignedName);
+            return new SendUserActionResult(processCompleted, processCanceled, newTaskInstanceId, newTaskName, assignedName);
         }
 
         private void CompleteProcessInstance(ProcessInstance processInstance)
         {
             processInstance.ProcessState = ProcessStates.Completed;
+        }
+        private void CancelProcessInstance(ProcessInstance processInstance)
+        {
+            processInstance.ProcessState = ProcessStates.Cancelled;
         }
 
         private async Task SaveProcessInstance(string processId, ProcessInstance processInstance, IContextInformation contextInformation)
@@ -126,6 +133,8 @@ namespace bpmist.business.Commands
             {
                 newTaskInstance.AssignedUserId = user.Id;
                 newTaskInstance.AssigneeName = user.UserFullName;
+
+                // TODO:! user inbox update required.
             }
             else if (nextTask.AssigningConfiguration?.AssigningGroupId != null)
             {
@@ -133,6 +142,8 @@ namespace bpmist.business.Commands
                 // TODO: Check if group exists
                 newTaskInstance.AssignedGroupId = nextTask.AssigningConfiguration.AssigningGroupId;
                 newTaskInstance.AssigneeName = getGroupQuery.Value.Group.GroupName;
+
+                // TODO:! group inbox update required.
             }
             else if (nextTask.AssigningConfiguration.PoolId != null && nextTask.AssigningConfiguration.PoolId.Count() > 0)
             {
@@ -211,16 +222,23 @@ namespace bpmist.business.Commands
             }
         }
 
-        private bool DoesActionPointsToAValidProcessItem(ProcessInstance processInstance, ActionModel action, out TaskModel nextTask, out bool processCompleted)
+        private bool DoesActionPointsToAValidProcessItem(ProcessInstance processInstance, ActionModel action, out TaskModel nextTask, out bool processCompleted, out bool processCanceled)
         {
             nextTask = null;
             processCompleted = false;
+            processCanceled = false;
 
             string nextItemId = action.NextItemId;
 
             if (nextItemId == null)
             {
                 processCompleted = true;
+                return true;
+            }
+            else if (nextItemId == "cancel")
+            {
+                processCanceled = true;
+                return true;
             }
 
             nextTask = processInstance.ProcessModel.Tasks.FirstOrDefault(t => t.Id == nextItemId);
@@ -238,9 +256,9 @@ namespace bpmist.business.Commands
             }
         }
 
-        private void SetTaskInstanceCompleted(TaskInstance taskInstance)
+        private void SetTaskInstanceCompleted(TaskInstance taskInstance, bool isCanceled)
         {
-            taskInstance.TaskState = TaskStates.Completed;
+            taskInstance.TaskState = isCanceled ? TaskStates.Canceled : TaskStates.Completed;
             taskInstance.CompletedAt = DateTime.UtcNow;
         }
 
@@ -288,10 +306,7 @@ namespace bpmist.business.Commands
                 return false;
             }
 
-            return
-                taskInstance.TaskState == TaskStates.Active ||
-                taskInstance.TaskState == TaskStates.Candidate ||
-                taskInstance.TaskState == TaskStates.Draft;
+            return taskInstance.TaskState != TaskStates.Completed && taskInstance.TaskState != TaskStates.Canceled;
         }
 
         protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(SendUserActionParameter parameter, IContextInformation contextInformation)

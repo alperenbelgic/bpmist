@@ -27,6 +27,8 @@ export class TaskCompletedModel {
   processInstanceId = '';
   taskInstanceId = '';
   taskName = '';
+  processCompleted = false;
+  processCanceled = false;
 }
 
 @Component({
@@ -142,6 +144,8 @@ export class EditTaskComponent implements OnInit {
           taskCompletedModel.processInstanceId = this.taskModel.processInstanceId;
           taskCompletedModel.taskInstanceId = r.Value.NewTaskInstanceId;
           taskCompletedModel.taskName = r.Value.NewTaskName;
+          taskCompletedModel.processCompleted = r.Value.HasProcessCompleted;
+          taskCompletedModel.processCanceled = r.Value.HasProcessCanceled;
 
           this.taskCompletedModel = taskCompletedModel;
 

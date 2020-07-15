@@ -1,8 +1,10 @@
 Todo:
-- complete & cancel processflow
+- completed tasks shows "completed", who and when completed it. 
+	- and below, all tasks of that process
 - denormalized data arrangment on assignment, creating new tasks, closing tasks.
 	- user doc: OrganizationUser.Tasks
 	- group: ActiveTaskInstancePaths, ActiveTaskInstancePathsAssignedToUsers
+	- waiting - active state when assigning user-group or group->user
 - Primary actions should be on the most right, warnings are left of them, secondary on the left side. 
 - task history
 - inbox

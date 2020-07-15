@@ -68,6 +68,44 @@
       </button>
     </div>
 
+    <div class="task-history">
+      <div style="text-align: center;">Show all other tasks</div>
+
+
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        style="margin-top:20px;"
+        *ngFor="let otherTask of ['', '', '']"
+      >
+        <div>
+          <div style="font-size: 24px; font-weight: bold;;">
+            Request Entry
+          </div>
+        </div>
+        <div
+          fxLayout="column"
+          style="text-align: right;"
+        >
+          <div>
+            Completed by
+          </div>
+          <div style="font-size: 18px; font-weight: bold;">
+            Baris B Belgic
+          </div>
+          <div style="font-size: 12px;">
+            at 12.01.2012 09:43
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+
+
   </div>
 
   <div
