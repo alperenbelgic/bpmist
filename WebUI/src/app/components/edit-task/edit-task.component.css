@@ -41,4 +41,6 @@
 
 .task-history {
   width: 500px;
+  color: gray;
+  margin-top: 30px;
 }

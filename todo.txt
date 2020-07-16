@@ -1,14 +1,5 @@
 Todo:
 
-- all tasks
-	- handle uncompleted tasks. write something else not Completed by 
-	- move more below
-	- uncollapse/collapse
-	- less strong color , like grayish
-	- don't show any thing on the first task
-	- that's it for now.
-- completed tasks shows "completed", who and when completed it. 
-	- and below, all tasks of that process
 - denormalized data arrangment on assignment, creating new tasks, closing tasks.
 	- search for all assigned user id, assigned group id assignments to find instances. 
 	- user doc: OrganizationUser.Tasks

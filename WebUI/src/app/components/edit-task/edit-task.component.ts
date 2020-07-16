@@ -42,6 +42,7 @@ export class EditTaskComponent implements OnInit {
   taskModel: TaskModel;
   taskCompletedModel: TaskCompletedModel;
   showCompletedMessage = false;
+  otherTasksShown = false;
 
   constructor(
     private webService: WebService,
@@ -184,5 +185,9 @@ export class EditTaskComponent implements OnInit {
             this.taskModel.taskInstanceId);
         }
       });
+  }
+
+  showAllOtherTasks() {
+    this.otherTasksShown = !this.otherTasksShown;
   }
 }

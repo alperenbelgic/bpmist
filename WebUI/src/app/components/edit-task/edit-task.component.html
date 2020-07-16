@@ -28,10 +28,16 @@
     </div>
     <div class="task-title">{{taskModel.title}}</div>
     <div
-      *ngIf="taskModel.taskState == 'Completed' || taskModel.taskState == 'Canceled'"
+      *ngIf="taskModel.taskState == 'Canceled'"
       class="centered-text"
     >
-      {{taskModel.taskState}} by <b>{{taskModel.assigneeName}}</b>
+      Cancelled by <b>{{taskModel.assigneeName}}</b>
+    </div>
+    <div
+      *ngIf="taskModel.taskState == 'Completed'"
+      class="centered-text"
+    >
+      Completed by <b>{{taskModel.assigneeName}}</b>
     </div>
     <div
       class="centered-text"
@@ -76,40 +82,53 @@
       </button>
     </div>
 
-    <div class="task-history">
-      <div style="text-align: center;">Show all other tasks</div>
-
-
-      <div
-        fxLayout="row"
-        fxLayoutAlign="space-between center"
-        style="margin-top:20px;"
-        *ngFor="let otherTask of taskModel.otherTasks"
-      >
-        <div>
-          <div style="font-size: 24px; font-weight: bold;;">
-            {{otherTask.TaskName}}
-          </div>
-        </div>
+    <ng-container *ngIf="taskModel.otherTasks.length > 1">
+      <div class="task-history">
         <div
-          fxLayout="column"
-          style="text-align: right;"
+          style="text-align: center;    text-decoration: underline; cursor:pointer;"
+          (click)="showAllOtherTasks()"
         >
-          <div>
-            Completed by
-          </div>
-          <div style="font-size: 18px; font-weight: bold;">
-            {{otherTask.AssingedName}}
-          </div>
-          <div style="font-size: 12px;">
-            {{otherTask.CompletedTime | _dateTime}}
-          </div>
+          <ng-container *ngIf="!otherTasksShown">Show all other tasks</ng-container>
+          <ng-container *ngIf="otherTasksShown">Hide other tasks</ng-container>
+
         </div>
 
+        <ng-container *ngIf="otherTasksShown">
+          <div
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+            style="margin-top:20px;"
+            *ngFor="let otherTask of taskModel.otherTasks"
+            [ngStyle]="{'font-style': (otherTask.TaskInstanceId == taskModel.taskInstanceId) ? 'italic' : 'normal'}"
+          >
+            <div>
+              <div style="font-size: 24px; font-weight: bold;;">
+                {{otherTask.TaskName}}
+              </div>
+            </div>
+            <div
+              fxLayout="column"
+              style="text-align: right;"
+            >
+              <div>
+                <ng-container *ngIf="otherTask.TaskState == 'Completed'">Completed by</ng-container>
+                <ng-container *ngIf="otherTask.TaskState == 'Canceled'">Cancelled by</ng-container>
+                <ng-container *ngIf="otherTask.TaskState == 'Active'">In progress</ng-container>
+                <ng-container *ngIf="otherTask.TaskState == 'Waiting'">Will be handled by</ng-container>
+              </div>
+              <div style="font-size: 18px; font-weight: bold;">
+                {{otherTask.AssingedName}}
+              </div>
+              <div style="font-size: 12px;">
+                {{otherTask.CompletedTime | _dateTime}}
+              </div>
+            </div>
+
+          </div>
+        </ng-container>
       </div>
 
-    </div>
-
+    </ng-container>
 
 
 
