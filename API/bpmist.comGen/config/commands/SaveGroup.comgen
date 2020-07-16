@@ -1,0 +1,14 @@
+{
+  "guid": "190D45C3-4753-4936-AE09-0CE4662BCA42",
+  "name": "SaveGroup",
+  "interfaceProject": "bpmist.data",
+  "implementationProject": "bpmist.firestore",
+  "isQuery": false,
+  "injects": [],
+  "parameters": {
+    "Group_bpmist.common.DataModels.DocumentTypes.Group": null
+  },
+  "returnType": {
+  },
+  "usedInApi": false
+}

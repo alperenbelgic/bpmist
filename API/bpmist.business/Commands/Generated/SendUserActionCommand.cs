@@ -10,7 +10,7 @@ namespace bpmist.business.Commands
     Command<SendUserActionParameter, SendUserActionResult>, ISendUserActionCommand
     {
         public SendUserActionCommand(
-            bpmist.data.ICommands.IGetProcessInstanceQuery _GetProcessInstanceQuery, bpmist.data.ICommands.ISaveProcessInstanceCommand _SaveProcessInstanceCommand, bpmist.data.ICommands.IGetOrganizationUserQuery _GetOrganizationUserQuery, bpmist.data.ICommands.IGetGroupQuery _GetGroupQuery, bpmist.data.ICommands.ISaveOrganizationUserCommand _SaveOrganizationUserCommand
+            bpmist.data.ICommands.IGetProcessInstanceQuery _GetProcessInstanceQuery, bpmist.data.ICommands.ISaveProcessInstanceCommand _SaveProcessInstanceCommand, bpmist.data.ICommands.IGetOrganizationUserQuery _GetOrganizationUserQuery, bpmist.data.ICommands.IGetGroupQuery _GetGroupQuery, bpmist.data.ICommands.ISaveOrganizationUserCommand _SaveOrganizationUserCommand, bpmist.data.ICommands.ISaveGroupCommand _SaveGroupCommand
         )
         {
             this.GetProcessInstanceQuery = _GetProcessInstanceQuery;
@@ -18,6 +18,7 @@ namespace bpmist.business.Commands
             this.GetOrganizationUserQuery = _GetOrganizationUserQuery;
             this.GetGroupQuery = _GetGroupQuery;
             this.SaveOrganizationUserCommand = _SaveOrganizationUserCommand;
+            this.SaveGroupCommand = _SaveGroupCommand;
         }
 
         private bpmist.data.ICommands.IGetProcessInstanceQuery GetProcessInstanceQuery { get; }
@@ -25,5 +26,6 @@ namespace bpmist.business.Commands
         private bpmist.data.ICommands.IGetOrganizationUserQuery GetOrganizationUserQuery { get; }
         private bpmist.data.ICommands.IGetGroupQuery GetGroupQuery { get; }
         private bpmist.data.ICommands.ISaveOrganizationUserCommand SaveOrganizationUserCommand { get; }
+        private bpmist.data.ICommands.ISaveGroupCommand SaveGroupCommand { get; }
     }
 }

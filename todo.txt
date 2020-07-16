@@ -7,7 +7,6 @@ Todo:
 	- waiting - active state when assigning user-group or group->user
 - Primary actions should be on the most right, warnings are left of them, secondary on the left side. 
 	- some margin
-
 - inbox
 	- person 
 	- groups
@@ -16,6 +15,9 @@ Todo:
 	- no manager? -> process owner , no process owner->same person (notification in any case)
 - login
 - assign to group manager
+- Calculate due dates when tasks created.
+	- first task probably shouldn't have any due date. 
+- notifications
 
 
 Later:
@@ -28,3 +30,7 @@ Later:
 - put back to group
 - Actions going back to a previous one should be assigned the user who worked on that one. 
 - ? system/webpage open, user gets user doc each minute, if any task changes, notifies to UI.
+- admin ops
+	- assign to anyone
+	- change values
+	- jump process to any step

@@ -14,6 +14,14 @@ namespace bpmist.common.DataModels.SubDocumentTypes
         [FirestoreProperty] public ActionModel[] Actions { get; set; } = new ActionModel[0];
 
         [FirestoreProperty] public AssigningConfiguration AssigningConfiguration { get; set; }
+
+        [FirestoreProperty] public DueDateConfiguration DueDateConfiguration { get; set; }
+    }
+
+    [FirestoreData]
+    public class DueDateConfiguration
+    {
+        [FirestoreProperty] public int? DueDay { get; set; }
     }
 
     [FirestoreData]
@@ -25,9 +33,6 @@ namespace bpmist.common.DataModels.SubDocumentTypes
         [FirestoreProperty] public string AssigningUserId { get; set; }
 
         [FirestoreProperty] public string AssigningGroupId { get; set; }
-
-        [FirestoreProperty] public string PoolId { get; set; } // this is on the fly group, which is created by selecting multiple users while defining assigned person.
-
     }
 
     [FirestoreData]

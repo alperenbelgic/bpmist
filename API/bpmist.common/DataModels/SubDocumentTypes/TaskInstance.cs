@@ -17,7 +17,7 @@ namespace bpmist.common.DataModels.SubDocumentTypes
         [FirestoreProperty] public string AssignedGroupId { get; set; }
         [FirestoreProperty] public string AssigneeName { get; set; } // can be either user's full name or group name
 
-        [FirestoreProperty] public TaskModel Task { get; set; } 
+        [FirestoreProperty] public TaskModel Task { get; set; }
 
         [FirestoreProperty] public Activity[] Activities { get; set; } = new Activity[0];
 

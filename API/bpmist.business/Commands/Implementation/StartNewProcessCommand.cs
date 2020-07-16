@@ -34,7 +34,9 @@ namespace bpmist.business.Commands
 
             var firstTask = processModel.Tasks.First();
 
-            string userFullName = await this.GetUserName(userId, contextInformation);
+            var user = await this.GetUser(userId, contextInformation);
+
+            string userFullName = user.UserFullName;
 
             var taskInstance =
                                  new TaskInstance()
@@ -60,27 +62,53 @@ namespace bpmist.business.Commands
             var createProcessInstanceResult =
             await this.CreateProcessInstanceCommand.ExecuteAsync(new SaveProcessInstanceParameter(processId, processInstance), contextInformation);
 
+            AddUserTasks(process.Id, process.ProcessName, firstTask, user, taskInstance, processInstance);
+
+            await this.SaveUser(user, contextInformation);
+
             // TODO: handle errors
 
             string processInstanceId = createProcessInstanceResult.Value.ProcessInstanceId;
             string taskName = firstTask.TaskName;
 
             var actions = firstTask.Actions.Select(a =>
-                {
-                    return new StartNewProcess_ActionsResult(a.ActionText, a.ActionType, a.Id);
-                })
+            {
+                return new StartNewProcess_ActionsResult(a.ActionText, a.ActionType, a.Id);
+            })
                 .ToArray();
 
             return new StartNewProcessResult(process.ProcessName, processInstanceId, taskName, taskInstance.Id, actions);
         }
 
-        public async Task<string> GetUserName(string userId, IContextInformation contextInformation)
+        private static void AddUserTasks(string processId, string processName, TaskModel firstTask, OrganizationUser user, TaskInstance taskInstance, ProcessInstance processInstance)
+        {
+            var userTasks = user.Tasks.ToList();
+            userTasks.Add(new DenormalizedTaskInstance()
+            {
+                DueDate = null,
+                ProcessId = processId,
+                ProcessName = processName,
+                ProcessInstanceId = processInstance.Id,
+                TaskName = firstTask.TaskName,
+                TaskInstanceId = taskInstance.Id,
+                TaskState = taskInstance.TaskState
+            });
+
+            user.Tasks = userTasks.ToArray();
+        }
+
+        private async Task SaveUser(OrganizationUser user, IContextInformation contextInformation)
+        {
+            await this.SaveOrganizationUserCommand.ExecuteAsync(new SaveOrganizationUserParameter(user), contextInformation);
+        }
+
+        public async Task<OrganizationUser> GetUser(string userId, IContextInformation contextInformation)
         {
             var getUserQueryResult = await this.GetUserQuery.ExecuteAsync(new GetOrganizationUserParameter(userId), contextInformation);
 
             // TODO: handle not returned user
 
-            return getUserQueryResult.Value.OrganizationUser.UserFullName;
+            return getUserQueryResult.Value.OrganizationUser;
         }
 
         protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(StartNewProcessParameter parameter, IContextInformation contextInformation)

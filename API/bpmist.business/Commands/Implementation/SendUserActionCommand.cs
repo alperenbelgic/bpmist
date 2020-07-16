@@ -76,7 +76,7 @@ namespace bpmist.business.Commands
                 // create the next task(s)
                 // how? who is assigned etc.
                 (newTaskInstanceId, newTaskName, assignedName) = await this.AddNewTaskInstanceInProcessInstance(
-                    processInstance, previousTaskInstance: taskInstance, currentlyAssignedUser, nextTask, contextInformation);
+                    processId, processInstance, previousTaskInstance: taskInstance, currentlyAssignedUser, nextTask, contextInformation);
             }
 
             await this.SaveProcessInstance(processId, processInstance, contextInformation);
@@ -99,7 +99,7 @@ namespace bpmist.business.Commands
         }
 
         private async Task<(string NewTaskInstanceId, string NewTaskName, string AssignedName)> AddNewTaskInstanceInProcessInstance(
-            ProcessInstance processInstance, TaskInstance previousTaskInstance, OrganizationUser currentlyAssignedUser, TaskModel nextTask, IContextInformation contextInformation)
+            string processId, ProcessInstance processInstance, TaskInstance previousTaskInstance, OrganizationUser currentlyAssignedUser, TaskModel nextTask, IContextInformation contextInformation)
         {
             /*
             // Analysis:
@@ -117,7 +117,7 @@ namespace bpmist.business.Commands
             */
 
             (bool canBeAssignedToASpecificUser, OrganizationUser user) =
-                await this.CanTaskInstanceBeAssignedToASpecificUser(nextTask, currentlyAssignedUser, contextInformation);
+                await this.Can_Task_Instance_Be_Assigned_To_A_Specific_User(nextTask, currentlyAssignedUser, contextInformation);
 
             // TODO: if cannot be assigned to a user, there must be a group by business rules. if group is unexpectedly not present, this spcific situation should be a known exception. 
 
@@ -134,21 +134,22 @@ namespace bpmist.business.Commands
                 newTaskInstance.AssignedUserId = user.Id;
                 newTaskInstance.AssigneeName = user.UserFullName;
 
-                // TODO:! user inbox update required.
+                AddTaskToUsersInbox(processId, processInstance, user, newTaskInstance);
+
+                await this.SaveOrganizationUser(user, contextInformation);
             }
             else if (nextTask.AssigningConfiguration?.AssigningGroupId != null)
             {
                 var getGroupQuery = await this.GetGroupQuery.ExecuteAsync(new GetGroupParameter(nextTask.AssigningConfiguration.AssigningGroupId), contextInformation);
                 // TODO: Check if group exists
-                newTaskInstance.AssignedGroupId = nextTask.AssigningConfiguration.AssigningGroupId;
-                newTaskInstance.AssigneeName = getGroupQuery.Value.Group.GroupName;
+                var group = getGroupQuery.Value.Group;
 
-                // TODO:! group inbox update required.
-            }
-            else if (nextTask.AssigningConfiguration.PoolId != null && nextTask.AssigningConfiguration.PoolId.Count() > 0)
-            {
-                // TODO: PoolId ->This function doesn't exist yet. correct error should be thrown
-                throw new NotImplementedException();
+                newTaskInstance.AssignedGroupId = nextTask.AssigningConfiguration.AssigningGroupId;
+                newTaskInstance.AssigneeName = group.GroupName;
+
+                AddTaskToGroupInbox(processId, processInstance, newTaskInstance, group);
+
+                await this.SaveGroup(group, contextInformation);
             }
             else
             {
@@ -163,7 +164,45 @@ namespace bpmist.business.Commands
             return (newTaskInstance.Id, newTaskInstance.Task.TaskName, newTaskInstance.AssigneeName);
         }
 
-        private async Task<(bool canAssignToSpecificUser, OrganizationUser user)> CanTaskInstanceBeAssignedToASpecificUser(TaskModel nextTask, OrganizationUser currentlyAssignedUser, IContextInformation contextInformation)
+        private static void AddTaskToGroupInbox(string processId, ProcessInstance processInstance, TaskInstance newTaskInstance, Group group)
+        {
+            var groupTasks = group.GroupTasks.ToList();
+            groupTasks.Add(new DenormalizedTaskInstance()
+            {
+                DueDate = null, // TODO: calculate due date
+                ProcessId = processId,
+                ProcessInstanceId = processInstance.Id,
+                ProcessName = processInstance.ProcessName,
+                TaskInstanceId = newTaskInstance.Id,
+                TaskName = newTaskInstance.Task.TaskName,
+                TaskState = newTaskInstance.TaskState
+            });
+            group.GroupTasks = groupTasks.ToArray();
+        }
+
+        private static void AddTaskToUsersInbox(string processId, ProcessInstance processInstance, OrganizationUser user, TaskInstance newTaskInstance)
+        {
+            var userTasks = user.Tasks.ToList();
+            userTasks.Add(new DenormalizedTaskInstance()
+            {
+                DueDate = null, // TODO: calculate due date
+                ProcessId = processId,
+                ProcessInstanceId = processInstance.Id,
+                ProcessName = processInstance.ProcessName,
+                TaskInstanceId = newTaskInstance.Id,
+                TaskName = newTaskInstance.Task.TaskName,
+                TaskState = newTaskInstance.TaskState
+            });
+
+            user.Tasks = userTasks.ToArray();
+        }
+
+        private async Task SaveGroup(Group group, IContextInformation contextInformation)
+        {
+            await this.SaveGroupCommand.ExecuteAsync(new SaveGroupParameter(group), contextInformation);
+        }
+
+        private async Task<(bool canAssignToSpecificUser, OrganizationUser user)> Can_Task_Instance_Be_Assigned_To_A_Specific_User(TaskModel nextTask, OrganizationUser currentlyAssignedUser, IContextInformation contextInformation)
         {
             var assigningConfiguration = nextTask.AssigningConfiguration;
 
@@ -189,7 +228,6 @@ namespace bpmist.business.Commands
                     // TODO: who to assign then? to the same user? to a process owner
                     assignedUserId = currentlyAssignedUser.Id;
                 }
-
             }
             else if (assigningConfiguration.AssigningUserId != null)
             {
@@ -282,9 +320,9 @@ namespace bpmist.business.Commands
             currentlyAssingedUser.Tasks = currentlyAssingedUser.Tasks.Where(t => t.TaskInstanceId != taskInstanceId).ToArray();
         }
 
-        private async Task SaveOrganizationUser(OrganizationUser currentlyAssingedUser, IContextInformation contextInformation)
+        private async Task SaveOrganizationUser(OrganizationUser user, IContextInformation contextInformation)
         {
-            await this.SaveOrganizationUserCommand.ExecuteAsync(new SaveOrganizationUserParameter(currentlyAssingedUser), contextInformation);
+            await this.SaveOrganizationUserCommand.ExecuteAsync(new SaveOrganizationUserParameter(user), contextInformation);
         }
 
         private bool HasCurrentUserAuthorisationToCallAction(TaskInstance taskInstance, string userId)

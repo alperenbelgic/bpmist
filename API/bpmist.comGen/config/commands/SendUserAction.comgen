@@ -9,7 +9,8 @@
     "SaveProcessInstanceCommand_bpmist.data.ICommands.ISaveProcessInstanceCommand",
     "GetOrganizationUserQuery_bpmist.data.ICommands.IGetOrganizationUserQuery",
     "GetGroupQuery_bpmist.data.ICommands.IGetGroupQuery",
-    "SaveOrganizationUserCommand_bpmist.data.ICommands.ISaveOrganizationUserCommand"
+    "SaveOrganizationUserCommand_bpmist.data.ICommands.ISaveOrganizationUserCommand",
+    "SaveGroupCommand_bpmist.data.ICommands.ISaveGroupCommand"
   ],
   "parameters": {
     "ProcessId_string": null,
