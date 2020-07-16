@@ -53,7 +53,7 @@ namespace bpmist.business.Commands
                 ProcessName = processInstance.ProcessName,
                 TaskName = taskInstance.Task.TaskName,
                 TaskState = taskInstance.TaskState,
-                DueDate = DateTime.UtcNow.AddYears(3)
+                DueDate = DateTime.UtcNow.AddYears(3) // TODO: update duedate
             });
 
             user.Tasks = userTasks.ToArray();

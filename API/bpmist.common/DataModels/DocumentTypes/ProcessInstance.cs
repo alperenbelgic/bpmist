@@ -1,5 +1,4 @@
-﻿using bpmist.business.common;
-using bpmist.common.DataModels.SubDocumentTypes;
+﻿using bpmist.common.DataModels.SubDocumentTypes;
 using Google.Cloud.Firestore;
 using System;
 using System.Collections.Generic;
