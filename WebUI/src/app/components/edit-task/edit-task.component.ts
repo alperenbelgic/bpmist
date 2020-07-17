@@ -11,7 +11,11 @@ export class TaskModel {
   processInstanceId = '';
   taskInstanceId = '';
   taskState = '';
-  actions: any[] = [];
+  set actions(value: any[]) {
+    this.primaryActions = value.filter(a => a.ActionType === 'Primary');
+    this.secondaryActions = value.filter(a => a.ActionType === 'Secondary');
+    this.warnedActions = value.filter(a => a.ActionType === 'Warned');
+  }
   assigneeName = '';
   assignmentStates = {
     assignedToCurrentUser: false,
@@ -20,6 +24,10 @@ export class TaskModel {
     assignedToCurrentUsersGroup: false
   };
   otherTasks = [];
+
+  primaryActions: any[];
+  warnedActions: any[];
+  secondaryActions: any[];
 }
 
 export class TaskCompletedModel {

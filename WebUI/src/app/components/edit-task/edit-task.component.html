@@ -66,20 +66,57 @@
 
     <div
       fxLayout="row"
-      fxLayoutAlign="end center"
+      fxLayoutAlign="space-between center"
     >
 
-      <button
-        *ngFor="let action of taskModel.actions"
-        (click)="submit(action.ActionId)"
+      <div
+        fxLayout="row"
         fxLayoutAlign="start center"
-        mat-button
-        mat-raised-button
-        color="primary"
-        [disabled]="!taskModel.assignmentStates.assignedToCurrentUser"
       >
-        {{action.ActionText}}
-      </button>
+        <button
+          *ngFor="let action of taskModel.secondaryActions"
+          (click)="submit(action.ActionId)"
+          fxLayoutAlign="start center"
+          mat-button
+          mat-raised-button
+          [disabled]="!taskModel.assignmentStates.assignedToCurrentUser"
+          style="margin-right:10px"
+        >
+          {{action.ActionText}}
+        </button>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayoutAlign="end center"
+      >
+        <button
+          *ngFor="let action of taskModel.warnedActions"
+          (click)="submit(action.ActionId)"
+          fxLayoutAlign="start center"
+          mat-button
+          mat-raised-button
+          color="warn"
+          [disabled]="!taskModel.assignmentStates.assignedToCurrentUser"
+          style="margin-left:10px"
+        >
+          {{action.ActionText}}
+        </button>
+
+        <button
+          *ngFor="let action of taskModel.primaryActions"
+          (click)="submit(action.ActionId)"
+          fxLayoutAlign="start center"
+          mat-button
+          mat-raised-button
+          color="primary"
+          [disabled]="!taskModel.assignmentStates.assignedToCurrentUser"
+          style="margin-left:10px"
+        >
+          {{action.ActionText}}
+        </button>
+      </div>
+
     </div>
 
     <ng-container *ngIf="taskModel.otherTasks.length > 1">
