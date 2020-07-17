@@ -93,6 +93,10 @@ namespace API.Controllers
                                         AssignToManager = true
                                     }
                                 },
+                                DueDateConfiguration = new DueDateConfiguration()
+                                {
+                                    DueDay = 2
+                                }
                             },
                             new TaskModel
                             {
@@ -110,6 +114,10 @@ namespace API.Controllers
                                 {
                                     AssigningGroupId =  hrGroupId
                                 },
+                                DueDateConfiguration = new DueDateConfiguration()
+                                {
+                                    DueDay = 1
+                                }
                             }
                         };
 

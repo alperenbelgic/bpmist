@@ -23,6 +23,7 @@ namespace bpmist.common.DataModels.SubDocumentTypes
         [FirestoreProperty] public System.DateTime? StartedAt { get; set; }
 
         [FirestoreProperty] public System.DateTime? CompletedAt { get; set; }
+        [FirestoreProperty] public System.DateTime? DueDate { get; set; }
     }
 
     public class TaskStates

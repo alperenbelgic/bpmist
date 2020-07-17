@@ -98,8 +98,8 @@ namespace bpmist.business.Commands
             await this.SaveProcessInstanceCommand.ExecuteAsync(new SaveProcessInstanceParameter(processId, processInstance), contextInformation);
         }
 
-        private async Task<(string NewTaskInstanceId, string NewTaskName, string AssignedName)> AddNewTaskInstanceInProcessInstance(
-            string processId, ProcessInstance processInstance, TaskInstance previousTaskInstance, OrganizationUser currentlyAssignedUser, TaskModel nextTask, IContextInformation contextInformation)
+        private async Task<(string NewTaskInstanceId, string NewTaskName, string AssignedName)>
+            AddNewTaskInstanceInProcessInstance(string processId, ProcessInstance processInstance, TaskInstance previousTaskInstance, OrganizationUser currentlyAssignedUser, TaskModel nextTask, IContextInformation contextInformation)
         {
             /*
             // Analysis:
@@ -121,12 +121,15 @@ namespace bpmist.business.Commands
 
             // TODO: if cannot be assigned to a user, there must be a group by business rules. if group is unexpectedly not present, this spcific situation should be a known exception. 
 
+            DateTime? dueDate = this.CalculateDueDate(nextTask);
+
             var newTaskInstance =
             new TaskInstance()
             {
                 StartedAt = DateTime.UtcNow,
                 TaskState = canBeAssignedToASpecificUser ? TaskStates.Active : TaskStates.Waiting,
-                Task = nextTask
+                Task = nextTask, 
+                DueDate = dueDate
             };
 
             if (canBeAssignedToASpecificUser)
@@ -162,6 +165,20 @@ namespace bpmist.business.Commands
             processInstance.TaskInstances = taskInstanceList.ToArray();
 
             return (newTaskInstance.Id, newTaskInstance.Task.TaskName, newTaskInstance.AssigneeName);
+        }
+
+        private DateTime? CalculateDueDate(TaskModel nextTask)
+        {
+            int? dueDay = nextTask.DueDateConfiguration.DueDay;
+
+            if (dueDay == null)
+            {
+                return null;
+            }
+
+            var dueDate = DateTime.UtcNow.Date.AddWeekday(dueDay.Value);
+
+            return dueDate;
         }
 
         private static void AddTaskToGroupInbox(string processId, ProcessInstance processInstance, TaskInstance newTaskInstance, Group group)
