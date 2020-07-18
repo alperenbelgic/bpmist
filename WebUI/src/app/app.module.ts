@@ -25,6 +25,7 @@ import { EditTaskComponent } from './components/edit-task/edit-task.component';
 import { ListProcessesComponent } from './components/list-processes/list-processes.component';
 import { TaskCompletedComponent } from './components/task-completed/task-completed.component';
 import { CustomDateTimePipePipe } from './common/Pipes/custom-date-time-pipe.pipe';
+import { ListTasksComponent } from './components/list-tasks/list-tasks.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -40,7 +41,8 @@ const appearance: MatFormFieldDefaultOptions = {
     EditTaskComponent,
     ListProcessesComponent,
     TaskCompletedComponent,
-    CustomDateTimePipePipe
+    CustomDateTimePipePipe,
+    ListTasksComponent
   ],
   imports: [
     BrowserModule,

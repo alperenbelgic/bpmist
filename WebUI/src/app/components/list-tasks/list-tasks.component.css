@@ -1,0 +1,29 @@
+.my-inbox-label {
+  font-weight: bold;
+  font-size: 40px;
+  margin-top: 60px;
+  text-align: center;
+}
+
+.task-item {
+  border-bottom: 1px solid gray;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.task-title {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.process-title {
+  font-size: 18px;
+}
+
+.due-day-value {
+  font-size: 18px;
+}
+
+.due-date-column {
+  text-align: right;
+}
