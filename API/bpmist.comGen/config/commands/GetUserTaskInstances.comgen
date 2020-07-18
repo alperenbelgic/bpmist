@@ -1,0 +1,40 @@
+{
+  "guid": "74446770-9529-4E98-972D-3E92D81A479A",
+  "name": "GetUserTaskInstances",
+  "interfaceProject": "bpmist.common",
+  "implementationProject": "bpmist.business",
+  "isQuery": true,
+  "injects": [
+    "GetOrganizationUserQuery_bpmist.data.ICommands.IGetOrganizationUserQuery",
+    "GetGroupQueryFactory_Func<bpmist.data.ICommands.IGetGroupQuery>"
+  ],
+  "parameters": {},
+  "returnType": {
+    "UserTaskInstanceList_List": {
+      "ProcessId_string": null,
+      "ProcessInstanceId_string": null,
+      "TaskInstanceId_string": null,
+      "ProcessName_string": null,
+      "TaskName_string": null,
+      "TaskState_string": null,
+      "DueDate_DateTime?": null,
+      "DuePast_bool": null,
+      "DaysToDue_int": null
+    },
+    "GroupsTaskInstanceList_List": {
+        "GroupName_string": null,
+        "TaskInstanceList_List": {
+        "ProcessId_string": null,
+        "ProcessInstanceId_string": null,
+        "TaskInstanceId_string": null,
+        "ProcessName_string": null,
+        "TaskName_string": null,
+        "TaskState_string": null,
+        "DueDate_DateTime?": null,
+        "DuePast_bool": null,
+        "DaysToDue_int": null
+      }
+    }
+  },
+  "usedInApi": true
+}

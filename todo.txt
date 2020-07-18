@@ -1,6 +1,4 @@
 Todo:
-- Calculate due dates when tasks created.
-	- first task probably shouldn't have any due date. 
 - inbox
 	- person 
 	- groups
@@ -28,3 +26,8 @@ Later:
 	- jump process to any step
 - user group management
 	- denormalize data
+- group tasks listed
+	- one of them clicked
+	- back button
+	- load the previous data (should be cached somewhere)
+	- then make the request again and update the result 
