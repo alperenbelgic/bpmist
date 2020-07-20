@@ -1,0 +1,51 @@
+<div class="left-menu-wrapper">
+
+  <img
+    class="image"
+    src="/assets/images/logo.png"
+  >
+
+  <a [routerLink]="['/']">
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start center"
+    >
+      <div class="menu-icon">
+        <i class="far fa-plus-square"></i>
+
+      </div>
+      <div class="menu-text">Create a new flow</div>
+    </div>
+  </a>
+
+
+
+
+
+  <a [routerLink]="['/MyInbox']">
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start center"
+    >
+      <div class="menu-icon">
+        <i class="fas fa-tasks"></i>
+
+      </div>
+      <div class="menu-text">My Inbox</div>
+    </div>
+  </a>
+  <a [routerLink]="['/MyGroupsInbox']">
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start center"
+    >
+      <div class="menu-icon">
+        <i class="fas fa-users"></i>
+
+      </div>
+      <div class="menu-text">My Groups Inbox</div>
+    </div>
+  </a>
+
+
+</div>

@@ -7,6 +7,7 @@ using bpmist.common.DataModels.SubDocumentTypes;
 using bpmist.firestore.DataModels;
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization.Internal;
 using Microsoft.Extensions.Logging;
 
 namespace API.Controllers
@@ -31,9 +32,10 @@ namespace API.Controllers
 
             var initialiseUsersAndGroupsResult = await InitialiseUsersAndGroups(organizationId);
             string hrGroupId = initialiseUsersAndGroupsResult.HrGroupId;
+            string financeGroupId = initialiseUsersAndGroupsResult.FinanceGroupId;
 
             //--Create process here
-            await InitialiseProcesses(organizationId, hrGroupId);
+            await InitialiseProcesses(organizationId, hrGroupId, financeGroupId);
 
             return new { Hodor = "modor" };
         }
@@ -46,9 +48,117 @@ namespace API.Controllers
             });
         }
 
-        private async Task InitialiseProcesses(string organizationId, string hrGroupId)
+        private async Task InitialiseProcesses(string organizationId, string hrGroupId, string financeGroupId)
         {
 
+            await this.CreateLeaveRequestProcess(organizationId, hrGroupId);
+
+            await this.CreateExpenseRequestProcess(organizationId, financeGroupId);
+        }
+
+        private async Task CreateExpenseRequestProcess(string organizationId, string financeGroupId)
+        {
+            string secondTaskId = Guid.NewGuid().ToString();
+            string thirdTaskId = Guid.NewGuid().ToString();
+
+
+            var tasks =
+                        new TaskModel[]
+                        {
+                            new TaskModel
+                            {
+                                TaskName = "Request Entry",
+                                Actions=new ActionModel[]
+                                {
+                                    new ActionModel
+                                    {
+                                        ActionText = "Submit",
+                                        NextItemId = secondTaskId,
+                                    }
+                                },
+
+                            },
+                            new TaskModel
+                            {
+                                Id = secondTaskId,
+                                TaskName = "Approval",
+                                Actions = new ActionModel[]{
+                                    new ActionModel
+                                    {
+                                        ActionText = "Approve",
+                                        NextItemId = thirdTaskId,
+                                    },
+                                    new ActionModel
+                                    {
+                                        ActionText = "Reject",
+                                        NextItemId = "cancel",
+                                        ActionType = ActionTypes.Warned
+                                    },
+                                    new ActionModel
+                                    {
+                                        ActionText = "Save",
+                                        NextItemId = "save",
+                                        ActionType = ActionTypes.Secondary
+                                    },
+                                },
+                                AssigningConfiguration = new AssigningConfiguration
+                                {
+                                    AssigningRule = new AssigningRule()
+                                    {
+                                        AssignToManager = true
+                                    }
+                                },
+                                DueDateConfiguration = new DueDateConfiguration()
+                                {
+                                    DueDay = 2
+                                }
+                            },
+                            new TaskModel
+                            {
+                                Id = thirdTaskId,
+                                TaskName = "Finance Confirmation",
+                                Actions = new ActionModel[]
+                                {
+                                    new ActionModel
+                                    {
+                                        ActionText = "Confirm",
+                                        NextItemId = null
+                                    }
+                                },
+                                AssigningConfiguration = new AssigningConfiguration
+                                {
+                                    AssigningGroupId =  financeGroupId
+                                },
+                                DueDateConfiguration = new DueDateConfiguration()
+                                {
+                                    DueDay = 1
+                                }
+                            }
+                        };
+
+            string leaveRequestProcessId = "B2A5B393-8B96-4FC5-B22A-AA16C8128425";
+
+            await
+                Documents.process(organizationId, leaveRequestProcessId)
+                .SetAsync(
+                            new Process()
+                            {
+                                ProcessName = "Expense Request",
+                                VersionedProcessModels = new ProcessModel[]
+                                {
+                                        new ProcessModel() { Tasks = tasks }
+                                },
+                                ProcessVisuals = new ProcessVisuals()
+                                {
+                                    IconColor = "#C38D9E",
+                                    Initials = "ER"
+                                }
+                            }
+                        );
+        }
+
+        private async Task CreateLeaveRequestProcess(string organizationId, string hrGroupId)
+        {
             string secondTaskId = Guid.NewGuid().ToString();
             string thirdTaskId = Guid.NewGuid().ToString();
 
@@ -121,25 +231,28 @@ namespace API.Controllers
                             }
                         };
 
-            string holidayProcessId = "{A34F2DCD-07D2-49EE-A28C-4C5B6084533E}";
-
-            //Documents.process(organizationId, holidayProcessId);
+            string leaveRequestProcessId = "A34F2DCD-07D2-49EE-A28C-4C5B6084533E";
 
             await
-                Documents.process(organizationId, holidayProcessId)
+                Documents.process(organizationId, leaveRequestProcessId)
                 .SetAsync(
                             new Process()
                             {
-                                ProcessName = "Holiday Request",
+                                ProcessName = "Leave Request",
                                 VersionedProcessModels = new ProcessModel[]
                                 {
                                         new ProcessModel() { Tasks = tasks }
+                                },
+                                ProcessVisuals = new ProcessVisuals()
+                                {
+                                    IconColor = "goldenrod",
+                                    Initials = "LR"
                                 }
                             }
                         );
         }
 
-        private async Task CreateGroups(string organizationId, string[] hrUserIds, string hrGroupId)
+        private async Task CreateGroups(string organizationId, string[] hrUserIds, string hrGroupId, string[] financeUserIds, string financeGroupId)
         {
 
             var group = Documents.group(organizationId, hrGroupId);
@@ -150,72 +263,73 @@ namespace API.Controllers
                     GroupName = "HR",
                     UserIds = hrUserIds
                 });
+
+            var financeGroup = Documents.group(organizationId, financeGroupId);
+
+            await financeGroup
+                .SetAsync(new Group()
+                {
+                    GroupName = "Finance",
+                    UserIds = financeUserIds
+                });
         }
 
-        private async Task<(string HrGroupId, string Temp)> InitialiseUsersAndGroups(string organizationId)
+        private async Task<(string HrGroupId, string FinanceGroupId)> InitialiseUsersAndGroups(string organizationId)
         {
             var usersCollection = Collections.organizationUsers(organizationId);
 
-            string userId = "{9296A486-5D25-4A40-97BA-F67CB6FBBBCC}";
-            string managerId = "{208DDB53-FDF0-41C8-A2F1-535E975CED22}";
-            string hrUser1 = "{83B203D7-2030-4788-BE40-CB153563A979}";
-            string hrUser2 = "{C06960E7-203F-4265-85BA-A0B59863B82D}";
+            string alperen = "9296A486-5D25-4A40-97BA-F67CB6FBBBCC";
+            string omer = "208DDB53-FDF0-41C8-A2F1-535E975CED22";
+            string baris = "83B203D7-2030-4788-BE40-CB153563A979";
+            string pelin = "C06960E7-203F-4265-85BA-A0B59863B82D";
 
-            string hrGroupId = "{44CBC4BF-DBDF-4B43-90F8-123B4242BB34}";
+            string hrGroupId = "44CBC4BF-DBDF-4B43-90F8-123B4242BB34";
+            string financeGroupId = "AEF717FA-EC23-4708-B2D3-5BADB54EFD70";
 
 
             await usersCollection
-                .Document(userId)
+                .Document(alperen)
                 .SetAsync(new OrganizationUser()
                 {
                     Email = "alperenbelgic@outlook.com",
-                    ManagerId = managerId,
-                    UserFullName = "Alperen Belgic"
+                    ManagerId = omer,
+                    UserFullName = "Alperen Belgic",
+                    GroupIds = new string[] { hrGroupId }
                 });
 
             await usersCollection
-                .Document(managerId)
+                .Document(omer)
                 .SetAsync(new OrganizationUser()
                 {
                     Email = "omar@gmail.com",
                     ManagerId = null,
-                    UserFullName = "Omar Little"
+                    UserFullName = "Omar Little",
+                    GroupIds = new string[] { hrGroupId }
                 });
 
             await usersCollection
-                .Document(hrUser1)
+                .Document(pelin)
                 .SetAsync(new OrganizationUser()
                 {
                     Email = "pelin@gmail.com",
                     ManagerId = null,
                     UserFullName = "Pelin Mezrea",
-                    GroupIds = new string[] { hrGroupId }
+                    GroupIds = new string[] { financeGroupId }
                 }); ;
 
             await usersCollection
-                .Document(hrUser2)
+                .Document(baris)
                 .SetAsync(new OrganizationUser()
                 {
                     Email = "baris@gmail.com",
-                    ManagerId = null,
+                    ManagerId = pelin,
                     UserFullName = "Baris B Belgic",
-                    GroupIds = new string[] { hrGroupId }
+                    GroupIds = new string[] { financeGroupId }
                 });
 
-            await this.CreateGroups(organizationId, new string[] { hrUser1, hrUser2 }, hrGroupId);
+            await this.CreateGroups(organizationId, new string[] { alperen, omer }, hrGroupId, new string[] { pelin, baris }, financeGroupId);
 
-            return (hrGroupId, null);
+            return (hrGroupId, financeGroupId);
         }
-
-        [HttpPost]
-        public object Test(X param)
-        {
-            return param;
-        }
-    }
-
-    public class X
-    {
-        public Dictionary<string, object> theObject { get; set; }
     }
 }

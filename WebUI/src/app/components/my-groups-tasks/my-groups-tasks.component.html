@@ -1,0 +1,61 @@
+<div
+  fxLayout="column"
+  fxLayoutAlign="center center"
+>
+  <ng-container *ngIf="groupsTasks">
+    <div style="width: 500px;">
+      <div class="my-inbox-label">My Groups' Inbox</div>
+      <div
+        class="no-task-message"
+        *ngIf="!groupsTasks || groupsTasks.length == 0"
+        fxLayout="row"
+        fxLayoutAlign="center center"
+      >
+        <div class="task-success-icon"><i class="fa fa-check-circle"></i></div>
+        <div>You don't have any assigned task. </div>
+      </div>
+      <div *ngFor="let groupTasks of groupsTasks">
+
+        <div
+          *ngFor="let task of groupTasks.TaskInstanceList"
+          class="task-item"
+          [routerLink]="['/EditTask', task.ProcessId, task.ProcessInstanceId, task.TaskInstanceId]"
+        >
+
+          <div
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+          >
+            <div fxLayout="column">
+              <div class="task-title">{{task.TaskName}} - <span class="group-name">{{groupTasks.GroupName}} <span
+                    class="group-name-group-label"
+                  >group</span></span></div>
+              <div class="process-title">in <b>{{task.ProcessName}}</b></div>
+            </div>
+            <div
+              fxLayout="column"
+              class="due-date-column"
+            >
+              <ng-container *ngIf="task.DueDate">
+                <ng-container *ngIf="task.DaysToDue == 0">
+                  <div>due</div>
+                  <div class="due-day-value"><b>Today</b></div>
+                </ng-container>
+                <ng-container *ngIf="task.DaysToDue > 0">
+                  <div>due in</div>
+                  <div class="due-day-value"><b>{{task.AbsDaysToDue}} days</b></div>
+                </ng-container>
+                <ng-container *ngIf="task.DaysToDue < 0">
+                  <div class="past-due-date">overdue</div>
+                  <div class="due-day-value past-due-date"><b>{{task.AbsDaysToDue}} days</b></div>
+                </ng-container>
+
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+</div>

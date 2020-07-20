@@ -51,7 +51,7 @@ namespace API.Controllers
         //208DDB53-FDF0-41C8-A2F1-535E975CED22 //omer
         //83B203D7-2030-4788-BE40-CB153563A979 //pelin
         //C06960E7-203F-4265-85BA-A0B59863B82D //baris
-        public string UserId => "{C06960E7-203F-4265-85BA-A0B59863B82D}";//pelin
+        public string UserId => "C06960E7-203F-4265-85BA-A0B59863B82D";
 
     }
 

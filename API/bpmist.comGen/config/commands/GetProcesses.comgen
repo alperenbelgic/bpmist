@@ -9,7 +9,11 @@
   "returnType": {
     "Processes_List": {
       "ProcessId_string": null,
-      "ProcessName_string": null
+      "ProcessName_string": null,
+      "Visuals_Object": {
+        "IconColor_string": null,
+        "Initials_string": null
+      }
     }
   },
   "usedInApi": true

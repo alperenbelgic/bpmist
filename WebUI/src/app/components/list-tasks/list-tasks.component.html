@@ -2,88 +2,58 @@
   fxLayout="column"
   fxLayoutAlign="center center"
 >
-  <div style="width: 500px;">
-    <div class="my-inbox-label">My Inbox</div>
-
-    <div class="task-item">
-
-      <div
-        fxLayout="row"
-        fxLayoutAlign="space-between center"
-      >
-        <div fxLayout="column">
-          <div class="task-title">Approval</div>
-          <div class="process-title">in <b>Holiday Request</b></div>
-        </div>
-        <div
-          fxLayout="column"
-          class="due-date-column"
-        >
-          <div>due in</div>
-          <div class="due-day-value"><b>2 days</b></div>
-        </div>
-      </div>
-    </div>
-    <div class="task-item">
+  <ng-container *ngIf="tasks">
+    <div style="width: 500px;">
+      <div class="my-inbox-label">My Inbox</div>
 
       <div
+        class="no-task-message"
+        *ngIf="!tasks.UserTaskInstanceList || tasks.UserTaskInstanceList.length == 0"
         fxLayout="row"
-        fxLayoutAlign="space-between center"
+        fxLayoutAlign="center center"
       >
-        <div fxLayout="column">
-          <div class="task-title">Approval</div>
-          <div class="process-title">in <b>Holiday Request</b></div>
-        </div>
-        <div
-          fxLayout="column"
-          class="due-date-column"
-        >
-          <div>due in</div>
-          <div class="due-day-value"><b>2 days</b></div>
-        </div>
+        <div class="task-success-icon"><i class="fa fa-check-circle"></i></div>
+        <div>You don't have any assigned task. </div>
       </div>
-    </div>
 
-
-    <div class="task-item">
 
       <div
-        fxLayout="row"
-        fxLayoutAlign="space-between center"
+        *ngFor="let task of tasks.UserTaskInstanceList"
+        class="task-item"
+        [routerLink]="['/EditTask', task.ProcessId, task.ProcessInstanceId, task.TaskInstanceId]"
       >
-        <div fxLayout="column">
-          <div class="task-title">Approval</div>
-          <div class="process-title">in <b>Holiday Request</b></div>
-        </div>
+
         <div
-          fxLayout="column"
-          class="due-date-column"
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
         >
-          <div>due in</div>
-          <div class="due-day-value"><b>2 days</b></div>
+          <div fxLayout="column">
+            <div class="task-title">{{task.TaskName}}</div>
+            <div class="process-title">in <b>{{task.ProcessName}}</b></div>
+          </div>
+          <div
+            fxLayout="column"
+            class="due-date-column"
+          >
+            <ng-container *ngIf="task.DueDate">
+              <ng-container *ngIf="task.DaysToDue == 0">
+                <div>due</div>
+                <div class="due-day-value"><b>Today</b></div>
+              </ng-container>
+              <ng-container *ngIf="task.DaysToDue > 0">
+                <div>due in</div>
+                <div class="due-day-value"><b>{{task.AbsDaysToDue}} days</b></div>
+              </ng-container>
+              <ng-container *ngIf="task.DaysToDue < 0">
+                <div class="past-due-date">overdue</div>
+                <div class="due-day-value past-due-date"><b>{{task.AbsDaysToDue}} days</b></div>
+              </ng-container>
+
+            </ng-container>
+          </div>
         </div>
       </div>
+
     </div>
-    <div class="task-item">
-
-      <div
-        fxLayout="row"
-        fxLayoutAlign="space-between center"
-      >
-        <div fxLayout="column">
-          <div class="task-title">Approval</div>
-          <div class="process-title">in <b>Holiday Request</b></div>
-        </div>
-        <div
-          fxLayout="column"
-          class="due-date-column"
-        >
-          <div>due in</div>
-          <div class="due-day-value"><b>2 days</b></div>
-        </div>
-      </div>
-    </div>
-
-
-  </div>
+  </ng-container>
 </div>

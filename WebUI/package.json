@@ -28,6 +28,7 @@
     "@syncfusion/ej2-angular-buttons": "^18.1.56",
     "@syncfusion/ej2-angular-dropdowns": "^18.1.59",
     "@syncfusion/ej2-angular-inputs": "^18.1.59",
+    "@syncfusion/ej2-angular-navigations": "^18.2.44",
     "rxjs": "~6.5.5",
     "tslib": "^1.13.0",
     "zone.js": "~0.10.3"

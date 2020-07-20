@@ -128,7 +128,7 @@ namespace bpmist.business.Commands
             {
                 StartedAt = DateTime.UtcNow,
                 TaskState = canBeAssignedToASpecificUser ? TaskStates.Active : TaskStates.Waiting,
-                Task = nextTask, 
+                Task = nextTask,
                 DueDate = dueDate
             };
 
@@ -137,7 +137,7 @@ namespace bpmist.business.Commands
                 newTaskInstance.AssignedUserId = user.Id;
                 newTaskInstance.AssigneeName = user.UserFullName;
 
-                AddTaskToUsersInbox(processId, processInstance, user, newTaskInstance);
+                AddTaskToUsersInbox(processId, processInstance, user, newTaskInstance, dueDate);
 
                 await this.SaveOrganizationUser(user, contextInformation);
             }
@@ -150,7 +150,7 @@ namespace bpmist.business.Commands
                 newTaskInstance.AssignedGroupId = nextTask.AssigningConfiguration.AssigningGroupId;
                 newTaskInstance.AssigneeName = group.GroupName;
 
-                AddTaskToGroupInbox(processId, processInstance, newTaskInstance, group);
+                AddTaskToGroupInbox(processId, processInstance, newTaskInstance, group, dueDate);
 
                 await this.SaveGroup(group, contextInformation);
             }
@@ -169,7 +169,7 @@ namespace bpmist.business.Commands
 
         private DateTime? CalculateDueDate(TaskModel nextTask)
         {
-            int? dueDay = nextTask.DueDateConfiguration.DueDay;
+            int? dueDay = nextTask?.DueDateConfiguration?.DueDay;
 
             if (dueDay == null)
             {
@@ -181,12 +181,12 @@ namespace bpmist.business.Commands
             return dueDate;
         }
 
-        private static void AddTaskToGroupInbox(string processId, ProcessInstance processInstance, TaskInstance newTaskInstance, Group group)
+        private static void AddTaskToGroupInbox(string processId, ProcessInstance processInstance, TaskInstance newTaskInstance, Group group, DateTime? dueDate)
         {
             var groupTasks = group.GroupTasks.ToList();
             groupTasks.Add(new DenormalizedTaskInstance()
             {
-                DueDate = null, // TODO: calculate due date
+                DueDate = dueDate,
                 ProcessId = processId,
                 ProcessInstanceId = processInstance.Id,
                 ProcessName = processInstance.ProcessName,
@@ -197,12 +197,12 @@ namespace bpmist.business.Commands
             group.GroupTasks = groupTasks.ToArray();
         }
 
-        private static void AddTaskToUsersInbox(string processId, ProcessInstance processInstance, OrganizationUser user, TaskInstance newTaskInstance)
+        private static void AddTaskToUsersInbox(string processId, ProcessInstance processInstance, OrganizationUser user, TaskInstance newTaskInstance, DateTime? dueDate)
         {
             var userTasks = user.Tasks.ToList();
             userTasks.Add(new DenormalizedTaskInstance()
             {
-                DueDate = null, // TODO: calculate due date
+                DueDate = dueDate,
                 ProcessId = processId,
                 ProcessInstanceId = processInstance.Id,
                 ProcessName = processInstance.ProcessName,

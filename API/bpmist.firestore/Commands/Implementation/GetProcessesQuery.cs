@@ -24,7 +24,10 @@ namespace bpmist.firestore.Commands
             new GetProcessesResult(
                 processes.Select(p => new GetProcesses_ProcessesResult(
                     p.Id,
-                    p.ProcessName
+                    p.ProcessName, 
+                    new GetProcesses_Processes_VisualsResult(
+                        p.ProcessVisuals.IconColor,
+                        p.ProcessVisuals.Initials)
                 )).ToArray());
         }
 

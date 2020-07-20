@@ -26,6 +26,8 @@ import { ListProcessesComponent } from './components/list-processes/list-process
 import { TaskCompletedComponent } from './components/task-completed/task-completed.component';
 import { CustomDateTimePipePipe } from './common/Pipes/custom-date-time-pipe.pipe';
 import { ListTasksComponent } from './components/list-tasks/list-tasks.component';
+import { MyGroupsTasksComponent } from './components/my-groups-tasks/my-groups-tasks.component';
+import { LeftMenuComponent } from './left-menu/left-menu.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -42,7 +44,9 @@ const appearance: MatFormFieldDefaultOptions = {
     ListProcessesComponent,
     TaskCompletedComponent,
     CustomDateTimePipePipe,
-    ListTasksComponent
+    ListTasksComponent,
+    MyGroupsTasksComponent,
+    LeftMenuComponent
   ],
   imports: [
     BrowserModule,

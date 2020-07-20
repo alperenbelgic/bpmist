@@ -50,7 +50,7 @@ export class EditTaskComponent implements OnInit {
   taskModel: TaskModel;
   taskCompletedModel: TaskCompletedModel;
   showCompletedMessage = false;
-  otherTasksShown = false;
+  otherTasksShown = true;
 
   constructor(
     private webService: WebService,

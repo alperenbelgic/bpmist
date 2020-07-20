@@ -18,12 +18,12 @@
       "TaskName_string": null,
       "TaskState_string": null,
       "DueDate_DateTime?": null,
-      "DuePast_bool": null,
-      "DaysToDue_int": null
+      "DaysToDue_int": null,
+      "AbsDaysToDue_int": null
     },
     "GroupsTaskInstanceList_List": {
         "GroupName_string": null,
-        "TaskInstanceList_List": {
+      "TaskInstanceList_List": {
         "ProcessId_string": null,
         "ProcessInstanceId_string": null,
         "TaskInstanceId_string": null,
@@ -31,8 +31,8 @@
         "TaskName_string": null,
         "TaskState_string": null,
         "DueDate_DateTime?": null,
-        "DuePast_bool": null,
-        "DaysToDue_int": null
+        "DaysToDue_int": null,
+        "AbsDaysToDue_int": null
       }
     }
   },

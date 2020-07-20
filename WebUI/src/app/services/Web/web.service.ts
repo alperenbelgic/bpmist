@@ -36,4 +36,9 @@ export class WebService {
     const endPoint = '/PullTaskFromGroupCommand/Post';
     return this.httpService.post(endPoint, { ProcessId, ProcessInstanceId, TaskInstanceId });
   }
+
+  public GetUserTaskInstancesQuery() {
+    const endPoint = '/GetUserTaskInstancesQuery/Get';
+    return this.httpService.get(endPoint);
+  }
 }

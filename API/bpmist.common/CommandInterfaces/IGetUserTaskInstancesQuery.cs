@@ -33,7 +33,7 @@ public class GetUserTaskInstancesResult
 
 public class GetUserTaskInstances_UserTaskInstanceListResult
 {
-    public GetUserTaskInstances_UserTaskInstanceListResult(string ProcessId, string ProcessInstanceId, string TaskInstanceId, string ProcessName, string TaskName, string TaskState, DateTime? DueDate, bool DuePast, int DaysToDue)
+    public GetUserTaskInstances_UserTaskInstanceListResult(string ProcessId, string ProcessInstanceId, string TaskInstanceId, string ProcessName, string TaskName, string TaskState, DateTime? DueDate, int DaysToDue, int AbsDaysToDue)
     {
             this.ProcessId = ProcessId;
             this.ProcessInstanceId = ProcessInstanceId;
@@ -42,8 +42,8 @@ public class GetUserTaskInstances_UserTaskInstanceListResult
             this.TaskName = TaskName;
             this.TaskState = TaskState;
             this.DueDate = DueDate;
-            this.DuePast = DuePast;
             this.DaysToDue = DaysToDue;
+            this.AbsDaysToDue = AbsDaysToDue;
     }
 
         public string ProcessId { get; } 
@@ -53,8 +53,8 @@ public class GetUserTaskInstances_UserTaskInstanceListResult
         public string TaskName { get; } 
         public string TaskState { get; } 
         public DateTime? DueDate { get; } 
-        public bool DuePast { get; } 
         public int DaysToDue { get; } 
+        public int AbsDaysToDue { get; } 
 }
 
 public class GetUserTaskInstances_GroupsTaskInstanceListResult
@@ -71,7 +71,7 @@ public class GetUserTaskInstances_GroupsTaskInstanceListResult
 
 public class GetUserTaskInstances_GroupsTaskInstanceList_TaskInstanceListResult
 {
-    public GetUserTaskInstances_GroupsTaskInstanceList_TaskInstanceListResult(string ProcessId, string ProcessInstanceId, string TaskInstanceId, string ProcessName, string TaskName, string TaskState, DateTime? DueDate, bool DuePast, int DaysToDue)
+    public GetUserTaskInstances_GroupsTaskInstanceList_TaskInstanceListResult(string ProcessId, string ProcessInstanceId, string TaskInstanceId, string ProcessName, string TaskName, string TaskState, DateTime? DueDate, int DaysToDue, int AbsDaysToDue)
     {
             this.ProcessId = ProcessId;
             this.ProcessInstanceId = ProcessInstanceId;
@@ -80,8 +80,8 @@ public class GetUserTaskInstances_GroupsTaskInstanceList_TaskInstanceListResult
             this.TaskName = TaskName;
             this.TaskState = TaskState;
             this.DueDate = DueDate;
-            this.DuePast = DuePast;
             this.DaysToDue = DaysToDue;
+            this.AbsDaysToDue = AbsDaysToDue;
     }
 
         public string ProcessId { get; } 
@@ -91,8 +91,8 @@ public class GetUserTaskInstances_GroupsTaskInstanceList_TaskInstanceListResult
         public string TaskName { get; } 
         public string TaskState { get; } 
         public DateTime? DueDate { get; } 
-        public bool DuePast { get; } 
         public int DaysToDue { get; } 
+        public int AbsDaysToDue { get; } 
 }
 
 

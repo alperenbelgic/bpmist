@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { DropDownListModule, ListBoxModule, MultiSelectModule } from '@syncfusion/ej2-angular-dropdowns';
 import { CheckBoxModule } from '@syncfusion/ej2-angular-buttons';
 import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
+import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
     ListBoxModule,
     MultiSelectModule,
     CheckBoxModule,
-    TextBoxModule
+    TextBoxModule,
+    SidebarModule
   ]
 })
 export class UiControlsModule { }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using bpmist.common.Commands;
 using bpmist.common.DataModels.DocumentTypes;
+using bpmist.common.DataModels.SubDocumentTypes;
 using bpmist.common.ICommands;
 using Google.Api;
 using Google.Apis.Http;
@@ -31,11 +32,14 @@ namespace bpmist.business.Commands
         {
             return user.Tasks.Select(t =>
             {
-                (bool duePast, int daysToDue) = this.CalculateDueValues(t.DueDate);
+                (int daysToDue, int absDaysToDue) = this.CalculateDueValues(t.DueDate);
 
                 return new GetUserTaskInstances_UserTaskInstanceListResult(
-                 t.ProcessId, t.ProcessInstanceId, t.TaskInstanceId, t.ProcessName, t.TaskName, t.TaskState, t.DueDate, duePast, daysToDue);
-            }).ToArray();
+                 t.ProcessId, t.ProcessInstanceId, t.TaskInstanceId, t.ProcessName, t.TaskName, t.TaskState, t.DueDate, daysToDue, absDaysToDue);
+            })
+            .Where(t=>t.TaskState != TaskStates.Candidate)
+            .OrderBy(t => t.DaysToDue)
+            .ToArray();
         }
 
         private async Task<GetUserTaskInstances_GroupsTaskInstanceListResult[]> GetGroupTasks(string[] groupIds, IContextInformation contextInformation)
@@ -65,12 +69,13 @@ namespace bpmist.business.Commands
                 group.GroupTasks.Select(gt =>
                 {
 
-                    (bool duePast, int daysToDue) = this.CalculateDueValues(gt.DueDate);
+                    (int daysToDue, int absDaysToDue) = this.CalculateDueValues(gt.DueDate);
 
                     return new GetUserTaskInstances_GroupsTaskInstanceList_TaskInstanceListResult(
-                    gt.ProcessId, gt.ProcessInstanceId, gt.TaskInstanceId, gt.ProcessName, gt.TaskName, gt.TaskState, gt.DueDate, duePast, daysToDue);
+                    gt.ProcessId, gt.ProcessInstanceId, gt.TaskInstanceId, gt.ProcessName, gt.TaskName, gt.TaskState, gt.DueDate, daysToDue, absDaysToDue);
 
-                });
+                })
+                .OrderBy(t => t.DaysToDue);
 
                 var groupTaskInstances = new GetUserTaskInstances_GroupsTaskInstanceListResult(groupName, taskInstances.ToArray());
 
@@ -80,23 +85,16 @@ namespace bpmist.business.Commands
             return groupTaskInstancesList.ToArray();
         }
 
-        private (bool duePast, int daysToDue) CalculateDueValues(DateTime? dueDate)
+        private (int daysToDue, int absDaysToDue) CalculateDueValues(DateTime? dueDate)
         {
             if (dueDate == null)
             {
-                return (false, 0);
+                return (0, 0);
             }
 
             int daysToDue = (int)((dueDate.Value.Date - DateTime.UtcNow.Date).TotalDays);
 
-            if (daysToDue < 0)
-            {
-                return (true, Math.Abs(daysToDue));
-            }
-            else
-            {
-                return (false, daysToDue);
-            }
+            return (daysToDue, Math.Abs(daysToDue));
         }
 
         protected override async Task<IEnumerable<OperationErrorInformation>> ValidateAsync(GetUserTaskInstancesParameter parameter, IContextInformation contextInformation)

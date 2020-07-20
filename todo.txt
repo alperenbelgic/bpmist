@@ -1,13 +1,17 @@
 Todo:
-- inbox
-	- person 
-	- groups
+
 - reports?
+	- manager report (process or task?)
+		- pick groups 
+		- show items [with default selection of 'filter due items']
 - when assigned to manager
 	- no manager? -> process owner , no process owner->same person (notification in any case)
 - login
+	- side nav visibility
 - assign to group manager
 - notifications
+- create paralel tasks
+- save form values
 
 
 Later:

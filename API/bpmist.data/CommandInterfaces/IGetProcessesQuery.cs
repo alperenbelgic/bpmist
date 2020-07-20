@@ -31,14 +31,28 @@ public class GetProcessesResult
 
 public class GetProcesses_ProcessesResult
 {
-    public GetProcesses_ProcessesResult(string ProcessId, string ProcessName)
+    public GetProcesses_ProcessesResult(string ProcessId, string ProcessName, GetProcesses_Processes_VisualsResult Visuals)
     {
             this.ProcessId = ProcessId;
             this.ProcessName = ProcessName;
+            this.Visuals = Visuals;
     }
 
         public string ProcessId { get; } 
         public string ProcessName { get; } 
+        public GetProcesses_Processes_VisualsResult Visuals { get; } 
+}
+
+public class GetProcesses_Processes_VisualsResult
+{
+    public GetProcesses_Processes_VisualsResult(string IconColor, string Initials)
+    {
+            this.IconColor = IconColor;
+            this.Initials = Initials;
+    }
+
+        public string IconColor { get; } 
+        public string Initials { get; } 
 }
 
 

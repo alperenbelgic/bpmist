@@ -41,3 +41,11 @@
 .due-date-column {
   text-align: right;
 }
+
+.group-name {
+  font-size: 18px;
+}
+
+.group-name-group-label {
+  font-weight: normal;
+}
