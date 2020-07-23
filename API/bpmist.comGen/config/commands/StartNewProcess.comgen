@@ -22,6 +22,13 @@
       "ActionText_string": null,
       "ActionType_string": null,
       "ActionId_string": null
+    },
+    "Form_Object": {
+      "Fields_List": {
+        "FieldId_string": null,
+        "FieldName_string": null,
+        "ValueType_string": null
+      }
     }
   },
   "usedInApi": true

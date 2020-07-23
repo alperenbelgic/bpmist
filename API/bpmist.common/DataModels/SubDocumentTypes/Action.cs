@@ -7,7 +7,7 @@ using System.Text;
 namespace bpmist.common.DataModels.SubDocumentTypes
 {
     [FirestoreData]
-    public class ActionModel : SubDocument
+    public class ActionModel : SubDocumentWithId
     {
         [FirestoreProperty] public string ActionText { get; set; }
 

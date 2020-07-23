@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using bpmist.common.Commands;
 
 namespace bpmist.common.ICommands
@@ -10,7 +11,7 @@ namespace bpmist.common.ICommands
     public class SendUserActionParameter
     {
         public SendUserActionParameter(
-            string ProcessId, string ProcessInstanceId, string TaskInstanceId, string ActionId, string Notes
+            string ProcessId, string ProcessInstanceId, string TaskInstanceId, string ActionId, string Notes, Dictionary<string, int[]> DateTimeFormValues
             )
         {
             this.ProcessId = ProcessId;
@@ -18,6 +19,7 @@ namespace bpmist.common.ICommands
             this.TaskInstanceId = TaskInstanceId;
             this.ActionId = ActionId;
             this.Notes = Notes;
+            this.DateTimeFormValues = DateTimeFormValues;
         }
 
         public string ProcessId { get; } 
@@ -25,6 +27,7 @@ namespace bpmist.common.ICommands
         public string TaskInstanceId { get; } 
         public string ActionId { get; } 
         public string Notes { get; } 
+        public Dictionary<string, int[]> DateTimeFormValues { get; } 
     }
 
 public class SendUserActionResult

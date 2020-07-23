@@ -77,7 +77,14 @@ namespace bpmist.business.Commands
             })
                 .ToArray();
 
-            return new StartNewProcessResult(process.ProcessName, processInstanceId, taskName, taskInstance.Id, actions);
+            var form = CreateForm(firstTask.TaskFormModel);
+
+            return new StartNewProcessResult(process.ProcessName, processInstanceId, taskName, taskInstance.Id, actions, form);
+        }
+
+        private StartNewProcess_FormResult CreateForm(TaskFormModel taskFormModel)
+        {
+            return new StartNewProcess_FormResult(taskFormModel.Fields.Select(f => new StartNewProcess_Form_FieldsResult(f.Id, f.FieldName, f.ValueType)).ToArray());
         }
 
         private static void AddUserTasks(string processId, string processName, TaskModel firstTask, OrganizationUser user, TaskInstance taskInstance, ProcessInstance processInstance)

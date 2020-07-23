@@ -8,7 +8,7 @@ namespace bpmist.common.DataModels.SubDocumentTypes
 {
     [FirestoreData]
 
-    public class ParallelTaskEndItem : SubDocument
+    public class ParallelTaskEndItem : SubDocumentWithId
     {
         [FirestoreProperty]
         public string ParallelTaskStartItemId { get; set; }

@@ -26,6 +26,7 @@
     "@ngx-formly/material": "^5.8.0",
     "@ngx-formly/schematics": "^5.8.1",
     "@syncfusion/ej2-angular-buttons": "^18.1.56",
+    "@syncfusion/ej2-angular-calendars": "^18.2.44",
     "@syncfusion/ej2-angular-dropdowns": "^18.1.59",
     "@syncfusion/ej2-angular-inputs": "^18.1.59",
     "@syncfusion/ej2-angular-navigations": "^18.2.44",

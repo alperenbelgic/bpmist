@@ -10,9 +10,9 @@ namespace bpmist.common.DataModels
     /// A map object belonging to a document
     /// </summary>
     [FirestoreData]
-    public abstract class SubDocument
+    public abstract class SubDocumentWithId
     {
-        public SubDocument()
+        public SubDocumentWithId()
         {
             // we assign an id
             // if the object is loaded from db, this will be overridden

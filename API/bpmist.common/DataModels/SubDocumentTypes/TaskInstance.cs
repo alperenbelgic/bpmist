@@ -7,7 +7,7 @@ using System.Text;
 namespace bpmist.common.DataModels.SubDocumentTypes
 {
     [FirestoreData]
-    public class TaskInstance : SubDocument
+    public class TaskInstance : SubDocumentWithId
     {
         [FirestoreProperty] public string TaskState { get; set; }
 

@@ -1,5 +1,14 @@
 Todo:
 
+- save form values
+	- convert date values from int[] to DateTime values.
+	- Field Name * (for required fields)
+	- scenarios
+		- leave request
+			- 1st step: start date - end date
+			- 2nd step: readonly start - end date
+				- comment (if you'd like to include the reason)
+			- 3rd step: those two values read only.
 - reports?
 	- manager report (process or task?)
 		- pick groups 
@@ -11,7 +20,7 @@ Todo:
 - assign to group manager
 - notifications
 - create paralel tasks
-- save form values
+- deactivate buttons when a request is sent
 
 
 Later:
@@ -34,4 +43,5 @@ Later:
 	- one of them clicked
 	- back button
 	- load the previous data (should be cached somewhere)
-	- then make the request again and update the result 
+	- then make the request again and update the result
+- 

@@ -12,12 +12,12 @@ using Microsoft.Extensions.Logging;
 
 namespace API.Controllers
 {
-    public class TaskController : BaseController
+    public class TempController : BaseController
     {
 
-        private readonly ILogger<TaskController> _logger;
+        private readonly ILogger<TempController> _logger;
 
-        public TaskController(ILogger<TaskController> logger)
+        public TempController(ILogger<TempController> logger)
         {
             _logger = logger;
         }
@@ -177,7 +177,22 @@ namespace API.Controllers
                                         NextItemId = secondTaskId,
                                     }
                                 },
-
+                                TaskFormModel=   new TaskFormModel
+                                {
+                                    Fields = new Field[]
+                                    {
+                                        new Field
+                                        {
+                                            FieldName = "Start",
+                                            ValueType = ValueTypes.Date
+                                        },
+                                        new Field
+                                        {
+                                            FieldName = "End",
+                                            ValueType = ValueTypes.Date
+                                        },
+                                    }
+                                }
                             },
                             new TaskModel
                             {

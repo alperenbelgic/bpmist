@@ -17,7 +17,8 @@
     "ProcessInstanceId_string": null,
     "TaskInstanceId_string": null,
     "ActionId_string": null,
-    "Notes_string": null
+    "Notes_string": null,
+    "DateTimeFormValues_Dictionary<string, int[]>": null
   },
   "returnType": {
     "HasProcessCompleted_bool": null,

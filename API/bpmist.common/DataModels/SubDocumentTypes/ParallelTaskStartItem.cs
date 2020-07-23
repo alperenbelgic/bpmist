@@ -6,7 +6,7 @@ using System.Text;
 namespace bpmist.common.DataModels.SubDocumentTypes
 {
     [FirestoreData]
-    public class ParallelTaskStartItem : SubDocument
+    public class ParallelTaskStartItem : SubDocumentWithId
     {
         [FirestoreProperty]
         public string[] StartingItemIds { get; set; }

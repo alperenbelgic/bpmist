@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using bpmist.common.Commands;
 
 namespace bpmist.common.ICommands
@@ -21,13 +22,14 @@ namespace bpmist.common.ICommands
 
 public class StartNewProcessResult
 {
-    public StartNewProcessResult(string ProcessName, string ProcessInstanceId, string TaskName, string TaskInstanceId, StartNewProcess_ActionsResult[] Actions)
+    public StartNewProcessResult(string ProcessName, string ProcessInstanceId, string TaskName, string TaskInstanceId, StartNewProcess_ActionsResult[] Actions, StartNewProcess_FormResult Form)
     {
             this.ProcessName = ProcessName;
             this.ProcessInstanceId = ProcessInstanceId;
             this.TaskName = TaskName;
             this.TaskInstanceId = TaskInstanceId;
             this.Actions = Actions;
+            this.Form = Form;
     }
 
         public string ProcessName { get; } 
@@ -35,6 +37,7 @@ public class StartNewProcessResult
         public string TaskName { get; } 
         public string TaskInstanceId { get; } 
         public StartNewProcess_ActionsResult[] Actions { get; } 
+        public StartNewProcess_FormResult Form { get; } 
 }
 
 public class StartNewProcess_ActionsResult
@@ -49,6 +52,30 @@ public class StartNewProcess_ActionsResult
         public string ActionText { get; } 
         public string ActionType { get; } 
         public string ActionId { get; } 
+}
+
+public class StartNewProcess_FormResult
+{
+    public StartNewProcess_FormResult(StartNewProcess_Form_FieldsResult[] Fields)
+    {
+            this.Fields = Fields;
+    }
+
+        public StartNewProcess_Form_FieldsResult[] Fields { get; } 
+}
+
+public class StartNewProcess_Form_FieldsResult
+{
+    public StartNewProcess_Form_FieldsResult(string FieldId, string FieldName, string ValueType)
+    {
+            this.FieldId = FieldId;
+            this.FieldName = FieldName;
+            this.ValueType = ValueType;
+    }
+
+        public string FieldId { get; } 
+        public string FieldName { get; } 
+        public string ValueType { get; } 
 }
 
 

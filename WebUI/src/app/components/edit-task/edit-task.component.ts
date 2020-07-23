@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from 'src/app/services/Web/http.service';
 import { WebService } from 'src/app/services/Web/web.service';
 import { Params, ActivatedRoute } from '@angular/router';
+import { FormComponent } from '../form/form.component';
 
 export class TaskModel {
   processName = '';
@@ -11,6 +12,7 @@ export class TaskModel {
   processInstanceId = '';
   taskInstanceId = '';
   taskState = '';
+  form: any = null;
   set actions(value: any[]) {
     this.primaryActions = value.filter(a => a.ActionType === 'Primary');
     this.secondaryActions = value.filter(a => a.ActionType === 'Secondary');
@@ -51,6 +53,8 @@ export class EditTaskComponent implements OnInit {
   taskCompletedModel: TaskCompletedModel;
   showCompletedMessage = false;
   otherTasksShown = true;
+
+  @ViewChild('appForm') formComponent: FormComponent;
 
   constructor(
     private webService: WebService,
@@ -129,6 +133,7 @@ export class EditTaskComponent implements OnInit {
         this.taskModel.processId = processId;
         this.taskModel.processInstanceId = r.Value.ProcessInstanceId;
         this.taskModel.taskInstanceId = r.Value.TaskInstanceId;
+        this.taskModel.form = r.Value.Form;
         this.taskModel.actions = r.Value.Actions;
         this.taskModel.assignmentStates.assignedToAnotherUser = false;
         this.taskModel.assignmentStates.assignedToCurrentUser = true;
@@ -139,12 +144,17 @@ export class EditTaskComponent implements OnInit {
   }
 
   submit(actionId: string) {
+
+    const returningForm = this.formComponent.getReturningForm();
+
     console.log(actionId, this.taskModel);
     this.webService.SendUserActionCommand(
       this.taskModel.processId,
       this.taskModel.processInstanceId,
       this.taskModel.taskInstanceId,
-      actionId, 'some notes of course')
+      actionId,
+      'some notes of course',
+      returningForm.DateTimeValues)
       .subscribe({
         next: (r: any) => {
           console.log('action trigger result', r);

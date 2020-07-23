@@ -28,6 +28,9 @@ import { CustomDateTimePipePipe } from './common/Pipes/custom-date-time-pipe.pip
 import { ListTasksComponent } from './components/list-tasks/list-tasks.component';
 import { MyGroupsTasksComponent } from './components/my-groups-tasks/my-groups-tasks.component';
 import { LeftMenuComponent } from './left-menu/left-menu.component';
+import { FormComponent } from './components/form/form.component';
+import { GenericFieldComponent } from './components/fields/generic-field/generic-field.component';
+import { DateFieldComponent } from './components/fields/date-field/date-field.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -46,7 +49,10 @@ const appearance: MatFormFieldDefaultOptions = {
     CustomDateTimePipePipe,
     ListTasksComponent,
     MyGroupsTasksComponent,
-    LeftMenuComponent
+    LeftMenuComponent,
+    FormComponent,
+    GenericFieldComponent,
+    DateFieldComponent
   ],
   imports: [
     BrowserModule,

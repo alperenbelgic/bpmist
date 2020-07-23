@@ -6,7 +6,7 @@ using System.Text;
 namespace bpmist.common.DataModels.SubDocumentTypes
 {
     [FirestoreData]
-    public class TaskModel : SubDocument
+    public class TaskModel : SubDocumentWithId
     {
         [FirestoreProperty] public string TaskName { get; set; }
 
@@ -15,6 +15,8 @@ namespace bpmist.common.DataModels.SubDocumentTypes
         [FirestoreProperty] public AssigningConfiguration AssigningConfiguration { get; set; }
 
         [FirestoreProperty] public DueDateConfiguration DueDateConfiguration { get; set; }
+
+        [FirestoreProperty] public TaskFormModel TaskFormModel { get; set; }
     }
 
     [FirestoreData]

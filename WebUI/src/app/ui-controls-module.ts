@@ -3,6 +3,7 @@ import { DropDownListModule, ListBoxModule, MultiSelectModule } from '@syncfusio
 import { CheckBoxModule } from '@syncfusion/ej2-angular-buttons';
 import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
 import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
+import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
     MultiSelectModule,
     CheckBoxModule,
     TextBoxModule,
-    SidebarModule
+    SidebarModule,
+    DatePickerModule
   ]
 })
 export class UiControlsModule { }

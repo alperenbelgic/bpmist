@@ -6,7 +6,7 @@ using System.Text;
 namespace bpmist.common.DataModels.SubDocumentTypes
 {
     [FirestoreData]
-    public class Condition : SubDocument
+    public class Condition : SubDocumentWithId
     {
         [FirestoreProperty] public object ConditionExpression { get; set; }
 

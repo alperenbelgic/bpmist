@@ -7,7 +7,7 @@ namespace bpmist.common.DataModels.SubDocumentTypes
 {
 
     [FirestoreData]
-    public class ProcessModel : SubDocument
+    public class ProcessModel : SubDocumentWithId
     {
         [FirestoreProperty] public int VersionNumber { get; set; }
 

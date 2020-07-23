@@ -22,9 +22,14 @@ export class WebService {
   }
 
   public SendUserActionCommand(
-    ProcessId: string, ProcessInstanceId: string, TaskInstanceId: string, ActionId: string, Notes: string): Observable<any> {
+    ProcessId: string,
+    ProcessInstanceId: string,
+    TaskInstanceId: string,
+    ActionId: string,
+    Notes: string,
+    DateTimeFormValues: object): Observable<any> {
     const endPoint = '/SendUserActionCommand/Post';
-    return this.httpService.post(endPoint, { ProcessId, ProcessInstanceId, TaskInstanceId, ActionId, Notes });
+    return this.httpService.post(endPoint, { ProcessId, ProcessInstanceId, TaskInstanceId, ActionId, Notes, DateTimeFormValues });
   }
 
   public GetTaskInstanceQuery(ProcessId: string, ProcessInstanceId: string, TaskInstanceId: string): Observable<any> {
