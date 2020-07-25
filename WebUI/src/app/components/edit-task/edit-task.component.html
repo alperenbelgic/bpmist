@@ -54,15 +54,6 @@
       </button>
     </div>
 
-    <div class="detail-textbox">
-      <ejs-textbox
-        placeholder="Any notes?"
-        floatLabelType="Always"
-        [multiline]='true'
-        cssClass="e-outline"
-        [(value)]='taskModel.details'
-      ></ejs-textbox>
-    </div>
 
     <div>
       <app-form
@@ -72,10 +63,10 @@
     </div>
 
     <div
+      class="actions-wrapper"
       fxLayout="row"
       fxLayoutAlign="space-between center"
     >
-
       <div
         fxLayout="row"
         fxLayoutAlign="start center"

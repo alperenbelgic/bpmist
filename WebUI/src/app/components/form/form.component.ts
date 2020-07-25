@@ -17,6 +17,29 @@ export class FormComponent implements OnInit {
 
   constructor(private cd: ChangeDetectorRef) { }
 
+  getValue(fieldFromBackend: any): any {
+
+    if (fieldFromBackend.FieldValue == null) {
+      return null;
+    }
+
+    if (fieldFromBackend.FieldType === 'Date') {
+
+      try {
+        const numbers: any[] = fieldFromBackend.FieldValue;
+        const year = numbers[0] as number;
+        const month = (numbers[1] as number) - 1;
+        const day = numbers[2] as number;
+
+        return new Date(year, month, day);
+      } catch {
+        return null;
+      }
+    }
+
+    return fieldFromBackend.FieldValue;
+  }
+
   ngOnInit(): void {
 
     if (this.form?.Fields == null) {
@@ -28,8 +51,10 @@ export class FormComponent implements OnInit {
         const field = new RenderingField();
         field.fieldId = f.FieldId;
         field.fieldName = f.FieldName;
-        field.fieldType = f.ValueType;
-        field.fieldValue = null;
+        field.fieldType = f.FieldType;
+        field.isReadOnly = f.ReadOnly;
+        field.fieldValue = this.getValue(f);
+
         return field;
       });
 
@@ -51,20 +76,25 @@ export class FormComponent implements OnInit {
   getReturningForm(): ReturningForm {
     const returningForm = new ReturningForm();
 
-    this.fields.filter(f => f.fieldType === 'Date').forEach(f => {
-      // Date values are kept as DateTime (containing date and time parts)
-      // and they are considered in local time at midnight
-      // They are converted to UTC.
-      // and in some local time zones (such as BST) they have yesterday's Date after conversion
-      // In order to prevent this, we pass them as integer arrays as [year, month(January=1), day]
-      let dateValueArray: number[] = null;
+    this.fields.forEach(f => {
+      if (f.fieldType === 'Date') {
+        // Date values are kept as DateTime (containing date and time parts)
+        // and they are considered in local time at midnight
+        // They are converted to UTC.
+        // and in some local time zones (such as BST) they have yesterday's Date after conversion
+        // In order to prevent this, we pass them as integer arrays as [year, month(January=1), day]
+        let dateValueArray: number[] = null;
 
-      if (f.fieldValue != null) {
-        const dateValue: Date = f.fieldValue as Date;
-        dateValueArray = [dateValue.getFullYear(), dateValue.getMonth() + 1, dateValue.getDate()];
+        if (f.fieldValue != null) {
+          const dateValue: Date = f.fieldValue as Date;
+          dateValueArray = [dateValue.getFullYear(), dateValue.getMonth() + 1, dateValue.getDate()];
+        }
+
+        returningForm.DateValues[f.fieldId] = dateValueArray;
       }
-
-      returningForm.DateTimeValues[f.fieldId] = dateValueArray;
+      else if (f.fieldType === 'Text') {
+        returningForm.TextValues[f.fieldId] = f.fieldValue;
+      }
     });
 
     return returningForm;
@@ -72,7 +102,8 @@ export class FormComponent implements OnInit {
 }
 
 export class ReturningForm {
-  DateTimeValues: any = {};
+  DateValues: any = {};
+  TextValues: any = {};
 }
 
 export class RenderingField {
@@ -91,6 +122,7 @@ export class RenderingField {
   fieldId: string;
   fieldName: string;
   fieldType: string;
+  isReadOnly: boolean;
   private _fieldValue: any = null;
   get fieldValue(): any {
     return this._fieldValue;

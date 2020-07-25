@@ -8,18 +8,12 @@ namespace bpmist.common.DataModels.SubDocumentTypes
     [FirestoreData]
     public class TaskFormModel : SubDocumentWithId
     {
-        [FirestoreProperty] public Field[] Fields { get; set; } = new Field[0];
+        [FirestoreProperty] public FieldInTask[] Fields { get; set; } = new FieldInTask[0];
     }
 
     [FirestoreData]
-    public class Field : SubDocumentWithId
+    public class FieldInTask : SubDocumentWithId
     {
-        [FirestoreProperty] public string ValueType { get; set; }
-
-        [FirestoreProperty] public string FieldName { get; set; }
-    }
-    public class ValueTypes
-    {
-        public const string Date = nameof(ValueTypes.Date);
+        [FirestoreProperty] public bool IsReadOnly { get; set; }
     }
 }

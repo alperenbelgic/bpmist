@@ -40,9 +40,21 @@ namespace bpmist.business.Commands
             if (false == this.HasCurrentUserAuthorisationToCallAction(taskInstance, contextInformation.User.UserId)) { throw SendUserActionResult.UserNotAuthorised(); }
 
             // Action points to a valid process item
-            if (false == this.DoesActionPointsToAValidProcessItem(processInstance, action, out TaskModel nextTask, out bool processCompleted, out bool processCanceled)) { throw SendUserActionResult.ActionNotPointingAValidProcessItem(); }
+            if (false == this.IsActionConfigurationCorrect(processInstance, action, out TaskModel nextTask, out bool processCompleted, out bool processCanceled, out bool isSaveAction)) { throw SendUserActionResult.ActionNotPointingAValidProcessItem(); }
 
             // TODO: other validations?
+
+            var appendDataCommandResult = await this.AppendSubmittedTaskDataCommand.ExecuteAsync(new AppendSubmittedTaskDataParameter(processInstance, taskInstance, parameter.DateFormValues, parameter.TextFormValues), contextInformation);
+
+            // TODO:! handle data validation errors
+
+            if (isSaveAction)
+            {
+                // this must be an action only to save current task instance. 
+                await this.SaveProcessInstance(processId, processInstance, contextInformation);
+
+                return new SendUserActionResult(false, false, null, null, null);
+            }
 
             var currentlyAssignedUserResult = await this.GetOrganizationUserQuery.ExecuteAsync(new data.ICommands.GetOrganizationUserParameter(taskInstance.AssignedUserId), contextInformation);
             // TODO: handle query error
@@ -50,6 +62,7 @@ namespace bpmist.business.Commands
 
             // close current task
             // how? - list all required things
+
 
             //      remove the task from user's inbox - if exists (for newly started tasks, it may not be added)
             this.RemoveCurrentTaskFromTaskOwnersInbox(processInstance, currentlyAssignedUser, parameter.TaskInstanceId, contextInformation);
@@ -128,7 +141,7 @@ namespace bpmist.business.Commands
             {
                 StartedAt = DateTime.UtcNow,
                 TaskState = canBeAssignedToASpecificUser ? TaskStates.Active : TaskStates.Waiting,
-                Task = nextTask,
+                TaskModel = nextTask,
                 DueDate = dueDate
             };
 
@@ -164,7 +177,7 @@ namespace bpmist.business.Commands
             taskInstanceList.Add(newTaskInstance);
             processInstance.TaskInstances = taskInstanceList.ToArray();
 
-            return (newTaskInstance.Id, newTaskInstance.Task.TaskName, newTaskInstance.AssigneeName);
+            return (newTaskInstance.Id, newTaskInstance.TaskModel.TaskName, newTaskInstance.AssigneeName);
         }
 
         private DateTime? CalculateDueDate(TaskModel nextTask)
@@ -191,7 +204,7 @@ namespace bpmist.business.Commands
                 ProcessInstanceId = processInstance.Id,
                 ProcessName = processInstance.ProcessName,
                 TaskInstanceId = newTaskInstance.Id,
-                TaskName = newTaskInstance.Task.TaskName,
+                TaskName = newTaskInstance.TaskModel.TaskName,
                 TaskState = newTaskInstance.TaskState
             });
             group.GroupTasks = groupTasks.ToArray();
@@ -207,7 +220,7 @@ namespace bpmist.business.Commands
                 ProcessInstanceId = processInstance.Id,
                 ProcessName = processInstance.ProcessName,
                 TaskInstanceId = newTaskInstance.Id,
-                TaskName = newTaskInstance.Task.TaskName,
+                TaskName = newTaskInstance.TaskModel.TaskName,
                 TaskState = newTaskInstance.TaskState
             });
 
@@ -277,11 +290,12 @@ namespace bpmist.business.Commands
             }
         }
 
-        private bool DoesActionPointsToAValidProcessItem(ProcessInstance processInstance, ActionModel action, out TaskModel nextTask, out bool processCompleted, out bool processCanceled)
+        private bool IsActionConfigurationCorrect(ProcessInstance processInstance, ActionModel action, out TaskModel nextTask, out bool processCompleted, out bool processCanceled, out bool isSaveAction)
         {
             nextTask = null;
             processCompleted = false;
             processCanceled = false;
+            isSaveAction = false;
 
             string nextItemId = action.NextItemId;
 
@@ -293,6 +307,11 @@ namespace bpmist.business.Commands
             else if (nextItemId == "cancel")
             {
                 processCanceled = true;
+                return true;
+            }
+            else if (nextItemId == "save")
+            {
+                isSaveAction = true;
                 return true;
             }
 
@@ -349,9 +368,30 @@ namespace bpmist.business.Commands
 
         private bool IsActionIdContainedInTask(TaskInstance taskInstance, string actionId, out ActionModel action)
         {
-            action = taskInstance.Task?.Actions.FirstOrDefault(a => a.Id == actionId);
+            action = GetActions(taskInstance).FirstOrDefault(a => a.Id == actionId);
 
             return action != null;
+        }
+
+        private ActionModel[] GetActions(TaskInstance taskInstance)
+        {
+            var actions = taskInstance.TaskModel?.Actions.ToList();
+
+            bool editableFieldExists = taskInstance.TaskModel.TaskFormModel.Fields.Any(f => !f.IsReadOnly);
+
+            // add save action if there is any non-read-only form value
+            if (editableFieldExists)
+            {
+                actions.Add(new ActionModel()
+                {
+                    ActionText = "Save",
+                    ActionType = ActionTypes.Secondary,
+                    Id = "save",
+                    NextItemId = "save"
+                });
+            }
+
+            return actions.ToArray();
         }
 
         private bool IsTaskInProcessAndActive(TaskInstance taskInstance)

@@ -11,7 +11,7 @@ namespace bpmist.common.ICommands
     public class SendUserActionParameter
     {
         public SendUserActionParameter(
-            string ProcessId, string ProcessInstanceId, string TaskInstanceId, string ActionId, string Notes, Dictionary<string, int[]> DateTimeFormValues
+            string ProcessId, string ProcessInstanceId, string TaskInstanceId, string ActionId, string Notes, Dictionary<string, int[]> DateFormValues, Dictionary<string, string> TextFormValues
             )
         {
             this.ProcessId = ProcessId;
@@ -19,7 +19,8 @@ namespace bpmist.common.ICommands
             this.TaskInstanceId = TaskInstanceId;
             this.ActionId = ActionId;
             this.Notes = Notes;
-            this.DateTimeFormValues = DateTimeFormValues;
+            this.DateFormValues = DateFormValues;
+            this.TextFormValues = TextFormValues;
         }
 
         public string ProcessId { get; } 
@@ -27,7 +28,8 @@ namespace bpmist.common.ICommands
         public string TaskInstanceId { get; } 
         public string ActionId { get; } 
         public string Notes { get; } 
-        public Dictionary<string, int[]> DateTimeFormValues { get; } 
+        public Dictionary<string, int[]> DateFormValues { get; } 
+        public Dictionary<string, string> TextFormValues { get; } 
     }
 
 public class SendUserActionResult

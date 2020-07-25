@@ -26,7 +26,7 @@ namespace bpmist.common.ICommands
 
 public class GetTaskInstanceResult
 {
-    public GetTaskInstanceResult(string ProcessName, string TaskName, string AssigneeName, string TaskState, GetTaskInstance_ActionsResult[] Actions, GetTaskInstance_UserTaskStateResult UserTaskState, GetTaskInstance_OtherTasksResult[] OtherTasks)
+    public GetTaskInstanceResult(string ProcessName, string TaskName, string AssigneeName, string TaskState, GetTaskInstance_ActionsResult[] Actions, GetTaskInstance_UserTaskStateResult UserTaskState, GetTaskInstance_OtherTasksResult[] OtherTasks, GetTaskInstance_FormResult Form)
     {
             this.ProcessName = ProcessName;
             this.TaskName = TaskName;
@@ -35,6 +35,7 @@ public class GetTaskInstanceResult
             this.Actions = Actions;
             this.UserTaskState = UserTaskState;
             this.OtherTasks = OtherTasks;
+            this.Form = Form;
     }
 
         public string ProcessName { get; } 
@@ -44,6 +45,7 @@ public class GetTaskInstanceResult
         public GetTaskInstance_ActionsResult[] Actions { get; } 
         public GetTaskInstance_UserTaskStateResult UserTaskState { get; } 
         public GetTaskInstance_OtherTasksResult[] OtherTasks { get; } 
+        public GetTaskInstance_FormResult Form { get; } 
 }
 
 public class GetTaskInstance_ActionsResult
@@ -92,6 +94,34 @@ public class GetTaskInstance_OtherTasksResult
         public string AssingedName { get; } 
         public string TaskState { get; } 
         public DateTime? CompletedTime { get; } 
+}
+
+public class GetTaskInstance_FormResult
+{
+    public GetTaskInstance_FormResult(GetTaskInstance_Form_FieldsResult[] Fields)
+    {
+            this.Fields = Fields;
+    }
+
+        public GetTaskInstance_Form_FieldsResult[] Fields { get; } 
+}
+
+public class GetTaskInstance_Form_FieldsResult
+{
+    public GetTaskInstance_Form_FieldsResult(string FieldId, string FieldName, string FieldType, object FieldValue, bool ReadOnly)
+    {
+            this.FieldId = FieldId;
+            this.FieldName = FieldName;
+            this.FieldType = FieldType;
+            this.FieldValue = FieldValue;
+            this.ReadOnly = ReadOnly;
+    }
+
+        public string FieldId { get; } 
+        public string FieldName { get; } 
+        public string FieldType { get; } 
+        public object FieldValue { get; } 
+        public bool ReadOnly { get; } 
 }
 
 

@@ -1,0 +1,16 @@
+{
+  "guid": "21C0A7A7-559C-4C07-BF06-02187E88C315",
+  "name": "AppendSubmittedTaskData",
+  "interfaceProject": "bpmist.common",
+  "implementationProject": "bpmist.business",
+  "isQuery": false,
+  "injects": [],
+  "parameters": {
+    "ProcessInstance_bpmist.common.DataModels.DocumentTypes.ProcessInstance": null,
+    "TaskInstance_bpmist.common.DataModels.SubDocumentTypes.TaskInstance": null,
+    "DateFormValues_Dictionary<string, int[]>": null,
+    "TextFormValues_Dictionary<string, string>": null
+  },
+  "returnType": {},
+  "usedInApi": false
+}

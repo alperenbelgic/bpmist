@@ -24,13 +24,15 @@ import { MatFormFieldDefaultOptions, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@ang
 import { EditTaskComponent } from './components/edit-task/edit-task.component';
 import { ListProcessesComponent } from './components/list-processes/list-processes.component';
 import { TaskCompletedComponent } from './components/task-completed/task-completed.component';
-import { CustomDateTimePipePipe } from './common/Pipes/custom-date-time-pipe.pipe';
+import { CustomDateTimePipe } from './common/Pipes/custom-date-time.pipe';
+import { CustomDatePipe } from './common/Pipes/custom-date-time.pipe';
 import { ListTasksComponent } from './components/list-tasks/list-tasks.component';
 import { MyGroupsTasksComponent } from './components/my-groups-tasks/my-groups-tasks.component';
 import { LeftMenuComponent } from './left-menu/left-menu.component';
 import { FormComponent } from './components/form/form.component';
 import { GenericFieldComponent } from './components/fields/generic-field/generic-field.component';
 import { DateFieldComponent } from './components/fields/date-field/date-field.component';
+import { TextFieldComponent } from './components/fields/text-field/text-field.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -46,13 +48,15 @@ const appearance: MatFormFieldDefaultOptions = {
     EditTaskComponent,
     ListProcessesComponent,
     TaskCompletedComponent,
-    CustomDateTimePipePipe,
+    CustomDateTimePipe,
+    CustomDatePipe,
     ListTasksComponent,
     MyGroupsTasksComponent,
     LeftMenuComponent,
     FormComponent,
     GenericFieldComponent,
-    DateFieldComponent
+    DateFieldComponent,
+    TextFieldComponent
   ],
   imports: [
     BrowserModule,

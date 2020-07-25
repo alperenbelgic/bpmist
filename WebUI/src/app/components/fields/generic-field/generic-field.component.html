@@ -1,10 +1,17 @@
 <div style="width:500px">
   <ng-container [ngSwitch]="field.fieldType">
+
     <app-date-field
       *ngSwitchCase="'Date'"
       [field]="field"
     ></app-date-field>
-    <div *ngSwitchDefault>hodor</div>
+
+    <app-text-field
+      *ngSwitchCase="'Text'"
+      [field]="field"
+    ></app-text-field>
+
+    <div *ngSwitchDefault>-</div>
   </ng-container>
 
 </div>

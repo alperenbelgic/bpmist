@@ -1,15 +1,13 @@
 Todo:
 
 - save form values
-	- convert date values from int[] to DateTime values.
+	-handle form values
+		- save a log
 	- Field Name * (for required fields)
 	- scenarios
-		- leave request
-			- 1st step: start date - end date
-			- 2nd step: readonly start - end date
-				- comment (if you'd like to include the reason)
-			- 3rd step: those two values read only.
+		- expense request?
 - reports?
+	-hr report for leave request
 	- manager report (process or task?)
 		- pick groups 
 		- show items [with default selection of 'filter due items']
@@ -44,4 +42,9 @@ Later:
 	- back button
 	- load the previous data (should be cached somewhere)
 	- then make the request again and update the result
-- 
+- check all api parameters for 
+	- null / empty
+	- how they could be abused
+- find and ensure a max amount of web request upload content for non-file services
+- frontend - ignore submitted read only values
+- backend - don't save readonly form values. 

@@ -162,6 +162,23 @@ namespace API.Controllers
             string secondTaskId = Guid.NewGuid().ToString();
             string thirdTaskId = Guid.NewGuid().ToString();
 
+            var startField = new ProcessField()
+            {
+                FieldName = "Start Date",
+                FieldType = FieldTypes.Date
+            };
+
+            var endField = new ProcessField()
+            {
+                FieldName = "End Date",
+                FieldType = FieldTypes.Date
+            };
+
+            var notesField = new ProcessField()
+            {
+                FieldName = "Notes",
+                FieldType = FieldTypes.Text
+            };
 
             var tasks =
                         new TaskModel[]
@@ -177,19 +194,19 @@ namespace API.Controllers
                                         NextItemId = secondTaskId,
                                     }
                                 },
-                                TaskFormModel=   new TaskFormModel
+                                TaskFormModel = new TaskFormModel
                                 {
-                                    Fields = new Field[]
+                                    Fields = new FieldInTask[]
                                     {
-                                        new Field
+                                        new FieldInTask
                                         {
-                                            FieldName = "Start",
-                                            ValueType = ValueTypes.Date
+                                            Id = startField.Id,
+                                            IsReadOnly = false
                                         },
-                                        new Field
+                                        new FieldInTask
                                         {
-                                            FieldName = "End",
-                                            ValueType = ValueTypes.Date
+                                            Id = endField.Id,
+                                            IsReadOnly = false
                                         },
                                     }
                                 }
@@ -210,6 +227,27 @@ namespace API.Controllers
                                         NextItemId = "cancel",
                                         ActionType = ActionTypes.Warned
                                     },
+                                },
+                                TaskFormModel=   new TaskFormModel
+                                {
+                                    Fields = new FieldInTask[]
+                                    {
+                                        new FieldInTask
+                                        {
+                                            Id = startField.Id,
+                                            IsReadOnly = true
+                                        },
+                                        new FieldInTask
+                                        {
+                                            Id = endField.Id,
+                                            IsReadOnly = true
+                                        },
+                                        new FieldInTask
+                                        {
+                                            Id = notesField.Id,
+                                            IsReadOnly = false
+                                        },
+                                    }
                                 },
                                 AssigningConfiguration = new AssigningConfiguration
                                 {
@@ -235,6 +273,27 @@ namespace API.Controllers
                                         NextItemId = null
                                     }
                                 },
+                                TaskFormModel=   new TaskFormModel
+                                {
+                                    Fields = new FieldInTask[]
+                                    {
+                                        new FieldInTask
+                                        {
+                                            Id = startField.Id,
+                                            IsReadOnly = true
+                                        },
+                                        new FieldInTask
+                                        {
+                                            Id = endField.Id,
+                                            IsReadOnly = true
+                                        },
+                                        new FieldInTask
+                                        {
+                                            Id = notesField.Id,
+                                            IsReadOnly = true
+                                        },
+                                    }
+                                },
                                 AssigningConfiguration = new AssigningConfiguration
                                 {
                                     AssigningGroupId =  hrGroupId
@@ -250,21 +309,30 @@ namespace API.Controllers
 
             await
                 Documents.process(organizationId, leaveRequestProcessId)
-                .SetAsync(
-                            new Process()
-                            {
-                                ProcessName = "Leave Request",
-                                VersionedProcessModels = new ProcessModel[]
+                    .SetAsync(
+                                new Process()
                                 {
-                                        new ProcessModel() { Tasks = tasks }
-                                },
-                                ProcessVisuals = new ProcessVisuals()
-                                {
-                                    IconColor = "goldenrod",
-                                    Initials = "LR"
+                                    ProcessName = "Leave Request",
+                                    VersionedProcessModels = new ProcessModel[]
+                                    {
+                                        new ProcessModel()
+                                        {
+                                            Tasks = tasks,
+                                            ProcessFields = new ProcessField[]
+                                            {
+                                                startField,
+                                                endField,
+                                                notesField
+                                            }
+                                        }
+                                    },
+                                    ProcessVisuals = new ProcessVisuals()
+                                    {
+                                        IconColor = "goldenrod",
+                                        Initials = "LR"
+                                    }
                                 }
-                            }
-                        );
+                            );
         }
 
         private async Task CreateGroups(string organizationId, string[] hrUserIds, string hrGroupId, string[] financeUserIds, string financeGroupId)

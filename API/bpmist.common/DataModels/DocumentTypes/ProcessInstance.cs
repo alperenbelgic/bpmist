@@ -13,7 +13,7 @@ namespace bpmist.common.DataModels.DocumentTypes
 
         [FirestoreProperty] public string ProcessName { get; set; }
 
-        [FirestoreProperty] public object ProcessData { get; set; }
+        [FirestoreProperty] public ProcessData ProcessData { get; set; } = new ProcessData();
 
         [FirestoreProperty] public ProcessModel ProcessModel { get; set; }
 
@@ -22,10 +22,18 @@ namespace bpmist.common.DataModels.DocumentTypes
         [FirestoreProperty] public string ProcessState { get; set; }
     }
 
+
+
     public class ProcessStates
     {
         public const string Running = nameof(Running);
         public const string Completed = nameof(Completed);
         public const string Cancelled = nameof(Cancelled);
+    }
+
+    public class FieldTypes
+    {
+        public const string Date = nameof(FieldTypes.Date);
+        public const string Text = nameof(FieldTypes.Text);
     }
 }

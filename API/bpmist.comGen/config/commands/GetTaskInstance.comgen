@@ -35,6 +35,15 @@
       "AssingedName_string": null,
       "TaskState_string": null,
       "CompletedTime_DateTime?": null
+    },
+    "Form_Object": {
+      "Fields_List": {
+        "FieldId_string": null,
+        "FieldName_string": null,
+        "FieldType_string": null,
+        "FieldValue_object": null,
+        "ReadOnly_bool": null
+      }
     }
   },
   "usedInApi": true

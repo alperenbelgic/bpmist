@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from 'src/app/services/Web/http.service';
 import { WebService } from 'src/app/services/Web/web.service';
-import { Params, ActivatedRoute } from '@angular/router';
+import { Params, ActivatedRoute, Router } from '@angular/router';
 import { FormComponent } from '../form/form.component';
+import { SnackBarService } from 'src/app/services/UI/snack-bar.service';
 
 export class TaskModel {
   processName = '';
@@ -59,6 +60,8 @@ export class EditTaskComponent implements OnInit {
   constructor(
     private webService: WebService,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private snackBar: SnackBarService
   ) {
   }
 
@@ -112,6 +115,7 @@ export class EditTaskComponent implements OnInit {
           this.taskModel.processInstanceId = processInstanceId;
           this.taskModel.taskInstanceId = taskInstanceId;
           this.taskModel.taskState = r.Value.TaskState;
+          this.taskModel.form = r.Value.Form;
           this.taskModel.actions = r.Value.Actions;
           this.taskModel.assigneeName = r.Value.AssigneeName;
           this.taskModel.assignmentStates.assignedToAnotherUser = r.Value.UserTaskState.AssignedToAnotherUser;
@@ -127,18 +131,21 @@ export class EditTaskComponent implements OnInit {
   StartNewProcesses(processId: string) {
     this.webService.StartNewProcessCommand(processId).subscribe({
       next: (r: any) => {
-        this.taskModel = new TaskModel();
-        this.taskModel.processName = r.Value.ProcessName;
-        this.taskModel.title = r.Value.TaskName;
-        this.taskModel.processId = processId;
-        this.taskModel.processInstanceId = r.Value.ProcessInstanceId;
-        this.taskModel.taskInstanceId = r.Value.TaskInstanceId;
-        this.taskModel.form = r.Value.Form;
-        this.taskModel.actions = r.Value.Actions;
-        this.taskModel.assignmentStates.assignedToAnotherUser = false;
-        this.taskModel.assignmentStates.assignedToCurrentUser = true;
-        this.taskModel.assignmentStates.assignedToCurrentUsersGroup = false;
-        this.taskModel.assignmentStates.assignedToGroup = false;
+        // EditTask/:processId/:processInstanceId/:taskInstanceId
+        this.router.navigate(['EditTask', processId, r.Value.ProcessInstanceId, r.Value.TaskInstanceId]);
+
+        // this.taskModel = new TaskModel();
+        // this.taskModel.processName = r.Value.ProcessName;
+        // this.taskModel.title = r.Value.TaskName;
+        // this.taskModel.processId = processId;
+        // this.taskModel.processInstanceId = r.Value.ProcessInstanceId;
+        // this.taskModel.taskInstanceId = r.Value.TaskInstanceId;
+        // this.taskModel.form = r.Value.Form;
+        // this.taskModel.actions = r.Value.Actions;
+        // this.taskModel.assignmentStates.assignedToAnotherUser = false;
+        // this.taskModel.assignmentStates.assignedToCurrentUser = true;
+        // this.taskModel.assignmentStates.assignedToCurrentUsersGroup = false;
+        // this.taskModel.assignmentStates.assignedToGroup = false;
       }
     });
   }
@@ -154,9 +161,16 @@ export class EditTaskComponent implements OnInit {
       this.taskModel.taskInstanceId,
       actionId,
       'some notes of course',
-      returningForm.DateTimeValues)
+      returningForm.DateValues,
+      returningForm.TextValues)
       .subscribe({
         next: (r: any) => {
+
+          if (actionId === 'save') {
+            this.snackBar.open('Form values are saved.');
+            return;
+          }
+
           console.log('action trigger result', r);
           this.showCompletedMessage = true;
 

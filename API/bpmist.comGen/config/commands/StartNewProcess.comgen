@@ -14,22 +14,8 @@
     "ProcessId_string": null
   },
   "returnType": {
-    "ProcessName_string": null,
     "ProcessInstanceId_string": null,
-    "TaskName_string": null,
-    "TaskInstanceId_string": null,
-    "Actions_List": {
-      "ActionText_string": null,
-      "ActionType_string": null,
-      "ActionId_string": null
-    },
-    "Form_Object": {
-      "Fields_List": {
-        "FieldId_string": null,
-        "FieldName_string": null,
-        "ValueType_string": null
-      }
-    }
+    "TaskInstanceId_string": null
   },
   "usedInApi": true
 }

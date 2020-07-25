@@ -7,6 +7,9 @@ namespace API
     {
         public static void AddBpmistServices(this IServiceCollection services)
         {
+            services.AddTransient<bpmist.common.ICommands.IAppendSubmittedTaskDataCommand, bpmist.business.Commands.AppendSubmittedTaskDataCommand>();
+            services.AddSingleton<Func<bpmist.common.ICommands.IAppendSubmittedTaskDataCommand>>(x => () => x.GetService<bpmist.common.ICommands.IAppendSubmittedTaskDataCommand>());
+
             services.AddTransient<bpmist.data.ICommands.IGetGroupQuery, bpmist.firestore.Commands.GetGroupQuery>();
             services.AddSingleton<Func<bpmist.data.ICommands.IGetGroupQuery>>(x => () => x.GetService<bpmist.data.ICommands.IGetGroupQuery>());
 

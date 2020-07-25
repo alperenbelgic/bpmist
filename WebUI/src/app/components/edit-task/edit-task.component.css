@@ -31,10 +31,6 @@
   text-align: center;
 }
 
-.detail-textbox {
-  margin-top: 20px;
-}
-
 .centered-text {
   text-align: center;
 }
@@ -42,5 +38,9 @@
 .task-history {
   width: 500px;
   color: gray;
+  margin-top: 30px;
+}
+
+.actions-wrapper {
   margin-top: 30px;
 }

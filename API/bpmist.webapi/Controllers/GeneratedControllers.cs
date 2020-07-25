@@ -138,7 +138,7 @@ namespace API.Controllers
 
             return await this.SendUserActionCommand.ExecuteAsync(
                 new bpmist.common.ICommands.SendUserActionParameter(
-                    _parameter.ProcessId, _parameter.ProcessInstanceId, _parameter.TaskInstanceId, _parameter.ActionId, _parameter.Notes, _parameter.DateTimeFormValues
+                    _parameter.ProcessId, _parameter.ProcessInstanceId, _parameter.TaskInstanceId, _parameter.ActionId, _parameter.Notes, _parameter.DateFormValues, _parameter.TextFormValues
                     ),
                 contextInfo
             );
@@ -151,7 +151,8 @@ namespace API.Controllers
             public string TaskInstanceId { get; set; } 
             public string ActionId { get; set; } 
             public string Notes { get; set; } 
-            public Dictionary<string, int[]> DateTimeFormValues { get; set; } 
+            public Dictionary<string, int[]> DateFormValues { get; set; } 
+            public Dictionary<string, string> TextFormValues { get; set; } 
          }
 
 

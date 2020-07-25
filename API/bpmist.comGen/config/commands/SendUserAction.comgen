@@ -10,7 +10,8 @@
     "GetOrganizationUserQuery_bpmist.data.ICommands.IGetOrganizationUserQuery",
     "GetGroupQuery_bpmist.data.ICommands.IGetGroupQuery",
     "SaveOrganizationUserCommand_bpmist.data.ICommands.ISaveOrganizationUserCommand",
-    "SaveGroupCommand_bpmist.data.ICommands.ISaveGroupCommand"
+    "SaveGroupCommand_bpmist.data.ICommands.ISaveGroupCommand",
+    "AppendSubmittedTaskDataCommand_bpmist.common.ICommands.IAppendSubmittedTaskDataCommand"
   ],
   "parameters": {
     "ProcessId_string": null,
@@ -18,7 +19,8 @@
     "TaskInstanceId_string": null,
     "ActionId_string": null,
     "Notes_string": null,
-    "DateTimeFormValues_Dictionary<string, int[]>": null
+    "DateFormValues_Dictionary<string, int[]>": null,
+    "TextFormValues_Dictionary<string, string>": null
   },
   "returnType": {
     "HasProcessCompleted_bool": null,

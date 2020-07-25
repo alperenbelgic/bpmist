@@ -1,15 +1,14 @@
 <div *ngIf="!field.isReadOnly">
-  <ejs-datepicker
-    format='dd MMMM yyyy'
-    [formControl]="field.formControl"
+  <ejs-textbox
     [placeholder]="field.fieldName"
     floatLabelType="Always"
+    [multiline]='true'
     cssClass="e-outline"
-    [allowEdit]="false"
-  ></ejs-datepicker>
+    [formControl]="field.formControl"
+  ></ejs-textbox>
 </div>
 
 <div *ngIf="field.isReadOnly">
   <div class="read-only-label">{{field.fieldName}}</div>
-  <div class="read-only-value">{{field.fieldValue | _date }}</div>
+  <div class="read-only-value">{{field.fieldValue }}</div>
 </div>
