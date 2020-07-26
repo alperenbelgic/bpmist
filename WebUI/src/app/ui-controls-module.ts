@@ -13,8 +13,7 @@ import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
     MultiSelectModule,
     CheckBoxModule,
     TextBoxModule,
-    SidebarModule,
-    DatePickerModule
+    DatePickerModule,
   ]
 })
 export class UiControlsModule { }

@@ -1,6 +1,9 @@
 Todo:
 
-- 
+- requesting user for leave request
+	- field auto calculated. 
+	- first user may change?
+	- then read only.
 - save form values
 	-handle form values
 		- save a log

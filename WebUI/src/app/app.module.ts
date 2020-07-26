@@ -71,10 +71,10 @@ const appearance: MatFormFieldDefaultOptions = {
     MaterialModule,
     UiControlsModule,
     FlexLayoutModule,
-    FormlyMatDatepickerModule,
-    FormlyMatToggleModule,
-    FormlyModule.forRoot(),
-    FormlyMaterialModule,
+    // FormlyMatDatepickerModule,
+    // FormlyMatToggleModule,
+    // FormlyModule.forRoot(),
+    // FormlyMaterialModule,
   ],
   providers: [
     {
