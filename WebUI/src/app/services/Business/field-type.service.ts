@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FieldType } from '../common/Models/Field/FieldType';
+import { FieldType } from '../../common/Models/Field/FieldType';
 
 @Injectable({
   providedIn: 'root'

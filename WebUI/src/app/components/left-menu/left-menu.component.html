@@ -1,4 +1,7 @@
-<div class="left-menu-wrapper">
+<div
+  class="left-menu-wrapper"
+  *ngIf="isLoggedIn$ | async as isLoggedIn"
+>
 
   <img
     class="image"

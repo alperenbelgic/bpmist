@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ProcessItemSettingsComponent } from '../process-item-settings/process-item-settings.component';
-import { RandomIdGenerator } from 'src/app/services/general.service';
+import { RandomIdGenerator } from 'src/app/services/Business/general.service';
 import { ProcessItem } from 'src/app/common/Models/ProcessItems/ProcessItem';
 import { Link } from 'src/app/common/Models/ProcessItems/Link';
 import { StepItem } from 'src/app/common/Models/ProcessItems/StepItem';
 import { ConditionItem } from 'src/app/common/Models/ProcessItems/ConditionItem';
 import { Process } from 'src/app/common/Models/ProcessItems/Process';
-import { UserGroupService } from 'src/app/services/userGroup.service';
+import { UserGroupService } from 'src/app/services/Business/userGroup.service';
 
 @Component({
   selector: 'app-process-designer',

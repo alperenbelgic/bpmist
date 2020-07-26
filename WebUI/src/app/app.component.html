@@ -1,35 +1,6 @@
-<!-- <ejs-sidebar
-  #sideBar
-  type="Slide"
-  [enableDock]="true"
-  [width]="'220px'"
-  [dockSize]="'72px'"
->
-  <div
-    (click)="sideBar.toggle()"
-    class="title"
-  > Sidebar content</div>
-  <div>
-    <a [routerLink]="['/']">
-      Create a new flow
-    </a>
-  </div>
-  <div>
-    <a [routerLink]="['/MyInbox']">
-      My Inbox
-    </a>
-  </div>
-  <div>
-    <a [routerLink]="['/MyGroupsInbox']">
-      My Groups Inbox
-    </a>
-  </div>
-
-</ejs-sidebar> -->
-
 <div fxLayout="row">
   <app-left-menu></app-left-menu>
-  <div style="height: 100vh; overflow-y: scroll;width: 100%;">
+  <div style="height: 100vh; overflow-y: auto;width: 100%;">
     <router-outlet></router-outlet>
 
   </div>

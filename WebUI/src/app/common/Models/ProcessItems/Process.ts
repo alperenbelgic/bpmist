@@ -2,9 +2,9 @@ import { ProcessItem } from './ProcessItem';
 import { Link } from './Link';
 import { Field } from '../Field/Field';
 import { StepItem } from './StepItem';
-import { RandomIdGenerator } from 'src/app/services/general.service';
+import { RandomIdGenerator } from '../../../services/Business/general.service';
 import { FieldInStep } from '../Field/FieldInStep';
-import { UserGroupService } from 'src/app/services/userGroup.service';
+import { UserGroupService } from '../../../services/Business/userGroup.service';
 import { from, Observable, BehaviorSubject, Subscription } from 'rxjs';
 
 export class Process {

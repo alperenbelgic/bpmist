@@ -14,14 +14,18 @@ namespace API.Controllers
     {
         protected virtual IContextInformation GetContextInfo()
         {
-            return new DefaultContextInformation();
+            string userId = this.Request.Headers["temp_user_id"];
+            return new DefaultContextInformation(userId);
+
             // throw new NotImplementedException();
             // return this.ContextProvider.GetContextInformation(this.GetCurrentUser());
         }
 
         protected virtual IUser GetCurrentUser(string authorizationKey = null)
         {
-            return new DefaultUser();
+            throw new NotImplementedException();
+            //return new DefaultContextInformation(userId);
+            //return new DefaultUser();
             // IUser user;
             // if (authorizationKey == null)
             // {
@@ -39,6 +43,10 @@ namespace API.Controllers
 
     public class DefaultUser : IUser
     {
+        public DefaultUser(string userId)
+        {
+            this.UserId = userId;
+        }
         public string UserName => "user_name";
 
         public IList<IRole> Roles => throw new NotImplementedException();
@@ -51,14 +59,18 @@ namespace API.Controllers
         //208DDB53-FDF0-41C8-A2F1-535E975CED22 //omer
         //83B203D7-2030-4788-BE40-CB153563A979 //pelin
         //C06960E7-203F-4265-85BA-A0B59863B82D //baris
-        public string UserId => "C06960E7-203F-4265-85BA-A0B59863B82D";
+        public string UserId { get; set; }// "C06960E7-203F-4265-85BA-A0B59863B82D";
 
     }
 
 
     public class DefaultContextInformation : IContextInformation
     {
-        public IUser User => new DefaultUser();
+        public DefaultContextInformation(string userId)
+        {
+            this.User = new DefaultUser(userId);
+        }
+        public IUser User { get; set; }
 
         public bool IsBaseCommand(Guid executionId)
         {

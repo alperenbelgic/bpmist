@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { FieldType } from '../common/Models/Field/FieldType';
-import { Group } from '../common/Models/Responsible/Group';
-import { User } from '../common/Models/Responsible/User';
-import { GroupAssignOption } from '../common/Models/Responsible/GroupAssignOption';
-import { ResponsibleType } from '../common/Models/Responsible/ResponsibleType';
+import { FieldType } from '../../common/Models/Field/FieldType';
+import { Group } from '../../common/Models/Responsible/Group';
+import { User } from '../../common/Models/Responsible/User';
+import { GroupAssignOption } from '../../common/Models/Responsible/GroupAssignOption';
+import { ResponsibleType } from '../../common/Models/Responsible/ResponsibleType';
 
 @Injectable({
   providedIn: 'root'

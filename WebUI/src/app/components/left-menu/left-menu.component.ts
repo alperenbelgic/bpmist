@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AuthService } from '../../services/Auth/auth.service';
 
 @Component({
   selector: 'app-left-menu',
@@ -7,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LeftMenuComponent implements OnInit {
 
-  constructor() { }
+  isLoggedIn$: Observable<boolean>;
+
+  constructor(authService: AuthService) {
+    this.isLoggedIn$ = authService.isLoggedIn;
+  }
 
   ngOnInit(): void {
   }

@@ -1,0 +1,53 @@
+<div
+  fxLayout
+  fxLayoutAlign="center center"
+  style="height: 100%;"
+>
+  <mat-card style="width: 300px;border-radius: 8px;">
+    <div style="text-align: center;">
+      <img
+        style="width: 150px;height:154.2px;border-radius: 10px;"
+        src="/assets/images/logo.png"
+      >
+    </div>
+    <div style="margin-top:20px; text-align: center;font-size: 24px;">
+      Login
+    </div>
+
+
+    <div style="margin-top:20px;">
+      <ejs-textbox
+        placeholder="User name"
+        cssClass="e-outline"
+        floatLabelType="Always"
+        [(value)]="username"
+      >
+      </ejs-textbox>
+    </div>
+    <div style="margin-top:10px">
+      <ejs-textbox
+        placeholder="Password"
+        cssClass="e-outline"
+        floatLabelType="Always"
+        [(value)]="password"
+      ></ejs-textbox>
+    </div>
+    <button
+      style="margin-top:10px"
+      (click)="login()"
+      mat-button
+      mat-raised-button
+      [disabled]="busy"
+      color="primary"
+    >
+      Login
+    </button>
+
+
+
+
+
+
+
+  </mat-card>
+</div>

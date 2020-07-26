@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,11 +28,13 @@ import { CustomDateTimePipe } from './common/Pipes/custom-date-time.pipe';
 import { CustomDatePipe } from './common/Pipes/custom-date-time.pipe';
 import { ListTasksComponent } from './components/list-tasks/list-tasks.component';
 import { MyGroupsTasksComponent } from './components/my-groups-tasks/my-groups-tasks.component';
-import { LeftMenuComponent } from './left-menu/left-menu.component';
+import { LeftMenuComponent } from './components/left-menu/left-menu.component';
 import { FormComponent } from './components/form/form.component';
 import { GenericFieldComponent } from './components/fields/generic-field/generic-field.component';
 import { DateFieldComponent } from './components/fields/date-field/date-field.component';
 import { TextFieldComponent } from './components/fields/text-field/text-field.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthKeyInterceptor } from './services/Web/auth-key.interceptor';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -56,7 +58,8 @@ const appearance: MatFormFieldDefaultOptions = {
     FormComponent,
     GenericFieldComponent,
     DateFieldComponent,
-    TextFieldComponent
+    TextFieldComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +80,11 @@ const appearance: MatFormFieldDefaultOptions = {
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: appearance
+    },
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthKeyInterceptor, multi: true
     }
+
   ],
   bootstrap: [AppComponent]
 })
