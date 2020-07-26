@@ -1,3 +1,12 @@
+# build client
+FROM node:12.7-alpine AS client
+WORKDIR /usr/src/app
+COPY package.json ./
+RUN npm install
+COPY WebUI ./
+RUN npm run build -- --prod
+
+# Build backend
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build
 WORKDIR /src
 
@@ -25,4 +34,5 @@ RUN dotnet publish "bpmist.webapi.csproj" -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine as final
 WORKDIR /app
 COPY --from=publish /app/publish ./
+COPY --from=client /usr/src/app/dist/bpmist ./wwwroot
 ENTRYPOINT ["dotnet", "bpmist.webapi.dll"]
