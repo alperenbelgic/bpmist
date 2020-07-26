@@ -40,6 +40,12 @@ namespace API.Controllers
             return new { Hodor = "modor" };
         }
 
+        [HttpGet]
+        public string Hello()
+        {
+            return "what's up?";
+        }
+
         private async Task CreateOrganization(string organizationId)
         {
             await Documents.organization(organizationId).SetAsync(new Organization()
