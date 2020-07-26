@@ -16,10 +16,7 @@ import { ProcessItemSettingsComponent } from './components/process-item-settings
 
 import { ClickStopPropagationDirective } from './common/Directives/click-stop-propagation.directive';
 
-import { FormlyModule } from '@ngx-formly/core';
-import { FormlyMaterialModule } from '@ngx-formly/material';
-import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
-import { FormlyMatToggleModule } from '@ngx-formly/material/toggle';
+
 import { MatFormFieldDefaultOptions, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { EditTaskComponent } from './components/edit-task/edit-task.component';
 import { ListProcessesComponent } from './components/list-processes/list-processes.component';
@@ -71,10 +68,6 @@ const appearance: MatFormFieldDefaultOptions = {
     MaterialModule,
     UiControlsModule,
     FlexLayoutModule,
-    // FormlyMatDatepickerModule,
-    // FormlyMatToggleModule,
-    // FormlyModule.forRoot(),
-    // FormlyMaterialModule,
   ],
   providers: [
     {
