@@ -1,7 +1,7 @@
 # build client
 FROM node:12.7-alpine AS client
 WORKDIR /usr/src/app
-COPY package.json ./
+COPY WebUI/package.json ./
 RUN npm install
 COPY WebUI ./
 RUN npm run build -- --prod
