@@ -1,12 +1,11 @@
 Todo:
 
-- requesting user for leave request
+- requesting user field for leave request
 	- field auto calculated. 
 	- first user may change?
 	- then read only.
+- empty fields - how to show them, with a dash (-) probably? or (blank)
 - save form values
-	-handle form values
-		- save a log
 	- Field Name * (for required fields)
 	- scenarios
 		- expense request?
@@ -23,6 +22,10 @@ Todo:
 - notifications
 - create paralel tasks
 - deactivate buttons when a request is sent
+- information tooltips or boxes for process and task
+	- content from configuration
+- actions tooltip
+	- fix tooltip for save action
 
 
 Later:
@@ -52,3 +55,18 @@ Later:
 - find and ensure a max amount of web request upload content for non-file services
 - frontend - ignore submitted read only values
 - backend - don't save readonly form values. 
+- roll back scenarios
+	- cancel last action & data submit & created task
+	- a data model that can go back to any state. maybe a subcollection. 
+	- each action can create a revision with a full state snapshot 
+		- (actually, probably we will just keep process instance snapshot with an action description)
+			more clearly, wheneverprocess instance changes, it will be versioned with full process instance data
+				- with the action data (save with this data triggered, process model changed etc.)
+		- save data
+			- keep submitted data and
+			- changed whole data
+		- call action ( and save data )
+		- change on process model
+		- I don't know if logs should be here
+			- this notification sent
+			- the text of "this action is done by this person"
