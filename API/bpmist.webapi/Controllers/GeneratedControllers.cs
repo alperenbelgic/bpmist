@@ -21,17 +21,25 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<CommandResult<bpmist.data.ICommands.GetProcessesResult>> Get(
-            
+
         )
         {
-            var contextInfo = this.GetContextInfo();
+            //temp try catch
+            try
+            {
+                var contextInfo = this.GetContextInfo();
 
-            return await this.GetProcessesQuery.ExecuteAsync(
-                new bpmist.data.ICommands.GetProcessesParameter(
-                    
-                    ),
-                contextInfo
-            );
+                return await this.GetProcessesQuery.ExecuteAsync(
+                    new bpmist.data.ICommands.GetProcessesParameter(
+
+                        ),
+                    contextInfo
+                );
+            }
+            catch (Exception ex)
+            {
+                return new CommandResult<bpmist.data.ICommands.GetProcessesResult>(new List<OperationErrorInformation>() { new OperationErrorInformation(ex.Message, ex.StackTrace) });
+            }
         }
     }
     public class GetTaskInstanceQueryController : BaseController
@@ -71,14 +79,14 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<CommandResult<bpmist.common.ICommands.GetUserTaskInstancesResult>> Get(
-            
+
         )
         {
             var contextInfo = this.GetContextInfo();
 
             return await this.GetUserTaskInstancesQuery.ExecuteAsync(
                 new bpmist.common.ICommands.GetUserTaskInstancesParameter(
-                    
+
                     ),
                 contextInfo
             );
@@ -109,12 +117,12 @@ namespace API.Controllers
             );
         }
 
-         public class PullTaskFromGroupControllerParameter
-         {
-            public string ProcessId { get; set; } 
-            public string ProcessInstanceId { get; set; } 
-            public string TaskInstanceId { get; set; } 
-         }
+        public class PullTaskFromGroupControllerParameter
+        {
+            public string ProcessId { get; set; }
+            public string ProcessInstanceId { get; set; }
+            public string TaskInstanceId { get; set; }
+        }
 
 
 
@@ -144,16 +152,16 @@ namespace API.Controllers
             );
         }
 
-         public class SendUserActionControllerParameter
-         {
-            public string ProcessId { get; set; } 
-            public string ProcessInstanceId { get; set; } 
-            public string TaskInstanceId { get; set; } 
-            public string ActionId { get; set; } 
-            public string Notes { get; set; } 
-            public Dictionary<string, int[]> DateFormValues { get; set; } 
-            public Dictionary<string, string> TextFormValues { get; set; } 
-         }
+        public class SendUserActionControllerParameter
+        {
+            public string ProcessId { get; set; }
+            public string ProcessInstanceId { get; set; }
+            public string TaskInstanceId { get; set; }
+            public string ActionId { get; set; }
+            public string Notes { get; set; }
+            public Dictionary<string, int[]> DateFormValues { get; set; }
+            public Dictionary<string, string> TextFormValues { get; set; }
+        }
 
 
 
@@ -183,10 +191,10 @@ namespace API.Controllers
             );
         }
 
-         public class StartNewProcessControllerParameter
-         {
-            public string ProcessId { get; set; } 
-         }
+        public class StartNewProcessControllerParameter
+        {
+            public string ProcessId { get; set; }
+        }
 
 
 
