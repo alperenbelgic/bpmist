@@ -38,7 +38,11 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                return new CommandResult<bpmist.data.ICommands.GetProcessesResult>(new List<OperationErrorInformation>() { new OperationErrorInformation(ex.Message, ex.StackTrace) });
+                return new CommandResult<bpmist.data.ICommands.GetProcessesResult>(new List<OperationErrorInformation>() { 
+                    new OperationErrorInformation(ex.Message, ex.StackTrace),
+                    new OperationErrorInformation(ex.InnerException.Message, ex.InnerException.StackTrace),
+
+                });
             }
         }
     }
