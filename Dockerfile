@@ -37,5 +37,5 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 as final
 WORKDIR /app
 COPY --from=publish /app/publish .
 #COPY --from=client /usr/src/app/dist/bpmist ./wwwroot
-COPY --from=build WebUI/prodBuild ./wwwroot
+COPY WebUI/prodBuild ./wwwroot
 ENTRYPOINT ["dotnet", "bpmist.webapi.dll"]
