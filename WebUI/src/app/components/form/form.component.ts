@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-form',
@@ -107,22 +107,27 @@ export class ReturningForm {
 }
 
 export class RenderingField {
+
   constructor() {
     this._formControl = new FormControl();
+    this._formControl.setValidators(Validators.required);
     this.formControl.valueChanges.subscribe({
       next: v => {
         // if form control triggers a change we set the field (not the property)
         // the property setter also sets to the formControl
+
         if (this._fieldValue !== v) {
           this._fieldValue = v;
         }
       }
     });
   }
+
   fieldId: string;
   fieldName: string;
   fieldType: string;
   isReadOnly: boolean;
+
   private _fieldValue: any = null;
   get fieldValue(): any {
     return this._fieldValue;
@@ -133,7 +138,8 @@ export class RenderingField {
       this.formControl.setValue(value);
     }
   }
-  private _formControl;
+
+  private _formControl: FormControl;
   get formControl(): FormControl {
     return this._formControl;
   }

@@ -11,7 +11,20 @@
       [field]="field"
     ></app-text-field>
 
-    <div *ngSwitchDefault>-</div>
+    <div class="error-message-wrapper">
+      touched: {{field.formControl.touched}} <br />
+      <div *ngIf="field.formControl.invalid && field.formControl.dirty ">
+        {{field.formControl.errors | json }}
+        <br />
+
+        <!--
+        dirty:{{field.formControl.dirty}}, disabled: {{field.formControl.disabled}}, enabled:
+        {{field.formControl.enabled}}, invalid:{{field.formControl.invalid}}, pristine: {{field.formControl.pristine}},
+        touched: {{field.formControl.touched}}, valid:{{field.formControl.valid}} -->
+
+      </div>
+    </div>
+
   </ng-container>
 
 </div>

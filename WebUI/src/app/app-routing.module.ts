@@ -6,6 +6,7 @@ import { ListTasksComponent } from './components/list-tasks/list-tasks.component
 import { MyGroupsTasksComponent } from './components/my-groups-tasks/my-groups-tasks.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './services/Auth/auth.guard';
+import { ProcessDesignerComponent } from './components/process-designer/process-designer.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,9 @@ const routes: Routes = [
       { path: 'EditTask/:processId/:processInstanceId/:taskInstanceId', component: EditTaskComponent },
       { path: 'MyInbox', component: ListTasksComponent },
       { path: 'MyGroupsInbox', component: MyGroupsTasksComponent },
-      { path: 'Login', component: LoginComponent }
+      { path: 'Login', component: LoginComponent },
+      { path: 'ProcessDesigner', component: ProcessDesignerComponent }
+
     ]
   }
 ];

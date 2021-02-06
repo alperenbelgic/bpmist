@@ -1,5 +1,6 @@
 Todo:
 
+- required fields
 - requesting user field for leave request
 	- field auto calculated. 
 	- first user may change?
