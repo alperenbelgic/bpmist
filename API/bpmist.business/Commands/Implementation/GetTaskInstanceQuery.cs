@@ -81,7 +81,7 @@ namespace bpmist.business.Commands
                     processInstance.ProcessState == ProcessStates.Cancelled ||
                     taskInstance.TaskState == TaskStates.Canceled ||
                     taskInstance.TaskState == TaskStates.Completed ||
-                    fieldInTask.IsReadOnly;
+                    !fieldInTask.Editable;
 
             return isFieldReadOnly;
         }
@@ -163,7 +163,7 @@ namespace bpmist.business.Commands
         {
             var actions = taskInstance.TaskModel?.Actions.ToList();
 
-            bool editableFieldExists = taskInstance.TaskModel.TaskFormModel.Fields.Any(f => !f.IsReadOnly);
+            bool editableFieldExists = taskInstance.TaskModel.TaskFormModel.Fields.Any(f => f.Editable);
 
             // add save action if there is any non-read-only form value
             if (editableFieldExists)

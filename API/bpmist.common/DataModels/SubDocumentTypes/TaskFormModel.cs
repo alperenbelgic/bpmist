@@ -14,6 +14,6 @@ namespace bpmist.common.DataModels.SubDocumentTypes
     [FirestoreData]
     public class FieldInTask : SubDocumentWithId
     {
-        [FirestoreProperty] public bool IsReadOnly { get; set; }
+        [FirestoreProperty] public bool Editable { get; set; }
     }
 }

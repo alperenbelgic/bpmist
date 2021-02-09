@@ -377,7 +377,7 @@ namespace bpmist.business.Commands
         {
             var actions = taskInstance.TaskModel?.Actions.ToList();
 
-            bool editableFieldExists = taskInstance.TaskModel.TaskFormModel.Fields.Any(f => !f.IsReadOnly);
+            bool editableFieldExists = taskInstance.TaskModel.TaskFormModel.Fields.Any(f => f.Editable);
 
             // add save action if there is any non-read-only form value
             if (editableFieldExists)

@@ -207,12 +207,12 @@ namespace API.Controllers
                                         new FieldInTask
                                         {
                                             Id = startField.Id,
-                                            IsReadOnly = false
+                                            Editable = true
                                         },
                                         new FieldInTask
                                         {
                                             Id = endField.Id,
-                                            IsReadOnly = false
+                                            Editable = true
                                         },
                                     }
                                 }
@@ -241,17 +241,17 @@ namespace API.Controllers
                                         new FieldInTask
                                         {
                                             Id = startField.Id,
-                                            IsReadOnly = true
+                                            Editable = false
                                         },
                                         new FieldInTask
                                         {
                                             Id = endField.Id,
-                                            IsReadOnly = true
+                                            Editable = false
                                         },
                                         new FieldInTask
                                         {
                                             Id = notesField.Id,
-                                            IsReadOnly = false
+                                            Editable = true
                                         },
                                     }
                                 },
@@ -286,17 +286,17 @@ namespace API.Controllers
                                         new FieldInTask
                                         {
                                             Id = startField.Id,
-                                            IsReadOnly = true
+                                            Editable = false
                                         },
                                         new FieldInTask
                                         {
                                             Id = endField.Id,
-                                            IsReadOnly = true
+                                            Editable = false
                                         },
                                         new FieldInTask
                                         {
                                             Id = notesField.Id,
-                                            IsReadOnly = true
+                                            Editable = false
                                         },
                                     }
                                 },
