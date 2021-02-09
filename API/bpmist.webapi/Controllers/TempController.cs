@@ -207,12 +207,17 @@ namespace API.Controllers
                                         new FieldInTask
                                         {
                                             Id = startField.Id,
-                                            Editable = true
+                                            Editable = true,
+
                                         },
                                         new FieldInTask
                                         {
                                             Id = endField.Id,
-                                            Editable = true
+                                            Editable = true,
+                                            Validation = new FieldInTaskValidation()
+                                            {
+                                                IsRequired  = true
+                                            }
                                         },
                                     }
                                 }

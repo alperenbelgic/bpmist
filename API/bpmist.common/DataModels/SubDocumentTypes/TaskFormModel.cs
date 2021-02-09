@@ -15,5 +15,14 @@ namespace bpmist.common.DataModels.SubDocumentTypes
     public class FieldInTask : SubDocumentWithId
     {
         [FirestoreProperty] public bool Editable { get; set; }
+
+        [FirestoreProperty] public FieldInTaskValidation Validation { get; set; } = new FieldInTaskValidation();
+    }
+
+    [FirestoreData]
+    public class FieldInTaskValidation
+    {
+        [FirestoreProperty]
+        public bool IsRequired { get; set; } = false; // This shouldn't be relevant if FieldInTask.Editable is false.
     }
 }
