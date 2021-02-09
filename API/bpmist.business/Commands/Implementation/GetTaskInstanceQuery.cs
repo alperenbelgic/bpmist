@@ -64,14 +64,21 @@ namespace bpmist.business.Commands
 
                     bool isReadOnly = this.IsFieldReadOnly(processInstance, taskInstance, taskFormModel, fieldInTask);
 
+                    var validation = this.GetValidation(fieldInTask);
+
                     var field =
-                        new GetTaskInstance_Form_FieldsResult(processField.Id, processField.FieldName, processField.FieldType, fieldValue, isReadOnly);
+                        new GetTaskInstance_Form_FieldsResult(processField.Id, processField.FieldName, processField.FieldType, fieldValue, isReadOnly, validation);
 
                     list.Add(field);
                 }
             }
 
             return new GetTaskInstance_FormResult(list.ToArray());
+        }
+
+        private GetTaskInstance_Form_Fields_ValidationResult GetValidation(FieldInTask fieldInTask)
+        {
+            return new GetTaskInstance_Form_Fields_ValidationResult(fieldInTask.Validation.IsRequired);
         }
 
         private bool IsFieldReadOnly(ProcessInstance processInstance, TaskInstance taskInstance, TaskFormModel taskFormModel, FieldInTask fieldInTask)

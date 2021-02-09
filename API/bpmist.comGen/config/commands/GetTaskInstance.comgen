@@ -42,7 +42,10 @@
         "FieldName_string": null,
         "FieldType_string": null,
         "FieldValue_object": null,
-        "ReadOnly_bool": null
+        "ReadOnly_bool": null,
+        "Validation_Object": {
+          "IsRequired_bool": null
+        }
       }
     }
   },

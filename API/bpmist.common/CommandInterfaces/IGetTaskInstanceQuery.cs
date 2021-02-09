@@ -108,13 +108,14 @@ public class GetTaskInstance_FormResult
 
 public class GetTaskInstance_Form_FieldsResult
 {
-    public GetTaskInstance_Form_FieldsResult(string FieldId, string FieldName, string FieldType, object FieldValue, bool ReadOnly)
+    public GetTaskInstance_Form_FieldsResult(string FieldId, string FieldName, string FieldType, object FieldValue, bool ReadOnly, GetTaskInstance_Form_Fields_ValidationResult Validation)
     {
             this.FieldId = FieldId;
             this.FieldName = FieldName;
             this.FieldType = FieldType;
             this.FieldValue = FieldValue;
             this.ReadOnly = ReadOnly;
+            this.Validation = Validation;
     }
 
         public string FieldId { get; } 
@@ -122,6 +123,17 @@ public class GetTaskInstance_Form_FieldsResult
         public string FieldType { get; } 
         public object FieldValue { get; } 
         public bool ReadOnly { get; } 
+        public GetTaskInstance_Form_Fields_ValidationResult Validation { get; } 
+}
+
+public class GetTaskInstance_Form_Fields_ValidationResult
+{
+    public GetTaskInstance_Form_Fields_ValidationResult(bool IsRequired)
+    {
+            this.IsRequired = IsRequired;
+    }
+
+        public bool IsRequired { get; } 
 }
 
 
