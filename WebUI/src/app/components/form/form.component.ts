@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-form',
@@ -14,6 +14,8 @@ export class FormComponent implements OnInit {
   fields: RenderingField[] = [];
 
   formGroup: FormGroup;
+
+  @Output() formValid = new EventEmitter<boolean>();
 
   constructor(private cd: ChangeDetectorRef) { }
 
@@ -53,6 +55,7 @@ export class FormComponent implements OnInit {
         field.fieldName = f.FieldName;
         field.fieldType = f.FieldType;
         field.isReadOnly = f.ReadOnly;
+        field.isRequired = f.Validation.IsRequired;
         field.fieldValue = this.getValue(f);
 
         return field;
@@ -66,8 +69,15 @@ export class FormComponent implements OnInit {
 
     this.cd.detectChanges();
 
+    this.formValid.next(this.formGroup.valid);
+
     this.formGroup.valueChanges.subscribe({
       next: v => {
+        console.log(v);
+        console.log(this.formGroup.valid);
+
+        this.formValid.next(this.formGroup.valid);
+
         this.cd.detectChanges();
       }
     });
@@ -110,7 +120,7 @@ export class RenderingField {
 
   constructor() {
     this._formControl = new FormControl();
-    this._formControl.setValidators(Validators.required);
+
     this.formControl.valueChanges.subscribe({
       next: v => {
         // if form control triggers a change we set the field (not the property)
@@ -142,5 +152,32 @@ export class RenderingField {
   private _formControl: FormControl;
   get formControl(): FormControl {
     return this._formControl;
+  }
+
+  private _isRequired: boolean;
+  get isRequired(): boolean {
+    return this._isRequired;
+  }
+  set isRequired(value: boolean) {
+    this._isRequired = value;
+
+    // call this for any validation change
+    this.updateValidators();
+  }
+
+  updateValidators() {
+    this._formControl.clearValidators();
+
+    const validators: ValidatorFn[] = [];
+
+    if (this._isRequired) {
+      validators.push(Validators.required);
+    }
+
+    if (validators.length > 0) {
+      this._formControl.setValidators(validators);
+    }
+
+    this._formControl.updateValueAndValidity();
   }
 }

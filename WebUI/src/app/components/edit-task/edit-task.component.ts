@@ -55,6 +55,8 @@ export class EditTaskComponent implements OnInit {
   showCompletedMessage = false;
   otherTasksShown = true;
 
+  isFormValid = false;
+
   @ViewChild('appForm') formComponent: FormComponent;
 
   constructor(
@@ -221,5 +223,9 @@ export class EditTaskComponent implements OnInit {
 
   showAllOtherTasks() {
     this.otherTasksShown = !this.otherTasksShown;
+  }
+
+  updateFormValidity(isFormValid: boolean) {
+    this.isFormValid = isFormValid;
   }
 }

@@ -59,6 +59,7 @@
       <app-form
         #appForm
         [form]="taskModel.form"
+        (formValid)="updateFormValidity($event)"
       ></app-form>
     </div>
 
@@ -108,7 +109,7 @@
           mat-button
           mat-raised-button
           color="primary"
-          [disabled]="!taskModel.assignmentStates.assignedToCurrentUser"
+          [disabled]="!taskModel.assignmentStates.assignedToCurrentUser || !isFormValid "
           style="margin-left:10px"
         >
           {{action.ActionText}}

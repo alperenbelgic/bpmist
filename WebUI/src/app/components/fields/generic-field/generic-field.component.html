@@ -12,17 +12,23 @@
     ></app-text-field>
 
     <div class="error-message-wrapper">
-      touched: {{field.formControl.touched}} <br />
-      <div *ngIf="field.formControl.invalid && field.formControl.dirty ">
+      <div *ngIf="field.formControl.errors?.required">
+        This field is required.
+      </div>
+
+      <!-- touched: {{field.formControl.touched}} <br /> -->
+      <!-- <div *ngIf="field.formControl.invalid && field.formControl.dirty "> -->
+      <!-- <div>
         {{field.formControl.errors | json }}
         <br />
+        <br />
 
-        <!--
+
         dirty:{{field.formControl.dirty}}, disabled: {{field.formControl.disabled}}, enabled:
         {{field.formControl.enabled}}, invalid:{{field.formControl.invalid}}, pristine: {{field.formControl.pristine}},
-        touched: {{field.formControl.touched}}, valid:{{field.formControl.valid}} -->
+        touched: {{field.formControl.touched}}, valid:{{field.formControl.valid}}
 
-      </div>
+      </div> -->
     </div>
 
   </ng-container>
