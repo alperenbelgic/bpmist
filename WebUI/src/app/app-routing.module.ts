@@ -28,6 +28,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  //imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })], // this is corrected version of upgrade to v11. I wanted to keep default value. I keep this line for a while to observe if it is fine.
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
