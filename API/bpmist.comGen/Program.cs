@@ -94,9 +94,9 @@ namespace bpmist.comGen
                 //delete file if exists
             }
 
-            string serviceRegistrationTemplateContent = File.ReadAllText("Config/global/ServiceMapper.template");
+            string serviceRegistrationTemplateContent = File.ReadAllText("Config/global/BpmistServiceMapper.template");
             string serviceRegistrationFileContent = serviceRegistrationTemplateContent.Replace("[ServiceMappings]", registeringServicesContent.ToString());
-            File.WriteAllText("..\\bpmist.webapi\\ServiceMapper.cs", serviceRegistrationFileContent);
+            File.WriteAllText("..\\bpmist.webapi\\BpmistServiceMapper.cs", serviceRegistrationFileContent);
 
         }
 

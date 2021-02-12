@@ -38,6 +38,8 @@ namespace API
             });
 
             services.AddBpmistServices();
+            
+            services.AddServices();
 
         }
 
