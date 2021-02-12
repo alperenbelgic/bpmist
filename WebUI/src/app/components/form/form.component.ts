@@ -5,7 +5,7 @@ import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms'
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css'],
-  // // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormComponent implements OnInit {
 
