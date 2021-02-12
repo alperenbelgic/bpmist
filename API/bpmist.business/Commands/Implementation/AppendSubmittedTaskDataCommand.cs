@@ -86,7 +86,7 @@ namespace bpmist.business.Commands
                     {
                         value = new DateTime(inputValue[0], inputValue[1], inputValue[2], 0, 0, 0, DateTimeKind.Utc);
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         // TODO: inform bpm.ist admins. should be found  out: is it a bug? is it an attack?
                     }

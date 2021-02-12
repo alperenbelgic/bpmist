@@ -265,7 +265,7 @@ namespace bpmist.common.Commands
                 {
                     contextInformation.OnCommandExecuted(this.ToString(), commandResult, executionId);
                 }
-                catch (Exception ex)
+                catch
                 {
 
                 }
