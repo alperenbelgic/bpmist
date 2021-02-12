@@ -10,6 +10,7 @@
     <ProjectReference Include="..\bpmist.core\bpmist.core.csproj" />
     <ProjectReference Include="..\bpmist.data\bpmist.data.csproj" />
     <ProjectReference Include="..\bpmist.firestore\bpmist.firestore.csproj" />
+    <ProjectReference Include="..\bpmist.javascript\bpmist.javascript.csproj" />
   </ItemGroup>
 
   <ItemGroup>

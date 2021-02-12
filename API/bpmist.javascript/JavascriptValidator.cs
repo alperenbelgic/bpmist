@@ -1,4 +1,5 @@
-﻿using Jint;
+﻿using bpmist.common.Javascript;
+using Jint;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,7 @@ namespace bpmist.javascript
     /// <summary>
     /// Runs validate functions written in Javascript to validate form values or forms.
     /// </summary>
-    public class JavascriptValidator
+    public class JavascriptValidator : IJavascriptValidator
     {
         /*
         Expected validateFunction structure:
@@ -81,19 +82,5 @@ namespace bpmist.javascript
         public const string CallValidateTemplate = @"validate(getValue);";
 
 
-    }
-
-    public class ValidationResult
-    {
-        public ValidationResult(bool valid, string customErrorMessage, bool validationRunSuccessfully)
-        {
-            this.Valid = valid;
-            this.CustomErrorMessage = customErrorMessage;
-            this.ValidatationRunSuccessfully = validationRunSuccessfully;
-        }
-
-        public bool Valid { get; }
-        public string CustomErrorMessage { get; }
-        public bool ValidatationRunSuccessfully { get; }
     }
 }
