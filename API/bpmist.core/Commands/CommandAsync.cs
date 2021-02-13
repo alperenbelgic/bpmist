@@ -173,7 +173,7 @@ namespace bpmist.common.Commands
         /// <param name="parameter"></param>
         /// <param name="contextInformation"></param>
         /// <returns></returns>
-        protected virtual async Task Initialize(CommandParameter parameter, IContextInformation contextInformation)
+        protected virtual async Task InitializeBeforeExecute(CommandParameter parameter, IContextInformation contextInformation)
         {
 
         }
@@ -190,7 +190,7 @@ namespace bpmist.common.Commands
 
             try
             {
-                await Initialize(parameter, contextInformation);
+                await InitializeBeforeExecute(parameter, contextInformation);
 
                 var operationErrorResults = await ValidateAsync(parameter, contextInformation);
 
