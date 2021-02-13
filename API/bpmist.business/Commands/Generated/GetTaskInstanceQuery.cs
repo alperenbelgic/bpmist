@@ -16,7 +16,7 @@ namespace bpmist.business.Commands
             this.GetProcessInstanceQuery = _GetProcessInstanceQuery;
             this.GetUserQuery = _GetUserQuery;
 
-            this.Initialize();
+            this.InitializeAfterConstruction();
         }
 
         private bpmist.data.ICommands.IGetProcessInstanceQuery GetProcessInstanceQuery { get; }

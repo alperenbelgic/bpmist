@@ -21,7 +21,7 @@ namespace bpmist.business.Commands
             this.SaveGroupCommand = _SaveGroupCommand;
             this.AppendSubmittedTaskDataCommand = _AppendSubmittedTaskDataCommand;
 
-            this.Initialize();
+            this.InitializeAfterConstruction();
         }
 
         private bpmist.data.ICommands.IGetProcessInstanceQuery GetProcessInstanceQuery { get; }

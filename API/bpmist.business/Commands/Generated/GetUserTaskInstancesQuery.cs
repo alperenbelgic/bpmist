@@ -16,7 +16,7 @@ namespace bpmist.business.Commands
             this.GetOrganizationUserQuery = _GetOrganizationUserQuery;
             this.GetGroupQueryFactory = _GetGroupQueryFactory;
 
-            this.Initialize();
+            this.InitializeAfterConstruction();
         }
 
         private bpmist.data.ICommands.IGetOrganizationUserQuery GetOrganizationUserQuery { get; }

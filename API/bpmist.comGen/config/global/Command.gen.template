@@ -15,7 +15,7 @@ namespace [CommandNamespace]
         {
 [InjectingCommandPropertyAssignment]
 
-            this.Initialize();
+            this.InitializeAfterConstruction();
         }
 
 [InjectingCommandProperties]

@@ -108,9 +108,9 @@ namespace bpmist.business.Commands
             }
         }
 
-        protected override void Initialize()
+        protected override void InitializeAfterConstruction()
         {
-            base.Initialize();
+            base.InitializeAfterConstruction();
 
             this.submittedDateValues = new List<KeyValuePair<string, DateTime?>>();
         }

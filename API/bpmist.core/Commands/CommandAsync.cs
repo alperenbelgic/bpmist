@@ -272,7 +272,7 @@ namespace bpmist.common.Commands
             }
         }
 
-        protected virtual void Initialize() { }
+        protected virtual void InitializeAfterConstruction() { }
 
         public CommandBase<CommandParameter, ReturnType> HandleBreakingError()
         {

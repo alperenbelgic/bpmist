@@ -15,7 +15,7 @@ namespace bpmist.firestore.Commands
         {
 
 
-            this.Initialize();
+            this.InitializeAfterConstruction();
         }
 
 
