@@ -1,0 +1,22 @@
+{
+  "guid": "87207EE9-438C-40F2-A4BD-FD63D1188403",
+  "name": "ValidateFormValues",
+  "interfaceProject": "bpmist.common",
+  "implementationProject": "bpmist.business",
+  "isQuery": false,
+  "injects": [
+  ],
+  "parameters": {
+    "FieldsInTask_bpmist.common.DataModels.SubDocumentTypes.FieldInTask[]": null,
+    "ProcessData_bpmist.common.DataModels.SubDocumentTypes.ProcessData": null,
+    "ProcessFields_bpmist.common.DataModels.SubDocumentTypes.ProcessField[]": null
+  },
+  "returnType": {
+    "IsFormValid_bool": null,
+    "ValidationErrors_List": {
+      "FieldName_string": null,
+      "ErrorMessage_string": null
+    }
+  },
+  "usedInApi": false
+}

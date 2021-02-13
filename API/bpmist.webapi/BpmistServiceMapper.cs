@@ -49,6 +49,9 @@ namespace API
             services.AddTransient<bpmist.common.ICommands.IStartNewProcessCommand, bpmist.business.Commands.StartNewProcessCommand>();
             services.AddSingleton<Func<bpmist.common.ICommands.IStartNewProcessCommand>>(x => () => x.GetService<bpmist.common.ICommands.IStartNewProcessCommand>());
 
+            services.AddTransient<bpmist.common.ICommands.IValidateFormValuesCommand, bpmist.business.Commands.ValidateFormValuesCommand>();
+            services.AddSingleton<Func<bpmist.common.ICommands.IValidateFormValuesCommand>>(x => () => x.GetService<bpmist.common.ICommands.IValidateFormValuesCommand>());
+
 
         }
     }
