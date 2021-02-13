@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="bpmist.common.DataModels.DocumentTypes.GlobalUser" Collapsed="true">
+    <Position X="25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAgAAAAAAABAAIAAAAAAAA=</HashCode>
+      <FileName>DataModels\DocumentTypes\GlobalUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.DocumentTypes.Group" Collapsed="true">
+    <Position X="18" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>DataModels\DocumentTypes\Group.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.DocumentTypes.Organization" Collapsed="true">
+    <Position X="19.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\DocumentTypes\Organization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.DocumentTypes.OrganizationUser" Collapsed="true">
+    <Position X="21.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAIAAAAAACAAAAAAAAAIAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>DataModels\DocumentTypes\OrganizationUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.DocumentTypes.Process">
+    <Position X="8.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAABAAA=</HashCode>
+      <FileName>DataModels\DocumentTypes\Process.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="VersionedProcessModels" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="bpmist.common.DataModels.DocumentTypes.ProcessInstance">
+    <Position X="0.75" Y="5" Width="1.75" />
+    <AssociationLine Name="ProcessData" Type="bpmist.common.DataModels.SubDocumentTypes.ProcessData" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.5" Y="6.188" />
+        <Point X="3.688" Y="6.188" />
+        <Point X="3.688" Y="7" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>MAAAAAAAAAAAIAAAAAAAIAAAAQAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>DataModels\DocumentTypes\ProcessInstance.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ProcessData" />
+      <Property Name="ProcessModel" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="TaskInstances" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="bpmist.common.DataModels.DocumentTypes.ProcessStates">
+    <Position X="18" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAIAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\DocumentTypes\ProcessInstance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.DocumentTypes.FieldTypes" Collapsed="true">
+    <Position X="23.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAACAAAAAA=</HashCode>
+      <FileName>DataModels\DocumentTypes\ProcessInstance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.ActionModel" Collapsed="true">
+    <Position X="10" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAABAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\Action.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.ActionTypes" Collapsed="true">
+    <Position X="18" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAQAAAAAAAAAACAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\Action.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.Activity" Collapsed="true">
+    <Position X="19.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\Activity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.Condition" Collapsed="true">
+    <Position X="25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\Condition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.ConditionItem" Collapsed="true">
+    <Position X="21.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\ConditionItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.ParallelTaskEndItem" Collapsed="true">
+    <Position X="25.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\ParallelTaskEndItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.ParallelTaskStartItem" Collapsed="true">
+    <Position X="25" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\ParallelTaskStartItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.ProcessModel">
+    <Position X="8" Y="7.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAEAEAAAAAAAAAQAAAAAAgAAIAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\ProcessModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Tasks" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ProcessFields" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.ProcessField">
+    <Position X="4.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\ProcessModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.ProcessData">
+    <Position X="3" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\ProcessModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.ProcessVisuals" Collapsed="true">
+    <Position X="19.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAACAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\ProcessVisuals.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.TaskFormModel" Collapsed="true">
+    <Position X="7.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\TaskFormModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Fields" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.FieldInTask">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\TaskFormModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Validation" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.FieldInTaskValidation">
+    <Position X="10.5" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\TaskFormModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.TaskInstance">
+    <Position X="4.25" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QAAAAEAAAAAAACAAABAAAAAEgAAAAAAAAAQAAIAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\TaskInstance.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TaskModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.TaskStates">
+    <Position X="23.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEIAgAAAAAAAAAABAAAgAAAAQAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\TaskInstance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.TaskModel">
+    <Position X="8" Y="5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQQAIAAAQAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\TaskModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TaskFormModel" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Actions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.DueDateConfiguration" Collapsed="true">
+    <Position X="19.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\TaskModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.AssigningConfiguration" Collapsed="true">
+    <Position X="21.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAoAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\TaskModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.AssigningRule" Collapsed="true">
+    <Position X="23.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\TaskModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bpmist.common.DataModels.SubDocumentTypes.DenormalizedTaskInstance" Collapsed="true">
+    <Position X="18" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAABAAAACAACAABAAAAAAEAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\SubDocumentTypes\UserTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
