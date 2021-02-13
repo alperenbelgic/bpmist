@@ -9,7 +9,7 @@
 #RUN npm run build -- --prod
 
 # Build backend
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 
 # Copy csproj and restore as distinct layers
@@ -19,6 +19,7 @@ COPY ["API/bpmist.core/bpmist.core.csproj", "bpmist.core/"]
 COPY ["API/bpmist.business/bpmist.business.csproj", "bpmist.business/"]
 COPY ["API/bpmist.data/bpmist.data.csproj", "bpmist.data/"]
 COPY ["API/bpmist.firestore/bpmist.firestore.csproj", "bpmist.firestore/"]
+COPY ["API/bpmist.javascript/bpmist.javascript.csproj", "bpmist.javascript/"]
 
 RUN dotnet restore "bpmist.webapi/bpmist.webapi.csproj"
 
@@ -33,7 +34,7 @@ RUN dotnet publish "bpmist.webapi.csproj" -c Release -o /app/publish
 
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 as final
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 as final
 WORKDIR /app
 COPY --from=publish /app/publish .
 #COPY --from=client /usr/src/app/dist/bpmist ./wwwroot
