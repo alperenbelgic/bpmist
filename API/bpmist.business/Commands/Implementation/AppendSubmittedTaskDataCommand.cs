@@ -12,6 +12,7 @@ namespace bpmist.business.Commands
 {
     public partial class AppendSubmittedTaskDataCommand
     {
+        List<KeyValuePair<string, DateTime?>> submittedDateValues;
         protected override async Task<AppendSubmittedTaskDataResult> ExecuteImplementationAsync(AppendSubmittedTaskDataParameter parameter, IContextInformation contextInformation)
         {
             // all data are in valid format
@@ -107,6 +108,11 @@ namespace bpmist.business.Commands
             }
         }
 
-        List<KeyValuePair<string, DateTime?>> submittedDateValues;
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            this.submittedDateValues = new List<KeyValuePair<string, DateTime?>>();
+        }
     }
 }
