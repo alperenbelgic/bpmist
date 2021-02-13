@@ -11,7 +11,8 @@
     "GetGroupQuery_bpmist.data.ICommands.IGetGroupQuery",
     "SaveOrganizationUserCommand_bpmist.data.ICommands.ISaveOrganizationUserCommand",
     "SaveGroupCommand_bpmist.data.ICommands.ISaveGroupCommand",
-    "AppendSubmittedTaskDataCommand_bpmist.common.ICommands.IAppendSubmittedTaskDataCommand"
+    "AppendSubmittedTaskDataCommand_bpmist.common.ICommands.IAppendSubmittedTaskDataCommand",
+    "ValidateFormValuesCommand_bpmist.common.ICommands.IValidateFormValuesCommand"
   ],
   "parameters": {
     "ProcessId_string": null,

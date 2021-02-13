@@ -10,7 +10,7 @@ namespace bpmist.business.Commands
     Command<SendUserActionParameter, SendUserActionResult>, ISendUserActionCommand
     {
         public SendUserActionCommand(
-            bpmist.data.ICommands.IGetProcessInstanceQuery _GetProcessInstanceQuery, bpmist.data.ICommands.ISaveProcessInstanceCommand _SaveProcessInstanceCommand, bpmist.data.ICommands.IGetOrganizationUserQuery _GetOrganizationUserQuery, bpmist.data.ICommands.IGetGroupQuery _GetGroupQuery, bpmist.data.ICommands.ISaveOrganizationUserCommand _SaveOrganizationUserCommand, bpmist.data.ICommands.ISaveGroupCommand _SaveGroupCommand, bpmist.common.ICommands.IAppendSubmittedTaskDataCommand _AppendSubmittedTaskDataCommand
+            bpmist.data.ICommands.IGetProcessInstanceQuery _GetProcessInstanceQuery, bpmist.data.ICommands.ISaveProcessInstanceCommand _SaveProcessInstanceCommand, bpmist.data.ICommands.IGetOrganizationUserQuery _GetOrganizationUserQuery, bpmist.data.ICommands.IGetGroupQuery _GetGroupQuery, bpmist.data.ICommands.ISaveOrganizationUserCommand _SaveOrganizationUserCommand, bpmist.data.ICommands.ISaveGroupCommand _SaveGroupCommand, bpmist.common.ICommands.IAppendSubmittedTaskDataCommand _AppendSubmittedTaskDataCommand, bpmist.common.ICommands.IValidateFormValuesCommand _ValidateFormValuesCommand
         )
         {
             this.GetProcessInstanceQuery = _GetProcessInstanceQuery;
@@ -20,6 +20,7 @@ namespace bpmist.business.Commands
             this.SaveOrganizationUserCommand = _SaveOrganizationUserCommand;
             this.SaveGroupCommand = _SaveGroupCommand;
             this.AppendSubmittedTaskDataCommand = _AppendSubmittedTaskDataCommand;
+            this.ValidateFormValuesCommand = _ValidateFormValuesCommand;
 
             this.InitializeAfterConstruction();
         }
@@ -31,5 +32,6 @@ namespace bpmist.business.Commands
         private bpmist.data.ICommands.ISaveOrganizationUserCommand SaveOrganizationUserCommand { get; }
         private bpmist.data.ICommands.ISaveGroupCommand SaveGroupCommand { get; }
         private bpmist.common.ICommands.IAppendSubmittedTaskDataCommand AppendSubmittedTaskDataCommand { get; }
+        private bpmist.common.ICommands.IValidateFormValuesCommand ValidateFormValuesCommand { get; }
     }
 }
