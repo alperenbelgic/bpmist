@@ -14,6 +14,8 @@ namespace bpmist.business.Commands
         )
         {
 
+
+            this.Initialize();
         }
 
 

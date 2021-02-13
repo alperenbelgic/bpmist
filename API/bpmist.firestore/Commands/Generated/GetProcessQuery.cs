@@ -14,6 +14,8 @@ namespace bpmist.firestore.Commands
         )
         {
 
+
+            this.Initialize();
         }
 
 

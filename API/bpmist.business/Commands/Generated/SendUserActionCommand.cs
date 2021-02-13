@@ -20,6 +20,8 @@ namespace bpmist.business.Commands
             this.SaveOrganizationUserCommand = _SaveOrganizationUserCommand;
             this.SaveGroupCommand = _SaveGroupCommand;
             this.AppendSubmittedTaskDataCommand = _AppendSubmittedTaskDataCommand;
+
+            this.Initialize();
         }
 
         private bpmist.data.ICommands.IGetProcessInstanceQuery GetProcessInstanceQuery { get; }

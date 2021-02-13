@@ -19,6 +19,8 @@ namespace bpmist.business.Commands
             this.GetGroupQuery = _GetGroupQuery;
             this.SaveGroupCommand = _SaveGroupCommand;
             this.SaveOrganizationUserCommand = _SaveOrganizationUserCommand;
+
+            this.Initialize();
         }
 
         private bpmist.data.ICommands.IGetProcessInstanceQuery GetProcessInstanceQuery { get; }

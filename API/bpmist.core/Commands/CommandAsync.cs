@@ -272,6 +272,8 @@ namespace bpmist.common.Commands
             }
         }
 
+        protected virtual void Initialize() { }
+
         public CommandBase<CommandParameter, ReturnType> HandleBreakingError()
         {
             this.BreakingErrorsHandled = true;

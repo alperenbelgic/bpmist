@@ -17,6 +17,8 @@ namespace bpmist.business.Commands
             this.CreateProcessInstanceCommand = _CreateProcessInstanceCommand;
             this.GetUserQuery = _GetUserQuery;
             this.SaveOrganizationUserCommand = _SaveOrganizationUserCommand;
+
+            this.Initialize();
         }
 
         private bpmist.data.ICommands.IGetProcessQuery GetProcessQuery { get; }
