@@ -29,7 +29,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="bpmist.common.DataModels.DocumentTypes.Process">
-    <Position X="8.25" Y="10.75" Width="1.5" />
+    <Position X="9.75" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAABAAA=</HashCode>
       <FileName>DataModels\DocumentTypes\Process.cs</FileName>
@@ -74,7 +74,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="bpmist.common.DataModels.SubDocumentTypes.ActionModel" Collapsed="true">
-    <Position X="10" Y="6.75" Width="1.5" />
+    <Position X="12" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAABAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataModels\SubDocumentTypes\Action.cs</FileName>
@@ -123,7 +123,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="bpmist.common.DataModels.SubDocumentTypes.ProcessModel">
-    <Position X="8" Y="7.75" Width="2.25" />
+    <Position X="9.5" Y="7.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAgAAAAAAAAAAEAEAAAAAAAAAQAAAAAAgAAIAAAAAAA=</HashCode>
       <FileName>DataModels\SubDocumentTypes\ProcessModel.cs</FileName>
@@ -136,7 +136,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="bpmist.common.DataModels.SubDocumentTypes.ProcessField">
-    <Position X="4.75" Y="7" Width="1.5" />
+    <Position X="6.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataModels\SubDocumentTypes\ProcessModel.cs</FileName>
@@ -157,7 +157,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="bpmist.common.DataModels.SubDocumentTypes.TaskFormModel" Collapsed="true">
-    <Position X="7.75" Y="2.75" Width="1.5" />
+    <Position X="4.75" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>DataModels\SubDocumentTypes\TaskFormModel.cs</FileName>
@@ -167,7 +167,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="bpmist.common.DataModels.SubDocumentTypes.FieldInTask">
-    <Position X="7.75" Y="0.5" Width="1.5" />
+    <Position X="4.75" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>DataModels\SubDocumentTypes\TaskFormModel.cs</FileName>
@@ -177,14 +177,14 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="bpmist.common.DataModels.SubDocumentTypes.FieldInTaskValidation">
-    <Position X="10.5" Y="0.75" Width="1.75" />
+    <Position X="6.75" Y="4.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataModels\SubDocumentTypes\TaskFormModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="bpmist.common.DataModels.SubDocumentTypes.TaskInstance">
-    <Position X="4.25" Y="3.75" Width="1.75" />
+    <Position X="0.75" Y="1.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>QAAAAEAAAAAAACAAABAAAAAEgAAAAAAAAAQAAIAAAAA=</HashCode>
       <FileName>DataModels\SubDocumentTypes\TaskInstance.cs</FileName>
@@ -201,7 +201,22 @@
     </TypeIdentifier>
   </Class>
   <Class Name="bpmist.common.DataModels.SubDocumentTypes.TaskModel">
-    <Position X="8" Y="5" Width="2.25" />
+    <Position X="9" Y="1.25" Width="2.25" />
+    <AssociationLine Name="Actions" Type="bpmist.common.DataModels.SubDocumentTypes.ActionModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.25" Y="2.562" />
+        <Point X="11.625" Y="2.562" />
+        <Point X="11.625" Y="4.346" />
+        <Point X="12" Y="4.346" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="TaskFormModel" Type="bpmist.common.DataModels.SubDocumentTypes.TaskFormModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9" Y="2.562" />
+        <Point X="5.438" Y="2.562" />
+        <Point X="5.438" Y="4" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAQQAIAAAQAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataModels\SubDocumentTypes\TaskModel.cs</FileName>
