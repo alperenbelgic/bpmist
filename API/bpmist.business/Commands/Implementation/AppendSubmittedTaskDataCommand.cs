@@ -28,6 +28,12 @@ namespace bpmist.business.Commands
                 var processField =
                     parameter.ProcessInstance.ProcessModel.ProcessFields.FirstOrDefault(pf => pf.Id == fieldInTask.Id);
 
+                if (processField == null)
+                {
+                    // TODO: consider logging
+                    continue;
+                }
+
                 if (processField.FieldType == FieldTypes.Date)
                 {
                     this.AssignDateValue(parameter.ProcessInstance.ProcessData.DateValues, fieldInTask);
@@ -101,6 +107,6 @@ namespace bpmist.business.Commands
             }
         }
 
-        List<KeyValuePair<string, DateTime?>> submittedDateValues = new List<KeyValuePair<string, DateTime?>>();
+        List<KeyValuePair<string, DateTime?>> submittedDateValues;
     }
 }
