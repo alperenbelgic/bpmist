@@ -11,6 +11,12 @@ namespace bpmist.business.Commands
     {
         protected override async Task<ValidateFormValuesResult> ExecuteImplementationAsync(ValidateFormValuesParameter parameter, IContextInformation contextInformation)
         {
+            var fieldsInTask = parameter.FieldsInTask;
+            var processData = parameter.ProcessData;
+            var processFields = parameter.ProcessFields;
+
+            // TODO: implement
+            return new ValidateFormValuesResult(true, new ValidateFormValues_ValidationErrorsResult[0]);
             throw new NotImplementedException();
         }
 
