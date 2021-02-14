@@ -488,7 +488,7 @@ public class CommandModel
     public void GetGeneratedCommandFilePath(out string filePath, out string fileName)
     {
         filePath = this.implementationProject + "\\" + "Commands\\Generated";
-        fileName = "\\" + this.name + (this.isQuery ? "Query" : "Command") + ".cs";
+        fileName = "\\" + this.name + (this.isQuery ? "Query" : "Command") + ".gen.cs";
     }
 
     public void GetImplementationCommandFilePath(out string filePath, out string fileName)
