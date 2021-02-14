@@ -33,8 +33,8 @@ public class PullTaskFromGroupResult
 
 
 
-        public static BusinessError TaskIsNotInProcessOrNotActive(params string[] messageTemplateData) => new BusinessError("TaskIsNotInProcessOrNotActive ", "Task is not found.  ", messageTemplateData);
-        public static BusinessError TaskIsNotAssignedToYourGroup(params string[] messageTemplateData) => new BusinessError("TaskIsNotAssignedToYourGroup ", "TaskIsNotAssignedToYourGroup.  ", messageTemplateData);
+        public static BusinessError TaskIsNotInProcessOrNotActive(params string[] messageTemplateData) => new BusinessError("TaskIsNotInProcessOrNotActive", "Task is not found.  ", messageTemplateData);
+        public static BusinessError TaskIsNotAssignedToYourGroup(params string[] messageTemplateData) => new BusinessError("TaskIsNotAssignedToYourGroup", "TaskIsNotAssignedToYourGroup.  ", messageTemplateData);
 }
 
 

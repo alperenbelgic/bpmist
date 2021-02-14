@@ -46,7 +46,7 @@ namespace bpmist.business.Commands
 
             var appendDataCommandResult = await this.AppendSubmittedTaskDataCommand.ExecuteAsync(new AppendSubmittedTaskDataParameter(processInstance, taskInstance, parameter.DateFormValues, parameter.TextFormValues), contextInformation);
 
-            // TODO:! handle data validation errors
+            await ValidateForm(processInstance, taskInstance, contextInformation);
 
             if (isSaveAction)
             {
@@ -95,6 +95,29 @@ namespace bpmist.business.Commands
             await this.SaveProcessInstance(processId, processInstance, contextInformation);
 
             return new SendUserActionResult(processCompleted, processCanceled, newTaskInstanceId, newTaskName, assignedName);
+        }
+
+        private async Task ValidateForm(ProcessInstance processInstance, TaskInstance taskInstance, IContextInformation contextInformation)
+        {
+            var fieldsInTask = taskInstance.TaskModel.TaskFormModel.Fields;
+            var processData = processInstance.ProcessData;
+            var processFields = processInstance.ProcessModel.ProcessFields;
+
+            var validationResult = await this.ValidateFormValuesCommand.ExecuteAsync(new ValidateFormValuesParameter(fieldsInTask, processData, processFields), contextInformation);
+
+            if (false == validationResult.Successful)
+            {
+                // TODO: How to handle if validation execution fails. 
+            }
+
+            if (false == validationResult.Value.IsFormValid)
+            {
+                string errorMessage = string.Join(" ", validationResult.Value.ValidationErrors.Select(ve =>
+                $"Field: {ve.FieldName}, Error message: {ve.ErrorMessage}."
+                ));
+
+                throw SendUserActionResult.InvalidFormValues(errorMessage);
+            }
         }
 
         private void CompleteProcessInstance(ProcessInstance processInstance)

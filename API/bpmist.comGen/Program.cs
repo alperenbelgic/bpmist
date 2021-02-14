@@ -324,7 +324,7 @@ namespace bpmist.comGen
                 resultPropertiesContent += string.Join(Environment.NewLine,
                     errorTypes.Select(et =>
                     {
-                        return $"        public static BusinessError {et.Key}(params string[] messageTemplateData) => new BusinessError(\"{ et.Key } \", \"{ et.Value } \", messageTemplateData);";
+                        return $"        public static BusinessError {et.Key}(params string[] messageTemplateData) => new BusinessError(\"{ et.Key }\", \"{ et.Value } \", messageTemplateData);";
                     }));
 
             }

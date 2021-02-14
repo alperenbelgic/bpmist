@@ -49,10 +49,11 @@ public class SendUserActionResult
         public string NewTaskName { get; } 
         public string AssignedName { get; } 
 
-        public static BusinessError TaskIsNotInProcessOrNotActive(params string[] messageTemplateData) => new BusinessError("TaskIsNotInProcessOrNotActive ", "Task is not found.  ", messageTemplateData);
-        public static BusinessError ActionIdNotContainedInTask(params string[] messageTemplateData) => new BusinessError("ActionIdNotContainedInTask ", "Action is not found.  ", messageTemplateData);
-        public static BusinessError UserNotAuthorised(params string[] messageTemplateData) => new BusinessError("UserNotAuthorised ", "You are not authorised for this action. The task should be assigned to you.  ", messageTemplateData);
-        public static BusinessError ActionNotPointingAValidProcessItem(params string[] messageTemplateData) => new BusinessError("ActionNotPointingAValidProcessItem ", "ActionNotPointingAValidProcessItem ", messageTemplateData);
+        public static BusinessError TaskIsNotInProcessOrNotActive(params string[] messageTemplateData) => new BusinessError("TaskIsNotInProcessOrNotActive", "Task is not found.  ", messageTemplateData);
+        public static BusinessError ActionIdNotContainedInTask(params string[] messageTemplateData) => new BusinessError("ActionIdNotContainedInTask", "Action is not found.  ", messageTemplateData);
+        public static BusinessError UserNotAuthorised(params string[] messageTemplateData) => new BusinessError("UserNotAuthorised", "You are not authorised for this action. The task should be assigned to you.  ", messageTemplateData);
+        public static BusinessError ActionNotPointingAValidProcessItem(params string[] messageTemplateData) => new BusinessError("ActionNotPointingAValidProcessItem", "ActionNotPointingAValidProcessItem ", messageTemplateData);
+        public static BusinessError InvalidFormValues(params string[] messageTemplateData) => new BusinessError("InvalidFormValues", "Invalid Form Values: {0} ", messageTemplateData);
 }
 
 
