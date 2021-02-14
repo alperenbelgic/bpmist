@@ -9,7 +9,7 @@
 #RUN npm run build -- --prod
 
 # Build backend
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
 
 # Copy csproj and restore as distinct layers
@@ -34,7 +34,7 @@ RUN dotnet publish "bpmist.webapi.csproj" -c Release -o /app/publish
 
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 as final
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 as final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
