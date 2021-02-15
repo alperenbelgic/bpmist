@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpService } from 'src/app/services/Web/http.service';
-import { WebService } from 'src/app/services/Web/web.service';
-import { Params, ActivatedRoute, Router } from '@angular/router';
+import { WebService, SendUserActionErrorCodes, ServiceResult } from 'src/app/services/Web/web.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormComponent } from '../form/form.component';
 import { SnackBarService } from 'src/app/services/UI/snack-bar.service';
 
@@ -54,6 +53,8 @@ export class EditTaskComponent implements OnInit {
   taskCompletedModel: TaskCompletedModel;
   showCompletedMessage = false;
   otherTasksShown = true;
+
+  formErrorMessage = '';
 
   isFormValid = false;
 
@@ -166,7 +167,17 @@ export class EditTaskComponent implements OnInit {
       returningForm.DateValues,
       returningForm.TextValues)
       .subscribe({
-        next: (r: any) => {
+        next: (r: ServiceResult<any>) => {
+
+          this.formErrorMessage = '';
+          if (false === r.Successful) {
+            const invalidFormValuesError = r.OperationErrors.find(e => e.ErrorCode === SendUserActionErrorCodes.InvalidFormValues);
+            if (invalidFormValuesError != null) {
+              // show error message
+              this.formErrorMessage = invalidFormValuesError.ErrorMessage;
+              return;
+            }
+          }
 
           if (actionId === 'save') {
             this.snackBar.open('Form values are saved.');

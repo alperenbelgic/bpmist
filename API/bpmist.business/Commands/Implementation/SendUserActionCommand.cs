@@ -112,9 +112,7 @@ namespace bpmist.business.Commands
 
             if (false == validationResult.Value.IsFormValid)
             {
-                string errorMessage = string.Join(" ", validationResult.Value.ValidationErrors.Select(ve =>
-                $"Field: {ve.FieldName}, Error message: {ve.ErrorMessage}."
-                ));
+                string errorMessage = string.Join(" ", validationResult.Value.ValidationErrors.Select(ve => ve.ErrorMessage));
 
                 throw SendUserActionResult.InvalidFormValues(errorMessage);
             }

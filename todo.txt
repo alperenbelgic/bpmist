@@ -1,8 +1,18 @@
 Todo:
 
 - required fields
-	- submitting empty required field should be handled.
-- requesting user field for leave request
+	+ submitting empty required field should be handled.
+	+ handle validation error in UI. show them etc	
+		+ consider how to handle other error messages. 
+		+ most of the error messages (actually including form values validation) only normally occurs if the service caller tweaks the system. probably better to ignore when they occur.
+	- validation with javascript injection (start date < end date)
+		- both in client and server side.
+- values for a past task	
+	- submitted values should be shown (instead of the latest versions)
+	- last versions could be included as well if changed. 
+- field visible, editable by javascript
+- requesting user field for leave request (priority?)
+	- first of, user as a field
 	- field auto calculated. 
 	- first user may change?
 	- then read only.

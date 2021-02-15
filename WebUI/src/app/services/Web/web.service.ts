@@ -28,7 +28,7 @@ export class WebService {
     ActionId: string,
     Notes: string,
     DateFormValues: object,
-    TextFormValues: object): Observable<any> {
+    TextFormValues: object): Observable<ServiceResult<any>> {
     const endPoint = '/SendUserActionCommand/Post';
     return this.httpService.post(
       endPoint, { ProcessId, ProcessInstanceId, TaskInstanceId, ActionId, Notes, DateFormValues, TextFormValues });
@@ -48,4 +48,22 @@ export class WebService {
     const endPoint = '/GetUserTaskInstancesQuery/Get';
     return this.httpService.get(endPoint);
   }
+
+}
+
+export class ServiceResult<T>{
+  Value: T;
+
+  Successful: boolean;
+  IsBreakingError: boolean; // I don't exactly remember the purpose but, should be, business error or exception distinction.
+  OperationErrors: OperationErrorInformation[];
+}
+
+export class OperationErrorInformation {
+  ErrorCode: string;
+  ErrorMessage: string;
+}
+
+export class SendUserActionErrorCodes {
+  public static readonly InvalidFormValues = 'InvalidFormValues';
 }
