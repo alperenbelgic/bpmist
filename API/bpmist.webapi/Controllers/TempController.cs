@@ -168,22 +168,30 @@ namespace API.Controllers
             string secondTaskId = Guid.NewGuid().ToString();
             string thirdTaskId = Guid.NewGuid().ToString();
 
+            // setting static ids for fields for keeping custom javascript runs
+            string startFieldId = "{A0A3DC51-67A3-4B9B-88CB-067376940DE2}";
+            string endFieldId = "{55A7B3A6-9D58-421A-B323-47DED5D09797}";
+            string notesId = "{D6B0F4E4-B037-4A85-8DAE-F40DACDD117F}";
+
             var startField = new ProcessField()
             {
                 FieldName = "Start Date",
-                FieldType = FieldTypes.Date
+                FieldType = FieldTypes.Date,
+                Id = startFieldId
             };
 
             var endField = new ProcessField()
             {
                 FieldName = "End Date",
-                FieldType = FieldTypes.Date
+                FieldType = FieldTypes.Date,
+                Id = endFieldId
             };
 
             var notesField = new ProcessField()
             {
                 FieldName = "Notes",
-                FieldType = FieldTypes.Text
+                FieldType = FieldTypes.Text,
+                Id = notesId
             };
 
             var tasks =
@@ -208,7 +216,24 @@ namespace API.Controllers
                                         {
                                             Id = startField.Id,
                                             Editable = true,
+                                            Validation = new FieldInTaskValidation()
+                                            {
+                                                CustomValidationDefinition = new CustomValidationDefinition()
+                                                {
+                                                    HasCustomValidation = true,
+                                                    CustomCodeContent = $@"
+        function validate(getValue) {{ 	
+	        var startDate = getValue('Start Date', '{startFieldId}');	
+	        var endDate = getValue('End Date', '{endFieldId}');		
 
+		    return endDate > startDate;
+            /* or return 'Start Date must be before End Date' if values satisfy.*/
+	    }}
+",
+                                                    ValidationErrorMessage = "End Date must be later than Start Date"
+
+                                                }
+                                            }
                                         },
                                         new FieldInTask
                                         {

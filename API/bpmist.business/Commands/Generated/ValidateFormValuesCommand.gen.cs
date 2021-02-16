@@ -10,14 +10,14 @@ namespace bpmist.business.Commands
     Command<ValidateFormValuesParameter, ValidateFormValuesResult>, IValidateFormValuesCommand
     {
         public ValidateFormValuesCommand(
-            
+            bpmist.common.ICommands.IValidateWithCustomCodeCommand _ValidateWithCustomCodeCommand
         )
         {
-
+            this.ValidateWithCustomCodeCommand = _ValidateWithCustomCodeCommand;
 
             this.InitializeAfterConstruction();
         }
 
-
+        private bpmist.common.ICommands.IValidateWithCustomCodeCommand ValidateWithCustomCodeCommand { get; }
     }
 }

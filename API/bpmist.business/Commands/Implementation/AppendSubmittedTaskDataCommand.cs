@@ -18,6 +18,8 @@ namespace bpmist.business.Commands
             // all data are in valid format
             // all required data provided
 
+            // TODO: for the api parameter, consider using nullable for "nonnullable by default" types. it would be better to accept values in and detect the problem if any.  otherwise, immediate exception throwing won't reveal the actual problem.
+
             PrepareDateValues(parameter);
 
             // validate

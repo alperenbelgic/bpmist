@@ -60,6 +60,23 @@ namespace bpmist.business.Commands
                         continue; // if it is required and non-existing, no need to check for other validations.
                     }
                 }
+
+                if (validationDefinition.CustomValidationDefinition.HasCustomValidation)
+                {
+                    var result = await this.ValidateWithCustomCodeCommand.ExecuteAsync(
+                                            new ValidateWithCustomCodeParameter(
+                                                processData,
+                                                validationDefinition.CustomValidationDefinition.CustomCodeContent),
+                                            contextInformation);
+
+                    if (false == result.Value.IsFormValid)
+                    {
+                        string validationMessage = result.Value.ValidationErrorMessage ?? validationDefinition.CustomValidationDefinition.ValidationErrorMessage;
+
+                        validationErrors.Add(new ValidateFormValues_ValidationErrorsResult(processField.FieldName, validationMessage));
+                    }
+
+                }
             }
 
             if (validationErrors.Any())

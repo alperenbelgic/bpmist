@@ -52,6 +52,9 @@ namespace API
             services.AddTransient<bpmist.common.ICommands.IValidateFormValuesCommand, bpmist.business.Commands.ValidateFormValuesCommand>();
             services.AddSingleton<Func<bpmist.common.ICommands.IValidateFormValuesCommand>>(x => () => x.GetService<bpmist.common.ICommands.IValidateFormValuesCommand>());
 
+            services.AddTransient<bpmist.common.ICommands.IValidateWithCustomCodeCommand, bpmist.javascript.Commands.ValidateWithCustomCodeCommand>();
+            services.AddSingleton<Func<bpmist.common.ICommands.IValidateWithCustomCodeCommand>>(x => () => x.GetService<bpmist.common.ICommands.IValidateWithCustomCodeCommand>());
+
 
         }
     }

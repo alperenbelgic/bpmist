@@ -7,7 +7,7 @@ namespace API
     {
         public static void AddServices(this IServiceCollection services)
         {
-            services.AddTransient<bpmist.common.Javascript.IJavascriptValidator, bpmist.javascript.JavascriptValidator>();
+
         }
     }
 }

@@ -5,6 +5,7 @@
   "implementationProject": "bpmist.business",
   "isQuery": false,
   "injects": [
+    "ValidateWithCustomCodeCommand_bpmist.common.ICommands.IValidateWithCustomCodeCommand"
   ],
   "parameters": {
     "FieldsInTask_bpmist.common.DataModels.SubDocumentTypes.FieldInTask[]": null,

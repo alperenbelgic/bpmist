@@ -1,0 +1,18 @@
+{
+  "guid": "2C948C8E-B492-4FA7-B27C-EF5ABB09347B",
+  "name": "ValidateWithCustomCode",
+  "interfaceProject": "bpmist.common",
+  "implementationProject": "bpmist.javascript",
+  "isQuery": false,
+  "injects": [
+  ],
+  "parameters": {
+    "ProcessData_bpmist.common.DataModels.SubDocumentTypes.ProcessData": null,
+    "CustomCode_string": null
+  },
+  "returnType": {
+    "IsFormValid_bool": null,
+    "ValidationErrorMessage_string": null
+  },
+  "usedInApi": false
+}
