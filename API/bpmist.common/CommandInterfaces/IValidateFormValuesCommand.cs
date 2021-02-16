@@ -11,15 +11,15 @@ namespace bpmist.common.ICommands
     public class ValidateFormValuesParameter
     {
         public ValidateFormValuesParameter(
-            bpmist.common.DataModels.SubDocumentTypes.FieldInTask[] FieldsInTask, bpmist.common.DataModels.SubDocumentTypes.ProcessData ProcessData, bpmist.common.DataModels.SubDocumentTypes.ProcessField[] ProcessFields
+            bpmist.common.DataModels.SubDocumentTypes.TaskFormModel TaskFormModel, bpmist.common.DataModels.SubDocumentTypes.ProcessData ProcessData, bpmist.common.DataModels.SubDocumentTypes.ProcessField[] ProcessFields
             )
         {
-            this.FieldsInTask = FieldsInTask;
+            this.TaskFormModel = TaskFormModel;
             this.ProcessData = ProcessData;
             this.ProcessFields = ProcessFields;
         }
 
-        public bpmist.common.DataModels.SubDocumentTypes.FieldInTask[] FieldsInTask { get; } 
+        public bpmist.common.DataModels.SubDocumentTypes.TaskFormModel TaskFormModel { get; } 
         public bpmist.common.DataModels.SubDocumentTypes.ProcessData ProcessData { get; } 
         public bpmist.common.DataModels.SubDocumentTypes.ProcessField[] ProcessFields { get; } 
     }

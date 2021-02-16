@@ -218,21 +218,7 @@ namespace API.Controllers
                                             Editable = true,
                                             Validation = new FieldInTaskValidation()
                                             {
-                                                CustomValidationDefinition = new CustomValidationDefinition()
-                                                {
-                                                    HasCustomValidation = true,
-                                                    CustomCodeContent = $@"
-        function validate(getValue) {{ 	
-	        var startDate = getValue('Start Date', '{startFieldId}');	
-	        var endDate = getValue('End Date', '{endFieldId}');		
-
-		    return endDate > startDate;
-            /* or return 'Start Date must be before End Date' if values satisfy.*/
-	    }}
-",
-                                                    ValidationErrorMessage = "End Date must be later than Start Date"
-
-                                                }
+                                                
                                             }
                                         },
                                         new FieldInTask
@@ -244,6 +230,21 @@ namespace API.Controllers
                                                 IsRequired  = true
                                             }
                                         },
+                                    },
+                                    CustomValidationDefinition = new CustomValidationDefinition()
+                                    {
+                                            HasCustomValidation = true,
+                                            CustomCodeContent = $@"
+function validate(getValue) {{ 	
+	var startDate = getValue('Start Date', '{startFieldId}');	
+	var endDate = getValue('End Date', '{endFieldId}');		
+
+	return endDate > startDate;
+    /* or return 'Start Date must be before End Date' if values satisfy.*/
+}}
+",
+                                            ValidationErrorMessage = "End Date must be later than Start Date"
+
                                     }
                                 }
                             },

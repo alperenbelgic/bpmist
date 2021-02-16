@@ -13,7 +13,8 @@ namespace bpmist.business.Commands
     {
         protected override async Task<ValidateFormValuesResult> ExecuteImplementationAsync(ValidateFormValuesParameter parameter, IContextInformation contextInformation)
         {
-            var fieldsInTask = parameter.FieldsInTask;
+            var taskFormModel = parameter.TaskFormModel;
+            var fieldsInTask = parameter.TaskFormModel.Fields;
             var processData = parameter.ProcessData;
             var processFields = parameter.ProcessFields;
 
@@ -60,23 +61,23 @@ namespace bpmist.business.Commands
                         continue; // if it is required and non-existing, no need to check for other validations.
                     }
                 }
+            }
 
-                if (validationDefinition.CustomValidationDefinition.HasCustomValidation)
+            if (taskFormModel.CustomValidationDefinition.HasCustomValidation)
+            {
+                var result = await this.ValidateWithCustomCodeCommand.ExecuteAsync(
+                                        new ValidateWithCustomCodeParameter(
+                                            processData,
+                                            taskFormModel.CustomValidationDefinition.CustomCodeContent),
+                                        contextInformation);
+
+                if (false == result.Value.IsFormValid)
                 {
-                    var result = await this.ValidateWithCustomCodeCommand.ExecuteAsync(
-                                            new ValidateWithCustomCodeParameter(
-                                                processData,
-                                                validationDefinition.CustomValidationDefinition.CustomCodeContent),
-                                            contextInformation);
+                    string validationMessage = result.Value.ValidationErrorMessage ?? taskFormModel.CustomValidationDefinition.ValidationErrorMessage;
 
-                    if (false == result.Value.IsFormValid)
-                    {
-                        string validationMessage = result.Value.ValidationErrorMessage ?? validationDefinition.CustomValidationDefinition.ValidationErrorMessage;
-
-                        validationErrors.Add(new ValidateFormValues_ValidationErrorsResult(processField.FieldName, validationMessage));
-                    }
-
+                    validationErrors.Add(new ValidateFormValues_ValidationErrorsResult("", validationMessage));
                 }
+
             }
 
             if (validationErrors.Any())

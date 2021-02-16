@@ -9,6 +9,10 @@ namespace bpmist.common.DataModels.SubDocumentTypes
     public class TaskFormModel : SubDocumentWithId
     {
         [FirestoreProperty] public FieldInTask[] Fields { get; set; } = new FieldInTask[0];
+
+
+        [FirestoreProperty]
+        public CustomValidationDefinition CustomValidationDefinition { get; set; } = new CustomValidationDefinition();
     }
 
     [FirestoreData]
@@ -24,9 +28,6 @@ namespace bpmist.common.DataModels.SubDocumentTypes
     {
         [FirestoreProperty]
         public bool IsRequired { get; set; } = false; // This shouldn't be relevant if FieldInTask.Editable is false.
-
-        [FirestoreProperty]
-        public CustomValidationDefinition CustomValidationDefinition { get; set; } = new CustomValidationDefinition();
     }
 
     [FirestoreData]

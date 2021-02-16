@@ -8,7 +8,7 @@
     "ValidateWithCustomCodeCommand_bpmist.common.ICommands.IValidateWithCustomCodeCommand"
   ],
   "parameters": {
-    "FieldsInTask_bpmist.common.DataModels.SubDocumentTypes.FieldInTask[]": null,
+    "TaskFormModel_bpmist.common.DataModels.SubDocumentTypes.TaskFormModel": null,
     "ProcessData_bpmist.common.DataModels.SubDocumentTypes.ProcessData": null,
     "ProcessFields_bpmist.common.DataModels.SubDocumentTypes.ProcessField[]": null
   },

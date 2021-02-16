@@ -99,11 +99,11 @@ namespace bpmist.business.Commands
 
         private async Task ValidateForm(ProcessInstance processInstance, TaskInstance taskInstance, IContextInformation contextInformation)
         {
-            var fieldsInTask = taskInstance.TaskModel.TaskFormModel.Fields;
+            var taskFormModel = taskInstance.TaskModel.TaskFormModel;
             var processData = processInstance.ProcessData;
             var processFields = processInstance.ProcessModel.ProcessFields;
 
-            var validationResult = await this.ValidateFormValuesCommand.ExecuteAsync(new ValidateFormValuesParameter(fieldsInTask, processData, processFields), contextInformation);
+            var validationResult = await this.ValidateFormValuesCommand.ExecuteAsync(new ValidateFormValuesParameter(taskFormModel, processData, processFields), contextInformation);
 
             if (false == validationResult.Successful)
             {
