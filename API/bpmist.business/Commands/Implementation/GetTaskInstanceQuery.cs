@@ -34,7 +34,7 @@ namespace bpmist.business.Commands
             var otherTasks = this.GetOtherTasks(processInstance.TaskInstances);
 
             var form = this.CreateForm(processInstance, taskInstance, taskInstance.TaskModel.TaskFormModel);
-
+            
             if (taskState == TaskStates.Completed || taskState == TaskStates.Canceled)
             {
                 // no action, no editing.

@@ -1,17 +1,27 @@
 Todo:
-
-- required fields
+- introduce mobile (rather earlier than later, because architecture should be aligned)
++ required fields
 	+ submitting empty required field should be handled.
 	+ handle validation error in UI. show them etc	
 		+ consider how to handle other error messages. 
 		+ most of the error messages (actually including form values validation) only normally occurs if the service caller tweaks the system. probably better to ignore when they occur.
-	- validation with javascript injection (start date < end date)
-		- both in client and server side.
+	+- validation with javascript injection (start date < end date)
+		+- both in client and +server side.
+			+ I am not going to run custom validatations in client side. because, it brings complexity also, it actually works fine like this. I will work anyway once the form is submitted. 
+- other validations
+	- date
+		- can select x days after/before or later/earlier (from today)		
 - values for a past task	
+	- submitted values should be saved (each)
+	- should we also save the full snap shot?
+		- or we can replay each submitted values
+	- should specifically diff is logged
+		- task form has 4 values, but only two of them changed. 
 	- submitted values should be shown (instead of the latest versions)
-	- last versions could be included as well if changed. 
+		- last versions could be included as well if changed. 
 - field visible, editable by javascript
-- requesting user field for leave request (priority?)
+	- if we are going to do these in client side (and it is the only practical way), would that be fine to do also custom validations in client side. 
+- requesting user field for leave request (is this priority?)
 	- first of, user as a field
 	- field auto calculated. 
 	- first user may change?
@@ -38,7 +48,8 @@ Todo:
 	- content from configuration
 - actions tooltip
 	- fix tooltip for save action
-
+- if action brings back to the same task handle it in UI, because in default it leaves the current task (except save)
+- scenarios for when a previous task is revisited, what are the chalanges?
 
 Later:
 - collection group queries
