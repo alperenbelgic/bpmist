@@ -1,3 +1,8 @@
-<GridLayout>
-  <page-router-outlet></page-router-outlet>
-</GridLayout>
+<div fxLayout="row">
+  <app-left-menu></app-left-menu>
+  <div style="height: 100vh; overflow-y: auto;width: 100%;">
+    <router-outlet></router-outlet>
+
+  </div>
+
+</div>
