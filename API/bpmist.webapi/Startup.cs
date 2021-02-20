@@ -38,7 +38,7 @@ namespace API
             });
 
             services.AddBpmistServices();
-            
+
             services.AddServices();
 
         }
@@ -53,7 +53,10 @@ namespace API
 
             app.UseCors("Local");
 
-            app.UseHttpsRedirection();
+            if (!env.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
