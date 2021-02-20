@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { WebServiceAddress } from './web.service.adress';
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +10,10 @@ import { Observable } from 'rxjs';
 export class HttpService {
 
   getServiceRootPath(): string {
-    if (location.hostname === 'localhost') {
-      return 'https://localhost:5001/api';
-    } else {
-      return '/api';
-    }
+    return this.webServiceAddress.get();
   }
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private webServiceAddress: WebServiceAddress, private router: Router) {
 
   }
 
