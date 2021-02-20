@@ -8,10 +8,13 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { ListProcessesComponent } from './components/list-processes/list-processes.component';
 
-import { WebService } from '../app/services/Web/web.service';
+import { AuthKeyInterceptor } from './services/Web/auth-key.interceptor';
 
 @NgModule({
-    providers: [],
+    providers: [
+        {
+        provide: HTTP_INTERCEPTORS, useClass: AuthKeyInterceptor, multi: true
+    }],
 
     bootstrap: [
         AppComponent
