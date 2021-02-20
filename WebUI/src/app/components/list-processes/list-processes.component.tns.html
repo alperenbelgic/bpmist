@@ -1,0 +1,13 @@
+<Label text="title"></Label>
+
+<ListView
+  *ngIf="processes!=null"
+  row="3"
+  [items]="processes"
+>
+  <ng-template let-item="item">
+    <Label [text]="item.ProcessName"></Label>
+
+
+  </ng-template>
+</ListView>
