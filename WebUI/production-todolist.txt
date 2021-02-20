@@ -1,0 +1,2 @@
+- remove "android:usesCleartextTraffic="true"" from App_Resources\Android\src\main\AndroidManifest.xml
+- src/environments/environment.ts: environment.production must be true.
