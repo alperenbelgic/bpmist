@@ -11,7 +11,7 @@ import { ListProcessesComponent } from './components/list-processes/list-process
 import { WebService } from '../app/services/Web/web.service';
 
 @NgModule({
-    providers: [WebService],
+    providers: [],
 
     bootstrap: [
         AppComponent
