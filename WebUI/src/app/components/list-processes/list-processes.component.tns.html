@@ -6,7 +6,11 @@
   [items]="processes"
 >
   <ng-template let-item="item">
-    <Label [text]="item.ProcessName"></Label>
+    <Label
+      [text]="item.ProcessName"
+      [nsRouterLink]="['/NewProcess', item.ProcessId]"
+      pageTransition="true"
+    ></Label>
 
 
   </ng-template>
