@@ -1,13 +1,11 @@
-<StackLayout backgroundColor="lightgray">
+<StackLayout >
 
   <Label text="{{this.taskModel == null}}"></Label>
   <Label text="{{this.taskModel?.form == null}}"></Label>
 
   <app-form
-    *ngIf="taskModel"
-    #appForm
-    [form]="taskModel?.form"
-    (formValid)="updateFormValidity($event)"
+    *ngIf="taskModel?.form"
+    [form]="taskModel.form"
   ></app-form>
 
 

@@ -1,25 +1,4 @@
-<!-- <div
-  *ngFor="let field of fields"
-  class="field-wrapper"
->
-  <app-generic-field [field]="field"></app-generic-field>
-</div> -->
-<StackLayout backgroundColor="lightgray">
-
-
-<ListView
-  *ngIf="fields"
-  row="3"
-  [items]="fields"
->
-  <ng-template let-field="item">
-    <StackLayout backgroundColor="red">
-    <Label text="{{field?.fieldName}}"></Label>
-    <Label [text]="'field.fieldName'"></Label>
-</StackLayout>
-
-  </ng-template>
-</ListView>
-
-
+<StackLayout>
+  <Label text="helloo"></Label>
+  <RadDataForm  #myRuntimeDataFormComp [source]="formValues" tkExampleTitle tkToggleNavButton  (editorUpdate)="onEditorUpdate($event)" ></RadDataForm>
 </StackLayout>
