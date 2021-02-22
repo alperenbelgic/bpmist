@@ -9,6 +9,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ListProcessesComponent } from './components/list-processes/list-processes.component';
 
 import { AuthKeyInterceptor } from './services/Web/auth-key.interceptor';
+import { EditTaskComponent } from './components/edit-task/edit-task.component';
+import { NativeScriptUIDataFormModule } from "nativescript-ui-dataform/angular";
+import { FormComponent } from './components/form/form.component';
 
 @NgModule({
     providers: [
@@ -23,11 +26,14 @@ import { AuthKeyInterceptor } from './services/Web/auth-key.interceptor';
         NativeScriptModule,
         AppRoutingModule,
         NativeScriptHttpClientModule,
-        NativeScriptFormsModule
+        NativeScriptFormsModule,
+        NativeScriptUIDataFormModule
     ],
     declarations: [
         AppComponent,
-        ListProcessesComponent
+        ListProcessesComponent,
+        EditTaskComponent,
+        FormComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
