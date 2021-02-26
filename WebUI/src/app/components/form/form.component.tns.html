@@ -1,4 +1,9 @@
 <StackLayout>
-  <Label text="helloo"></Label>
-  <RadDataForm  #myRuntimeDataFormComp [source]="formValues" tkExampleTitle tkToggleNavButton  (editorUpdate)="onEditorUpdate($event)" ></RadDataForm>
+  <RadDataForm
+    #myRuntimeDataFormComp
+    [source]="formValues"
+    tkExampleTitle
+    tkToggleNavButton
+    (editorUpdate)="onEditorUpdate($event)"
+  ></RadDataForm>
 </StackLayout>
