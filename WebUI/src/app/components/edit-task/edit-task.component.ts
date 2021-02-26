@@ -58,7 +58,7 @@ export class EditTaskComponent implements OnInit {
 
   isFormValid = false;
 
-  @ViewChild('appForm') formComponent: FormComponent;
+  @ViewChild('appForm', { static: false }) formComponent: FormComponent;
 
   constructor(
     private webService: WebService,
@@ -135,7 +135,9 @@ export class EditTaskComponent implements OnInit {
     this.webService.StartNewProcessCommand(processId).subscribe({
       next: (r: any) => {
         // EditTask/:processId/:processInstanceId/:taskInstanceId
-        this.router.navigate(['EditTask', processId, r.Value.ProcessInstanceId, r.Value.TaskInstanceId]);
+        //this.router.navigate(['EditTask', processId, r.Value.ProcessInstanceId, r.Value.TaskInstanceId]);
+        this.initialize(processId, r.Value.ProcessInstanceId, r.Value.TaskInstanceId);
+        return;
 
         // this.taskModel = new TaskModel();
         // this.taskModel.processName = r.Value.ProcessName;
@@ -174,6 +176,7 @@ export class EditTaskComponent implements OnInit {
             const invalidFormValuesError = r.OperationErrors.find(e => e.ErrorCode === SendUserActionErrorCodes.InvalidFormValues);
             if (invalidFormValuesError != null) {
               // show error message
+              console.log('error', invalidFormValuesError.ErrorMessage);
               this.formErrorMessage = invalidFormValuesError.ErrorMessage;
               return;
             }
