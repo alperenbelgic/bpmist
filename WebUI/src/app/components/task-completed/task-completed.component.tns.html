@@ -1,0 +1,86 @@
+<StackLayout>
+  <Image
+    *ngIf="!taskCompletedModel.processCompleted && !taskCompletedModel.processCanceled"
+    src="~/assets/images/completed-green.png"
+    class="image"
+  ></Image>
+  <Image
+    *ngIf="taskCompletedModel.processCompleted"
+    src="~/assets/images/completed-green.png"
+    class="image"
+  ></Image>
+  <Image
+    *ngIf="taskCompletedModel.processCanceled"
+    src="~/assets/images/cancel.jpg"
+    class="image"
+  ></Image>
+
+
+  <Label
+    *ngIf="!taskCompletedModel.processCompleted && !taskCompletedModel.processCanceled"
+    text="Congrats!"
+    textAlignment="center"
+    class="congrats-text"
+  ></Label>
+  <Label
+    *ngIf="taskCompletedModel.processCompleted"
+    text="That's it!"
+    textAlignment="center"
+    class="congrats-text"
+  ></Label>
+  <Label
+    *ngIf="taskCompletedModel.processCanceled"
+    text="Done!"
+    textAlignment="center"
+    class="congrats-text"
+  ></Label>
+
+
+  <Label
+    *ngIf="!taskCompletedModel.processCompleted && !taskCompletedModel.processCanceled"
+    text="Task Completed!"
+    textAlignment="center"
+  ></Label>
+  <Label
+    *ngIf="taskCompletedModel.processCompleted"
+    text="The process with all tasks are now completed!"
+    textAlignment="center"
+  ></Label>
+  <Label
+    *ngIf="taskCompletedModel.processCanceled"
+    text="The process is canceled."
+    textAlignment="center"
+  ></Label>
+
+
+  <ng-container *ngIf="!taskCompletedModel.processCompleted && !taskCompletedModel.processCanceled">
+    <StackLayout>
+
+      <!-- <h5>Next task is</h5>
+      <a
+        class="next-task"
+        [routerLink]="['/EditTask/' + taskCompletedModel.processId + '/' + taskCompletedModel.processInstanceId + '/'+ taskCompletedModel.taskInstanceId]"
+      >{{taskCompletedModel.taskName}}</a>
+      <h5 class="assigned-to-label">Assigned to </h5>
+      <h2 class="assigned-to">{{taskCompletedModel.assigneeName}}</h2> -->
+
+      <Label text="Next task is"></Label>
+      <!-- <Label
+        [text]="taskCompletedModel.taskName"
+        [routerLink]="['/EditTask/' + taskCompletedModel.processId + '/' + taskCompletedModel.processInstanceId + '/'+ taskCompletedModel.taskInstanceId]"
+      ></Label> -->
+      <Label
+        [text]="taskCompletedModel.taskName"
+        [nsRouterLink]="['/EditTask/' + taskCompletedModel.processId + '/' + taskCompletedModel.processInstanceId + '/'+ taskCompletedModel.taskInstanceId]"
+      ></Label>
+
+      <Label text="Assigned to"></Label>
+      <Label [text]="taskCompletedModel.assigneeName"></Label>
+
+    </StackLayout>
+
+  </ng-container>
+
+
+
+</StackLayout>

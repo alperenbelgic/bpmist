@@ -12,6 +12,7 @@ import { AuthKeyInterceptor } from './services/Web/auth-key.interceptor';
 import { EditTaskComponent } from './components/edit-task/edit-task.component';
 import { NativeScriptUIDataFormModule } from "nativescript-ui-dataform/angular";
 import { FormComponent } from './components/form/form.component';
+import { TaskCompletedComponent } from './components/task-completed/task-completed.component';
 
 @NgModule({
     providers: [
@@ -33,7 +34,8 @@ import { FormComponent } from './components/form/form.component';
         AppComponent,
         ListProcessesComponent,
         EditTaskComponent,
-        FormComponent
+        FormComponent,
+        TaskCompletedComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
