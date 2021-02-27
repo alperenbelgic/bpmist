@@ -1,12 +1,31 @@
-<StackLayout >
+<ActionBar title="Task"></ActionBar>
 
-  <Label text="{{this.taskModel == null}}"></Label>
-  <Label text="{{this.taskModel?.form == null}}"></Label>
+<StackLayout *ngIf="taskModel!=null && !showCompletedMessage">
+
 
   <app-form
+    #appForm
     *ngIf="taskModel?.form"
     [form]="taskModel.form"
   ></app-form>
 
 
+  <ListView
+    *ngIf="taskModel?.primaryActions!=null"
+    [items]="taskModel.primaryActions"
+  >
+    <ng-template let-action="item">
+      <Button
+        class="my-button"
+        [text]="action.ActionText"
+        (tap)="submit(action.ActionId)"
+        [isEnabled]="!taskModel.assignmentStates.assignedToCurrentUser || !isFormValid"
+      ></Button>
+
+    </ng-template>
+  </ListView>
+</StackLayout>
+
+<StackLayout *ngIf="showCompletedMessage == true">
+  <app-task-completed [taskCompletedModel]="taskCompletedModel"></app-task-completed>
 </StackLayout>

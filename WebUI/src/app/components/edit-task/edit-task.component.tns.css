@@ -1,0 +1,26 @@
+.my-button {
+  android-elevation: 4;
+  background-color: lightseagreen;
+  border-color: darkolivegreen;
+  border-width: 1;
+  color: whitesmoke;
+  font-size: 18;
+  font-weight: bold;
+}
+
+.my-button:active {
+  android-elevation: 8;
+  background-color: whitesmoke;
+  border-color: darkolivegreen;
+  border-width: 1;
+  color: lightseagreen;
+  font-size: 18;
+  font-weight: bold;
+}
+
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
