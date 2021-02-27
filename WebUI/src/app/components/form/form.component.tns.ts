@@ -2,6 +2,9 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input, O
 import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 import { DataFormEditorType, PropertyEditor, EntityProperty } from 'nativescript-ui-dataform';
 import { RadDataFormComponent } from 'nativescript-ui-dataform/angular';
+import { isIOS } from '@nativescript/core';
+declare var NSDateFormatter: any;
+declare var java: any;
 
 @Component({
     selector: 'app-form',
@@ -49,16 +52,38 @@ export class FormComponent implements OnInit {
     }
 
     public onEditorUpdate(args) {
-        console.log('EDITOR UPDATED');
-        // if (args.propertyName === "hodor") {
-        try {
-            // args.editor.setDateFormat('yyyy/MM/dd');
-        }
-        catch{
 
-        }
+        let fieldId = args.propertyName;
 
-        // }
+        let field = (this.form.Fields as any[]).find(f => f.FieldId == fieldId);
+
+        if (field != null) {
+
+            try {
+                if (field.FieldType === 'Date') {
+                    if (isIOS) {
+                        if (args?.editor?.dateFormatter != null) { // not sure how to confirm in an ios device
+                            const dateFormatter = NSDateFormatter.alloc().init();
+                            dateFormatter.dateFormat = "MM-yyyy-dd";
+
+                            // args.editor.ios.dateFormatter = dateFormatter; (this version is probably incorrect but can't test on ios now)
+                            args.editor.dateFormatter = dateFormatter;
+                        }
+
+                    } else {
+
+                        if (args?.editor?.setDateFormat != null) {
+                            let simpleDateFormat = new java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.US);
+
+                            args.editor.setDateFormat(simpleDateFormat);
+                        }
+                    }
+                }
+            }
+            catch (err) {
+                console.log('onEditorUpdate error', err);
+            }
+        }
     }
 
     ngOnInit(): void {
@@ -74,17 +99,15 @@ export class FormComponent implements OnInit {
             this.formValues[field.FieldId] = this.getValue(field);
         });
 
-        this.formValues["{A0A3DC51-67A3-4B9B-88CB-067376940DE2}"] = new Date();
-
-        console.log('form values', this.formValues);
+        this.formValues["{A0A3DC51-67A3-4B9B-88CB-067376940DE2}"] = new Date(2015, 1, 22);
     }
 
     ngAfterViewInit() {
         (this.form.Fields as any[]).forEach(field => {
-            const property = this.myRuntimeDataFormComp.dataForm.getPropertyByName(field.FieldId);
+            let property = this.myRuntimeDataFormComp.dataForm.getPropertyByName(field.FieldId);
             property.displayName = field.FieldName;
 
-            const propertyEditor = new PropertyEditor();
+            let propertyEditor = new PropertyEditor();
 
             if (field.FieldType === 'Date') {
                 propertyEditor.type = DataFormEditorType.DatePicker;
@@ -99,6 +122,37 @@ export class FormComponent implements OnInit {
 
     getReturningForm(): ReturningForm {
         const returningForm = new ReturningForm();
+
+        const objectKeys = Object.keys(this.formValues);
+
+        objectKeys.forEach(fieldId => {
+
+            let field = (this.form.Fields as any[]).find(f => f.FieldId == fieldId);
+
+            if (field === null) {
+                return;
+            }
+
+            let value = this.formValues[fieldId];
+            if (field.FieldType === 'Date') {
+                // Date values are kept as DateTime (containing date and time parts)
+                // and they are considered in local time at midnight
+                // They are converted to UTC.
+                // and in some local time zones (such as BST) they have yesterday's Date after conversion
+                // In order to prevent this, we pass them as integer arrays as [year, month(January=1), day]
+                let dateValueArray: number[] = null;
+
+                if (value != null) {
+                    let dateValue: Date = value as Date;
+                    dateValueArray = [dateValue.getFullYear(), dateValue.getMonth() + 1, dateValue.getDate()];
+                }
+
+                returningForm.DateValues[fieldId] = dateValueArray;
+            }
+            else if (field.fieldType === 'Text') {
+                returningForm.TextValues[fieldId] = value;
+            }
+        });
 
         // this.fields.forEach(f => {
         //   if (f.fieldType === 'Date') {
@@ -140,7 +194,7 @@ export class RenderingField {
                 // if form control triggers a change we set the field (not the property)
                 // the property setter also sets to the formControl
 
-                if (this._fieldValue !== v) {
+                if (this._fieldValue != v) {
                     this._fieldValue = v;
                 }
             }
@@ -157,7 +211,7 @@ export class RenderingField {
         return this._fieldValue;
     }
     set fieldValue(value: any) {
-        if (this._fieldValue !== value) {
+        if (this._fieldValue != value) {
             this._fieldValue = value;
             this.formControl.setValue(value);
         }
