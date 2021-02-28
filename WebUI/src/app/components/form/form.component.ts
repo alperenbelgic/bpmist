@@ -73,8 +73,6 @@ export class FormComponent implements OnInit {
 
     this.formGroup.valueChanges.subscribe({
       next: v => {
-        console.log(v);
-        console.log(this.formGroup.valid);
 
         this.formValid.next(this.formGroup.valid);
 

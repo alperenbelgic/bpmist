@@ -159,7 +159,6 @@ export class EditTaskComponent implements OnInit {
 
     const returningForm = this.formComponent.getReturningForm();
 
-    console.log(actionId, this.taskModel);
     this.webService.SendUserActionCommand(
       this.taskModel.processId,
       this.taskModel.processInstanceId,
