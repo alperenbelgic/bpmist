@@ -10,8 +10,14 @@
     #appForm
     *ngIf="taskModel?.form"
     [form]="taskModel.form"
+    (formValid)="updateFormValidity($event)"
   ></app-form>
 
+  <Label
+    *ngIf="formErrorMessage != null"
+    [text]="formErrorMessage"
+    style="margin: 10;color:red;font-size: 10px;"
+  ></Label>
 
   <ListView
     *ngIf="taskModel?.primaryActions!=null"
@@ -22,11 +28,39 @@
         class="my-button"
         [text]="action.ActionText"
         (tap)="submit(action.ActionId)"
-        [isEnabled]="!taskModel.assignmentStates.assignedToCurrentUser || !isFormValid"
+        [isEnabled]="(taskModel.assignmentStates.assignedToCurrentUser == true) && (isFormValid == true)"
       ></Button>
 
     </ng-template>
   </ListView>
+
+  <ListView
+  *ngIf="taskModel?.warnedActions!=null"
+  [items]="taskModel.warnedActions"
+>
+  <ng-template let-action="item">
+    <Button
+      class="my-button"
+      [text]="action.ActionText"
+      (tap)="submit(action.ActionId)"
+      [isEnabled]="(taskModel.assignmentStates.assignedToCurrentUser == true) && (isFormValid == true)"
+    ></Button>
+
+  </ng-template>
+</ListView>
+
+<ListView
+*ngIf="taskModel?.secondaryActions!=null"
+[items]="taskModel.secondaryActions"
+>
+<ng-template let-action="item">
+  <Button
+    [text]="action.ActionText"
+    (tap)="submit(action.ActionId)"
+  ></Button>
+
+</ng-template>
+</ListView>
 </StackLayout>
 
 <StackLayout *ngIf="showCompletedMessage == true">
