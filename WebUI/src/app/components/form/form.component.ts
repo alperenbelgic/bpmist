@@ -132,7 +132,13 @@ export class RenderingField {
   }
 
   fieldId: string;
-  fieldName: string;
+  _fieldName: string='';
+  get fieldName(): string{
+      return this._fieldName;
+  }
+  set fieldName(value:string){
+      this._fieldName = value;
+  }
   fieldType: string;
   isReadOnly: boolean;
 
@@ -152,7 +158,7 @@ export class RenderingField {
     return this._formControl;
   }
 
-  private _isRequired: boolean;
+  private _isRequired: boolean = false;
   get isRequired(): boolean {
     return this._isRequired;
   }
@@ -161,6 +167,12 @@ export class RenderingField {
 
     // call this for any validation change
     this.updateValidators();
+
+  }
+
+  // mobile specific
+  get visibleFieldName(): string {
+      return this.fieldName + (this.isRequired ? " *":"");
   }
 
   updateValidators() {
