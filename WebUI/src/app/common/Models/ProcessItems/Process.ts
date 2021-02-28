@@ -80,7 +80,6 @@ export class Process {
   }
 
   private setAllUserTypeFields() {
-    console.log(this._fields);
     this.userTypeFields =
       this._fields.filter(field => field.fieldType?.code === 'user' && !field.generalFieldSettings.multipleValue);
 
