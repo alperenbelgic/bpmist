@@ -1,10 +1,17 @@
-<StackLayout>
-  <RadDataForm
-    #myRuntimeDataFormComp
-    [source]="formValues"
-    commitMode="Immediate"
-    tkExampleTitle
-    tkToggleNavButton
-    (editorUpdate)="onEditorUpdate($event)"
-  ></RadDataForm>
-</StackLayout>
+<ListView
+  *ngIf="fields!=null"
+  [items]="fields"
+  marginTop="0"
+  separatorColor="transparent"
+>
+
+  <ng-template
+    let-field="item"
+    let-odd="odd"
+    let-even="even"
+    style="padding: 0;margin:0;"
+  >
+    <app-generic-field [field]="field"></app-generic-field>
+
+  </ng-template>
+</ListView>

@@ -1,6 +1,9 @@
 <ActionBar title="Task"></ActionBar>
 
-<StackLayout *ngIf="taskModel!=null && !showCompletedMessage">
+<StackLayout
+  *ngIf="taskModel!=null && !showCompletedMessage"
+  style="padding: 0;margin:0;"
+>
 
 
   <app-form

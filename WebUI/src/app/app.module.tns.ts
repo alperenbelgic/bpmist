@@ -13,6 +13,10 @@ import { EditTaskComponent } from './components/edit-task/edit-task.component';
 import { NativeScriptUIDataFormModule } from "nativescript-ui-dataform/angular";
 import { FormComponent } from './components/form/form.component';
 import { TaskCompletedComponent } from './components/task-completed/task-completed.component';
+import { GenericFieldComponent } from './components/fields/generic-field/generic-field.component';
+import { DateFieldComponent } from './components/fields/date-field/date-field.component';
+import { TextFieldComponent } from './components/fields/text-field/text-field.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
     providers: [
@@ -27,6 +31,8 @@ import { TaskCompletedComponent } from './components/task-completed/task-complet
         NativeScriptModule,
         AppRoutingModule,
         NativeScriptHttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
         NativeScriptFormsModule,
         NativeScriptUIDataFormModule
     ],
@@ -35,7 +41,10 @@ import { TaskCompletedComponent } from './components/task-completed/task-complet
         ListProcessesComponent,
         EditTaskComponent,
         FormComponent,
-        TaskCompletedComponent
+        TaskCompletedComponent,
+        GenericFieldComponent,
+        DateFieldComponent,
+        TextFieldComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
