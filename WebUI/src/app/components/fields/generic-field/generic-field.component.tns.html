@@ -1,5 +1,5 @@
 
-  <ng-container [ngSwitch]="field.fieldType">
+<ng-container [ngSwitch]="field.fieldType">
 
     <app-date-field
       *ngSwitchCase="'Date'"
@@ -10,11 +10,4 @@
       *ngSwitchCase="'Text'"
       [field]="field"
     ></app-text-field>
-
-    <!-- <div class="error-message-wrapper">
-      <div *ngIf="field.formControl.errors?.required">
-        This field is required.
-      </div>
-    </div> -->
-
-  </ng-container>
+</ng-container>

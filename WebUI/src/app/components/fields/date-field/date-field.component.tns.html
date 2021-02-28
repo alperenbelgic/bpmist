@@ -1,18 +1,25 @@
 <StackLayout style="padding: 0;margin:0;">
-    <RadDataForm #dataform
-                 [source]="model"
-                 commitMode="Immediate"
-                 tkExampleTitle
-                 tkToggleNavButton
-                 (editorUpdate)="onEditorUpdate($event)"
-                 (propertyCommitted)="propertyCommitted($event)">
+  <RadDataForm
+    #dataform
+    [source]="model"
+    commitMode="Immediate"
+    tkExampleTitle
+    tkToggleNavButton
+    (editorUpdate)="onEditorUpdate($event)"
+    (propertyCommitted)="propertyCommitted($event)"
+  >
 
-        <TKEntityProperty tkDataFormProperty
-                          name="value"
-                          [displayName]="field.fieldName">
-            <TKPropertyEditor tkEntityPropertyEditor
-                              type="DatePicker"></TKPropertyEditor>
-        </TKEntityProperty>
+    <TKEntityProperty
+      tkDataFormProperty
+      name="value"
+      [displayName]="field.visibleFieldName"
+    >
+      <TKPropertyEditor
+        tkEntityPropertyEditor
+        type="DatePicker"
+      ></TKPropertyEditor>
 
-    </RadDataForm>
+    </TKEntityProperty>
+
+  </RadDataForm>
 </StackLayout>
