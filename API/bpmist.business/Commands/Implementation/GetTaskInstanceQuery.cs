@@ -30,10 +30,11 @@ namespace bpmist.business.Commands
             string taskName = taskInstance.TaskModel.TaskName;
             string assigneeName = taskInstance.AssigneeName;
             string taskState = taskInstance.TaskState;
+            bool actionUserOnCharge = actionUserId == taskInstance.AssignedUserId;
 
             var otherTasks = this.GetOtherTasks(processInstance.TaskInstances);
 
-            var form = this.CreateForm(processInstance, taskInstance, taskInstance.TaskModel.TaskFormModel);
+            var form = this.CreateForm(processInstance, taskInstance, taskInstance.TaskModel.TaskFormModel, actionUserOnCharge);
             
             if (taskState == TaskStates.Completed || taskState == TaskStates.Canceled)
             {
@@ -42,7 +43,7 @@ namespace bpmist.business.Commands
             }
 
             // TODO:! include save task as default - only if the form has any field to save. 
-            var actions = this.GetActions(taskInstance).Select(a => new GetTaskInstance_ActionsResult(a.ActionText, a.ActionType, a.Id)).ToArray();
+            var actions = this.GetActions(taskInstance, actionUserOnCharge).Select(a => new GetTaskInstance_ActionsResult(a.ActionText, a.ActionType, a.Id)).ToArray();
 
             var userTaskState = await GetUserTaskState(taskInstance, actionUserId, contextInformation);
 
@@ -50,7 +51,7 @@ namespace bpmist.business.Commands
             return new GetTaskInstanceResult(processName, taskName, assigneeName, taskState, actions, userTaskState, otherTasks, form);
         }
 
-        private GetTaskInstance_FormResult CreateForm(ProcessInstance processInstance, TaskInstance taskInstance, TaskFormModel taskFormModel)
+        private GetTaskInstance_FormResult CreateForm(ProcessInstance processInstance, TaskInstance taskInstance, TaskFormModel taskFormModel, bool actionUserOnCharge)
         {
             var list = new List<GetTaskInstance_Form_FieldsResult>();
 
@@ -62,7 +63,9 @@ namespace bpmist.business.Commands
                 {
                     var fieldValue = this.GetFieldValue(processField, processInstance.ProcessData);
 
-                    bool isReadOnly = this.IsFieldReadOnly(processInstance, taskInstance, taskFormModel, fieldInTask);
+                    bool isReadOnly = !actionUserOnCharge ? 
+                                                            true : 
+                                                            this.IsFieldReadOnly(processInstance, taskInstance, taskFormModel, fieldInTask);
 
                     var validation = this.GetValidation(fieldInTask);
 
@@ -166,8 +169,13 @@ namespace bpmist.business.Commands
             return getProcessInstanceResult.Value.ProcessInstance;
         }
 
-        private ActionModel[] GetActions(TaskInstance taskInstance)
+        private ActionModel[] GetActions(TaskInstance taskInstance, bool actionUserOnCharge)
         {
+            if (!actionUserOnCharge)
+            {
+                return new ActionModel[0];
+            }
+
             var actions = taskInstance.TaskModel?.Actions.ToList();
 
             bool editableFieldExists = taskInstance.TaskModel.TaskFormModel.Fields.Any(f => f.Editable);
