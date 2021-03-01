@@ -4,6 +4,7 @@
 >
 
   <GridLayout
+    *ngIf="field.isReadOnly == false"
     columns="*, 44"
     rows="*"
   >
@@ -25,5 +26,14 @@
     ></Button>
 
   </GridLayout>
+
+  <TextField
+   *ngIf="field.isReadOnly == true"
+    hint=""
+    class="textBox read-only"
+    [text]='dateInText'
+    [isUserInteractionEnabled]="false"
+  >
+  </TextField>
 
 </StackLayout>

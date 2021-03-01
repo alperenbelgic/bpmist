@@ -2,5 +2,7 @@
   hint=""
   [text]='text'
   (textChange)="onTextChange($event)"
+  [class.read-only]="field.isReadOnly"
+  [isUserInteractionEnabled]="field.isReadOnly == false"
 >
 </TextField>

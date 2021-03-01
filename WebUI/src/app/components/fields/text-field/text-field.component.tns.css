@@ -1,0 +1,6 @@
+.read-only{
+  background-color: rgb(230, 231, 241);
+  border-top-left-radius: 10;
+  border-top-right-radius: 10;
+  padding-left: 10;
+}
