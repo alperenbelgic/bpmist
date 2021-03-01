@@ -50,6 +50,14 @@ Todo:
 	- fix tooltip for save action
 - if action brings back to the same task handle it in UI, because in default it leaves the current task (except save)
 - scenarios for when a previous task is revisited, what are the chalanges?
+- save action shouldn't run all validations
+	- data type, max length, security validation is fine
+	- user should be able to save values if required and possibly other validation not satisfied. 
+- security validations	
+	- possible max value for text
+	- max file size 
+	- data type validations	
+		- should be refused or ignored?	
 
 Later:
 - collection group queries
