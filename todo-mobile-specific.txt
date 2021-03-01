@@ -1,18 +1,16 @@
 - edit task & form  
-    - introduce rad form and integrate 
-        +- date value format broken for shown value (year missing)
-        - clean ui
-        +- save values  
-        - read only values
-        - button visibility
-        - validation      
-            - set property validation for required fields
-            - button enabled/disabled
-            - service returning validation message rendering
-    - complete flow with UI & look
-    - file upload should be integrated as custom form field type
-        - example: https://play.nativescript.org/?template=play-ng&id=pmXu7c&v=70   
-
+    +- * symbol for required field
+    - implement text field 
+    - clean ui
+    - read only values
+    - button visibility
+    - validation      
+        - set property validation for required fields
+        +- button enabled/disabled
+        +- service returning validation message rendering
+- complete flow with UI & look
+- file upload should be integrated as custom form field type
+    - example: https://play.nativescript.org/?template=play-ng&id=pmXu7c&v=70  
 
 
 ------------------

@@ -18,11 +18,17 @@ import { DateFieldComponent } from './components/fields/date-field/date-field.co
 import { TextFieldComponent } from './components/fields/text-field/text-field.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
+
+import { ModalDialogService, ModalDialogOptions } from "@nativescript/angular";
+import { DatePickerComponent } from './components/fields/date-field/date-picker/date-picker.component.tns';
+
 @NgModule({
     providers: [
         {
         provide: HTTP_INTERCEPTORS, useClass: AuthKeyInterceptor, multi: true
-    }],
+    },
+    ModalDialogService
+    ],
 
     bootstrap: [
         AppComponent
@@ -44,7 +50,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
         TaskCompletedComponent,
         GenericFieldComponent,
         DateFieldComponent,
-        TextFieldComponent
+        TextFieldComponent,
+        DatePickerComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA

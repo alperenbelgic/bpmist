@@ -1,25 +1,29 @@
-<StackLayout style="padding: 0;margin:0;">
-  <RadDataForm
-    #dataform
-    [source]="model"
-    commitMode="Immediate"
-    tkExampleTitle
-    tkToggleNavButton
-    (editorUpdate)="onEditorUpdate($event)"
-    (propertyCommitted)="propertyCommitted($event)"
+<StackLayout
+  style="padding: 0;margin:0;"
+  *ngIf="field != null"
+>
+
+  <GridLayout
+    columns="*, 44"
+    rows="*"
   >
 
-    <TKEntityProperty
-      tkDataFormProperty
-      name="value"
-      [displayName]="field.visibleFieldName"
+    <TextField
+      col="0"
+      hint="Enter Date"
+      class="textBox"
+      [text]='dateInText'
+      [isUserInteractionEnabled]="false"
     >
-      <TKPropertyEditor
-        tkEntityPropertyEditor
-        type="DatePicker"
-      ></TKPropertyEditor>
+    </TextField>
 
-    </TKEntityProperty>
+    <Button
+      col="1"
+      text="."
+      style="height: 25;  border-color: black; border-width: 1;"
+      (tap)="open()"
+    ></Button>
 
-  </RadDataForm>
+  </GridLayout>
+
 </StackLayout>

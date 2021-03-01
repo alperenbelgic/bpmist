@@ -1,0 +1,21 @@
+<StackLayout>
+
+    <DatePicker
+    (dateChange)="onDateChanged($event)"
+    [date]="dateValue"
+    verticalAlignment="center">
+    </DatePicker>
+
+    <Button
+        class="pick-button"
+        text="Pick"
+        (tap)="pick()"
+    ></Button>
+
+    <Button
+        class="clear-button"
+        text="Clear"
+        (tap)="clear()"
+    ></Button>
+
+</StackLayout>

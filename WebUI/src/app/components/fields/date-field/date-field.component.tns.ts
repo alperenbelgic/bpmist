@@ -1,55 +1,95 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
 import { RenderingField } from '../../form/form.component';
-import { RadDataFormComponent } from 'nativescript-ui-dataform/angular';
+import { ModalDialogService, ModalDialogOptions } from "@nativescript/angular";
 import { isIOS } from '@nativescript/core';
-declare var NSDateFormatter: any;
-declare var java: any;
-
+import { DatePickerComponent } from './date-picker/date-picker.component.tns';
 @Component({
-  selector: 'app-date-field',
-  templateUrl: './date-field.component.html',
-  styleUrls: ['./date-field.component.css']
+    selector: 'app-date-field',
+    templateUrl: './date-field.component.html',
+    styleUrls: ['./date-field.component.css']
 })
-export class DateFieldComponent implements OnInit {
-
-    model: any = { value: null };
+export class DateFieldComponent {
 
     _field: RenderingField = null;
-    get field(): RenderingField{ return this._field; }
-    @Input() set field(value: RenderingField){
-        this.model.value = value.fieldValue;
+    get field(): RenderingField { return this._field; }
+    @Input() set field(value: RenderingField) {
         this._field = value;
+        this.SetDateInText();
+        this.SubscribeValueChange();
     }
 
-  constructor() { }
+    dateValueChangeSubscription$ = null;
+    dateInText: string = '';
 
-  ngOnInit(): void {
-}
 
-public propertyCommitted(args) {
-    this.field.fieldValue = this.model.value;
-}
+    constructor(
+        private modalService: ModalDialogService, private vcRef: ViewContainerRef
 
-public onEditorUpdate(args) {
+    ) { }
 
-    if (isIOS) {
-        if (args?.editor?.dateFormatter != null) { // not sure how to confirm in an ios device
-            const dateFormatter = NSDateFormatter.alloc().init();
-            dateFormatter.dateFormat = "MM-yyyy-dd";
+    ngOnDestroy(): void {
+        this.unsubscribeResources();
+    }
 
-            // args.editor.ios.dateFormatter = dateFormatter; (this version is probably incorrect but can't test on ios now)
-            args.editor.dateFormatter = dateFormatter;
-        }
+    open() {
 
-    } else {
+        this.createModelView().then(result => {
 
-        if (args?.editor?.setDateFormat != null) {
-            let simpleDateFormat = new java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.US);
+            // handle null and undefined seperately
+            // null is for clear, undefined is for no action.
+            if (result === null) {
+                this.field.fieldValue = null;
+            }
+            else if (result === undefined) {
+                // no action
+            }
+            else if (Object.prototype.toString.call(result) === '[object Date]') {
+                this.field.fieldValue = result;
+            }
+            console.log(result);
+        }).catch(error => { });
+    }
 
-            args.editor.setDateFormat(simpleDateFormat);
+    private createModelView(): Promise<any> {
+        const options: ModalDialogOptions = {
+            viewContainerRef: this.vcRef,
+            context: this.field.fieldValue,
+            fullscreen: false,
+        };
+
+        // showModal returns a promise with the received parameters from the modal page
+        return this.modalService.showModal(DatePickerComponent, options);
+    }
+
+    SubscribeValueChange() {
+        this.unsubscribeResources();
+
+        this.dateValueChangeSubscription$ = this.field.formControl.valueChanges.subscribe({
+            next: v => {
+                this.SetDateInText();
+            }
+        });
+    }
+
+    unsubscribeResources() {
+        if (this.dateValueChangeSubscription$ != null) {
+            try {
+                this.dateValueChangeSubscription$.unsubscribe();
+            }
+            finally { }
         }
     }
-}
 
+    SetDateInText() {
+        if (this._field == null ||
+            this._field.fieldValue == null ||
+            Object.prototype.toString.call(this._field.fieldValue) !== '[object Date]') {
+            this.dateInText = '';
+        }
+        else {
+            const dateValue = (this._field.fieldValue as Date);
 
+            this.dateInText = dateValue.getDate().toString() + '/' + (dateValue.getMonth() + 1).toString() + '/' + dateValue.getFullYear().toString();
+        }
+    }
 }

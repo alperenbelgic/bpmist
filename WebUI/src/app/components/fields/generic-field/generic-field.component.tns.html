@@ -1,5 +1,6 @@
-
-<ng-container [ngSwitch]="field.fieldType">
+<StackLayout>
+  <Label [text]="field?.fieldName"></Label>
+  <ng-container [ngSwitch]="field.fieldType">
 
     <app-date-field
       *ngSwitchCase="'Date'"
@@ -10,4 +11,5 @@
       *ngSwitchCase="'Text'"
       [field]="field"
     ></app-text-field>
-</ng-container>
+  </ng-container>
+</StackLayout>
