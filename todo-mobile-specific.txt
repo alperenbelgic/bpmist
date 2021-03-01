@@ -1,4 +1,5 @@
 - edit task & form  
+    - implement readonly date picker
     +- * symbol for required field
     - implement text field 
     - clean ui
@@ -15,4 +16,7 @@
 
 ------------------
 
-- clear date value?
++- clear date value?
+- close button for date picker
+    - I clicked clear to close  
+        - value lost
