@@ -13,6 +13,8 @@
 - file upload should be integrated as custom form field type
     - example: https://play.nativescript.org/?template=play-ng&id=pmXu7c&v=70  
 
++- add round corners to texboxes, when they inactive they look too serious now
+- deactivate buttons on clicked
 
 ------------------
 
