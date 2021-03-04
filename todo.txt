@@ -1,5 +1,6 @@
 Todo:
-- introduce mobile (rather earlier than later, because architecture should be aligned)
+- get the source code in another folder, keep web branch there, when you run, npm install won't take long time. 
++- introduce mobile (rather earlier than later, because architecture should be aligned)
 + required fields
 	+ submitting empty required field should be handled.
 	+ handle validation error in UI. show them etc	
@@ -17,6 +18,7 @@ Todo:
 		- or we can replay each submitted values
 	- should specifically diff is logged
 		- task form has 4 values, but only two of them changed. 
+			- if none of them change on submission, then no value change log.
 	- submitted values should be shown (instead of the latest versions)
 		- last versions could be included as well if changed. 
 - field visible, editable by javascript
@@ -101,3 +103,13 @@ Later:
 		- I don't know if logs should be here
 			- this notification sent
 			- the text of "this action is done by this person"
+- task parallelisation
+	- if it is a specific task (with fields and everything)
+		- the data which each task instance produce , can stay in a collection
+- making a process instance a project-like entity?
+	- having lots of standard tasks
+	- joining them serially and parallelly
+	- process instance data is not something we care
+	- this is good to keep in mind
+		- project has a unique flow and steps
+		- process has a predefined flow and steps
