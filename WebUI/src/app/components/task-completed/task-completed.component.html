@@ -41,7 +41,7 @@
     class="task-completed-text"
   >The process is canceled.</h1>
   <ng-container *ngIf="!taskCompletedModel.processCompleted && !taskCompletedModel.processCanceled">
-    <h5>Next task is</h5>
+    <h5>Next task</h5>
     <a
       class="next-task"
       [routerLink]="['/EditTask/' + taskCompletedModel.processId + '/' + taskCompletedModel.processInstanceId + '/'+ taskCompletedModel.taskInstanceId]"

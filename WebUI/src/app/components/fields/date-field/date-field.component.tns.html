@@ -18,17 +18,17 @@
     >
     </TextField>
 
-    <Button
+    <Label
       col="1"
-      text="."
-      style="height: 25;  border-color: black; border-width: 1;"
+      text="&#xf073;"
+      class="fas button"
       (tap)="open()"
-    ></Button>
+    ></Label>
 
   </GridLayout>
 
   <TextField
-   *ngIf="field.isReadOnly == true"
+    *ngIf="field.isReadOnly == true"
     hint=""
     class="textBox read-only"
     [text]='dateInText'

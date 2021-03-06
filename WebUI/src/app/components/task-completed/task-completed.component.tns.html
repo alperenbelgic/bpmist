@@ -54,7 +54,7 @@
 
 
   <ng-container *ngIf="!taskCompletedModel.processCompleted && !taskCompletedModel.processCanceled">
-    <StackLayout>
+    <StackLayout class="next-task-info-wrapper">
 
       <!-- <h5>Next task is</h5>
       <a
@@ -64,18 +64,48 @@
       <h5 class="assigned-to-label">Assigned to </h5>
       <h2 class="assigned-to">{{taskCompletedModel.assigneeName}}</h2> -->
 
-      <Label text="Next task is"></Label>
+      <Label
+        text="Next task"
+        textAlignment="center"
+      ></Label>
       <!-- <Label
         [text]="taskCompletedModel.taskName"
         [routerLink]="['/EditTask/' + taskCompletedModel.processId + '/' + taskCompletedModel.processInstanceId + '/'+ taskCompletedModel.taskInstanceId]"
       ></Label> -->
       <Label
-        [text]="taskCompletedModel.taskName"
+        class="new-task-name"
+        textAlignment="center"
+        textWrap="true"
         [nsRouterLink]="['/EditTask/' + taskCompletedModel.processId + '/' + taskCompletedModel.processInstanceId + '/'+ taskCompletedModel.taskInstanceId]"
-      ></Label>
+      >
 
-      <Label text="Assigned to"></Label>
-      <Label [text]="taskCompletedModel.assigneeName"></Label>
+
+        <FormattedString>
+          <Span
+            [text]="taskCompletedModel.taskName"
+          ></Span>
+          <Span text="&nbsp;" ></Span>
+          <Span
+            class="fas"
+            text="&#xf138;"
+          ></Span>
+        </FormattedString>
+
+
+
+
+
+      </Label>
+
+      <Label
+        text="Assigned to"
+        textAlignment="center"
+      ></Label>
+      <Label
+      class="assignee-name"
+        [text]="taskCompletedModel.assigneeName"
+        textAlignment="center"
+      ></Label>
 
     </StackLayout>
 

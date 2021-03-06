@@ -1,6 +1,15 @@
-.read-only{
+.read-only {
   background-color: rgb(230, 231, 241);
   border-top-left-radius: 10;
   border-top-right-radius: 10;
   padding-left: 10;
+}
+
+.fas {
+  font-family: "Font Awesome 5 Free", "fa-solid-900";
+}
+
+.button {
+  font-size: 20;
+  color: black;
 }

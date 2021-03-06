@@ -3,5 +3,21 @@
 }
 
 .congrats-text {
-  font-size: 20px;
+  font-size: 20;
+}
+
+.next-task-info-wrapper {
+  padding-top: 40;
+}
+
+.new-task-name {
+  font-size: 25;
+  color: midnightblue;
+}
+.fas {
+  font-family: "Font Awesome 5 Free", "fa-solid-900";
+}
+
+.assignee-name {
+  font-size: 18;
 }
