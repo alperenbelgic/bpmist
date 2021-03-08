@@ -1,73 +1,86 @@
-<!-- <ActionBar title="Task"></ActionBar> -->
+<ActionBar
+  [title]="taskModel?.title"
+  style="background-color: #003b31;"
+>
+
+  <ActionItem
+    position="left"
+    icon="font://&#xf0c9;"
+    class="fas"
+    (tap)="openDrawer()"
+  ></ActionItem>
+
+</ActionBar>
+
 
 <StackLayout
   *ngIf="taskModel!=null && !showCompletedMessage"
   style="padding: 0;margin:0;"
 >
   <DockLayout
-  height="100%"
+    height="100%"
     stretchLastChild="true"
   >
 
 
 
-  <StackLayout dock="bottom">
-    <Label
-      *ngIf="formErrorMessage != null"
-      [text]="formErrorMessage"
-      style="margin: 10;color:red;font-size: 10px;"
-    ></Label>
-    <ListView
-      *ngIf="taskModel?.primaryActions!=null"
-      [items]="taskModel.primaryActions"
-    >
-      <ng-template let-action="item">
-        <Button
-          class="btn"
-          [text]="action.ActionText"
-          (tap)="submit(action.ActionId)"
-          [isEnabled]="(taskModel.assignmentStates.assignedToCurrentUser == true) && (isFormValid == true)"
-        ></Button>
+    <StackLayout dock="bottom">
+      <Label
+        *ngIf="formErrorMessage != null"
+        [text]="formErrorMessage"
+        style="margin: 10;color:red;font-size: 10px;"
+      ></Label>
+      <ListView
+        *ngIf="taskModel?.primaryActions!=null"
+        [items]="taskModel.primaryActions"
+      >
+        <ng-template let-action="item">
+          <Button
+            class="btn"
+            [text]="action.ActionText"
+            (tap)="submit(action.ActionId)"
+            [isEnabled]="(taskModel.assignmentStates.assignedToCurrentUser == true) && (isFormValid == true)"
+          ></Button>
 
-      </ng-template>
-    </ListView>
+        </ng-template>
+      </ListView>
 
-    <ListView
-      *ngIf="taskModel?.warnedActions!=null"
-      [items]="taskModel.warnedActions"
-    >
-      <ng-template let-action="item">
-        <Button
-          class="btn btn-warned"
-          [text]="action.ActionText"
-          (tap)="submit(action.ActionId)"
-          [isEnabled]="(taskModel.assignmentStates.assignedToCurrentUser == true) && (isFormValid == true)"
-        ></Button>
+      <ListView
+        *ngIf="taskModel?.warnedActions!=null"
+        [items]="taskModel.warnedActions"
+      >
+        <ng-template let-action="item">
+          <Button
+            class="btn btn-warned"
+            [text]="action.ActionText"
+            (tap)="submit(action.ActionId)"
+            [isEnabled]="(taskModel.assignmentStates.assignedToCurrentUser == true) && (isFormValid == true)"
+          ></Button>
 
-      </ng-template>
-    </ListView>
+        </ng-template>
+      </ListView>
 
-    <ListView
-      *ngIf="taskModel?.secondaryActions!=null"
-      [items]="taskModel.secondaryActions"
-    >
-      <ng-template let-action="item">
-        <Button
-          [text]="action.ActionText"
-          (tap)="submit(action.ActionId)"
-        ></Button>
+      <ListView
+        *ngIf="taskModel?.secondaryActions!=null"
+        [items]="taskModel.secondaryActions"
+      >
+        <ng-template let-action="item">
+          <Button
+            [text]="action.ActionText"
+            (tap)="submit(action.ActionId)"
+          ></Button>
 
-      </ng-template>
-    </ListView>
-  </StackLayout>
+        </ng-template>
+      </ListView>
+    </StackLayout>
 
-  <app-form
-    dock="top"
-    #appForm
-    *ngIf="taskModel?.form"
-    [form]="taskModel.form"
-    (formValid)="updateFormValidity($event)"
-  ></app-form>
+    <app-form
+      dock="top"
+      #appForm
+      *ngIf="taskModel?.form"
+      [form]="taskModel.form"
+      (formValid)="updateFormValidity($event)"
+    ></app-form>
 
 
 

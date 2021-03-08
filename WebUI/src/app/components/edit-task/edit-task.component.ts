@@ -4,6 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormComponent } from '../form/form.component';
 import { SnackBarService } from 'src/app/services/UI/snack-bar.service';
 
+import { getRootView } from "@nativescript/core/application";
+import { RadSideDrawer } from 'nativescript-ui-sidedrawer';
+
 export class TaskModel {
   processName = '';
   title = '';
@@ -67,6 +70,10 @@ export class EditTaskComponent implements OnInit {
     private snackBar: SnackBarService
   ) {
   }
+
+  openDrawer() {
+    (getRootView() as RadSideDrawer).showDrawer();
+}
 
   ngOnInit(): void {
 

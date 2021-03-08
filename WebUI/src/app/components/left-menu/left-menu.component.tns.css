@@ -1,0 +1,19 @@
+.logo {
+  margin-top: 40;
+  width: 50%;
+  border-bottom-color: white;
+  border-bottom-width: 2;
+  border-bottom-style: solid;
+  padding-bottom: 10;
+}
+
+.stack {
+  text-align: center;
+}
+
+.menu-item {
+  margin-top: 20;
+  font-size: 20;
+  color: white;
+  font-family: "Baloo 2", "baloo2";
+}

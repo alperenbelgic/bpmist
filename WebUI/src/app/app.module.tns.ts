@@ -22,6 +22,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ModalDialogService, ModalDialogOptions } from "@nativescript/angular";
 import { DatePickerComponent } from './components/fields/date-field/date-picker/date-picker.component.tns';
 
+import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angular';
+import { LeftMenuComponent } from './components/left-menu/left-menu.component';
+
 @NgModule({
     providers: [
         {
@@ -40,12 +43,14 @@ import { DatePickerComponent } from './components/fields/date-field/date-picker/
         FormsModule,
         ReactiveFormsModule,
         NativeScriptFormsModule,
-        NativeScriptUIDataFormModule
+        NativeScriptUIDataFormModule,
+        NativeScriptUISideDrawerModule
     ],
     declarations: [
         AppComponent,
         ListProcessesComponent,
         EditTaskComponent,
+        LeftMenuComponent,
         FormComponent,
         TaskCompletedComponent,
         GenericFieldComponent,

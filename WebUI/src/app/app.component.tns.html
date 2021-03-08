@@ -1,3 +1,10 @@
-<GridLayout>
-  <page-router-outlet></page-router-outlet>
-</GridLayout>
+<RadSideDrawer drawerLocation="Right">
+  <GridLayout
+    tkDrawerContent
+    style="background-color: #003b31;"
+  >
+    <app-left-menu></app-left-menu>
+  </GridLayout>
+
+  <page-router-outlet tkMainContent></page-router-outlet>
+</RadSideDrawer>

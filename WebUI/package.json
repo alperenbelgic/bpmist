@@ -38,6 +38,7 @@
     "@nativescript/core": "~7.1.0",
     "@nativescript/theme": "~3.0.0",
     "nativescript-ui-dataform": "^7.0.4",
+    "nativescript-ui-sidedrawer": "^9.0.3",
     "reflect-metadata": "~0.1.12",
     "rxjs": "^6.6.0",
     "zone.js": "~0.11.1"
