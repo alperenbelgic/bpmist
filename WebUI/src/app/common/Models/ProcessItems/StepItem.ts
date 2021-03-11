@@ -12,13 +12,14 @@ export class StepItem extends ProcessItem {
 
   public constructor(
     id: string,
+    public justCreatedOnInterface: boolean,
     retrievedFromServer: boolean = false,
     stepName: string,
     topPx: number,
     leftPx: number,
     defaultResponsibleType: ResponsibleType,
     defaultGroupAssignOption: GroupAssignOption) {
-    super(id, retrievedFromServer, topPx, leftPx, stepName);
+    super(id, justCreatedOnInterface, retrievedFromServer, topPx, leftPx, stepName);
 
     this.responsible = new Responsible(defaultResponsibleType, null, defaultGroupAssignOption);
 

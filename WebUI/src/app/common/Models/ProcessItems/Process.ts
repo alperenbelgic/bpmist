@@ -62,6 +62,7 @@ export class Process {
     this.processItems.push(
       new StepItem(
         this.randomIdGenerator.generate(),
+        true,
         false,
         stepName,
         topPx,

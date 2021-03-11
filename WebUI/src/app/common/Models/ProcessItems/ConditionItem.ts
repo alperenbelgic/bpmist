@@ -4,10 +4,11 @@ export class ConditionItem extends ProcessItem {
 
   public constructor(
     id: string,
+    public justCreatedOnInterface: boolean,
     retrievedFromServer: boolean = false,
     conditionName: string,
     topPx: number,
     leftPx: number) {
-    super(id, retrievedFromServer, topPx, leftPx, conditionName);
+    super(id, justCreatedOnInterface, retrievedFromServer, topPx, leftPx, conditionName);
   }
 }

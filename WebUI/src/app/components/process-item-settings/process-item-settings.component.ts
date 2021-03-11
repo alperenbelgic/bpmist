@@ -141,8 +141,8 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
   }
 
   async close() {
-    this.processItem = null;
     this.visible = false;
+    this.processItem = null;
   }
 
   //#region responsible - step item functions

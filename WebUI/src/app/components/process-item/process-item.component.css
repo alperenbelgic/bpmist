@@ -1,48 +1,53 @@
-
 .noselect {
-    -webkit-touch-callout: none;
-    /* iOS Safari */
-    -webkit-user-select: none;
-    /* Safari */
-    -khtml-user-select: none;
-    /* Konqueror HTML */
-    -moz-user-select: none;
-    /* Old versions of Firefox */
-    -ms-user-select: none;
-    /* Internet Explorer/Edge */
-    user-select: none;
-    /* Non-prefixed version, currently
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
                                     supported by Chrome, Opera and Firefox */
 }
 
 .state-box {
-    background-color: whitesmoke;
-    width: 100px;
-    height: 100px;
+  background-color: whitesmoke;
+  width: 100px;
+  height: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .selected {
-    border: 3px solid tomato;
-    padding: 3px;
-    border-radius: 3px;
+  border: 3px solid tomato;
+  padding: 3px;
+  border-radius: 3px;
 }
 
 .not-selected {
-    border: 3px solid transparent;
-    padding: 3px;
-    border-radius: 3px;
+  border: 3px solid transparent;
+  padding: 3px;
+  border-radius: 3px;
 }
 
 .settings-button {
-    margin-top: -41px;
-    margin-left: 68px;
-    background-color: dodgerblue;
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-    text-align: center;
+  background-color: dodgerblue;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  text-align: center;
+  position: absolute;
+  left: 75px;
+  top: -35px;
 }
 
 .settings-button i {
@@ -51,15 +56,26 @@
 }
 
 .create-link-button {
-    margin-top: -41px;
-    margin-left: 30px;
-    background-color: dodgerblue;
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-    text-align: center;
+  /* margin-top: -41px;
+  margin-left: 30px;
+  background-color: dodgerblue;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  text-align: center; */
+
+  background-color: dodgerblue;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  text-align: center;
+  position: absolute;
+  left: 35px;
+  top: -35px;
 }
 
 .create-link-button i {
@@ -72,23 +88,19 @@
 
 } */
 
-
-
-
 .condition-box {
   background-color: white;
   transform: rotate(45deg);
   width: 75px;
   height: 75px;
-
 }
 
-.condition-content{
+.condition-content {
   transform: rotate(-45deg);
 }
 
 .condition-box .create-link-button {
-  margin-left:7px;
+  margin-left: 7px;
 }
 
 .condition-box .settings-button {
@@ -100,17 +112,16 @@
   margin-top: 3px;
 }
 
-.condition-box .create-link-button i{
+.condition-box .create-link-button i {
   transform: rotate(0deg);
 }
-
 
 .box-button {
   visibility: collapse;
   transition: visibility 0.2s;
 }
 
-.box-button:hover{
+.box-button:hover {
   visibility: visible;
 }
 
@@ -119,4 +130,27 @@
 } */
 .box:hover .box-button {
   visibility: visible;
+}
+
+.process-item-textbox {
+  width: 94%;
+  height: 95%;
+}
+
+.submit-process-name-change {
+  background-color: dodgerblue;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  text-align: center;
+  position: absolute;
+  left: 75px;
+  top: 112px;
+}
+
+.submit-process-name-change i {
+  font-size: 27px;
+  margin-top: 4px;
 }

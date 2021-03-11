@@ -105,7 +105,9 @@ export class ProcessDesignerComponent implements OnInit {
 
     const newItem = new StepItem(
       this.randomIdGenerator.generate(),
-      false, 'new one',
+      true,
+      false,
+      '[New Step]',
       lastItem.topPx,
       lastItem.leftPx + 1,
       this.userGroupService.getDefaultResponsibleType(),
@@ -124,7 +126,7 @@ export class ProcessDesignerComponent implements OnInit {
 
     this.arrangeHorizontalDistances();
     const lastItem = this.processItems.pop();
-    const newItem = new ConditionItem(this.randomIdGenerator.generate(), false, 'new cond', lastItem.topPx, lastItem.leftPx + 1);
+    const newItem = new ConditionItem(this.randomIdGenerator.generate(), true, false, 'new cond', lastItem.topPx, lastItem.leftPx + 1);
     this.processItems.push(lastItem);
     this.processItems.push(newItem);
     this.arrangeHorizontalDistances();

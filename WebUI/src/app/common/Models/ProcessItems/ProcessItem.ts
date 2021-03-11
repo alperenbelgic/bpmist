@@ -6,7 +6,8 @@ export class ProcessItem {
 
   public constructor(
     public readonly id: string,
-    protected retrievedFromServer: boolean,
+    public justCreatedOnInterface: boolean,
+    public retrievedFromServer: boolean,
     public topPx: number = 80,
     public leftPx: number = 80,
     public text: string = '',

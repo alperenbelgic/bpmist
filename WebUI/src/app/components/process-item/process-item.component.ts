@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 
 import { ProcessItem } from 'src/app/common/Models/ProcessItems/ProcessItem';
 
@@ -9,10 +9,28 @@ import { ProcessItem } from 'src/app/common/Models/ProcessItems/ProcessItem';
 })
 export class ProcessItemComponent implements OnInit {
 
-  @Input() processItem: ProcessItem;
+  _processItem: ProcessItem;
+
+  get processItem(): ProcessItem { return this._processItem; }
+  @Input() set processItem(val: ProcessItem) {
+    this._processItem = val;
+
+    this.showProcessItemNameEdit = this._processItem.justCreatedOnInterface;
+
+    if (this.showProcessItemNameEdit) {
+      setTimeout(() => {
+        this.processItemNameTextArea.nativeElement.focus();
+        this.processItemNameTextArea.nativeElement.select();
+      }, 40);
+    }
+
+  }
   @Output() linkCreated: EventEmitter<any> = new EventEmitter();
   @Output() settingDialogueOpening = new EventEmitter<ProcessItem>();
   isSettingsVisible = false;
+  showProcessItemNameEdit = false;
+
+  @ViewChild("processItemNameTextArea") processItemNameTextArea: ElementRef;
 
   constructor(
     private el: ElementRef) { }
@@ -40,5 +58,24 @@ export class ProcessItemComponent implements OnInit {
       event: $event
     });
 
+  }
+
+  swapShowProcessItemNameEdit() {
+    this.showProcessItemNameEdit = true;
+    setTimeout(() => {
+      this.processItemNameTextArea.nativeElement.focus();
+    }, 40);
+  }
+
+  submitProcessName() {
+    this.showProcessItemNameEdit = false;
+  }
+
+  processItemNameSubmitted(event) {
+    var code = (event.keyCode ? event.keyCode : event.which);
+    if (code == 13) { //Enter keycode
+      this.showProcessItemNameEdit = false;
+      return false;
+    }
   }
 }
