@@ -1,36 +1,53 @@
 .designer-wrapper {
-    font-family: "Comfortaa";
+  font-family: "Comfortaa";
+  overflow-x: auto;
+
+  background-color: #333;
+  background-size: 80px 80px;
+  background-image: linear-gradient(to bottom, #555 1px, transparent 1px);
+
+  height: 100%;
+}
+
+.header {
+  background-color: white;
+  padding: 15px 0px 15px 6px;
+  position: fixed;
+  width: 100%;
 }
 
 app-process-item {
-    position: absolute;
+  position: absolute;
 }
 
 .title {
-    font: bold;
-    margin: 15px 0px 15px 6px;
+  font: bold;
+  /* margin: 15px 0px 15px 6px; */
 }
 
 .box {
-    width: 100%;
-    height: 600px;
-    background-color: #333;
-    background-size: 80px 80px;
-    background-image: linear-gradient(to bottom, #555 1px, transparent 1px);
-    border: 1px solid black;
+  /* width: 100%; */
+  /* height: 600px; */
+  background-color: #333;
+  background-size: 80px 80px;
+  background-image: linear-gradient(to bottom, #555 1px, transparent 1px);
+  /* border: 1px solid black; */
+
+  /* width: 2802px; */
 }
 
 .inner-box {
-    position: absolute;
-    width: 100%;
-}
+  /* position: absolute; */
+  /* width: 100%; */
 
+  position: sticky;
+}
 
 .connector:hover {
   stroke: yellow;
 }
 
-button{
+button {
   margin-left: 6px;
-  margin-bottom: 6px;;
+  margin-bottom: 6px;
 }
