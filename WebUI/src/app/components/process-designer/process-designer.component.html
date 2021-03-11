@@ -4,31 +4,32 @@
 >
 </app-process-item-settings>
 
-
 <div class="designer-wrapper">
-  <div class="title">
-    Process Builder: <b>New head count request</b>
+  <div class="header">
+    <div class="title">
+      Process Builder: <b>New head count request</b>
+    </div>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="addItem()"
+    >
+      New Step
+      <!-- state event state
+          state decision state
+          state event action state
+          state event action decison state
+          stoppropagation as directive
+          select by drawing a box -->
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="addCondition()"
+    >
+      New Condition
+    </button>
   </div>
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="addItem()"
-  >
-    New Step
-    <!-- state event state
-        state decision state
-        state event action state
-        state event action decison state
-        stoppropagation as directive
-        select by drawing a box -->
-  </button>
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="addCondition()"
-  >
-    New Condition
-  </button>
   <div
     #thebox
     id="the-box"
