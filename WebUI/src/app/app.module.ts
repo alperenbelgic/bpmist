@@ -32,6 +32,7 @@ import { DateFieldComponent } from './components/fields/date-field/date-field.co
 import { TextFieldComponent } from './components/fields/text-field/text-field.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthKeyInterceptor } from './services/Web/auth-key.interceptor';
+import { ResponsibleComponent } from './components/process-item-settings-components/responsible/responsible.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -56,7 +57,8 @@ const appearance: MatFormFieldDefaultOptions = {
     GenericFieldComponent,
     DateFieldComponent,
     TextFieldComponent,
-    LoginComponent
+    LoginComponent,
+    ResponsibleComponent
   ],
   imports: [
     BrowserModule,
