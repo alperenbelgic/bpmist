@@ -1,5 +1,5 @@
 <div
-  *ngIf="visible"
+  *ngIf="visible && process != null && processItem != null"
   class="settings-modal"
 >
 
@@ -77,208 +77,10 @@
             <mat-tab label="Responsible">
 
 
-              <div fxLayout="column">
-
-                <ejs-dropdownlist
-                  style="margin-top:22px"
-                  placeholder="Whom to assign?"
-                  name="whoToAssign"
-                  [dataSource]='showingResponsibleTypes'
-                  [ngModel]="stepItem?.responsible?.responsibleType?.code"
-                  [fields]="{value:'code', text:'name' }"
-                  (change)='stepItem.responsible.responsibleType = $event.itemData; '
-                  [allowFiltering]='false'
-                  cssClass="e-outline"
-                  floatLabelType="Always"
-                  popupHeight='500px'
-                >
-
-                  <ng-template
-                    #itemTemplate=""
-                    let-data=""
-                  >
-
-                    <span *ngIf="data.visualState.enabled">{{data.name}}</span>
-                    <span *ngIf="!data.visualState.enabled"><span
-                        style="text-decoration: line-through;">{{data.name}}</span>
-                      <span> [No field exists]</span></span>
-
-                  </ng-template>
-
-                  <ng-template
-                    #footerTemplate=""
-                    let-data=""
-                  >
-
-                    <div
-                      fxLayout="row"
-                      fxLayoutAlign="end center"
-                      style="height: 30px;"
-                      *ngIf="stepItem?.responsible?.visualState.show_ShowHideAdvancedOptions"
-                    >
-
-                      <div
-                        style="
-                        text-decoration: underline;
-                        cursor:pointer;
-                        transform: translateX(-4px);"
-                        (click)='showAdvancedResponsibleTypes = !showAdvancedResponsibleTypes'
-                      >
-
-                        <ng-container *ngIf="showAdvancedResponsibleTypes">Hide advanced options</ng-container>
-                        <ng-container *ngIf="!showAdvancedResponsibleTypes">Show advanced options</ng-container>
-
-                      </div>
-                    </div>
-
-                  </ng-template>
-                </ejs-dropdownlist>
-
-
-                <div
-                  *ngIf="stepItem.responsible.visualState.isTypeGroup"
-                  fxLayout="column"
-                >
-
-                  <ejs-dropdownlist
-                    class="detailed-settings-item-wrapper"
-                    placeholder="Group"
-                    name="group"
-                    [dataSource]='groups'
-                    [ngModel]="stepItem?.responsible?.group?.groupId"
-                    [fields]="{value:'groupId', text:'groupName' }"
-                    (change)='stepItem.responsible.group = $event.itemData; '
-                    [allowFiltering]='true'
-                    [ignoreAccent]='true'
-                    filterBarPlaceholder='Search'
-                    cssClass="e-outline detailed-settings-item-wrapper"
-                    marks
-                    and
-                    floatLabelType="Always"
-                  >
-                  </ejs-dropdownlist>
-
-                </div>
-
-                <div *ngIf="stepItem.responsible.visualState.isTypeUser">
-
-                  <ejs-dropdownlist
-                    style="margin-top:22px"
-                    placeholder="User"
-                    name="user"
-                    [dataSource]='users'
-                    [ngModel]="stepItem?.responsible?.user?.userId"
-                    [fields]="{value:'userId', text:'userName' }"
-                    (change)='stepItem.responsible.user = $event.itemData; '
-                    [allowFiltering]='true'
-                    [ignoreAccent]='true'
-                    filterBarPlaceholder='Search'
-                    cssClass="e-outline"
-                    floatLabelType="Always"
-                  >
-                  </ejs-dropdownlist>
-
-                </div>
-
-                <div *ngIf="stepItem.responsible.visualState.isTypeGroupList">
-                  <!-- {{stepItem?.responsible?.groups}} -->
-                  <ejs-multiselect
-                    #groupsMultiselect
-                    style="margin-top:22px"
-                    placeholder="Groups"
-                    name="groups"
-                    [dataSource]='groups'
-                    [fields]="{ text: 'groupName', value: 'groupId' }"
-                    mode='Box'
-                    [showDropDownIcon]='true'
-                    [closePopupOnSelect]="false"
-                    filterBarPlaceholder='Search'
-                    cssClass="e-outline"
-                    floatLabelType="Always"
-                    [allowFiltering]='true'
-                    [ignoreAccent]='true'
-                    [(value)]="selectedGroupIds"
-                  ></ejs-multiselect>
-                  <!-- [(ngModel)]="selectedGroupIds" -->
-                  <!-- (change)="assignMultiselectValues(stepItem.responsible, 'groups', 'groupId', groups, $event.value, $event)" -->
-
-                </div>
-
-                <div *ngIf="stepItem.responsible.visualState.isTypeUserList">
-
-                  <ejs-multiselect
-                    style="margin-top:22px"
-                    placeholder="Users"
-                    name="users"
-                    [dataSource]='users'
-                    [fields]="{ text: 'userName', value: 'userId' }"
-                    mode='Box'
-                    [showDropDownIcon]='true'
-                    filterBarPlaceholder='Search'
-                    cssClass="e-outline"
-                    floatLabelType="Always"
-                    [allowFiltering]='true'
-                    [ignoreAccent]='true'
-                    (change)="assignMultiselectValues(stepItem.responsible, 'users', 'userId', users, $event.value, $event);"
-                    [(ngModel)]="selectedUserIds"
-                  ></ejs-multiselect>
-
-                </div>
-
-                <div *ngIf="stepItem.responsible.visualState.isTypeUserFromField">
-
-                  <ejs-dropdownlist
-                    style="margin-top:22px"
-                    placeholder="User Field"
-                    name="userField"
-                    [dataSource]='process.userTypeFields'
-                    [ngModel]="stepItem?.responsible?.userField?.id"
-                    [fields]="{value:'id', text:'name' }"
-                    (change)='stepItem.responsible.userField = $event.itemData; '
-                    [allowFiltering]='true'
-                    [ignoreAccent]='true'
-                    filterBarPlaceholder='Search'
-                    cssClass="e-outline"
-                    floatLabelType="Always"
-                  >
-                  </ejs-dropdownlist>
-
-                </div>
-
-                <div *ngIf="stepItem.responsible.visualState.showGroupAssignOptions">
-
-                  <div
-                    class="detailed-settings-item-wrapper"
-                    style="
-                            font-size: 12px;
-                            margin-left: 9px;
-                            line-height: 1em;
-                            color: #777;
-                            transform: translateY(2px);
-                            background-color: white;
-                            padding-left: 5px;
-                            display: inline-block;
-                            width: 106px;"
-                  >How to distribute?</div>
-                  <mat-selection-list
-                    [multiple]="false"
-                    (selectionChange)="stepItem.responsible.groupAssignOption = $event.option.value"
-                  >
-                    <mat-list-option
-                      *ngFor="let groupAssignOption of groupAssignOptions"
-                      [value]="groupAssignOption"
-                      [selected]="groupAssignOption.optionCode === stepItem?.responsible?.groupAssignOption?.optionCode"
-                      [matTooltip]="groupAssignOption.optionTooltip"
-                    >
-
-                      <div style="vertical-align: middle;height: 100%;">{{groupAssignOption.optionText}}</div>
-
-                    </mat-list-option>
-
-                  </mat-selection-list>
-                </div>
-
-              </div>
+              <app-responsible
+                [process]="process"
+                [processItem]="processItem"
+              ></app-responsible>
 
             </mat-tab>
 
@@ -578,61 +380,18 @@
               </div>
 
             </mat-tab>
-            <mat-tab label="Links"> submit, links to this step, or condition</mat-tab>
-
-            <mat-tab label="Description"> Content 3 </mat-tab>
-            <mat-tab label="Notifications"> Content 3 </mat-tab>
             <mat-tab label="Actions">
-              <p>just before coming to this step </p>
-              <p>right after completing this step</p>
+              <p>this action goes to this step</p>
+              <p>this action ends the process</p>
               <p>python script to arrange data</p>
               <p>web service call</p>
               <p>(for future)-> save/update data to database</p>
             </mat-tab>
+
+            <mat-tab label="Docs"> Documents will be edited here. </mat-tab>
+            <mat-tab label="Notifications"> Notification will be configured here. </mat-tab>
+
           </mat-tab-group>
-
-          <!-- <div class="section clickable">
-
-          <button mat-button #settingNotVisible color="primary">
-            <div class="section-name">
-              <i class="fas fa-angle-double-down"></i> Responsible
-            </div>
-          </button>
-
-        </div>
-
-        <div class="section clickable" (click)="swapStepFormDesignerVisible()">
-
-          <button mat-button #settingNotVisible color="primary">
-            <div class="section-name">
-              <i *ngIf="isStepFormDesignerVisible" class="fas fa-angle-double-up"></i> <i
-                *ngIf="!isStepFormDesignerVisible" class="fas fa-angle-double-down"></i> Form designer
-            </div>
-          </button>
-
-        </div>
-        <div *ngIf="isStepFormDesignerVisible" class="form-designer-wrapper">
-
-
-
-
-        </div>
-
-        <div class="section clickable">
-          <button mat-button #settingNotVisible color="primary">
-            <div class="section-name">
-              <i class="fas fa-angle-double-down"></i> Actions
-            </div>
-          </button>
-        </div>
-
-        <div class="section clickable">
-          <button mat-button #settingNotVisible color="primary">
-            <div class="section-name">
-              <i class="fas fa-angle-double-down"></i> Description & help content
-            </div>
-          </button>
-        </div> -->
 
         </ng-container>
 

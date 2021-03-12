@@ -33,17 +33,7 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
 
   @Input() process: Process;
   currentFieldInStep: FieldInStep;
-  selectedUserIds = [];
-  // tslint:disable-next-line: variable-name
-  _selectedGroupIds = [];
-  get selectedGroupIds() {
-    return this._selectedGroupIds;
-  }
-  set selectedGroupIds(value: any[]) {
-    console.log('value setter', value);
-    this._selectedGroupIds = value;
-    this.assignMultiselectValues(this.stepItem.responsible, 'groups', 'groupId', this.groups, value, null);
-  }
+
 
   // tslint:disable-next-line: variable-name
   _processItem: ProcessItem;
@@ -51,30 +41,8 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
 
 
   // Loaded lists
-  groups: Group[];
-  users: User[];
-  groupAssignOptions: GroupAssignOption[] = [];
+
   fieldTypes: FieldType[] = [];
-
-  allResponsibleTypes: ResponsibleType[] = [];
-  showingResponsibleTypes: ResponsibleType[] = [];
-
-  private fieldChangeSubscription: Subscription;
-
-  setShowingResponsibleTypes(): void {
-
-    this.showingResponsibleTypes =
-      this.allResponsibleTypes.filter(rt => !rt.isAdvancedOption || this.stepItem?.responsible?.visualState?.showAdvancedOptions);
-  }
-
-  get showAdvancedResponsibleTypes(): boolean {
-    return this.stepItem?.responsible?.visualState?.showAdvancedOptions;
-  }
-
-  set showAdvancedResponsibleTypes(value: boolean) {
-    this.stepItem.responsible.visualState.showAdvancedOptions = value;
-    this.setShowingResponsibleTypes();
-  }
 
   get processItems(): ProcessItem[] {
     return this.process.processItems;
@@ -91,12 +59,6 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
     }
 
     this._processItem = value;
-
-    // TODO: only if it is step item
-    // TODO: explain why we make this call
-    // TODO: are you handling null "value" here?
-    this.initialise_Responsible_MultipleSelection_Variables();
-    this.setShowingResponsibleTypes();
   }
 
   //#region step item
@@ -112,27 +74,19 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
   //#endregion
 
   constructor(
-    private fieldTypeService: FieldTypeService,
-    private userGroupService: UserGroupService
+    private fieldTypeService: FieldTypeService
   ) {
   }
 
   async ngOnInit() {
     this.fieldTypes = await this.fieldTypeService.getFieldTypes();
-    this.groups = await this.userGroupService.getGroups();
-    this.users = await this.userGroupService.getUsers();
-    this.groupAssignOptions = await this.userGroupService.getGroupAssignOptions();
-    this.allResponsibleTypes = this.userGroupService.getResponsibleTypes();
 
-    this.subscribeFieldChanges();
   }
 
   ngOnDestroy() {
-    this.unsubscribe();
   }
 
   unsubscribe() {
-    this.fieldChangeSubscription?.unsubscribe();
   }
 
   async open(processItem: ProcessItem) {
@@ -144,53 +98,6 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
     this.visible = false;
     this.processItem = null;
   }
-
-  //#region responsible - step item functions
-
-  initialise_Responsible_MultipleSelection_Variables() {
-    this.selectedUserIds = (this.stepItem?.responsible?.users ?? []).map(u => u.userId);
-    this.selectedGroupIds = (this.stepItem?.responsible?.groups ?? []).map(g => g.groupId);
-  }
-
-  subscribeFieldChanges() {
-    this.updateEnabledResponsibleTypes();
-
-    this.fieldChangeSubscription =
-      this.process.fieldsChange$.subscribe(fc => {
-        this.updateEnabledResponsibleTypes();
-      });
-  }
-
-  updateEnabledResponsibleTypes() {
-    this.allResponsibleTypes.forEach(rt => {
-      rt.visualState.enabled = true;
-
-      const groupFieldSelectionWithNoGroupField =
-        rt.code === 'groupFromField' &&
-        this.process.groupTypeFields.length === 0;
-
-      const userFieldSelectionWithNoUserField =
-        rt.code === 'userFromField' &&
-        this.process.userTypeFields.length === 0;
-
-      const groupListSelectionWithNoRelevantField =
-        rt.code === 'groupListFromField' &&
-        this.process.multipleGroupTypeFields.length === 0;
-
-      const userListWithSelectionNoRelevantField =
-        rt.code === 'userListFromField' &&
-        this.process.multipleUserTypeFields.length === 0;
-
-      if (groupFieldSelectionWithNoGroupField ||
-        userFieldSelectionWithNoUserField ||
-        groupListSelectionWithNoRelevantField ||
-        userListWithSelectionNoRelevantField) {
-        rt.visualState.enabled = false;
-      }
-    });
-  }
-
-  //#endregion
 
   //#region field - step item functions
 
@@ -241,22 +148,5 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
     return array.filter(i => selectorFunc(i).toLowerCase().indexOf(filter.toLowerCase()) > -1);
   }
 
-  // TODO: move to a base component?
-  assignMultiselectValues(
-    parentObjectOfModel: any,
-    fieldNameOfModel: string,
-    idFieldNameInModel: string,
-    selectableListOfItems: any[],
-    selectedItemIds: any[],
-    event: any
-  ) {
-    console.log(event)
-    // TODO: handling a selected object which is not present in the list?
-    const selectedItems = selectableListOfItems.filter(
-      item =>
-        selectedItemIds.some(selectedItemId =>
-          selectedItemId === item[idFieldNameInModel]));
 
-    parentObjectOfModel[fieldNameOfModel] = selectedItems;
-  }
 }
