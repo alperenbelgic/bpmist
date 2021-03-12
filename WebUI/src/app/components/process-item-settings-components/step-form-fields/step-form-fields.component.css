@@ -1,0 +1,89 @@
+.fields-settings {
+  margin-top: 8px;
+  margin-bottom: 15px;
+}
+
+.form-setting-mode {
+  margin-top: 30px;
+}
+
+.form-setting-mode-with-top-button {
+  margin-top: 0px;
+}
+
+.field-edit-title {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.detailed-settings-item-wrapper {
+  margin-top: 22px;
+}
+
+.form-designer-empty-content {
+  text-align: center;
+  margin: 30px;
+}
+
+.field-form {
+  margin-top: 10px;
+  padding-bottom: 15px;
+  border-bottom: gray solid 1px;
+}
+
+.field-number {
+  width: 54px;
+  font-weight: bold;
+  font-size: 24px;
+  color: #555;
+  text-align: center;
+  margin-top: 9px;
+}
+
+.field-name-in-list {
+  width: 340px;
+  margin-top: 9px;
+}
+
+.setting-button {
+  font-size: 24px;
+}
+
+.new-field-wrapper {
+  margin-top: 16px;
+}
+
+.new-field-wrapper button {
+  margin-bottom: 15px;
+}
+
+.new-field-wrapper {
+  margin-top: 16px;
+}
+
+.new-field-wrapper button {
+  margin-bottom: 15px;
+}
+
+mat-form-field,
+mat-checkbox {
+  margin-right: 10px;
+}
+
+.back-button {
+  padding: 0px;
+  line-height: 18px;
+  font-size: 20px;
+  width: 30px;
+  min-width: 24px;
+  padding-left: 5px;
+}
+
+.mat-selection-list {
+  padding-top: 0px;
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: rgba(0, 0, 0, 0.12);
+}

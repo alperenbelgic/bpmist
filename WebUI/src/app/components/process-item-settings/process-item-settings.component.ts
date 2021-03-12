@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChild } from '@angular/core';
 import { FieldTypeService } from '../../services/Business/field-type.service';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { RandomIdGenerator } from '../../services/Business/general.service';
@@ -17,9 +17,8 @@ import { SelectionSettingsModel } from '@syncfusion/ej2-dropdowns';
 
 import { ListBoxComponent, CheckBoxSelection, MultiSelectModule } from '@syncfusion/ej2-angular-dropdowns';
 import { Subscription } from 'rxjs';
+import { StepFormFieldsComponent } from '../process-item-settings-components/step-form-fields/step-form-fields.component';
 ListBoxComponent.Inject(CheckBoxSelection);
-
-type FieldViewMode = 'listFields' | 'fieldEdit' | 'addExisting';
 
 @Component({
   selector: 'app-process-item-settings',
@@ -28,21 +27,17 @@ type FieldViewMode = 'listFields' | 'fieldEdit' | 'addExisting';
 })
 export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
 
+
+  @ViewChild('stepFormFields') stepFormFieldsComponent: StepFormFieldsComponent;
+
   public visible = false;
-  fieldsViewMode: FieldViewMode = 'listFields';
 
   @Input() process: Process;
-  currentFieldInStep: FieldInStep;
 
 
   // tslint:disable-next-line: variable-name
   _processItem: ProcessItem;
-  isStepFormDesignerVisible = false;
 
-
-  // Loaded lists
-
-  fieldTypes: FieldType[] = [];
 
   get processItems(): ProcessItem[] {
     return this.process.processItems;
@@ -67,20 +62,13 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
     return this.processItem as StepItem;
   }
 
-  get renderingFieldsInStep(): FieldInStep[] {
-    return this.stepItem.fieldsInStep.filter((value, index, arr) => !value.deleted);
-  }
 
   //#endregion
 
-  constructor(
-    private fieldTypeService: FieldTypeService
-  ) {
+  constructor() {
   }
 
   async ngOnInit() {
-    this.fieldTypes = await this.fieldTypeService.getFieldTypes();
-
   }
 
   ngOnDestroy() {
@@ -101,42 +89,15 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
 
   //#region field - step item functions
 
-  openFieldEditViewForNewField() {
-
-    const addNewFieldResult = this.process.addNewField(this.stepItem);
-
-    this.currentFieldInStep = addNewFieldResult.createdFieldInStep;
-
-    this.fieldsViewMode = 'fieldEdit';
-  }
-
-  removeFieldInStep(fieldInStep: FieldInStep) {
-    fieldInStep.deleted = true;
-  }
-
-  openFieldEditViewForExistingField(fieldInStep: FieldInStep) {
-    this.currentFieldInStep = fieldInStep;
-    this.fieldsViewMode = 'fieldEdit';
-  }
-
-  openAddExistingFieldView() {
-    this.fieldsViewMode = 'addExisting';
-  }
-
-  openListFields() {
-    this.fieldsViewMode = 'listFields';
-  }
-
-  swapStepFormDesignerVisible() {
-    this.isStepFormDesignerVisible = !this.isStepFormDesignerVisible;
-  }
 
   onProcessItemChange() {
-    this.fieldsViewMode = 'listFields';
+    this.stepFormFieldsComponent.resetViewMode();
   }
 
   onStepItemSettingsTabChanged($event) {
-    this.fieldsViewMode = 'listFields';
+    this.stepFormFieldsComponent.resetViewMode();
+
+
   }
 
   //#endregion
@@ -147,6 +108,4 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
     }
     return array.filter(i => selectorFunc(i).toLowerCase().indexOf(filter.toLowerCase()) > -1);
   }
-
-
 }

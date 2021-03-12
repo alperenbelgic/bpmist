@@ -100,8 +100,8 @@ export class ResponsibleComponent implements OnInit {
   }
 
   initialise_Responsible_MultipleSelection_Variables() {
-    // this.selectedUserIds = (this.stepItem?.responsible?.users ?? []).map(u => u.userId);
-    // this.selectedGroupIds = (this.stepItem?.responsible?.groups ?? []).map(g => g.groupId);
+    this.selectedUserIds = (this.stepItem?.responsible?.users ?? []).map(u => u.userId);
+    this.selectedGroupIds = (this.stepItem?.responsible?.groups ?? []).map(g => g.groupId);
   }
 
   setShowingResponsibleTypes(): void {
