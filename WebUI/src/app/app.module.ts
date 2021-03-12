@@ -34,6 +34,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthKeyInterceptor } from './services/Web/auth-key.interceptor';
 import { ResponsibleComponent } from './components/process-item-settings-components/responsible/responsible.component';
 import { StepFormFieldsComponent } from './components/process-item-settings-components/step-form-fields/step-form-fields.component';
+import { FieldDefinitionEditorComponent } from './components/process-item-settings-components/field-definition-editor/field-definition-editor.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -60,7 +61,8 @@ const appearance: MatFormFieldDefaultOptions = {
     TextFieldComponent,
     LoginComponent,
     ResponsibleComponent,
-    StepFormFieldsComponent
+    StepFormFieldsComponent,
+    FieldDefinitionEditorComponent
   ],
   imports: [
     BrowserModule,
