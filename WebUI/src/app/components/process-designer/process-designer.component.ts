@@ -340,4 +340,9 @@ export class ProcessDesignerComponent implements OnInit {
   openSettingDialogue(stepItem: StepItem) {
     this.settingItemComponent.open(stepItem);
   }
+
+  mouseEnter(arg) {
+    console.log(arg);
+  }
+
 }
