@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { FieldInStep } from 'src/app/common/Models/Field/FieldInStep';
 import { FieldType } from 'src/app/common/Models/Field/FieldType';
 import { FieldTypeService } from 'src/app/services/Business/field-type.service';
@@ -15,6 +15,8 @@ import { StepItem } from 'src/app/common/Models/ProcessItems/StepItem';
   styleUrls: ['./step-form-fields.component.css']
 })
 export class StepFormFieldsComponent implements OnInit {
+
+  @ViewChildren('formFields') formFieldsViewChildren: QueryList<ElementRef>;
 
   editingField: FieldInStep;
 
@@ -74,6 +76,10 @@ export class StepFormFieldsComponent implements OnInit {
     const addNewFieldResult = this.process.addNewField(this.stepItem);
 
     this.currentFieldInStep = addNewFieldResult.createdFieldInStep;
+
+    setTimeout(() => {
+      this.formFieldsViewChildren?.last?.nativeElement?.scrollIntoView({ behavior: 'smooth' });
+    }, 50);
   }
 
   removeFieldInStep(fieldInStep: FieldInStep) {
