@@ -42,6 +42,23 @@ export class ObservableArray<T extends IPropertyChanged<T>> extends BehaviorSubj
     super.next(new ArrayChanged(newArray, 'removed', item, super.value.sender, null));
   }
 
+  updateOrder(array: T[]) {
+    // TODO: check if same set of values sent.
+
+    let orderChangeExist = false;
+
+    for (let i = 0; i < array.length; i++) {
+      if (super.value.array[i] != array[i]) {
+        orderChangeExist = true;
+        break;
+      }
+    }
+
+    if (orderChangeExist) {
+      super.next(new ArrayChanged(array, 'orderChanged', null, super.value.sender, null));
+    }
+  }
+
   private subscribeItem(item: T) {
     const subscription = item.propertyChanged.subscribe(propertyChanged => {
 

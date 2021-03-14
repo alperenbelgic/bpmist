@@ -55,6 +55,8 @@ export class ProcessDesignerComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialize();
+
+    this.process.processItems.subscribe(v => console.log(v));
   }
 
   initialize() {
@@ -252,8 +254,11 @@ export class ProcessDesignerComponent implements OnInit {
     if (this.process.processItems.value.array.length < 2) {
       return;
     }
+    const sortedProcessItems = [...this.process.processItems.value.array]
+      .sort((a, b) => a.leftPx - b.leftPx);
 
-    const sortedProcessItems = this.process.processItems.value.array.sort((a, b) => a.leftPx - b.leftPx);
+    this.process.processItems.updateOrder(sortedProcessItems);
+
     const buffer = 70;
     let i: number;
     for (i = 1; i < sortedProcessItems.length; i++) {
