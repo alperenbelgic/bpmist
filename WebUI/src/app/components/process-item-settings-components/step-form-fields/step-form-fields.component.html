@@ -17,70 +17,72 @@
     >
       This step doesn't contain any field.
     </div>
-    <div
-      class="field-form"
-      fxLayout="row"
-      *ngFor="let fieldInStep of renderingFieldsInStep; let i=index"
-    >
-
-      <div class="field-number">
-        <div>{{i+1}}</div>
-      </div>
-
+    <div class="field-list-wrapper">
       <div
-        class="field-name-in-list"
-        fxLayout="column"
+        class="field-form"
+        fxLayout="row"
+        *ngFor="let fieldInStep of renderingFieldsInStep; let i=index"
+        #formFields
       >
-        <span class="field-name-span">{{fieldInStep.field.name}}</span>
-        <span class="field-type">{{fieldInStep.field.fieldType?.name}}</span>
-      </div>
 
-      <div>
-        <mat-button-toggle-group
-          *ngIf="fieldInStep.editableFieldUsedInAnotherStep"
-          [(ngModel)]="fieldInStep.readOnly"
-          [vertical]="true"
-          (change)="fieldInStepReadOnlyChanged()"
-        >
-          <mat-button-toggle [value]="false">Editable</mat-button-toggle>
-          <mat-button-toggle [value]="true">Read Only</mat-button-toggle>
-        </mat-button-toggle-group>
-        <div *ngIf="!fieldInStep.editableFieldUsedInAnotherStep">
-          read only toggle removed
+        <div class="field-number">
+          <div>{{i+1}}</div>
         </div>
-      </div>
 
-      <div fxLayout="row">
-
-        <button
-          mat-button
-          class="setting-button"
-          (click)="removeFieldInStep(fieldInStep)"
+        <div
+          class="field-name-in-list"
+          fxLayout="column"
         >
-          <i class="fas fa-trash-alt"></i>
-        </button>
+          <span class="field-name-span">{{fieldInStep.field.name}}</span>
+          <span class="field-type">{{fieldInStep.field.fieldType?.name}}</span>
+        </div>
 
-        <button
-          mat-button
-          class="setting-button"
-          (click)="openFieldEditViewForExistingField(fieldInStep)"
-          [disabled]="fieldInStep.readOnly && fieldInStep != currentFieldInStep"
-        >
-          <i
-            matBadge="!"
-            matBadgeColor="warn"
-            matBadgePosition="before"
-            class="fas fa-pencil-alt"
-            [ngClass]="{
+        <div>
+          <mat-button-toggle-group
+            *ngIf="fieldInStep.editableFieldUsedInAnotherStep"
+            [(ngModel)]="fieldInStep.readOnly"
+            [vertical]="true"
+            (change)="fieldInStepReadOnlyChanged()"
+          >
+            <mat-button-toggle [value]="false">Editable</mat-button-toggle>
+            <mat-button-toggle [value]="true">Read Only</mat-button-toggle>
+          </mat-button-toggle-group>
+          <div *ngIf="!fieldInStep.editableFieldUsedInAnotherStep">
+            read only toggle removed
+          </div>
+        </div>
+
+        <div fxLayout="row">
+
+          <button
+            mat-button
+            class="setting-button"
+            (click)="removeFieldInStep(fieldInStep)"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </button>
+
+          <button
+            mat-button
+            class="setting-button"
+            (click)="openFieldEditViewForExistingField(fieldInStep)"
+            [disabled]="fieldInStep.readOnly && fieldInStep != currentFieldInStep"
+          >
+            <i
+              matBadge="!"
+              matBadgeColor="warn"
+              matBadgePosition="before"
+              class="fas fa-pencil-alt"
+              [ngClass]="{
               'field-selected': fieldInStep == currentFieldInStep,
               'field-selection-disabled': fieldInStep != currentFieldInStep && fieldInStep.readOnly}"
-          ></i>
-        </button>
+            ></i>
+          </button>
+
+        </div>
 
       </div>
-
     </div>
-
     <div
       class="new-field-wrapper"
       fxLayout="column"
