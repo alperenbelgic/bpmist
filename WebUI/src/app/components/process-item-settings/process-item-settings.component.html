@@ -33,13 +33,15 @@
             #itemTemplate
             let-data
           >
-            <span *ngIf="$any(data).constructor.name== 'StepItem'">
-              Step:
-            </span>
-            <span *ngIf="$any(data).constructor.name== 'ConditionItem'">
-              Condition:
-            </span>
-            <span>{{data.text}}</span>
+            <div *ngIf="data">
+              <span *ngIf="$any(data).constructor.name== 'StepItem'">
+                Step:
+              </span>
+              <span *ngIf="$any(data).constructor.name== 'ConditionItem'">
+                Condition:
+              </span>
+              <span>{{data.text}}</span>
+            </div>
           </ng-template>
           <ng-template
             #valueTemplate

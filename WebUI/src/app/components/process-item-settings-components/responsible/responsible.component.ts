@@ -22,8 +22,8 @@ export class ResponsibleComponent implements OnInit {
   showingResponsibleTypes: ResponsibleType[] = [];
   _processItem: ProcessItem;
 
-  groups: Group[];
-  users: User[];
+  groups: Group[] = [];
+  users: User[] = [];
   selectedUserIds = [];
 
 
