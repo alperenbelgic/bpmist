@@ -92,6 +92,8 @@
                 #stepFormFields
                 [process]="process"
                 [processItem]="processItem"
+                [fieldTypes]="fieldTypes"
+                (currentFieldChanged)="currentFieldChanged($event)"
               ></app-step-form-fields>
             </mat-tab>
             <mat-tab label="Actions">
@@ -102,8 +104,8 @@
               <p>(for future)-> save/update data to database</p>
             </mat-tab>
 
-            <mat-tab label="Docs"> Documents will be edited here. </mat-tab>
             <mat-tab label="Notifications"> Notification will be configured here. </mat-tab>
+            <mat-tab label="Docs"> Documents will be edited here. </mat-tab>
 
           </mat-tab-group>
 
@@ -115,7 +117,11 @@
 
 
     <div class="right-part">
-      <span>right part</span>
+      <app-field-definition-editor
+        #fieldDefinitionEditor
+        [fieldTypes]="fieldTypes"
+      ></app-field-definition-editor>
+
     </div>
 
 

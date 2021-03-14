@@ -1,1 +1,185 @@
-<p>field-definition-editor works!</p>
+<form
+  #fieldsForm="ngForm"
+  *ngIf="fieldInStep && fieldTypes"
+  class="wrapper"
+>
+
+  <div fxLayout="column">
+
+    <div>* This field is used in multiple steps and these settings will be shared acrross steps. (show this only if
+      there are multiple editiable uses of this field accross steps)</div>
+    <!-- todo:
+is readonly ve is required'i list'e tasi
+bu sayfadan cikart
+bu sayfayi calistir falan  -->
+    <div class="field-edit-title">
+      Field Editor
+      <i
+        class="fas fa-info-circle"
+        matTooltip="Settings for fields of the form. "
+      ></i>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Field Name</mat-label>
+      <input
+        [(ngModel)]="fieldInStep.field.name"
+        name="name-{{fieldInStep.field.id}}"
+        matInput
+        #input
+      >
+    </mat-form-field>
+
+    <ejs-dropdownlist
+      placeholder="Field Type"
+      name="fieldType-{{fieldInStep.field.id}}"
+      [dataSource]='fieldTypes'
+      [ngModel]="fieldInStep?.field?.fieldType?.code"
+      [fields]="{value:'code', text:'name' }"
+      (change)='fieldInStep.field.fieldType = $event.itemData'
+      cssClass="e-outline"
+      floatLabelType="Always"
+    >
+    </ejs-dropdownlist>
+
+  </div>
+
+  <div
+    fxLayout="column"
+    *ngIf="fieldInStep.field.fieldType"
+  >
+
+    <mat-selection-list
+      [multiple]="false"
+      (selectionChange)="fieldInStep.readOnly = $event.option.value"
+      class="detailed-settings-item-wrapper"
+    >
+      <mat-list-option
+        [value]="false"
+        [selected]="!fieldInStep.readOnly"
+      >
+        Editable
+      </mat-list-option>
+      <mat-list-option
+        [value]="true"
+        [selected]="fieldInStep.readOnly"
+      >
+        Readonly
+      </mat-list-option>
+    </mat-selection-list>
+
+    <mat-selection-list
+      *ngIf="!fieldInStep.readOnly"
+      [multiple]="false"
+      (selectionChange)="fieldInStep.isRequired = $event.option.value"
+      class="detailed-settings-item-wrapper"
+    >
+      <mat-list-option
+        [value]="false"
+        [selected]="!fieldInStep.isRequired"
+      >
+        Can be left empty
+      </mat-list-option>
+
+      <mat-list-option
+        [value]="true"
+        [selected]="fieldInStep.isRequired"
+      >
+        Value required
+      </mat-list-option>
+
+
+    </mat-selection-list>
+
+  </div>
+
+  <ng-container *ngIf="fieldInStep.field.fieldType">
+
+    <div *ngIf="fieldInStep.field.fieldType.code == 'numeric'">
+
+
+      <div
+        fxLayout="column"
+        class="detailed-settings-item"
+      >
+        <mat-checkbox
+          class="detailed-settings-item-wrapper"
+          color="primary"
+          [(ngModel)]="fieldInStep.field.numericFieldSettings.hasMinValueRestriction"
+          name="hasMinValueRestriction-{{fieldInStep.field.id}}"
+        >Set Minimum Value?
+        </mat-checkbox>
+
+        <mat-form-field
+          appearance="outline"
+          *ngIf="fieldInStep.field.numericFieldSettings.hasMinValueRestriction"
+        >
+          <mat-label>Minimum value</mat-label>
+          <input
+            [(ngModel)]="fieldInStep.field.numericFieldSettings.minValue"
+            name="minValue-{{fieldInStep.field.id}}"
+            matInput
+            type="number"
+          >
+        </mat-form-field>
+      </div>
+
+      <div
+        fxLayout="column"
+        class="detailed-settings-item"
+      >
+        <mat-checkbox
+          class="detailed-settings-item-wrapper"
+          color="primary"
+          [(ngModel)]="fieldInStep.field.numericFieldSettings.hasMaxValueRestriction"
+          name="hasMaxValueRestriction-{{fieldInStep.field.id}}"
+        >Set Maximum Value?
+        </mat-checkbox>
+
+        <mat-form-field
+          appearance="outline"
+          *ngIf="fieldInStep.field.numericFieldSettings.hasMaxValueRestriction"
+        >
+          <mat-label>Maximum value</mat-label>
+          <input
+            [(ngModel)]="fieldInStep.field.numericFieldSettings.maxValue"
+            name="maxValue-{{fieldInStep.field.id}}"
+            matInput
+            type="number"
+          >
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div *ngIf="fieldInStep.field.fieldType.code === 'text'">
+      text settings: multiline, max character, min character
+    </div>
+
+    <div
+      class="detailed-settings-item-wrapper"
+      *ngIf="fieldInStep.field.fieldType.code === 'user' || fieldInStep.field.fieldType.code === 'group'"
+    >
+
+      <mat-selection-list
+        [multiple]="false"
+        (selectionChange)="fieldInStep.field.generalFieldSettings.multipleValue = $event.option.value"
+      >
+        <mat-list-option
+          [value]="false"
+          [selected]="!fieldInStep.field.generalFieldSettings.multipleValue"
+        >
+          Single item selection
+        </mat-list-option>
+        <mat-list-option
+          [value]="true"
+          [selected]="fieldInStep.field.generalFieldSettings.multipleValue"
+        >
+          Multiple items selection
+        </mat-list-option>
+      </mat-selection-list>
+
+    </div>
+
+  </ng-container>
+
+</form>

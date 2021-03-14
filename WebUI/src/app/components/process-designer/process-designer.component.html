@@ -89,7 +89,7 @@
       </svg>
       <app-process-item
         appClickStopPropagation
-        *ngFor="let processItem of processItems"
+        *ngFor="let processItem of process.processItems"
         (linkCreated)="startLinkProcess($event)"
         [processItem]="processItem"
         [style.left.px]="processItem.leftPx"

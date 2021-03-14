@@ -53,9 +53,19 @@ export class Process {
       false,
       false);
 
+    field.fieldInStepList.next([...field.fieldInStepList.value, fieldInStep]);
+
     stepItem.fieldsInStep.push(fieldInStep);
 
     return { createdFieldInStep: fieldInStep };
+  }
+
+  addNewStepField(stepItem: StepItem, field: Field) {
+    // TODO: work on scenarios
+    // initializing with values from server and
+    // creating values from ui
+    // creating a fresh process
+
   }
 
   addNewStep(stepName: string, topPx: number, leftPx: number) {

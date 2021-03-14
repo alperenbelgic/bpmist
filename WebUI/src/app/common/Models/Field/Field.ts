@@ -4,6 +4,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 export class Field {
 
+  fieldInStepList = new BehaviorSubject<FieldInStep[]>([]);
+
   // tslint:disable-next-line: variable-name
   constructor(private _id: string) {
     this.generalFieldSettings = new GeneralFieldSettings(this);

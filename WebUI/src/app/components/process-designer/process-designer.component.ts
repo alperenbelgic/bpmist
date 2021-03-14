@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ProcessItemSettingsComponent } from '../process-item-settings/process-item-settings.component';
 import { RandomIdGenerator } from 'src/app/services/Business/general.service';
 import { ProcessItem } from 'src/app/common/Models/ProcessItems/ProcessItem';
@@ -16,9 +16,6 @@ import { UserGroupService } from 'src/app/services/Business/userGroup.service';
 export class ProcessDesignerComponent implements OnInit {
 
   process: Process;
-  get processItems(): ProcessItem[] {
-    return this.process?.processItems;
-  }
 
   selectedProcessItems: ProcessItem[] = [];
 
@@ -35,16 +32,17 @@ export class ProcessDesignerComponent implements OnInit {
   @ViewChild('thebox') drawingBox: any;
   startedLinkItem: ProcessItem = null;
 
-  get links(): Link[] {
+  links: Link[];
+  recalculateViewLinks() {
     const links: Link[] = [];
-    this.processItems.forEach((processItem: ProcessItem) => {
+    this.process.processItems.forEach((processItem: ProcessItem) => {
       processItem.links.forEach((link: Link) => {
         if (link.startItem === processItem) {
           links.push(link);
         }
       });
     });
-    return links;
+    this.links = links;
   }
 
   constructor(
@@ -101,7 +99,7 @@ export class ProcessDesignerComponent implements OnInit {
     this.cd.detach();
 
     this.arrangeHorizontalDistances();
-    const lastItem = this.processItems.pop();
+    const lastItem = this.process.processItems.slice(-1)[0];
 
     const newItem = new StepItem(
       this.randomIdGenerator.generate(),
@@ -113,8 +111,7 @@ export class ProcessDesignerComponent implements OnInit {
       this.userGroupService.getDefaultResponsibleType(),
       this.userGroupService.getDefaultGroupAssignOption());
 
-    this.processItems.push(lastItem);
-    this.processItems.push(newItem);
+    this.process.processItems.push(newItem);
     this.arrangeHorizontalDistances();
 
     this.cd.detectChanges();
@@ -125,10 +122,10 @@ export class ProcessDesignerComponent implements OnInit {
     this.cd.detach();
 
     this.arrangeHorizontalDistances();
-    const lastItem = this.processItems.pop();
+    const lastItem = this.process.processItems.slice(-1)[0];
+
     const newItem = new ConditionItem(this.randomIdGenerator.generate(), true, false, 'new cond', lastItem.topPx, lastItem.leftPx + 1);
-    this.processItems.push(lastItem);
-    this.processItems.push(newItem);
+    this.process.processItems.push(newItem);
     this.arrangeHorizontalDistances();
 
     this.cd.detectChanges();
@@ -250,11 +247,11 @@ export class ProcessDesignerComponent implements OnInit {
 
   arrangeHorizontalDistances() {
 
-    if (this.processItems.length < 2) {
+    if (this.process.processItems.length < 2) {
       return;
     }
 
-    const sortedProcessItems = this.processItems.sort((a, b) => a.leftPx - b.leftPx);
+    const sortedProcessItems = this.process.processItems.sort((a, b) => a.leftPx - b.leftPx);
     const buffer = 70;
     let i: number;
     for (i = 1; i < sortedProcessItems.length; i++) {
@@ -330,6 +327,7 @@ export class ProcessDesignerComponent implements OnInit {
 
     this.startedLinkItem.links.push(link);
     processItem.links.push(link);
+    this.recalculateViewLinks();
 
     this.isLinkBeingCreated = false;
     this.startedLinkItem = null;

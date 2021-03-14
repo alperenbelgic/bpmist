@@ -10,6 +10,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
 
 @NgModule({
   exports: [
@@ -24,7 +26,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatProgressBarModule,
     MatListModule,
     MatCheckboxModule,
-
+    MatButtonToggleModule
   ]
 })
 export class MaterialModule { }

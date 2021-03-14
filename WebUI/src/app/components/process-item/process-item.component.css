@@ -150,7 +150,7 @@
   top: 112px;
 }
 
-.submit-process-name-change i {
-  font-size: 27px;
-  margin-top: 4px;
+.submit-process-name-change div {
+  margin-top: 10px;
+  font-weight: bold;
 }

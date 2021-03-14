@@ -18,6 +18,7 @@ import { SelectionSettingsModel } from '@syncfusion/ej2-dropdowns';
 import { ListBoxComponent, CheckBoxSelection, MultiSelectModule } from '@syncfusion/ej2-angular-dropdowns';
 import { Subscription } from 'rxjs';
 import { StepFormFieldsComponent } from '../process-item-settings-components/step-form-fields/step-form-fields.component';
+import { FieldDefinitionEditorComponent } from '../process-item-settings-components/field-definition-editor/field-definition-editor.component';
 ListBoxComponent.Inject(CheckBoxSelection);
 
 @Component({
@@ -29,6 +30,7 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
 
 
   @ViewChild('stepFormFields') stepFormFieldsComponent: StepFormFieldsComponent;
+  @ViewChild('fieldDefinitionEditor') fieldDefinitionEditor: FieldDefinitionEditorComponent;
 
   public visible = false;
 
@@ -65,10 +67,16 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
 
   //#endregion
 
-  constructor() {
+  fieldTypes: FieldType[] = [];
+
+  constructor(
+    private fieldTypeService: FieldTypeService
+  ) {
+
   }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.fieldTypeService.getFieldTypes().then(v => { this.fieldTypes = v; });
   }
 
   ngOnDestroy() {
@@ -96,8 +104,6 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
 
   onStepItemSettingsTabChanged($event) {
     this.stepFormFieldsComponent.resetViewMode();
-
-
   }
 
   //#endregion
@@ -107,5 +113,8 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
       return array;
     }
     return array.filter(i => selectorFunc(i).toLowerCase().indexOf(filter.toLowerCase()) > -1);
+  }
+  currentFieldChanged(fieldInStep: FieldInStep) {
+    this.fieldDefinitionEditor.show(fieldInStep);
   }
 }
