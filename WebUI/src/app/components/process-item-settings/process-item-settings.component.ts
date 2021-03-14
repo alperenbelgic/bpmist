@@ -42,7 +42,7 @@ export class ProcessItemSettingsComponent implements OnInit, OnDestroy {
 
 
   get processItems(): ProcessItem[] {
-    return this.process.processItems;
+    return this.process.processItems.value.array;
   }
 
   get processItem(): ProcessItem {

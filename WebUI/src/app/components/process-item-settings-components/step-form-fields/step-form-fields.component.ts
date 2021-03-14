@@ -49,9 +49,6 @@ export class StepFormFieldsComponent implements OnInit {
 
   async ngOnInit() {
   }
-  get processItems(): ProcessItem[] {
-    return this.process.processItems;
-  }
 
   get processItem(): ProcessItem {
     return this._processItem;

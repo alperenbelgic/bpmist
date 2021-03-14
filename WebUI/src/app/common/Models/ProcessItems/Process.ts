@@ -21,7 +21,7 @@ export class Process {
 
   processId: string;
 
-  processItems: ProcessItem[] = [];
+  processItems = new ObservableArray<ProcessItem>(this);
   links: Link[] = [];
 
   public fields = new ObservableArray<Field>(this);
@@ -59,7 +59,7 @@ export class Process {
   }
 
   addNewStep(stepName: string, topPx: number, leftPx: number) {
-    this.processItems.push(
+    this.processItems.addItem(
       new StepItem(
         this.randomIdGenerator.generate(),
         true,

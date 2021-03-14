@@ -7,6 +7,8 @@ import { StepItem } from 'src/app/common/Models/ProcessItems/StepItem';
 import { ConditionItem } from 'src/app/common/Models/ProcessItems/ConditionItem';
 import { Process } from 'src/app/common/Models/ProcessItems/Process';
 import { UserGroupService } from 'src/app/services/Business/userGroup.service';
+import { ArrayChanged, ObservableArray } from 'src/app/common/Models/PropertyChangedTypes';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-process-designer',
@@ -35,7 +37,7 @@ export class ProcessDesignerComponent implements OnInit {
   links: Link[];
   recalculateViewLinks() {
     const links: Link[] = [];
-    this.process.processItems.forEach((processItem: ProcessItem) => {
+    this.process.processItems.value.array.forEach((processItem: ProcessItem) => {
       processItem.links.forEach((link: Link) => {
         if (link.startItem === processItem) {
           links.push(link);
@@ -99,19 +101,19 @@ export class ProcessDesignerComponent implements OnInit {
     this.cd.detach();
 
     this.arrangeHorizontalDistances();
-    const lastItem = this.process.processItems.slice(-1)[0];
+    const lastItem = this.process.processItems.value.array.slice(-1)[0];
 
     const newItem = new StepItem(
       this.randomIdGenerator.generate(),
       true,
       false,
-      '[New Step]',
+      '[Type Step Name]',
       lastItem.topPx,
       lastItem.leftPx + 1,
       this.userGroupService.getDefaultResponsibleType(),
       this.userGroupService.getDefaultGroupAssignOption());
 
-    this.process.processItems.push(newItem);
+    this.process.processItems.addItem(newItem);
     this.arrangeHorizontalDistances();
 
     this.cd.detectChanges();
@@ -122,10 +124,10 @@ export class ProcessDesignerComponent implements OnInit {
     this.cd.detach();
 
     this.arrangeHorizontalDistances();
-    const lastItem = this.process.processItems.slice(-1)[0];
+    const lastItem = this.process.processItems.value.array.slice(-1)[0];
 
-    const newItem = new ConditionItem(this.randomIdGenerator.generate(), true, false, 'new cond', lastItem.topPx, lastItem.leftPx + 1);
-    this.process.processItems.push(newItem);
+    const newItem = new ConditionItem(this.randomIdGenerator.generate(), true, false, '[Type Condition Name]', lastItem.topPx, lastItem.leftPx + 1);
+    this.process.processItems.addItem(newItem);
     this.arrangeHorizontalDistances();
 
     this.cd.detectChanges();
@@ -247,11 +249,11 @@ export class ProcessDesignerComponent implements OnInit {
 
   arrangeHorizontalDistances() {
 
-    if (this.process.processItems.length < 2) {
+    if (this.process.processItems.value.array.length < 2) {
       return;
     }
 
-    const sortedProcessItems = this.process.processItems.sort((a, b) => a.leftPx - b.leftPx);
+    const sortedProcessItems = this.process.processItems.value.array.sort((a, b) => a.leftPx - b.leftPx);
     const buffer = 70;
     let i: number;
     for (i = 1; i < sortedProcessItems.length; i++) {

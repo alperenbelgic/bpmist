@@ -36,7 +36,10 @@
     class="box"
     (click)="clickBox()"
   >
-    <div class="inner-box">
+    <div
+      class="inner-box"
+      *ngIf="this.process.processItems | async; let processItems "
+    >
 
       <svg
         width="100"
@@ -87,9 +90,11 @@
         </line>
 
       </svg>
+
+      <!-- angular confuses types, .array error can be ignored -->
       <app-process-item
         appClickStopPropagation
-        *ngFor="let processItem of process.processItems"
+        *ngFor="let processItem of processItems.array"
         (linkCreated)="startLinkProcess($event)"
         [processItem]="processItem"
         [style.left.px]="processItem.leftPx"

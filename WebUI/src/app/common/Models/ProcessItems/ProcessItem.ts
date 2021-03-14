@@ -1,8 +1,10 @@
+import { Observable, Subject } from 'rxjs';
 import { ProcessItemComponent } from 'src/app/components/process-item/process-item.component';
+import { IPropertyChanged, PC } from '../PropertyChangedTypes';
 import { Link } from './Link';
 import { ProcessItemVisualState } from './ProcessItemVisualState';
 
-export class ProcessItem {
+export class ProcessItem implements IPropertyChanged<ProcessItem> {
 
   public constructor(
     public readonly id: string,
@@ -15,6 +17,8 @@ export class ProcessItem {
   ) {
 
   }
+
+  propertyChanged = new Subject<PC<ProcessItem>>();
 
   links: Link[] = []; // persistent
 

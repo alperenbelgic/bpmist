@@ -88,6 +88,13 @@ export class UserGroupService {
         visualState: { enabled: true },
       },
       {
+        code: 'manager',
+        name: 'Assign to the manager',
+        tooltip: 'This step will be assigned to the manager of the previous action user.',
+        isAdvancedOption: false,
+        visualState: { enabled: true },
+      },
+      {
         code: 'groupList',
         name: 'Assign to multiple groups parallelly',
         tooltip: 'Multiple steps will be assigned to groups you select.',

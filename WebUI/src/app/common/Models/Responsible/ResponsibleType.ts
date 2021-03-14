@@ -1,5 +1,5 @@
 // tslint:disable-next-line: max-line-length
-export type ResponsibleTypeCode = 'group' | 'user' | 'groupList' | 'userList' | 'groupFromField' | 'userFromField' | 'groupListFromField' | 'userListFromField';
+export type ResponsibleTypeCode = 'group' | 'user' | 'manager' | 'groupList' | 'userList' | 'groupFromField' | 'userFromField' | 'groupListFromField' | 'userListFromField';
 
 
 export class ResponsibleType {
