@@ -1,8 +1,9 @@
 import { Field } from './Field';
 import { Subscription, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { IPropertyChanged, nameof, PC } from '../PropertyChangedTypes';
 
-export class FieldInStep {
+export class FieldInStep implements IPropertyChanged<FieldInStep> {
 
   constructor(
     public id: string,
@@ -41,20 +42,21 @@ export class FieldInStep {
     return this._readOnly;
   }
   set readOnly(val: boolean) {
+    const oldValue = this._readOnly;
     this._readOnly = val;
-    this.propertyChanged.next(new PC(nameof<FieldInStep>("readOnly"), val, this));
+    this.propertyChanged.next(new PC('readOnly', val, oldValue, this));
   }
 
   deleted = false;
 
-
+  // assignment of this value might be moved to a central point.
   editableFieldUsedInAnotherStep = false;
 
   calculateEditableFieldUsedInAnotherStep() {
     this.editableFieldUsedInAnotherStep = this.field.fieldInStepList.value.some(f => f != this && f.readOnly == false && f.deleted == false);
   }
 
-  propertyChanged = new Subject<PC>();
+  propertyChanged = new Subject<PC<FieldInStep>>();
 
   visualState = {
     justDeleted: false // use this for showing, undo?
@@ -66,12 +68,3 @@ export class FieldInStep {
 }
 
 
-export const nameof = <T>(name: keyof T) => name;
-
-export class PC {
-  constructor(
-    public propertyName: string,
-    public propertyValue: any,
-    public sender: any
-  ) { }
-}

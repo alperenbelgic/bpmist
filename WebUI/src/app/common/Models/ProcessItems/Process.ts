@@ -6,6 +6,7 @@ import { RandomIdGenerator } from '../../../services/Business/general.service';
 import { FieldInStep } from '../Field/FieldInStep';
 import { UserGroupService } from '../../../services/Business/userGroup.service';
 import { from, Observable, BehaviorSubject, Subscription } from 'rxjs';
+import { ArrayChanged, ObservableArray } from '../PropertyChangedTypes';
 
 export class Process {
 
@@ -13,9 +14,9 @@ export class Process {
     private randomIdGenerator: RandomIdGenerator,
     private userGroupService: UserGroupService,
   ) {
-    this.fields$.subscribe(fields => {
-      this.setAllUserTypeFields();
-    });
+    this.fields.subscribe(change => {
+      this.setAllUserTypeFields(change);
+    })
   }
 
   processId: string;
@@ -23,12 +24,7 @@ export class Process {
   processItems: ProcessItem[] = [];
   links: Link[] = [];
 
-  // tslint:disable-next-line: variable-name
-  private _fields: Field[] = [];
-  private fields$: BehaviorSubject<Field[]> = new BehaviorSubject<Field[]>([]);
-  public get fieldsChange$(): Observable<Field[]> {
-    return this.fields$.asObservable();
-  }
+  public fields = new ObservableArray<Field>(this);
   userTypeFields: Field[] = [];
   groupTypeFields: Field[] = [];
   multipleUserTypeFields: Field[] = [];
@@ -38,13 +34,7 @@ export class Process {
 
     const field = new Field(this.randomIdGenerator.generate());
 
-    (field as any).processSubscription =
-      field.fieldChanged$.subscribe(_ => {
-        this.fields$.next(this._fields);
-      });
-
-    this._fields.push(field);
-    this.fields$.next(this._fields);
+    this.fields.addItem(field);
 
     const fieldInStep = new FieldInStep(
       this.randomIdGenerator.generate(),
@@ -90,17 +80,35 @@ export class Process {
     // stop deletion or ask if they want to remove that field being selected
   }
 
-  private setAllUserTypeFields() {
+  private setAllUserTypeFields(change: ArrayChanged<Field>) {
+
+    const fieldAddedOrRemovedWithUserOrGroupFieldType =
+      (change.changeMode == 'added' || change.changeMode == 'removed') &&
+      (change.changedValue.fieldType?.code == 'user' || change.changedValue.fieldType?.code == 'group');
+
+    const fieldFieldTypeOrGeneralFieldSettingsChanged =
+      change.changeMode == 'itemPropertyChanged' &&
+      (change.itemPropertyChanged.propertyName == 'fieldType' || change.itemPropertyChanged.propertyName == 'generalFieldSettings');
+
+    if (!fieldAddedOrRemovedWithUserOrGroupFieldType && !fieldFieldTypeOrGeneralFieldSettingsChanged) {
+      return;
+    }
+
+    const fields = this.fields.getArray();
+
     this.userTypeFields =
-      this._fields.filter(field => field.fieldType?.code === 'user' && !field.generalFieldSettings.multipleValue);
+      fields.filter(field => field.fieldType?.code === 'user' && !field.generalFieldSettings.multipleValue);
 
     this.multipleUserTypeFields =
-      this._fields.filter(field => field.fieldType?.code === 'user' && field.generalFieldSettings.multipleValue);
+      fields.filter(field => field.fieldType?.code === 'user' && field.generalFieldSettings.multipleValue);
 
     this.groupTypeFields =
-      this._fields.filter(field => field.fieldType?.code === 'group' && !field.generalFieldSettings.multipleValue);
+      fields.filter(field => field.fieldType?.code === 'group' && !field.generalFieldSettings.multipleValue);
 
     this.multipleGroupTypeFields =
-      this._fields.filter(field => field.fieldType?.code === 'group' && field.generalFieldSettings.multipleValue);
+      fields.filter(field => field.fieldType?.code === 'group' && field.generalFieldSettings.multipleValue);
   }
+
+
+
 }

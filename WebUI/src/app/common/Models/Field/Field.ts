@@ -1,8 +1,9 @@
 import { FieldType } from './FieldType';
 import { FieldInStep } from './FieldInStep';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { IPropertyChanged, PC } from '../PropertyChangedTypes';
 
-export class Field {
+export class Field implements IPropertyChanged<Field>{
 
   fieldInStepList = new BehaviorSubject<FieldInStep[]>([]);
 
@@ -10,6 +11,7 @@ export class Field {
   constructor(private _id: string) {
     this.generalFieldSettings = new GeneralFieldSettings(this);
   }
+  propertyChanged: Subject<PC<Field>>;
 
   get id(): string {
     return this._id;
@@ -21,8 +23,9 @@ export class Field {
     return this._name;
   }
   set name(value: string) {
+    const oldValue = this._name;
     this._name = value;
-    this._fieldChanged$.next(this);
+    this.propertyChanged.next(new PC('name', value, oldValue, this));
   }
 
   // tslint:disable-next-line: variable-name
@@ -31,14 +34,9 @@ export class Field {
     return this._fieldType;
   }
   set fieldType(value: FieldType) {
+    const oldValue = this._fieldType;
     this._fieldType = value;
-    this._fieldChanged$.next(this);
-  }
-
-  // tslint:disable-next-line: variable-name
-  private _fieldChanged$ = new BehaviorSubject<Field>(this);
-  get fieldChanged$(): Observable<Field> {
-    return this._fieldChanged$.asObservable();
+    this.propertyChanged.next(new PC('fieldType', value, oldValue, this));
   }
 
   generalFieldSettings: GeneralFieldSettings;
@@ -66,10 +64,6 @@ export class Field {
     }
   };
 
-  triggerChange() {
-    this._fieldChanged$.next(this);
-  }
-
 }
 export class GeneralFieldSettings {
   constructor(private field: Field) {
@@ -77,8 +71,10 @@ export class GeneralFieldSettings {
 
   _multiple: boolean;
   set multipleValue(value: boolean) {
+    const oldValue = this._multiple;
     this._multiple = value;
-    this.field.triggerChange();
+    // TODO this usage may not be ideal. no final model yet, for hierarcial data structures.
+    this.field.propertyChanged.next(new PC('generalFieldSettings', value, oldValue, this.field));
   }
   get multipleValue(): boolean {
     return this._multiple;
