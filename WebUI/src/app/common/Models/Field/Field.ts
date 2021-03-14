@@ -11,7 +11,7 @@ export class Field implements IPropertyChanged<Field>{
   constructor(private _id: string) {
     this.generalFieldSettings = new GeneralFieldSettings(this);
   }
-  propertyChanged: Subject<PC<Field>>;
+  propertyChanged = new Subject<PC<Field>>();
 
   get id(): string {
     return this._id;

@@ -1,75 +1,78 @@
-<div
-  *ngIf="$any(processItem).constructor.name== 'StepItem'"
-  (dblclick)="swapShowProcessItemNameEdit()"
-  class="box state-box noselect"
-  [ngClass]="{
+<div *ngIf="processItem">
+
+  <div
+    *ngIf="$any(processItem).constructor.name== 'StepItem'"
+    (dblclick)="swapShowProcessItemNameEdit()"
+    class="box state-box noselect"
+    [ngClass]="{
     'selected': processItem.visualState.isSelected,
     'not-selected': !processItem.visualState.isSelected
   }"
->
-  <div
-    *ngIf="!showProcessItemNameEdit"
-    class="create-link-button box-button"
-    appClickStopPropagation
-    (click)="createLink($event)"
   >
-    <i class="fas fa-long-arrow-alt-up"></i>
-  </div>
-  <div
-    *ngIf="!showProcessItemNameEdit"
-    class="settings-button box-button"
-    appClickStopPropagation
-    (click)="openSettings($event)"
-  >
-    <i class="fas fa-wrench"></i>
-  </div>
-  <div
-    *ngIf="showProcessItemNameEdit"
-    class="submit-process-name-change"
-    appClickStopPropagation
-    (click)="submitProcessName()"
-  >
-    <div>OK</div>
-  </div>
-  <textarea
-    #processItemNameTextArea
-    (keypress)="processItemNameSubmitted($event)"
-    [(ngModel)]='processItem.text'
-    class="
+    <div
+      *ngIf="!showProcessItemNameEdit"
+      class="create-link-button box-button"
+      appClickStopPropagation
+      (click)="createLink($event)"
+    >
+      <i class="fas fa-long-arrow-alt-up"></i>
+    </div>
+    <div
+      *ngIf="!showProcessItemNameEdit"
+      class="settings-button box-button"
+      appClickStopPropagation
+      (click)="openSettings($event)"
+    >
+      <i class="fas fa-wrench"></i>
+    </div>
+    <div
+      *ngIf="showProcessItemNameEdit"
+      class="submit-process-name-change"
+      appClickStopPropagation
+      (click)="submitProcessName()"
+    >
+      <div>OK</div>
+    </div>
+    <textarea
+      #processItemNameTextArea
+      (keypress)="processItemNameSubmitted($event)"
+      [(ngModel)]='processItem.text'
+      class="
     process-item-textbox"
-    appClickStopPropagation
-    *ngIf="showProcessItemNameEdit;else processItemNameLabel"
-  ></textarea>
-  <ng-template #processItemNameLabel>
-    <div>{{processItem.text}}</div>
-  </ng-template>
-</div>
+      appClickStopPropagation
+      *ngIf="showProcessItemNameEdit;else processItemNameLabel"
+    ></textarea>
+    <ng-template #processItemNameLabel>
+      <div>{{processItem.text}}</div>
+    </ng-template>
+  </div>
 
 
 
-<div
-  *ngIf="$any(processItem).constructor.name== 'ConditionItem'"
-  class="box condition-box noselect"
-  [ngClass]="{
+  <div
+    *ngIf="$any(processItem).constructor.name== 'ConditionItem'"
+    class="box condition-box noselect"
+    [ngClass]="{
   'selected': processItem.visualState.isSelected,
   'not-selected': !processItem.visualState.isSelected
 }"
->
-  <div
-    class="create-link-button box-button"
-    appClickStopPropagation
-    (click)="createLink($event)"
   >
-    <i class="fas fa-long-arrow-alt-up"></i>
-  </div>
-  <div
-    class="settings-button box-button"
-    appClickStopPropagation
-    (click)="openSettings($event)"
-  >
-    <i class="fas fa-wrench"></i>
-  </div>
-  <div class="condition-content">
-    {{processItem.text}} - {{processItem.id}}
+    <div
+      class="create-link-button box-button"
+      appClickStopPropagation
+      (click)="createLink($event)"
+    >
+      <i class="fas fa-long-arrow-alt-up"></i>
+    </div>
+    <div
+      class="settings-button box-button"
+      appClickStopPropagation
+      (click)="openSettings($event)"
+    >
+      <i class="fas fa-wrench"></i>
+    </div>
+    <div class="condition-content">
+      {{processItem.text}} - {{processItem.id}}
+    </div>
   </div>
 </div>

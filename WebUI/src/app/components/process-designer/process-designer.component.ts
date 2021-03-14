@@ -60,7 +60,7 @@ export class ProcessDesignerComponent implements OnInit {
 
     this.process = new Process(this.randomIdGenerator, this.userGroupService);
 
-    this.process.addNewStep('Request Entry', 30 + 80, 100);
+    this.process.addNewStep('Request Entry', 30 + 4 * 80, 100);
 
     this.cd.detectChanges();
     this.cd.reattach();

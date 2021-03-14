@@ -124,7 +124,8 @@ export class ResponsibleComponent implements OnInit {
     this.updateEnabledResponsibleTypes();
 
     this.fieldChangeSubscription =
-      this.process.fieldsChange$.subscribe(fc => {
+      this.process.fields.subscribe(fc => {
+        // TODO: this should be centralized and not handled in component.
         this.updateEnabledResponsibleTypes();
       });
   }

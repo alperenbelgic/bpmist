@@ -39,6 +39,10 @@ export class ProcessItemComponent implements OnInit {
     this.processItem.visualState.component = this;
   }
 
+  ngAfterViewInit() {
+    this.processItem.topPx = Math.round(this.processItem.visualState.middleY / 80) * 80 - this.processItem.visualState.height / 2;
+  }
+
   getWidth() {
     return this.el.nativeElement.offsetWidth;
   }
