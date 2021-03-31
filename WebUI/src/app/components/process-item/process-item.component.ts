@@ -12,19 +12,7 @@ export class ProcessItemComponent implements OnInit {
   _processItem: ProcessItem;
 
   get processItem(): ProcessItem { return this._processItem; }
-  @Input() set processItem(val: ProcessItem) {
-    this._processItem = val;
 
-    this.showProcessItemNameEdit = this._processItem.justCreatedOnInterface;
-
-    if (this.showProcessItemNameEdit) {
-      setTimeout(() => {
-        this.processItemNameTextArea.nativeElement.focus();
-        this.processItemNameTextArea.nativeElement.select();
-      }, 40);
-    }
-
-  }
   @Output() linkCreated: EventEmitter<any> = new EventEmitter();
   @Output() settingDialogueOpening = new EventEmitter<ProcessItem>();
   isSettingsVisible = false;
@@ -34,6 +22,22 @@ export class ProcessItemComponent implements OnInit {
 
   constructor(
     private el: ElementRef) { }
+
+  @Input() set processItem(val: ProcessItem) {
+    this._processItem = val;
+
+    this.showProcessItemNameEdit = this._processItem.justCreatedOnInterface;
+
+    if (this.showProcessItemNameEdit) {
+
+      const that = this;
+      setTimeout(() => {
+        that.processItemNameTextArea.nativeElement.focus();
+        that.processItemNameTextArea.nativeElement.select();
+      }, 4000);
+    }
+
+  }
 
   ngOnInit(): void {
     this.processItem.visualState.component = this;
@@ -82,4 +86,6 @@ export class ProcessItemComponent implements OnInit {
       return false;
     }
   }
+
+
 }
