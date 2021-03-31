@@ -101,7 +101,7 @@ export class UserGroupService {
       {
         code: 'group',
         name: 'Assign to a group',
-        tooltip: 'This step will be assigned to a user from the group you select.',
+        tooltip: 'This step will be assigned to a user from the group you select. ',
         isAdvancedOption: false,
         visualState: { enabled: true },
       },
