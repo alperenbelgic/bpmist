@@ -7,6 +7,7 @@ import { FieldInStep } from '../Field/FieldInStep';
 import { UserGroupService } from '../../../services/Business/userGroup.service';
 import { from, Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { ArrayChanged, ObservableArray } from '../PropertyChangedTypes';
+import { ProcessStarter } from '../Responsible/ProcessStarter';
 
 export class Process {
 
@@ -14,14 +15,21 @@ export class Process {
     private randomIdGenerator: RandomIdGenerator,
     private userGroupService: UserGroupService,
   ) {
+
+    this.processStarter = new ProcessStarter(
+      this.userGroupService.getDefaultProcessStarter(), []);
+
     this.fields.subscribe(change => {
       this.setAllUserTypeFields(change);
-    })
+    });
   }
 
   processId: string;
 
   processItems = new ObservableArray<ProcessItem>(this);
+
+  processStarter: ProcessStarter;
+
   links: Link[] = [];
 
   public fields = new ObservableArray<Field>(this);
@@ -58,24 +66,27 @@ export class Process {
 
   }
 
-  addNewStep(stepName: string, topPx: number, leftPx: number) {
-    this.processItems.addItem(
-      new StepItem(
-        this.randomIdGenerator.generate(),
-        true,
-        false,
-        stepName,
-        topPx,
-        leftPx,
-        this.userGroupService.getDefaultResponsibleType(),
-        this.userGroupService.getDefaultGroupAssignOption(),
-      ));
+  addNewStep(stepName: string, topPx: number, leftPx: number, isFirstItem: boolean = false) {
+    const newStep = new StepItem(
+      this.randomIdGenerator.generate(),
+      true,
+      false,
+      stepName,
+      topPx,
+      leftPx,
+      this.userGroupService.getDefaultResponsibleType(),
+      this.userGroupService.getDefaultGroupAssignOption(),
+    );
+
+    newStep.isFirstItem = isFirstItem;
+
+    this.processItems.addItem(newStep);
   }
 
   deleteField(field: Field) {
     // TODO: check if the field is a user field or group field picked as the responsible in a step
     // TODO: call value changed
-    ((field as any).processSubscription as Subscription).unsubscribe();
+    //((field as any).processSubscription as Subscription).unsubscribe();
 
     // stop deletion or ask if they want to remove that field being selected
   }

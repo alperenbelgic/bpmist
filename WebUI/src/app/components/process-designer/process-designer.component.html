@@ -71,7 +71,7 @@
           [attr.y1]="lineCreationStartY"
           [attr.x2]="lineCreationEndX"
           [attr.y2]="lineCreationEndY"
-          stroke="tomato"
+          stroke="green"
           marker-end="url(#arrow-end)"
         />
 
@@ -83,7 +83,7 @@
           [attr.y1]="link.startItem.visualState.middleY"
           [attr.x2]="link.endItem.visualState.middleX"
           [attr.y2]="link.endItem.visualState.middleY"
-          stroke="tomato"
+          [attr.stroke]="link.color"
           marker-end="url(#arrow-end)"
           (mouseenter)="mouseEnter(link.startItem.visualState.middleX) "
         >

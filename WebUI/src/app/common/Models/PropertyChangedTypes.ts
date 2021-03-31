@@ -15,6 +15,13 @@ export interface IPropertyChanged<T> {
   propertyChanged: Observable<PC<T>>;
 }
 
+// create a subject implementation returning observable
+// and we use it in implementing IPropertyChanged
+// this should filter repeating values
+// also something to make assignment easier
+// this._val = obsimplementation.setvalue(newvalue, this._val)
+// it will check if values same, if same no fire, and return new value
+
 export class ObservableArray<T extends IPropertyChanged<T>> extends BehaviorSubject<ArrayChanged<T>>{
   constructor(private owner: any) {
     super(new ArrayChanged<T>([], 'initialized', null, owner, null));

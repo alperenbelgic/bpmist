@@ -13,7 +13,8 @@ export class ProcessItem implements IPropertyChanged<ProcessItem> {
     public topPx: number = 80,
     public leftPx: number = 80,
     public text: string = '',
-    public deletable: boolean = true
+    public deletable: boolean = true,
+    public isFirstItem: boolean = false
   ) {
 
   }

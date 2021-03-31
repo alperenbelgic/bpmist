@@ -4,6 +4,7 @@ import { Group } from '../../common/Models/Responsible/Group';
 import { User } from '../../common/Models/Responsible/User';
 import { GroupAssignOption } from '../../common/Models/Responsible/GroupAssignOption';
 import { ResponsibleType } from '../../common/Models/Responsible/ResponsibleType';
+import { ProcessStarterType, ProcessStarterTypeCode } from 'src/app/common/Models/Responsible/ProcessStarterType';
 
 @Injectable({
   providedIn: 'root'
@@ -50,16 +51,17 @@ export class UserGroupService {
 
   getGroupAssignOptions(): GroupAssignOption[] {
     return [
+      new GroupAssignOption(
+        'PulledManually',
+        'A member of the group will manually pull the step.',
+        'When this step is reached, the step will be available to any member to pull and work'),
 
       new GroupAssignOption(
         'AssignRandomly',
         'The step will automatically be assigned to a member.',
         'When this step is reached, the system will assign this step to a random member automatically'),
 
-      new GroupAssignOption(
-        'PulledManually',
-        'A member of the group will manually pull the step.',
-        'When this step is reached, the step will be available to any member to pull and work'),
+
 
     ];
 
@@ -67,7 +69,30 @@ export class UserGroupService {
 
   getDefaultGroupAssignOption(): GroupAssignOption {
 
-    return this.getGroupAssignOptions().find(gao => gao.optionCode === 'AssignRandomly');
+    return this.getGroupAssignOptions().find(gao => gao.optionCode === 'PulledManually');
+
+  }
+
+  getProcessStarterTypes(): ProcessStarterType[] {
+    return [
+      {
+        code: 'anyone',
+        name: 'Anyone can start',
+        tooltip: 'Anyone can start',
+        visualState: { enabled: true }
+      },
+      {
+        code: 'groupList',
+        name: 'Users from selected groups can start',
+        tooltip: 'Users from selected groups can start.',
+        visualState: { enabled: true }
+      },
+    ];
+  }
+
+  getDefaultProcessStarter(): ProcessStarterType {
+
+    return this.getProcessStarterTypes()[0];
 
   }
 

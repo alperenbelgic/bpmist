@@ -16,12 +16,14 @@ export class ProcessItemVisualState {
   component: ProcessItemComponent;
 
   get width(): number {
+
     return this.component?.getWidth() ?? 0;
   }
 
   get height(): number {
     return this.component?.getHeight() ?? 0;
   }
+
 
   get middleX(): number {
     return this.processItem.leftPx + ((this.component?.getWidth() ?? 0) / 2);

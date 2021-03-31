@@ -13,7 +13,10 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-process-designer',
   templateUrl: './process-designer.component.html',
-  styleUrls: ['./process-designer.component.css']
+  styleUrls: ['./process-designer.component.css'],
+  host: {
+    '(document:keyup)': 'handleKeyboardEvent($event)'
+  }
 })
 export class ProcessDesignerComponent implements OnInit {
 
@@ -56,7 +59,19 @@ export class ProcessDesignerComponent implements OnInit {
   ngOnInit(): void {
     this.initialize();
 
-    this.process.processItems.subscribe(v => console.log(v));
+    // move it so somewhere else please
+    this.process.processItems.subscribe(change => {
+      if (change.changeMode == 'orderChanged') {
+        let processItems = [...change.array];
+        processItems.shift().isFirstItem = true;
+
+        processItems.forEach(element => {
+          element.isFirstItem = false;
+        });
+
+        console.log(change.array);
+      }
+    });
   }
 
   initialize() {
@@ -64,7 +79,7 @@ export class ProcessDesignerComponent implements OnInit {
 
     this.process = new Process(this.randomIdGenerator, this.userGroupService);
 
-    this.process.addNewStep('Request Entry', 30 + 4 * 80, 100);
+    this.process.addNewStep('Request Entry', 30 + 4 * 80, 100, true);
 
     this.cd.detectChanges();
     this.cd.reattach();
@@ -348,6 +363,15 @@ export class ProcessDesignerComponent implements OnInit {
 
   mouseEnter(arg) {
     console.log(arg);
+  }
+
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key == "Escape") {
+      if (this.isLinkBeingCreated) {
+        this.isLinkBeingCreated = false;
+        this.startedLinkItem = null;
+      }
+    }
   }
 
 }
