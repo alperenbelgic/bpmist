@@ -4865,7 +4865,7 @@
               setTimeout(function () {
                 that.processItemNameTextArea.nativeElement.focus();
                 that.processItemNameTextArea.nativeElement.select();
-              }, 4000);
+              }, 60);
             }
           }
         }, {
