@@ -1,12 +1,13 @@
 ## build client
+# ignore next two lines
 # build client canceled, because too slow, 
 # angular prod build is built in prodBuild folder in local and copied. below lines down to npm run commented out.
-#FROM node:14.5-alpine AS client
-#WORKDIR /usr/src/app
-#COPY WebUI/package.json ./
-#RUN npm install
-#COPY WebUI ./
-#RUN npm run build -- --prod
+FROM node:14.5-alpine AS client
+WORKDIR /usr/src/app
+COPY WebUI/package.json ./
+RUN npm install
+COPY WebUI ./
+RUN npm run build -- --prod
 
 # Build backend
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
@@ -39,7 +40,7 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 # below line commented out (two below is included instead)
-#COPY --from=client /usr/src/app/dist/bpmist ./wwwroot
-COPY WebUI/prodBuild ./wwwroot
+COPY --from=client /usr/src/app/dist/bpmist ./wwwroot
+#COPY WebUI/prodBuild ./wwwroot
 
 ENTRYPOINT ["dotnet", "bpmist.webapi.dll"]
