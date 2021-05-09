@@ -1,5 +1,72 @@
+For promotion:
+	- isFirstItem flag now exists. use it in Responsible (who can start?)
+	- probably, it's good to have the who can start configuration in process
+	- because, if starting item shifts, we need to keep same config
+	- first item can change if process item is removed! add this as well.
+
+- login as process designer (don't show the login)
+- list processes page
+- new process button
+- open process designer
+- create leave request
+	- add three steps
+		- create request , approval , HR approval
+		- connect them
+	- for create request
+		- anyone can start
+		- start date & end date
+			- required
+			- mention that we can make more sofisticated validations but skipping
+	- for appraval
+		- responsible: manager
+		- add two fields readonly
+			- add notes as text not reqired
+		- actions
+			- approve action name change
+			- add another action to decline
+				- this will end the process
+	- for HR approval
+		- responsible : HR group
+		- all fields included readonly
+		- approve and decline actions
+	- so there are lots of details I skipped. 
+	- this phase was the design phase
+	- now lets see the application which is running with these definitions.
+	- login as an employee
+	- create the process
+	- login as manager from the mobile 
+	- there is much more than this. I wanted to show you the potentials with a short video. 
+	- if you are interested, write me on linkedin or [alperen@bpm.ist]
+
+
+- how to detect starting step? 
+	- first step should be fine to start.
+	- yes first step is always starting step and
+	- there must be no other step that don't receive a link. 
+	- first step might or might not have receiving link (usually not)
+- basic types should work in UI	
+	+- text
+	+- date
+	- number
+	- user? (not sure about this)
+- basic configurations done in designer
+	- responsible
+	- form
+	- validations
+	- actions
+- reports	
+	- 
+- ???
+	- delete step
+	- test if FieldInStep.editableFieldUsedInAnotherStep value calculated correctly
+	- if a step is start step, it should show Anyone can start or Members of selected groups can start.
+- login , show user name , logout
+	- login in mobile but only for a specific user no need to implement end to end
+- clean process designer header 
+- process name change on process list or creation
+
 Todo:
-- get the source code in another folder, keep web branch there, when you run, npm install won't take long time. 
++- get the source code in another folder, keep web branch there, when you run, npm install won't take long time. 
 +- introduce mobile (rather earlier than later, because architecture should be aligned)
 + required fields
 	+ submitting empty required field should be handled.
@@ -60,8 +127,38 @@ Todo:
 	- max file size 
 	- data type validations	
 		- should be refused or ignored?	
+- designer
+	- bring data from server and build ui
+	- should we generate data type structure of objects returned from service?
+		- that data should be translated in UI structure
+		- some static typing would help
+	- right click and drag can scroll the content
+		- https://htmldom.dev/drag-to-scroll/
+	- when a moved element is outside the frame from right or bottom, scroll to keep the element inside
+	- element moved outside from left or top-> put it back inside.
+	- double click element brings text box inside, update step name
+	- validation 
+		- show boxes of process items differently (color etc.) if anything not validated inside
+		- show tab name in red or something if something is not validated well. 
+- assign to manager
+	- this should work only that task(step) is created for the first time.
+- action to terminate process
+	- and action can terminate process
+		- the process instance will end and last active state will be that state
+		- if you want a specific state to be in, once you end
+		- create a task which has no action and your action jumps to that task
+		- this means this is a final task and process will end
 
 Later:
+- multiple action (if sent within miliseconds) in same task can be accepted and processed
+	- only one of them should be accepted
+	- a possible way of solution. 
+		- immediately append a request flag in task and then read requrest flags
+		- if the first (active) req. flag is your own. then go ahead.
+		- if not delete your flag and don't process the request
+		- once everything is processed for valid request, remove the flag
+		- it can be now allowed to process other requests to be handled 
+			- if the processed request didn't make the task closed/completed.
 - collection group queries
 	- how to apply exactly
 	- can it be projected under a path?
